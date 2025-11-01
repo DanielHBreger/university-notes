@@ -1,0 +1,372 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW10]{E\&M 2025 HW10}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Sphere in a Dielectric}
+\begin{colbox}
+	A conductive sphere of radius R is held at constant potential $V_0$ and inserted halfway into an infinite dielectric material with dielectric coefficient $\epsilon$.
+	\begin{itemize}
+		\item Find the electric potential in all space.
+		\item Find the bound charge density $\sigma_b$ and the free charge density $\sigma_f$ on the surface of the conductive sphere.
+		\item Show that the total charge you found indeed creates the potential you found in the previous point.
+		\item We'll now assume the ball is inserted $3/4$ of its height into the dielectric. Is the answer from the first point still correct?
+	\end{itemize}
+\end{colbox}
+
+\subsection{Potential}
+
+Since the problem has azimuthal symmetry we can use the expression for the potential using Legendre polynomials. We can immediately discard several elements using the boundary conditions that the potential is finite at the center of the sphere and that it tends to 0 at infinity to get
+
+\begin{equation}
+  \phi(r,\theta)= \sum\limits_{i=0}^\infty \begin{cases}
+  	A_lr^lP_l(\cos\theta) & r<R\\
+  	B_lr^{-(l+1)}P_l(\cos\theta) & r>R
+  \end{cases}
+\end{equation}
+
+We can use the boundary condition that the potential on the entire surface, i.e at $r=R$ is $V_0$, to find that for all $l\neq 0$ $A_l=B_l=0$, and that the potential must be continuous, therefore
+
+\begin{align}
+	\phi(r,\theta)=\begin{cases}
+		V_0 & r<R\\
+		\frac{R}{r}V_0 & r>R
+	\end{cases}
+\end{align}
+
+\subsection{Bound charge density}
+
+To find the bound charge density, we'll find the polarization. To find the polarization, we'll calculate the displacement field and electric field. The electric field is given by
+
+\begin{equation}
+  \bold E = -\bold\nabla\phi = \begin{cases}
+  	0 & r<R\\
+  	\frac{R}{r^2}V_0\hat r & r>R
+  \end{cases}
+\end{equation}
+
+We'll calculate the polarization's perpendicular element above and below the dielectric. Inside the dielectric:
+
+\begin{align}
+	\bold P_\perp=\frac{1}{4\pi}(\bold D_\perp - \bold E_\perp)=\frac{\epsilon-1}{4\pi}\bold E=\frac{(\epsilon-1)V_0}{4\pi R}
+\end{align}
+
+thus
+
+\begin{equation}
+  \sigma_B=-\bold P_\perp=\frac{(1-\epsilon)V_0}{4\pi R}
+\end{equation}
+
+and
+
+\begin{equation}
+  \sigma_f = \frac{1}{4\pi}\Delta\bold D_\perp=\frac{\epsilon V_0}{4\pi R}
+\end{equation}
+
+Above the dielectric we find that there is no polarization therefore
+
+\begin{align}
+	\sigma_b=0 && \sigma_f=\frac{1}{4\pi}\Delta\bold D_\perp=\frac{1}{4\pi}\Delta\bold E_\perp=\frac{V_0}{4\pi R}
+\end{align}
+
+\subsection{Total charge to potential}
+
+First we notice that in both cases we have $\sigma=\sigma_b+\sigma_f=\frac{V_0}{4\pi R}$. Both charge distributions are uniform (since they have no dependence on anything) therefore we can just do
+
+\begin{equation}
+  \phi(r)=\int\dd^3x\frac{\rho(r',\theta',\varphi')}{|\bold r-\bold r'|}=\frac{4\pi R^2\sigma}{r}=\frac{R}{t}V_0
+\end{equation}
+
+which is indeed the potential we found earlier.
+
+\subsection{Deeper ball}
+
+The answer in the first point will no longer be correct. When the ball is inserted 3/4 of the way in, we no longer find that the electric field is perpendicular to the surface of the sphere and parallel to the surface of the dielectric, which breaks our symmetries we used.
+
+\clearpage
+\section{Cylindrical Cable}
+\begin{colbox}
+	A cylindrical cable with permeability $\mu$ and constant current I is given. The cable's radius is R. Find B and H inside and outside the cable.
+\end{colbox}
+
+Recalling Ampere's law:
+
+\begin{equation}
+  \oint\limits_{L}\bold B\cdot\dd\bold l = \frac{4\pi}{c}\iint\limits_A\bold J\cdot\dd\bold S
+\end{equation}
+
+and the current density being
+
+\begin{equation}
+  \bold J=\frac{I}{\pi R^2}\Theta(R-r)\hat z
+\end{equation}
+
+since there is a constant current I spread evenly over the area of the cable. We also note that the fields must be constant since there is no time or spatial dependence in the origins of the fields. Finally, we know the magnetic field will be in the $\varphi$ direction. Therefore
+
+\begin{align}
+	\oint\limits_{L}\bold B\cdot\dd\bold l=\int\limits_0^{2\pi}B(r)\hat\varphi\cdot\dd\varphi\hat\varphi=2\pi rB(r)
+\end{align}
+
+and
+
+\begin{align}
+	\frac{4\pi}{c}\iint\limits_A\bold J\cdot\dd\bold S=\frac{4\pi}{c}\int\limits_0^{2\pi}\dd\varphi\int\limits_0^rr'\dd r'\frac{I}{\pi R^2}\Theta(R-r)=\frac{8\pi^2 I}{R^2c}\int\limits_0^rr'\dd r'\Theta(R-r)
+\end{align}
+
+therefore
+
+\begin{equation}
+  B(r) = \frac{4\pi I}{R^2cr}\int\limits_0^rr'\dd r'\Theta(R-r)
+\end{equation}
+
+Inside the cable:
+
+\begin{equation}
+  \bold B(r) = \frac{4\pi I}{R^2cr}\int\limits_0^rr'\dd r'=\frac{2\pi rI}{R^2c}\hat\varphi
+\end{equation}
+
+and outside the cable
+
+\begin{equation}
+  \bold B(r) = \frac{4\pi I}{R^2cr}\int\limits_0^Rr\dd r=\frac{2\pi I}{cr}\hat\varphi
+\end{equation}
+
+in total
+
+\begin{equation}
+  \bold B=\frac{2\pi I}{c}\hat\varphi\begin{cases}
+  	\frac{r}{R^2} & r<R\\
+  	\frac{1}{r} & r>R
+  \end{cases}
+\end{equation}
+
+
+and the H field is just the same divided by $\mu$:
+\begin{equation}
+  \bold H = \frac{2\pi I}{\mu c}\hat\varphi\begin{cases}
+  	\frac{r}{R^2} & r<R\\
+  	\frac{1}{r} & r>R
+  \end{cases}
+\end{equation}
+
+
+\clearpage
+\section{Spinning Sphere}
+\begin{colbox}
+	A sphere of radius R with surface charge $\sigma$ is given. The sphere is spinning with constant angular velocity $\omega \hat z$.
+	\begin{itemize}
+		\item What is the surface current density? What is the volumetric current density?
+		\item Calculate the magnetic dipole moment.
+		\item Calculate the magnetic field inside and outside the sphere. Hint: The sphere inside the sphere is constant and proportional to $\omega$.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Current densities}
+
+The surface current density is given by
+
+\begin{equation}
+  \pmb\kappa=\sigma\pmb v=\sigma\cdot(\omega\hat z \times R\hat r)=\sigma\omega R\sin\theta\hat\varphi
+\end{equation}
+
+and to get the volumetric density we just multiple by a delta
+
+\begin{equation}
+  \pmb J=\pmb\kappa\delta(r-R)=\sigma\omega R\sin\theta\delta(r-R)\hat\varphi
+\end{equation}
+
+\subsection{magnetic dipole moment}
+
+\begin{align}
+	\pmb m &= \frac{1}{2c}\int\dd V\pmb r\times\pmb J\\
+	&= \frac{\sigma\omega}{2c}\int\dd V R\sin\theta\delta(r-R)r(\cos\varphi\sin\theta\hat x+\sin\varphi\sin\theta\hat y + \cos\theta\hat z)\times(-\sin\varphi\hat x+\cos\varphi\hat y)\\
+	&= \frac{\sigma\omega R^4}{2c}\int\limits_0^{2\pi}\dd\varphi\int\limits_0^\pi\dd\theta\dd\theta\sin^3\theta(\cos^2\varphi+\sin^2\varphi)\hat z\\
+	&= \frac{\sigma\omega R^4\pi}{c}\int\limits_0^\pi\dd\theta\sin^3\theta\hat z=\frac{\sigma\omega R^4 \pi}{c}\cdot(2-2/3)\hat z=\frac{4\pi\sigma\omega R^4}{3c}\hat z
+\end{align}
+
+\subsection{magnetic field}
+
+The potential is given by
+
+\begin{equation}
+  \pmb A(\pmb r) = \frac{1}{c}\int\dd VG_D(\pmb r,\pmb r')\pmb J(\pmb r')
+\end{equation}
+
+where the Greens function in spherical harmonics is
+
+\begin{equation}
+  G_D(\pmb r,\pmb r')=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{4\pi}{2l+1}\frac{r_<^l}{r_>^{l+1}}Y^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi)
+\end{equation}
+
+Combining we get
+
+\begin{align}
+	\pmb A(\pmb r) &= \frac{1}{c}\int\dd VG_D(\pmb r,\pmb r')\pmb J(\pmb r')\\
+	&= \frac{1}{c}\int\dd\Omega\int\dd r' r'^2 \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{4\pi}{2l+1}\frac{r_<^l}{r_>^{l+1}}Y^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi)\delta(r-R)\pmb\kappa(\pmb r')\\
+	&= \frac{R^2}{c}\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l \frac{4\pi}{2l+1}\frac{r_<^l}{r_>^{l+1}} Y_{l,m}(\theta,\varphi)\int\dd\Omega Y^*_{l,m}(\theta',\varphi')\pmb\kappa(\theta',\varphi')
+\end{align}
+
+We'll simplify the integral by splitting it into parts by vector element of the potential in cartesian. In this process we notice the only vector element in the right hand side is kappa, therefore we'll split kappa up and look at each element individually and fit spherical harmonics to the resulting trig functions.
+
+\begin{align}
+  \kappa_x &=-\sigma\omega R\sin\theta\sin\varphi = -\sigma\omega Ri\sqrt{\frac{2\pi}{3}}(Y_{1,1}+Y_{1,-1})\\
+  \kappa_y &= -\sigma\omega R\sin\theta\cos\varphi=-\sigma\omega R\sqrt{\frac{2\pi}{3}}(Y_{1,1}-Y_{1,-1})\\
+  \kappa_z &= 0
+\end{align}
+
+therefore
+
+\begin{align}
+	\int\dd\Omega Y^*_{l,m}(\theta',\varphi')\kappa_x &= -\sigma\omega Ri\sqrt{\frac{2\pi}{3}}\delta_{l,1}(\delta_{1,m}+\delta_{-1,m})\\
+	\int\dd\Omega Y^*_{l,m}(\theta',\varphi')\kappa_y &= -\sigma\omega R\sqrt{\frac{2\pi}{3}}\delta_{l,1}(\delta_{1,m}-\delta_{-1,m})\\
+	\int\dd\Omega Y^*_{l,m}(\theta',\varphi')\kappa_z &= 0
+\end{align}
+
+Therefore
+
+\begin{align}
+	A_x &=-\frac{R^2}{c}\frac{4\pi}{3}\frac{r_<}{r_>^2}(Y_{1,1}+Y_{1,-1})\sigma\omega Ri\sqrt{\frac{2\pi}{3}}=-\frac{1}{c}\sigma\omega R^3\frac{4\pi}{3}\frac{r_<}{r_>^2}\sin\theta\sin\varphi\\
+	A_y &= \frac{R^2}{c}\frac{4\pi}{3}\frac{r_<}{r_>^2}(Y_{1,1}-Y_{1,-1})\sigma\omega R\sqrt{\frac{2\pi}{3}}=\frac{1}{c}\sigma\omega R^3\frac{4\pi}{3}\frac{r_<}{r_>^2}\sin\theta\cos\varphi\\
+	A_z &=0
+\end{align}
+
+Rewriting this in spherical coordinates we find
+
+\begin{equation}
+  \pmb A(\pmb r)=\frac{1}{c}\sigma\omega R^3\frac{4\pi}{3}\frac{r_<}{r_>^2}\sin\theta\hat\varphi
+\end{equation}
+
+
+And we notice that the potential is only in the $\varphi$ direction (as expected). Now, the magnetic field can be found using
+
+\begin{equation}
+  \pmb B(\pmb r)=\pmb\nabla\times\pmb A(\pmb r)
+\end{equation}
+
+and since our potential is only in the $\varphi$ direction, we can ignore all the elements of the rotor which don't affect that element, finding that
+
+\begin{equation}
+  \pmb B(\pmb r) = \frac{1}{r\sin\theta}\partial_\theta(A_\varphi\sin\theta)\hat r-\frac{1}{r}\partial_r(A_\varphi r)\hat\theta
+\end{equation}
+
+Since we have the element with the smaller and larger r, we split the calculation for inside and outside the sphere. Inside the sphere we have 
+
+\begin{equation}
+  \frac{r_<}{r_>^2}=\frac{r}{R^2}
+\end{equation}
+
+therefore
+
+\begin{align}
+	\pmb B(\pmb r)&=\frac{4\pi}{3c}\sigma\omega R\left(\frac{1}{r\sin\theta}\partial_\theta(r\sin^2\theta)\hat r-\frac{1}{r}\partial_r(r^2\sin\theta)\hat\theta\right)\\
+	&= \frac{4\pi}{3c}\sigma\omega R\left(\frac{2\cos\theta\sin\theta}{\sin\theta}\hat r-\frac{2r\sin\theta}{r}\hat\theta\right)\\
+	&= \frac{8\pi}{3c}\sigma\omega R(\cos\theta\hat r-\sin\theta\hat\theta)
+\end{align}
+
+and outside the sphere we have
+
+\begin{equation}
+  \frac{r_<}{r_>^2}=\frac{R^2}{r}
+\end{equation}
+
+therefore
+
+\begin{align}
+	\pmb B(\pmb r)&=\frac{4\pi}{3c}\sigma\omega R^4\left(\frac{1}{r\sin\theta}\partial_\theta(\frac{\sin^2\theta}{r^2})\hat r-\frac{1}{r}\partial_r(\frac{\sin\theta}{r})\hat\theta\right)\\
+	&= \frac{4\pi}{3c}\sigma\omega R^4\left(\frac{2\cos\theta}{r^3}\hat r + \frac{\sin\theta}{r^3}\hat\theta\right)\\
+	&= \frac{4\pi}{3c}\sigma\omega \frac{R^4}{r^3}(2\cos\theta\hat r + \sin\theta\hat\theta)
+\end{align}
+
+\clearpage
+\section{Magnetized Sphere}
+\begin{colbox}
+	A sphere of radius a with constant magnetization $\bold M=M\hat z$ is given. Calculate the magnetic field in all space.
+\end{colbox}
+
+We have azimuthal symmetry in this problem so the solution will be possible to be written using Legendre polynomials. When outside the sphere, since there is no material or charges, it's clear we can write
+
+\begin{equation}
+  A_0 = \sum\limits_{l=0}^\infty \tilde A_lr^{-(l+1)}P_l(\cos\theta)
+\end{equation}
+
+because the potential must approach 0 at infinity. We mark the coefficients with a tilde to avoid confusion with the potential. Inside the sphere we know the magnetic field must be in the direction of the magnetization so we can write $\pmb B=B_0\hat z$ which also gives us $\pmb H=(B_0-4\pi M)\hat z$.
+
+Next we can apply boundary conditions, specifically that the perpendicular elements of the magnetic field inside and outside must be the same on the boundary, and the H field's parallel elements must be the same as well. This gives us the following conditions:
+
+\begin{equation}
+  B_0\cos\theta=\sum\limits_{l=0}^\infty \tilde -(l+1)A_lr^{-(l+2)}P_l(\cos\theta)
+\end{equation}
+
+which using the fact $P_1(x)=x$ we demand that
+
+\begin{equation}
+  B_0=-2\tilde A_1a^{-3}
+\end{equation}
+
+and aplying the H boundary conditions:
+
+\begin{equation}
+  H_\parallel^\text{ins}=(B_0-4\pi M)\hat z\cdot\hat\theta=(4\pi M-B_0)\sin\theta
+\end{equation}
+
+but
+
+\begin{equation}
+  H_\parallel^\text{out}=\left.\frac{1}{\alpha}\partial_\theta A_0\right|_{r=a}=\sum\limits_{l=0}^\infty \tilde A_la^{-(l+2)}\partial_\theta P_l(\cos\theta)
+\end{equation}
+
+again using the fact $P_1(x)=x$ we find
+
+\begin{equation}
+  B_0-4\pi M=\tilde A_1a^{-3}
+\end{equation}
+
+We can combine these results to find
+
+\begin{align}
+	\tilde A_1=-\frac{4\pi}{3}Ma^3
+\end{align}
+
+and
+
+\begin{equation}
+  B_0=\frac{8\pi}{3}M
+\end{equation}
+
+which we can then use to find the potential outside the sphere
+
+\begin{equation}
+  A_0=-\frac{4\pi}{3}\frac{Ma^3}{r^2}\cos\theta
+\end{equation}
+
+and by taking the gradient we get the field
+
+\begin{equation}
+  \pmb B = \begin{cases}
+  	\frac{8\pi M}{3}\hat z & r<a\\
+  	\frac{4\pi}{3}\frac{Ma^3}{r^3}(2\cos\theta\hat r+\sin\theta\hat\theta) &r>a
+  \end{cases}
+\end{equation}
+
+
+\end{document}

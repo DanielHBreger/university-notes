@@ -1,0 +1,884 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+
+\title[E\&M 2025 HW3]{E\&M 2025 HW3}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+Note: In every matrix in this document all appearances of 0 are omitted for brevity.
+
+\section{Question 1}
+\begin{colbox}
+    1. Find the coordinate change matrix \(\Lambda\) for a rotation of 90 degrees around the z axis\\
+    2. Find \(\tensor{(F')}{^\mu_\nu}\) using two methods: \begin{itemize}
+  \item \(\tr{F}{_\mu_\nu} \rightarrow \tr{(F')}{_\mu_\nu} \rightarrow \tr{(F')}{^\mu_\nu}\)
+  \item \(\tr{F}{_\mu_\nu} \rightarrow \tr{F}{^\mu_\nu} \rightarrow \tr{(F')}{^\mu_\nu}\)
+\end{itemize}
+\end{colbox}
+
+\subsection{Part 1}
+
+The matrix representing rotations around the z axis is \begin{equation*}
+	\Lambda = \begin{pmatrix}
+		1 &  &  & \\
+		 & \cos\varphi & \sin\varphi & \\
+		 & -\sin\varphi & \cos\varphi & \\
+		 &  &  & 1
+	\end{pmatrix}
+\end{equation*}
+
+Therefore if we set $\varphi = \pm\frac{\pi}{2}$:
+\begin{equation}
+	\Lambda = \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}
+\end{equation}
+
+respectively.
+
+\subsection{Part 2}
+
+We could calculate $\Lambda^{-1}$ and $\Lambda^T$ but we can just directly notice that
+
+\begin{equation}
+	\Lambda^{-1}=\Lambda^T=\begin{pmatrix}
+		1 &  &  & \\
+		 &  & \mp1 & \\
+		 & \pm1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}
+\end{equation}
+
+and we remember that 
+
+\begin{equation}\label{fields tensor}
+	\tr{F}{_\mu_\nu} = \begin{pmatrix}
+		&E_1&E_2&E_3\\
+		-E_1&&-B_3&B_2\\
+		-E_2&B_3&&-B_1\\
+		-E_3&-B_2&B_1&
+	\end{pmatrix}
+\end{equation}
+
+We shall now find $\tr{(F')}{^\mu_\nu}$.
+
+\subsubsection{First method}
+
+\begin{align}
+	\tr{(F')}{_\mu_\nu} &= \tr{(\Lambda^{-1})}{_\mu^\sigma}\tr{F}{_\sigma_\epsilon}\tr{(\Lambda^{-1})}{^\epsilon_\nu}\\
+	&= \left[{\Lambda^{-1}}^TF\Lambda^{-1}\right]_{\mu\nu}\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\begin{pmatrix}
+		&E_1&E_2&E_3\\
+		-E_1&&-B_3&B_2\\
+		-E_2&B_3&&-B_1\\
+		-E_3&-B_2&B_1&
+	\end{pmatrix}\begin{pmatrix}
+		1 &  &  & \\
+		 &  & \mp1 & \\
+		 & \pm1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		-E_1&\mp B_3&&B_2\\
+		-E_2&&\mp B_3&-B_1\\
+		-E_3&\pm B_1&\pm B_2&
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		\mp E_2&&-B_3&\mp B_1\\
+		\pm E_1&B_3&&\mp B_2\\
+		-E_3&\pm B_1&\pm B_2&
+	\end{pmatrix}
+\end{align}
+
+Next we'll raise an index using the metric.  The metric is
+
+\begin{align}
+	\eta' &= (\Lambda^{-1})^T\eta(\Lambda^{-1})\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\begin{pmatrix}
+		1&&&\\
+		&-1&&\\
+		&&-1&\\
+		&&&-1
+	\end{pmatrix}\begin{pmatrix}
+		1 &  &  & \\
+		 &  & \mp1 & \\
+		 & \pm1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\mtr{1&&&\\
+	&&\pm1&\\
+	&\mp1&&\\
+	&&&-1}\\
+	&= \mtr{1&&&\\
+	&-1&&\\
+	&&-1&\\
+	&&&-1}
+\end{align}
+
+Therefore
+
+\begin{align}
+	\tr{(F')}{^\mu_\nu} &= \tr{(\eta')}{^\mu^\sigma}\tr{(F')}{_\sigma_\nu}\\
+	&= \mtr{1&&&\\
+	&-1&&\\
+	&&-1&\\
+	&&&-1}\begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		\mp E_2&&-B_3&\mp B_1\\
+		\pm E_1&B_3&&\mp B_2\\
+		-E_3&\pm B_1&\pm B_2&
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		\pm E_2&&B_3&\pm B_1\\
+		\mp E_1&-B_3&&\pm B_2\\
+		E_3&\mp B_1&\mp B_2&
+	\end{pmatrix}
+\end{align}
+
+\subsubsection{Second method}
+
+This time we first raise the index using the metric
+
+\begin{align}
+	\tr{F}{^\mu_\nu} &= \tr{\eta}{^\mu^\sigma}\tr{F}{_\sigma_\nu}\\
+	&= \begin{pmatrix}
+		1&&&\\
+		&-1&&\\
+		&&-1&\\
+		&&&-1
+	\end{pmatrix}\begin{pmatrix}
+		&E_1&E_2&E_3\\
+		-E_1&&-B_3&B_2\\
+		-E_2&B_3&&-B_1\\
+		-E_3&-B_2&B_1&
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		&E_1&E_2&E_3\\
+		E_1&&B_3&-B_2\\
+		E_2&-B_3&&B_1\\
+		E_3&B_2&-B_1&
+	\end{pmatrix}
+\end{align}
+
+Then we change coordinates
+
+\begin{align}
+	\tr{(F')}{^\mu_\nu} &= \tr{(\Lambda^{-1})}{^\mu_\sigma}\tr{F}{^\sigma_\epsilon}\tr{(\Lambda^{-1})}{^\epsilon_\nu}\\
+	&= \left[{\Lambda^{-1}}^TF\Lambda^{-1}\right]_{\mu\nu}\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\begin{pmatrix}
+		&E_1&E_2&E_3\\
+		E_1&&B_3&-B_2\\
+		E_2&-B_3&&B_1\\
+		E_3&B_2&-B_1&
+	\end{pmatrix}\begin{pmatrix}
+		1 &  &  & \\
+		 &  & \mp1 & \\
+		 & \pm1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		1 &  &  & \\
+		 &  & \pm1 & \\
+		 & \mp1 &  & \\
+		 &  &  & 1
+	\end{pmatrix}\begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		E_1&\pm B_3&&-B_2\\
+		E_2&&\pm B_3&B_1\\
+		E_3&\mp B_1&\mp B_2&
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		&\pm E_2&\mp E_1&E_3\\
+		\pm E_2&&B_3&\pm B_1\\
+		\mp E_1&-B_3&&\pm B_2\\
+		E_3&\mp B_1&\mp B_2&
+	\end{pmatrix}
+\end{align}
+
+And we can see the two methods are equivalent.
+
+\clearpage
+\section{Question 2}
+\begin{colbox}
+The laboratory has the following magnetic and electric fields: \begin{align}
+  \bold{E}=E_0 \hat z && \bold B=B_0 \hat x
+\end{align} \begin{itemize}
+  \item Show that \(-\frac{1}{2}\tr{F}{^\mu^\nu}\tr{F}{_\mu_\nu} = E^2-B^2\) and explain why this value is equal in all coordinate systems
+  \item use the formula for the Lorentz transformation of EM fields and find the velocity \(\bold V = v \hat Y\) of the coordinate system $x'^\mu$ in which $\bold E'=0$. What is $\bold B'$ in this system? What is the condition on $E_0,B_0$ to move to this system?
+  \item A point electric charge q with mass m is released from rest at the origin of the coordinate system in the lab's frame. Write the equations of motion in coordinate system $x'^\mu$ and find $p'^\mu(\tau)$.
+  \item Find the path as a function of its proper time and lab time
+  \item What is the time in which the particle completes a revolution in the yz plane as measured in system $x'^\mu$?
+  \item Use the result of item 4 and write down the path of the particle in the lab frame as a function of its proper time.
+\end{itemize}	
+\end{colbox}
+
+\subsection{Part 1}
+
+The fields tensor is given by equation \ref{fields tensor}. The dual tensor is thus:
+
+\begin{align}
+	\tr{F}{^\mu^\nu} &= \tr{\eta}{^\mu^\sigma}\tr{F}{_\sigma_\epsilon}\tr{\eta}{^\epsilon^\nu}\\
+	&= \mtr{1&&&\\
+	&-1&&\\
+	&&-1&\\
+	&&&-1}\mtr{
+		&E_1&E_2&E_3\\
+		-E_1&&-B_3&B_2\\
+		-E_2&B_3&&-B_1\\
+		-E_3&-B_2&B_1&}\mtr{1&&&\\
+	&-1&&\\
+	&&-1&\\
+	&&&-1}\\
+	&= \mtr{1&&&\\
+	&-1&&\\
+	&&-1&\\
+	&&&-1}\mtr{
+		&-E_1&-E_2&-E_3\\
+		-E_1&&B_3&-B_2\\
+		-E_2&-B_3&&B_1\\
+		-E_3&B_2&-B_1&}\\
+	&= \mtr{
+		&-E_1&-E_2&-E_3\\
+		E_1&&-B_3&B_2\\
+		E_2&B_3&&-B_1\\
+		E_3&-B_2&B_1&}
+\end{align}
+
+Therefore
+
+\begin{align}
+	-\frac{1}{2}\tr{F}{^\mu^\nu}\tr{F}{_\mu_\nu} &= -\frac{1}{2}\left(-2E_1^2-2E_2^2-2E_3^2+2B_1^2+2B_2^2+2B_3^2\right)\\
+	&= E_1^2+E_2^2+E_3^2-B_1^2-B_2^2-B_3^2\\
+	&= E^2-B^2
+\end{align}
+
+This expression is a scalar, thus it's also a Lorentz scalar.
+
+\subsection{Part 2}
+
+The transformation matrix for the Lorentz boost along the y axis is given by
+
+\begin{align}
+	\tr{\Lambda}{^\mu_\nu} = \mtr{\gamma &&-\gamma \beta&\\
+	& 1 &&\\
+	-\gamma \beta&&\gamma&\\
+	&&&1}
+\end{align}
+
+its inverse is
+
+\begin{align}
+	\tr{(\Lambda^{-1})}{^\mu_\nu} = \mtr{\gamma &&\gamma \beta&\\
+	& 1 &&\\
+	\gamma \beta&&\gamma&\\
+	&&&1}
+\end{align}
+
+since the inverse boost should return us to the same velocity we had initially.
+
+Therefore 
+
+\begin{align}
+	\tr{F}{_\mu _\nu} &= \tr{(\Lambda^{-1})}{_\mu ^\sigma} \tr{F}{_\sigma _\epsilon} \tr{(\Lambda^{-1})}{^\epsilon_\nu}\\
+	&= \left[{\Lambda^{-1}}^TF\lambda^{-1}\right]_{\mu\nu}\\
+	&= \mtr{\gamma &&\gamma \beta&\\
+	& 1 &&\\
+	\gamma \beta&&\gamma&\\
+	&&&1}\begin{pmatrix}
+		&&&E_0\\
+		&&&\\
+		&&&-B_0\\
+		-E_0&&B_0&
+	\end{pmatrix}\mtr{\gamma &&\gamma \beta&\\
+	& 1 &&\\
+	\gamma \beta&&\gamma&\\
+	&&&1}\\
+	&= \mtr{\gamma &&\gamma \beta&\\
+	& 1 &&\\
+	\gamma \beta&&\gamma&\\
+	&&&1}\begin{pmatrix}
+		&&&E_0\\
+		&&&\\
+		&&&-B_0\\
+		-\gamma E_0+\gamma\beta B_0&&-\gamma\beta E_0+\gamma B_0&
+	\end{pmatrix}\\
+	&= \begin{pmatrix}
+		&&&\gamma E_0-\gamma\beta B_0\\
+		&&&\\
+		&&&\gamma\beta E_0 - \gamma B_0\\
+		-\gamma E_0+\gamma\beta B_0&&-\gamma\beta E_0+\gamma B_0&
+	\end{pmatrix}
+\end{align}
+
+Therefore the fields in our new reference frame are
+
+\begin{align}
+	E=\mtr{0\\0\\\gamma E_0-\gamma\beta B_0} && B=\mtr{\gamma B_0-\gamma\beta E_0\\0\\0}
+\end{align}
+
+To satisfy that the electric field is zero we thus find that
+
+\begin{equation}
+	\beta=\frac{E_0}{B_0} 
+\end{equation}
+
+and the magnetic field we observe at this velocity is
+
+\begin{equation}
+	B=\mtr{\gamma B_0-\gamma\beta^2B_0\\0\\0}=\mtr{\gamma B_0(1-\beta^2)\\0\\0} = \mtr{\frac{B_0}{\gamma}\\0\\0}  
+\end{equation}
+
+And since we found a relation between the fields and the velocity of the object, which cannot exceed c, we can find
+
+\begin{equation}
+  \left|\frac{E_0}{B_0}\right| < 1
+\end{equation}
+
+\subsection{Part 3}
+
+The equation of motion for a charged particle is 
+
+\begin{equation}
+	m \diff[2] {x_\mu}\tau - \frac{q}{c} \diff {x^\nu}\tau \tr{F}{_\mu_\nu} = 0
+\end{equation}
+
+and we can rewrite it as
+
+\begin{equation}
+	\diff {p_\mu}\tau - \frac{q}{c} u^\nu \tr{F}{_\mu_\nu} = 0
+\end{equation}
+
+and we can further expand this by multiplying and dividing the 2nd element by m:
+\begin{equation}
+	\diff {p_\mu}\tau -\frac{q}{mc}mu^\nu \tr{F}{_\mu_\nu} = \diff {p_\mu}\tau -\frac{q}{mc}p^\nu \tr{F}{_\mu_\nu}=0
+\end{equation}
+
+To be able to solve this we will raise the index for the first element:
+\begin{equation}
+	\tr{\eta}{_\mu_\sigma}\diff {p^\sigma}\tau = \frac{q}{mc}p^\nu \tr{F}{_\mu_\nu}
+\end{equation}
+
+Next we'll multiply by the dual metric
+
+\begin{equation}
+  \tr{\eta}{^\mu^\rho}\tr{\eta}{_\rho_\sigma} \diff{p^\sigma}\tau = \frac{q}{mc}\tr{\eta}{^\mu^\rho}p^\nu\tr{F}{_\mu_\nu}
+\end{equation}
+
+we can simplify this
+
+\begin{equation}
+  \tr{\delta}{^\mu_\sigma}\diff {p^\sigma}\tau = \frac{q}{mc}\tr{\eta}{^\mu^\rho}p^\nu\tr{F}{_\mu_\nu}
+\end{equation}
+
+and further
+
+\begin{equation}
+  \diff {p^\mu}\tau = \frac{q}{mc} \tr{\eta}{^\mu^\rho} p^\nu \tr{F}{_\mu_\nu}
+\end{equation}
+
+switching to matrix multiplication form
+
+\begin{equation}
+	\diff p\tau = \frac{q}{mc}\eta^{-1}Fp
+\end{equation}
+
+We can now substitute the fields tensor for this question and get
+
+\begin{equation}
+  \diff p\tau = \frac{q}{mc}\mtr{1&&&\\&-1&&\\&&-1&\\&&&-1}\mtr{&&&\\&&&\\&&&-\frac{B_0}{\gamma}\\&&\frac{B_0}{\gamma}&}p
+\end{equation}
+
+simplifying we get
+
+\begin{equation}
+  \diff p\tau = \frac{q}{mc}\frac{B_0}{\gamma}\mtr{&&&\\&&&\\&&&1\\&&-1&}p
+\end{equation}
+
+The eigenvalues and eigenvectors of this matrix are
+
+\begin{align}
+	\lambda_0=0, v_{0,1}=\mtr{1\\0\\0\\0},\mtr{0\\1\\0\\0} && \lambda_{1,2}=\pm i,v_2=\mtr{0\\0\\1\\ i},v_3=\mtr{0\\0\\1\\-i}
+\end{align}
+
+Therefore the solutions to our system of equations is
+
+\begin{equation}
+  p=c_0v_0+c_1v_1+c_2e^{i\frac{qB_0}{mc}\tau}v_2+c_3e^{-i\frac{qB_0}{mc}\tau}v_3 = \mtr{c_0\\c_1\\c_2e^{i\frac{qB_0}{mc}\tau}+c_3e^{-i\frac{qB_0}{mc}\tau}\\\left(c_2e^{i\frac{qB_0}{mc}\tau}-c_3e^{-i\frac{qB_0}{mc}\tau}\right)i}
+\end{equation}
+
+Our particle started off at rest in the lab frame therefore in its own rest frame
+
+\begin{equation}
+  p_0^\mu=\tr{\Lambda}{^\mu_\nu}p^\nu_0=\mtr{\gamma &&-\gamma \beta&\\
+	& 1 &&\\
+	-\gamma \beta&&\gamma&\\
+	&&&1}\mtr{mc\\0\\0\\0}=\mtr{\gamma mc\\0\\\-gamma\beta mc\\0}
+\end{equation}
+
+therefore
+
+\begin{align}
+	c_0=\gamma mc && c_1 = 0 && c_2+c_3=-\gamma\beta mc && c_2-c_3=0
+\end{align}
+
+therefore
+
+\begin{align}
+	c_2 = c_3=-\frac{\gamma\beta mc}{2} = -\frac{\gamma mv}{2}
+\end{align}
+
+therefore the particle's 4-momentum is
+
+\begin{equation}\label{result23}
+  p^\mu(\tau)=\mtr{\gamma mc\\0\\-\frac{\gamma mv}{2}\left(e^{i\frac{qB_0}{mc}\tau}+e^{-i\frac{qB_0}{mc}\tau}\right)\\-\frac{i\gamma mv}{2}\left(e^{i\frac{qB_0}{mc}\tau}-e^{-i\frac{qB_0}{mc}\tau}\right)} = \mtr{\gamma mc\\0\\-\gamma mv\cos{\frac{qB_0}{mc}\tau}\\\gamma mv\sin{\frac{qB_0}{mc}\tau}}
+\end{equation}
+
+This indeed is motion in a 4-dimensional corkscrew as expected.
+
+\subsection{Part 4}
+
+By definition
+
+\begin{equation}
+  p'^\mu = m \diff {x'^\mu}\tau
+\end{equation}
+
+so if we combine with equation \ref{result23} we get
+
+\begin{equation}
+  m \diff {x'^\mu}\tau = \mtr{\gamma mc\\0\\-\gamma mv\cos{\frac{qB_0}{mc}\tau}\\\gamma mv\sin{\frac{qB_0}{mc}\tau}}
+\end{equation}
+
+canceling terms and integrating over $\tau$:
+
+\begin{equation}
+  \int \diff {x'^\mu}{\tau} \,d\tau = \int \mtr{\gamma c\\0\\-\gamma v\cos{\frac{qB_0}{mc}\tau}\\\gamma v\sin{\frac{qB_0}{mc}\tau}} \,d\tau\\
+\end{equation}
+
+therefore
+
+\begin{equation}
+  x'^\mu = \mtr{\gamma c \tau+c_0\\c_1\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}+c_2\\-\frac{\gamma mvc}{qB_0}\cos{\frac{qB_0}{mc}\tau + c_3}}
+\end{equation}
+
+But since the particle started in the origin (in the lab's reference frame but this lorentz transforms to the origin as well in the particle's frame)
+
+\begin{align}
+	c_0=0 && c_1=0 &&c_2=0 &&c_3=\frac{\gamma mvc}{qB_0}
+\end{align}
+
+Thus the particle's path is
+
+\begin{equation}
+  x'^\mu=\mtr{\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\-\frac{\gamma mvc}{qB_0}\cos{\frac{qB_0}{mc}\tau + \frac{\gamma mvc}{qB_0}}} = \mtr{\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau})}
+\end{equation}
+
+\subsection{Part 5}
+
+The revolution time in the rest frame is, of course
+
+\begin{equation}
+  T=\frac{2\pi}{\omega} = \frac{2\pi mc}{qB_0}
+\end{equation}
+
+and in the lab's frame
+
+\begin{equation}
+  T'=\gamma\frac{2\pi}{\omega} = \frac{2\gamma\pi mc}{qB_0}
+\end{equation}
+
+\subsection{Part 6}
+
+We will have to perform a reverse boost
+
+\begin{align}
+	x^\mu(\tau) &= \tr{(\Lambda^{-1})}{^\mu_\nu}x'^\nu(\tau)\\
+	&= \mtr{\gamma&&\gamma\beta&\\&1&&\\\gamma\beta&&\gamma&\\
+	&&&1}\mtr{\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau})}\\
+	&= \mtr{\gamma^2ct-\frac{\gamma^2 \beta mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\0\\\gamma^2\beta ct-\frac{\gamma^2 mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau})}
+\end{align}
+
+\clearpage
+\section{Question 3}
+\begin{colbox}
+	A point charge q moving at constant velocity $\bold V = v \hat z$ and is at the origin at t=0 in the lab frame S. In the rest frame of the particle S' the electric fields are \begin{align}
+		E'=\frac{q \hat r'}{r'^2} && \bold B = 0
+	\end{align} using the transformation rule for fields find the fields in the lab frame S.
+\end{colbox}
+
+To simplify the Lorentz boosts needed to be performed we'll convert the fields to cartesian coordinates.
+
+\begin{align}
+	E'=q\frac{\hat x'+\hat y'+ \hat z'}{x'^2+y'^2+z'^2} = q\frac{x'+y'+z'}{(x'^2+y'^2+z'^2)^{3/2}} && B'=0
+\end{align}
+
+Therefore our fields tensor in the particle's rest frame is
+
+\begin{equation}
+  \tr{F{'}}{_\mu_\nu} = \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mtr{&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&}
+\end{equation}
+
+and the Lorentz boost matrices
+
+\begin{align}
+  \tr{\Lambda}{^\mu_\nu} = \mtr{\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma} && \tr{(\Lambda^{-1})}{^\mu_\nu} = \mtr{\gamma&&&\gamma\beta\\&1&&\\&&1&\\\gamma\beta&&&\gamma}
+\end{align}
+
+Therefore the fields tensor in the lab's rest frame is
+
+\begin{align}
+	\tr{F}{_\mu_\nu} &= \tr{\Lambda}{_\mu^\sigma}\tr{F{'}}{_\sigma_\epsilon}\tr{\Lambda}{^\epsilon_\nu}\\
+	&= \left[\Lambda^TF\Lambda\right]_{\mu\nu}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mtr{\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma}\mtr{&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&}\mtr{\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mtr{\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma}\mtr{-\gamma\beta z'&x'&y'&\gamma z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\-\gamma z'&&&\gamma\beta z'}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mtr{-\gamma^2\beta z' + \gamma^2\beta z'&\gamma x'&\gamma y'&\gamma^2 z' - \gamma^2\beta^2z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\\gamma^2\beta^2 z' - \gamma^2z'&-\gamma\beta x'&-\gamma\beta y'&-\gamma^2\beta z'+\gamma^2\beta z'}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mtr{&\gamma x'&\gamma y'&z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\z'&-\gamma\beta x'&-\gamma\beta y'&}
+\end{align}
+
+Next we convert the coordinates to the lab frame
+
+\begin{equation}
+  x'^\mu = \tr{\Lambda}{^\mu_\nu}x'^\nu = \mtr{\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma}\mtr{ct\\x\\y\\z}=\mtr{\gamma ct-\gamma\beta z\\x\\y\\\gamma z-\gamma\beta ct} = \mtr{\gamma (ct- \beta z)\\x\\y\\\gamma (z-vt)}
+\end{equation}
+
+therefore the fields tensor in the lab frame is
+
+\begin{equation}
+  \tr{F}{_\mu_\nu}=\frac{q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mtr{&\gamma x&\gamma y&\gamma(z-vt)\\-\gamma x&&&\gamma\beta x\\-\gamma y&&&\gamma\beta y\\\gamma(z-vt)&-\gamma\beta x&-\gamma\beta y&}
+\end{equation}
+
+Therefore the fields in the lab frame are
+
+\begin{align}
+	E=\frac{\gamma q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mtr{x\\y\\z-vt} && B=\frac{\gamma\beta q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mtr{-y\\x\\0}
+\end{align}
+
+\clearpage
+\section{Question 4}
+\begin{colbox}
+	A capacitor made of two square plates with side length a and separation d such that $d \ll a$ has charge -Q on the top plate and +Q on the bottom plate. We'll define the axes such that its center coincides with the center of the capacitor, its axes are parallel to the edges of the capacitor and the separation between the plates is along the z axis. Find the electric and magnetic fields in the following coordinate systems: \begin{enumerate}
+		\item A system moving at speed $u \hat x$
+		\item A system moving at speed $u \hat z$
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Part 1}
+
+In this part the Lorentz boost is
+
+\begin{equation}
+  \tr{\Lambda}{^\mu_\nu} = \mtr{\gamma&-\gamma\beta&&\\
+  -\gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1}
+\end{equation}
+
+and the reverse boost is the same just without the minus signs, this is getting long so I'll leave it at that. Next, the electric field in the capacitor in the capacitor's frame is $E=4\pi\sigma\hat z$ where $\sigma=\frac{Q}{a^2}$ is the surface charge density. Therefore the fields tensor is
+
+\begin{equation}
+  \tr{F}{_\mu_\nu} = 4\pi\sigma \mtr{&&&1\\&&&\\&&&\\-1&&&}
+\end{equation}
+
+Using the known transformation rule the fields tensor in the moving frame is
+
+\begin{align}
+	\tr{F{'}}{_\mu_\nu} &= \tr{(\Lambda^{-1})}{_\mu^\sigma}\tr{F}{_\sigma_\epsilon}\tr{\Lambda}{^\epsilon_\nu}\\
+	&= \left[{(\Lambda^{-1})}^TF(\Lambda^{-1})\right]_{\mu\nu}\\
+	&= 4\pi\sigma\mtr{\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1}\mtr{&&&1\\&&&\\&&&\\-1&&&}\mtr{\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1}\\
+  &= 4\pi\sigma \mtr{\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1}\mtr{&&&1\\&&&\\&&&\\-\gamma&-\gamma\beta&&}\\
+  &= 4\pi\gamma\sigma \mtr{&&&1\\&&&\beta\\&&&\\-1&-\beta&&}
+\end{align}
+
+Therefore the fields are
+
+\begin{align}
+	E'=4\pi\gamma\sigma \hat z && B'=4\pi\gamma\beta\sigma\hat y
+\end{align}
+
+only for $-\frac{d}{2} \leq z \leq \frac{d}{2}$.
+
+\subsection{Part 2}
+
+In this part the Lorentz boost is
+
+\begin{equation}
+  \tr{\Lambda}{^\mu_\nu} = \mtr{\gamma&&&-\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  -\gamma\beta&&&\gamma}
+\end{equation}
+
+and the reverse boost is the same just without the minus signs, this is getting long so I'll leave it at that. Repeating the steps of part 1:
+
+\begin{align}
+	\tr{F{'}}{_\mu_\nu} &= \tr{(\Lambda^{-1})}{_\mu^\sigma}\tr{F}{_\sigma_\epsilon}\tr{\Lambda}{^\epsilon_\nu}\\
+	&= \left[{(\Lambda^{-1})}^TF(\Lambda^{-1})\right]_{\mu\nu}\\
+	&= 4\pi\sigma\mtr{\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma}\mtr{&&&1\\&&&\\&&&\\-1&&&}\mtr{\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma}\\
+  &= 4\pi\sigma \mtr{\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma}\mtr{\gamma\beta&&&\gamma\\&&&\\&&&\\-\gamma&&&-\gamma\beta}\\
+  &= 4\pi\gamma\sigma \mtr{\gamma^2\beta-\gamma^2\beta&&&\gamma^2-\gamma^2\beta^2\\&&&\\&&&\\\gamma^2\beta^2-\gamma^2&&&\gamma^2\beta-\gamma^2\beta}\\
+  &= 4\pi\gamma\sigma \mtr{&&&\gamma^2-\gamma^2\beta^2\\&&&\\&&&\\\gamma^2\beta^2-\gamma^2&&&}\\
+  &= 4\pi\gamma\sigma \mtr{&&&1\\&&&\\&&&\\-1&&&}\\
+\end{align}
+
+Therefore the fields are
+
+\begin{align}
+	E'=4\pi\sigma \hat z && B'=0
+\end{align}
+
+and since the movement is in the $\hat z$ direction we need to account for length contraction therefore the field exists only between $-\frac{d}{2\gamma} \leq z'+ut' \leq \frac{d}{2\gamma}$.
+
+\clearpage
+\section{Question 5}
+\begin{colbox}
+	A charged particle with charge q and mass m is moving in a straight line at speed v under the influence of a uniform electric field in space. Show that for any force F parallel to the velocity v \begin{equation}
+		F=m\left(1-\frac{v^2}{c^2}\right)^{-3/2}\diff vt
+	\end{equation}
+\end{colbox}
+
+The definition of force in relativistic mechanics is 
+
+\begin{align}
+  F^\mu &= \diff{{p^\mu}}{\tau} = \diff{{p^\mu}}{t} \diff{t}{\tau}=\gamma \diff{p^\mu}{t}\\
+  &= \gamma m \diff{{u^\mu}}{t}
+\end{align}
+
+where p is the 4-momentum and u is the 4-velocity. We'll notice that the definition of the 4-velocity is 
+
+\begin{equation}
+  u^\mu = \diff{{x^\mu}}{\tau}=\gamma \diff{{x^\mu}}{t}
+\end{equation}
+
+Next since we're only looking at the spatial part of the 4-force, i.e the 3-force, which we'll denote with F':
+
+\begin{equation}
+  F=\frac{d}{dt}\gamma (\frac{1}{c}E,F')
+\end{equation}
+
+We'll define the 3-velocity as expected and mark it u'. therefore
+
+\begin{align}
+  F' &= m \frac{d}{dt}(\gamma u')\\
+  &= m\left(\diff \gamma t u'+\gamma \diff {u'}t\right)\\
+  &= m\left(\diff \gamma t u'+\gamma a'\right)
+\end{align}
+ 
+ We'll now look at the gamma differential
+ 
+ \begin{align}
+  \diff \gamma t &= \frac{d}{dt}\left(\frac{1}{\sqrt{1-\frac{u'^2}{c^2}}}\right)\\
+  &= \frac{1}{2}\frac{1}{\left(1-\frac{u'^2}{c^2}\right)^\frac{3}{2}}\cdot \left(-\frac{1}{c^2}\diff{u'^2}{t}\right)\\
+  &= \frac{\gamma^3}{2c^2}\diff{u'^2}{t}\\
+  &= \frac{\gamma^3}{2c^2}\left(2u'\diff {u'}t\right)\\
+  &= \frac{\gamma^3}{c^2}u'\cdot a
+\end{align}
+
+therefore
+
+\begin{align}
+  F' &=  m\left(\frac{\gamma^3}{c^2}(u'\cdot a) u'+\gamma a'\right)\\
+  &= \frac{m\gamma^3}{c^2}(u'\cdot a')u'+m\gamma a'
+\end{align}
+
+We can immediately notice that since the force is parallel to the direction of movement, and identities of the dot product that in our case
+
+\begin{align}
+  F' &= m\frac{\gamma^3}{c^2}u'^2a'_\parallel +m\gamma a'\\
+  &= m\frac{\gamma^3}{c^2}u'^2a'_\parallel +m\gamma (a'_\parallel+a'_\perp)\\
+  &= m\gamma\left(\frac{\gamma^2}{c^2}u'^2+1\right)a'_\parallel+m\gamma a_\perp\\
+  &= m\gamma\left(\gamma^2\frac{u'^2}{c^2}+1\right)a'_\parallel+m\gamma a_\perp\\
+  &= m\gamma\left(\gamma^2\beta^2+1\right)a'_\parallel+m\gamma a_\perp\\
+  &= m\gamma\left(\frac{\frac{u'^2}{c^2}}{1-\frac{u'^2}{c^2}}+1\right)a'_\parallel+m\gamma a_\perp\\
+  &= m\gamma\left(\frac{1}{1-\frac{u'^2}{c^2}}\right)a'_\parallel+m\gamma a_\perp\\
+  &= m\gamma^3a'_\parallel+m\gamma a_\perp
+\end{align}
+
+and since $a_\perp=0$:
+
+\begin{equation}
+  F'=m\gamma^3a'=m\left(1-\frac{u'^2}{c^2}\right)^{-\frac{3}{2}}\diff{u'}t
+\end{equation}
+
+
+\clearpage
+\section{Question 6}
+\begin{colbox}
+	A point charge with mass m and charge q is placed at t=0 at the origin, then a constant force is applied to it. \begin{enumerate}
+		\item What is the velocity of the charge as a function of time?
+		\item What is the energy of the charge as a function of time?
+		\item Calculate the derivative $\diff \tau E$ where $\tau$ is the proper time of the particle and E is its energy
+		\item In this part assume that the origin of the force mentioned in the previous parts is from a constant electric field acting on the charge. Write down the fields tensor $\tr{F}{^\mu^\nu}$ in the momentary rest frame of the particle
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Part 1}
+
+Since the particle begins at rest and the force applies is constant, the particle will move only in the direction of the force, thus we can use the result of question 5:
+
+\begin{equation}
+  F'=m\left(1-\frac{u'^2}{c^2}\right)^{-\frac{3}{2}}\diff{u'}t
+\end{equation}
+
+To find the velocity we integrate with respect with time
+
+\begin{equation}
+  \int\limits_o^t \frac{F'}{m}dt' = \int\limits_0^{u(t)}\left(1-\frac{u'^2}{c^2}\right)^{-\frac{3}{2}}\diff{u'}tdt
+\end{equation}
+
+therefore
+
+\begin{equation}
+  \frac{F}{m}t = \int\limits_0^{u(t)}\left(1-\frac{u'^2}{c^2}\right)^{-\frac{3}{2}}du'=\frac{u'}{\sqrt{1-\frac{u'^2}{c^2}}}
+\end{equation}
+
+squaring both sides and rearranging
+
+\begin{equation}
+  u'^2=\frac{F^2}{m^2}t\left(1-\frac{u'^2}{c^2}\right)
+\end{equation}
+
+simplifying
+
+\begin{equation}
+  u'(t) = \frac{F}{m}t\left(1+\left(\frac{Ft}{mc}\right)^2\right)^{-\frac{1}{2}}
+\end{equation}
+
+\subsection{Part 2}
+
+\begin{equation}
+  E=\gamma mc^2
+\end{equation}
+
+therefore
+
+\begin{align}
+	E &= \gamma mc^2\\
+	&= \left(1-\frac{v^2}{c^2}\right)^{-\frac{1}{2}}mc^2\\
+	&=mc^2\ins{1-\frac{1}{c^2}\ins{\frac{F}{m}t\left(1+\left(\frac{Ft}{mc}\right)^2\right)^{-1}}}^{-\frac{1}{2}}\\
+	&= mc^2\ins{1-\frac{1}{c^2}\ins{\frac{F^2t^2}{m^2}\frac{m^2c^2}{m^2c^2+F^2t^2}}}^{-\frac{1}{2}}\\
+	&= mc^2\ins{1-\frac{F^2t^2}{m^2c^2+F^2t^2}}^{-\frac{1}{2}}\\
+	&= mc^2\ins{\frac{m^2c^2}{m^2c^2+f^2t^2}}^{-\frac{1}{2}}\\
+	&= mc^2\sqrt{1+\ins{\frac{Ft}{mc}}^2}
+\end{align}
+
+as required.
+
+\subsection{Part 3}
+
+First we notice that
+
+\begin{align}
+	\diff \tau E=\diff \tau t \diff tE
+\end{align}
+
+therefore we want to find the dependance of E on t using the previous part:
+
+\begin{equation}
+	E^2=m^2c^4\ins{1+\ins{\frac{Ft}{mc}}^2}
+\end{equation}
+
+therefore
+
+\begin{equation}
+  \frac{F^2t^2}{m^2c^2}=\ins{\frac{E}{mc^2}}^2-1
+\end{equation}
+
+and therefore
+
+\begin{equation}
+  t=\frac{mc}{F}\sqrt{\ins{\frac{E}{mc^2}}^2-1}
+\end{equation}
+
+Returning to equation 138 we get
+
+\begin{align}
+	\diff \tau E&=\diff \tau t \diff tE\\
+	&= \frac{1}{\gamma}\frac{d}{dE}\ins{\frac{mc}{F}\sqrt{\ins{\frac{E}{mc^2}}^2-1}}\\
+	=\left[\gamma=\frac{E}{mc^2}\right]&= \frac{mc^2}{E}\frac{mc}{F}\frac{E}{m^2c^4}\ins{\ins{\frac{E}{mc^2}}^2-1}^{-\frac{1}{2}}\\
+	&= \frac{1}{cF}\ins{\ins{\frac{E}{mc^2}}^2-1}^{-\frac{1}{2}}
+\end{align}
+
+\subsection{Part 4}
+
+We can compile what we learned in the previous parts to deduce what the fields tensor must look like. Since in the particle's rest frame.
+
+Since we know the electric field in the lab's frame acts in the direction of the particle's movement, then the field doesn't change when looking at it from the particle's rest frame. If we assume motion along the x axis, the fields tensor in the lab's rest frame must look like
+
+\begin{equation}
+  \tr{T}{_\mu_\nu} = \mtr{&E&&\\-E&&&\\&&&\\&&&}
+\end{equation}
+
+and the co-tensor is
+
+\begin{equation}
+  \tr{T}{^\mu^\nu} = \tr{\eta}{^\mu^\alpha}\tr{\eta}{^\nu^\beta}\tr{T}{_\alpha_\beta}=\mtr{&-E&&\\E&&&\\&&&\\&&&}
+\end{equation}
+
+and as stated before the fields tensor in the particle's frame is identical to the lab frame, so that is our answer.
+
+\end{document}

@@ -1,0 +1,638 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW8]{E\&M 2025 HW8}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\emph{This worksheet was solved mostly in my bomb shelter, if there are mistakes, I blame the neighbor's kids who could not stop screaming. It was 80dB on average.}
+
+\section{Green's function}
+\begin{colbox}
+	An infinite plane is placed at $z=0$ and held at potential V.
+	\begin{itemize}
+		\item Write the problem's Green function
+		\item Above the plane there is a finite wire charged with charge density $\lambda$. It is parallel to the XY plane above the X axis so that its edges are at $(\pm L/2,0,d)$. Find the potential above the plane. You may leave unsolved integrals.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Green Function}
+
+Since Green functions only depend on the geometry of the problem, we just need a Green function for an infinite plane. We already solved this in the lecture, thus
+
+\begin{equation}
+  G_D=\frac{1}{\sqrt{(x-x')^2+(y-y')^2+(z-z')^2}}-\frac{1}{\sqrt{(x-x')^2+(y-y')^2+(z+z')^2}}
+\end{equation}
+
+\subsection{Finite wire}
+
+We'll convert the line charge density to volume charge density
+
+\begin{equation}
+  \rho(x,y,z)=\lambda \delta(y)\delta(z-d)\Theta(L/2-x)\Theta(x+L/2)
+\end{equation}
+
+The potential is given by
+
+\begin{equation}
+  \phi=\iiint\limits_V\dd V'\rho G-\frac{1}{4\pi}\iint\limits_{\partial V}\dd S'\cdot\phi\nabla G
+\end{equation}
+
+where V is the top half of space (z>0) and thus the surface is the XY plane. Therefore
+
+\begin{align}
+	\iiint\limits_V\dd V'\rho G &= \int\limits_{-\infty}^\infty\dd x' \int\limits_{-\infty}^\infty\dd y' \int\limits_0^\infty \dd z' \lambda \delta(y)\delta(z-d)\Theta(L/2-x)\Theta(x+L/2)G\\
+	&= \lambda \int\limits_{-L/2}^{L/2}\dd x' G(x,y,z,x',0,d)\\
+	&= \lambda \int\limits_{-L/2}^{L/2}\dd x' \frac{1}{\sqrt{(x-x')^2+y^2+(z-d)^2}}-\frac{1}{\sqrt{(x-x')^2+y'^2+(z+d)^2}}
+\end{align}
+
+Which I won't solve.
+
+As for the boundary,
+
+\begin{align}
+	\iint\limits_{\partial V}\dd S'\cdot\phi\nabla G &= -V\int\limits_{-\infty}^\infty\dd x'\int\limits_{-\infty}^\infty\dd y'\left.\diffp{G}{z'}\right|_{z'=0}\\
+	&= -V \int\limits_{-\infty}^\infty\dd x'\int\limits_{-\infty}^\infty\dd y' \frac{2z}{\left((x-x')^2+(y-y')^2+z^2\right)^{3/2}}
+\end{align}
+
+therefore the solution is
+
+\begin{align*}
+	\phi &= \lambda \int\limits_{-L/2}^{L/2}\dd x' \frac{1}{\sqrt{(x-x')^2+y^2+(z-d)^2}}-\frac{1}{\sqrt{(x-x')^2+y'^2+(z+d)^2}}\\
+	&+ \frac{Vz}{2\pi}\int\limits_{-\infty}^\infty\dd x'\int\limits_{-\infty}^\infty\dd y' \frac{1}{\left((x-x')^2+(y-y')^2+z^2\right)^{3/2}}
+\end{align*}
+
+\clearpage
+\section{Cartesian separation of variables}
+\begin{colbox}
+	Two parallel grounded planes are given with separation d. Between the two plates there is a plate charged with surface charge density $\sigma$ which is placed perpendicular to the other plates.
+	\begin{itemize}
+		\item What are the boundary conditions the potential needs to fulfill between the grounded plates?
+		\item Using separation of variables find the potential between the plates.
+		\item Find the charge density on the top and bottom plates.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Boundary conditions}
+
+First it's clear the following must be true:
+
+\begin{align}
+	\phi(x,0)=\phi(x,d)=0
+\end{align}
+
+Second, we expect the potential to approach 0 at infinity thus
+
+\begin{equation}
+  \lim\limits_{x\rightarrow\pm\infty}\phi(x,y)=0
+\end{equation}
+
+for all y between the plates. Third, We know there is a difference in the electric field across charged plates, which is the gradient of the potential, thus we also expect to see
+
+\begin{equation}
+  -\left.\diffp{\phi}{x}\right|_{x=0^+}+\left.\diffp{\phi}{x}\right|_{x=0^-}=4\pi\sigma
+\end{equation}
+
+and finally the potential must be continuous
+
+\begin{equation}
+  \phi(0^+,y)=\phi(0^-,y)
+\end{equation}
+
+\subsection{Finding the Potential}
+
+From the previous subsection we have a set of equations we need to solve. We'll start by setting the Ansatz
+
+\begin{equation}
+  X''Y+XY''=0
+\end{equation}
+
+with the following boundary conditions
+
+\begin{align}
+	Y(0)=0 && Y(d)=0
+\end{align}
+
+which gives us the following, using the known solutions for Sturm-Liouville problems
+
+\begin{equation}
+  Y=A\sin(\sqrt{\lambda}y)
+\end{equation}
+
+and since Y(d) is zero, but we don't want the trivial solution, we find
+
+\begin{equation}
+  \sqrt{\lambda} = \frac{\pi n}{d}
+\end{equation}
+
+Therefore
+
+\begin{equation}
+  Y_n(y)=\sin(\frac{\pi n}{d}y)
+\end{equation}
+
+And thus 
+
+\begin{equation}
+  \phi(x,y) = \sum\limits_{n=1}^\infty X(x)Y_n(y)=\sum\limits_{n=1}^\infty X(x)\sin(\frac{\pi n}{d} y)
+\end{equation}
+
+but we also know that
+
+\begin{equation}
+  \diffp[2]{\phi}{x}+\diffp[2]{\phi}{y}=-4\pi\sigma\delta(x)
+\end{equation}
+
+therefore
+
+\begin{equation}
+  \sum\limits_{n=1}^\infty (X_n''-\lambda_nX_n)\sin(\frac{\pi n}{d}y)=-4\pi\sigma\delta(x)
+\end{equation}
+
+We can treat the entire X part as coefficients of an infinite sum of functions we'll develop using the inner product as in a fourier series:
+
+\begin{align}
+	<-4\pi\sigma\delta(x),Y_n(y)> &= -4\pi\sigma\delta(x)\int\limits_0^d\dd y\sin(\frac{\pi n}{d}y)\\
+	&= 4\frac{\sigma d}{n}\delta(x)\left.\cos(\frac{\pi n}{d}y)\right|_0^d\\
+	&= 4\frac{\sigma d}{n}\delta(x)((-1)^n-1)\\
+	&= \begin{cases}
+		-8\frac{\sigma d}{n}\delta(x) & n=2k+1\\
+		0 & n=2k
+	\end{cases}
+\end{align}
+
+and we find the normalization required
+
+\begin{align}
+	<Y_n(y),Y_n(y)> &= \int\limits_0^d\dd y\sin^2(\frac{\pi n}{d}y)=\frac{d}{2}
+\end{align}
+
+therefore
+
+\begin{equation}
+  -4\pi\sigma\delta(x)=-\sum\limits_{k=1}^\infty\frac{16\sigma}{2k+1}\delta(x)\sin(\frac{\pi n}{d}y)
+\end{equation}
+
+therefore
+
+\begin{equation}
+  \sum\limits_{n=1}^\infty (X_n''-\lambda_nX_n) = -\sum\limits_{k=1}^\infty\frac{16\sigma}{2k+1}\delta(x)
+\end{equation}
+
+Whenever n is even this simplifies to
+
+\begin{equation}
+  X_n''-\lambda_nX_n = 0
+\end{equation}
+
+Whose solutions are
+
+\begin{equation}
+  X_n(x) = A_ne^{\sqrt{\lambda}x}+Be^{-\sqrt{\lambda}x}
+\end{equation}
+
+but from our boundary condition that demands the solution goes to 0 an both infinities, both A and B must be 0, making X also 0. For odd n we get
+
+\begin{equation}\label{diffeq1}
+  X_n''-\lambda_nX_n = \frac{16\sigma}{n}\delta(x)
+\end{equation}
+
+Which is another ODE whose solution is, outside x=0:
+
+\begin{equation}
+  X_n(x)=A_ne^{\sqrt{\lambda}x}+B_ne^{-\sqrt{\lambda}x}
+\end{equation}
+
+but since the solution could be different at positive and negative x values, we also have
+
+\begin{equation}
+  X_n(x) = C_ne^{\sqrt{\lambda}x}+D_ne^{-\sqrt{\lambda}x}
+\end{equation}
+
+for negative x.
+
+Since the solution goes to 0 at both infinities we find $A_n=D_n=0$. thus
+
+\begin{equation}
+  X_n(x)=\begin{cases}
+  	B_ne^{-\sqrt{\lambda}x} & x>0\\
+  	C_ne^{\sqrt{\lambda}x} & x<0
+  \end{cases}
+\end{equation}
+
+From the demand the solution be continuous we find that $B_n=C_n$ thus
+
+\begin{equation}
+  X_n(x)=A_ne^{-\sqrt{\lambda}|x|}
+\end{equation}
+
+inserting this back into equation \ref{diffeq1} and integrating over x we get
+
+\begin{equation}
+  X_n'(x)-\lambda_n A_n\int\limits_{-\infty}^\infty \dd x e^{-\sqrt{\lambda}|x|} = -\frac{16\sigma}{n}
+\end{equation}
+
+therefore
+
+\begin{equation}
+  2\sqrt{\lambda_n}A_n = \frac{16\sigma}{n} \rightarrow A_n=\frac{8\sigma d}{\pi n^2}
+\end{equation}
+
+so the solution for X for odd n is
+
+\begin{equation}
+  X_n(x)=\frac{8\sigma d}{\pi n^2}e^{-\frac{\pi n |x|}{d}}
+\end{equation}
+
+and therefore the solution for the potential is
+
+\begin{align}
+	\phi(x,y) &= \sum\limits_{n=1}^\infty \frac{8\sigma d}{\pi (2n-1)^2}e^{-\frac{\pi (2n-1) |x|}{d}}\sin(\frac{\pi (2n-1)}{d}y)
+\end{align}
+
+\subsection{Charge Density}
+
+Recalling the property of the electric field that it "jumps" at conductors, we'll find the electric field perpendicular to the plates from the potential and continue from there.
+
+\begin{align}
+	E_\perp &=-\diffp{\phi}{y}\\
+	&= \sum\limits_{n=1}^\infty \frac{8\sigma d}{\pi (2n-1)^2}e^{-\frac{\pi (2n-1) |x|}{d}}\cos(\frac{\pi (2n-1)}{d}y)\cdot\frac{\pi(2n-1)}{d}\\
+	&= -8\sigma\sum\limits_{n=1}^\infty\frac{1}{2n-1}e^{-\frac{\pi (2n-1) |x|}{d}}\cos(\frac{\pi (2n-1)}{d}y)
+\end{align}
+
+for the bottom plate y=0 since both approaches to 0 give the same:
+
+\begin{equation}
+  E_{\perp\downarrow}=-8\sigma\sum\limits_{n=1}^\infty\frac{1}{2n-1}e^{-\frac{\pi (2n-1) |x|}{d}}
+\end{equation}
+
+therefore, since the field outside the area we're interested in is 0:
+
+\begin{align}
+  \sigma &= \frac{1}{4\pi}\cdot-8\sigma\sum\limits_{n=1}^\infty\frac{1}{2n-1}e^{-\frac{\pi (2n-1) |x|}{d}}\\
+  &=-\frac{2\sigma}{\pi}\sum\limits_{n=1}^\infty\frac{1}{2n-1}e^{-\frac{\pi (2n-1) |x|}{d}}
+\end{align}
+
+and for the top plate we can conclude from the symmetry of the problem that it must be identical:
+
+\begin{equation}
+  \sigma = -\frac{2\sigma}{\pi}\sum\limits_{n=1}^\infty\frac{1}{2n-1}e^{-\frac{\pi (2n-1) |x|}{d}}
+\end{equation}
+
+\clearpage
+\section{Green function between two spherical shells}
+\begin{colbox}
+	In class you saw the Dirichlet Green function for a spherical shell with radius $R_0$:
+	\begin{equation}
+		G_D(x,x')=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{4\pi}{1+2l}Y^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi)\times\begin{cases}
+			\frac{1}{r}\left(\frac{R_0}{r}\right)^l\left[\left(\frac{r'}{R_0}\right)^l-\left(\frac{R_0}{r'}\right)^{l+1}\right] & r>r'\\
+			\frac{1}{r'}\left(\frac{R_0}{r'}\right)^l\left[\left(\frac{r}{R_0}\right)^l-\left(\frac{R_0}{r}\right)^{l+1}\right] & r<r'
+		\end{cases}
+	\end{equation}
+	In this exercise we will find the Dirichlet Green function between two concentric shells with radii a and b.
+	\begin{itemize}
+		\item Write the Green's function as a sum of spherical harmonics in the following way:
+		\begin{equation}
+			G_D(x,x')=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^la_{lm}(r|r',\theta',\varphi')Y_{l,m}(\theta,\varphi)
+		\end{equation} Explain why you can write the coefficients using this separation of variables \begin{equation}
+			a_{lm}(r|r',\theta',\varphi')=g_l(r,r')Y^*_{lm}(\theta',\varphi')
+		\end{equation} and find a differential equation for $g_l$.
+		\item Show that the solution to this equation is \begin{equation}
+			g_l(r,r')=\begin{cases}
+				Ar^l+Br^{-(l+1)} & r<r'\\
+				A'r^l+B'r^{-(l+1)} & r>r'
+			\end{cases}
+		\end{equation}
+		\item Insert the appropriate boundary conditions for the problem and write $g_l$ using only 2 constants.
+		\item We'll define $r_<\equiv \min\{r,r'\}$, $r_>\equiv \max\{r,r'\}$. From the symmetry of $g_l$ we can show that \begin{equation}
+			g_l(r,r')=C\left(r_<^l-\frac{a^{2l+1}}{r_<^{l+1}}\right)\left(\frac{1}{r_>^{l+1}}-\frac{r>^l}{b^{2l+1}}\right)
+		\end{equation} find C and write the full Green function
+		\item Write the Green function at the limit $a\rightarrow 0,b\rightarrow\infty$
+	\end{itemize}
+\end{colbox}
+
+\subsection{Green as Spherical Harmonics}
+
+First we know that the following is true
+
+\begin{equation}
+  \nabla^2G_D(x,x')=-4\pi\delta(\bold x- \bold x')
+\end{equation}
+
+if we rewrite the delta function using spherical harmonics
+
+\begin{equation}
+  \delta(\bold x-\bold x') = \frac{1}{r^2}\delta(r-r')\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lY^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi)
+\end{equation}
+
+combining we find
+
+\begin{equation}\label{nablagreen}
+  \nabla^2G_D(x,x')=\frac{-4\pi}{r^2}\delta(r-r')\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lY^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi)
+\end{equation}
+
+We also know that spherical harmonics satisfy
+
+\begin{equation}\label{harmonicsidentity}
+  \frac{1}{\sin\theta}\diffp*{\left(\sin\theta\diffp{Y_{l,m}}{\theta}\right)}{\theta}+\frac{1}{\sin^2\theta}\diffp[2]{Y_{l,m}}{\varphi}=-l(l+1)Y_{l,m}
+\end{equation}
+
+If we look at the given instruction, we can see
+
+\begin{align}
+	\nabla^2G_D(x,x') &= \nabla^2\left(\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^la_{lm}(r|r',\theta',\varphi')Y_{l,m}(\theta,\varphi)\right)\\
+	&= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l \nabla^2\left( a_{lm}(r|r',\theta',\varphi')Y_{l,m}(\theta,\varphi)\right)
+\end{align}
+
+and using the laplacian in spherical coordinates
+
+\begin{align}
+	&= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{1}{r}\diffp*[2]{(ra_{lm}Y_{l,m})}{r}+\frac{1}{r^2\sin\theta}\diffp*{\left(\sin\theta\diffp*{(a_{lm}Y_{l,m})}{\theta}\right)}{\theta}+\frac{1}{r^2\sin^2\theta}\diffp*[2]{(a_{lm}Y_{l,m})}{\varphi}\\
+	&= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{Y_{l,m}}{r}\diffp*[2]{(ra_{lm})}{r}+\frac{a_{lm}}{r^2}\left(\frac{1}{\sin\theta}\diffp*{\left(\sin\theta\diffp{Y_{l,m}}{\theta}\right)}{\theta}+\frac{1}{\sin^2\theta}\diffp[2]{Y_{l,m}}{\varphi}\right)
+\end{align}
+
+Using equation \ref{harmonicsidentity}
+
+\begin{align}
+	&= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{Y_{l,m}}{r}\diffp*[2]{(ra_{lm})}{r}-\frac{a_{lm}}{r^2}\left(l(l+1)Y_{l,m}\right)\\
+	&= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{1}{r}\left(\diffp*[2]{(ra_{lm})}{r}-\frac{l(l+1)}{r}a_{lm}\right)Y_{l,m}
+\end{align}
+
+Next we compare this to equation \ref{nablagreen}
+
+\begin{align}
+	\frac{-4\pi}{r^2}\delta(r-r')\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lY^*_{l,m}(\theta',\varphi')Y_{l,m}(\theta,\varphi) &= \sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{1}{r}\left(\diffp*[2]{(ra_{lm})}{r}-\frac{l(l+1)}{r}a_{lm}\right)Y_{l,m}\\
+	\frac{-4\pi}{r}\delta(r-r')Y^*_{l,m}(\theta',\varphi') &= \diffp*[2]{(ra_{lm})}{r}-\frac{l(l+1)}{r}a_{lm}
+\end{align}
+
+From the lefthand's variable dependance we expect to be able to write
+
+\begin{equation}
+  a_{lm}=g_{lm}(r,r')Y^*_{l,m}(\theta',\varphi')
+\end{equation}
+
+therefore
+
+\begin{align}
+	\frac{-4\pi}{r}\delta(r-r')Y^*_{l,m}(\theta',\varphi') &= \diffp*[2]{(ra_{lm})}{r}-\frac{l(l+1)}{r}g_{lm}(r,r')Y^*_{l,m}(\theta',\varphi')\\
+	\frac{-4\pi}{r}\delta(r-r') &= \diffp*[2]{(rg_{lm})}{r}-\frac{l(l+1)}{r}g_{lm}
+\end{align}
+
+but since this equation doesn't depend on m, we can also say g doesn't depend on m, therefore
+
+\begin{equation}\label{glidentity}
+  \diffp*[2]{(rg_l(r,r'))}{r}-\frac{l(l+1)}{r}g_l(r,r')=-\frac{4'pi}{r}\delta(r-r')
+\end{equation}
+
+\subsection{finding solution}
+
+Since we're looking for solutions outside $r=r'$ then we can solve the following:
+
+\begin{equation}
+  \diffp*[2]{(rg_l(r,r'))}{r}-\frac{l(l+1)}{r}g_l(r,r')=0
+\end{equation}
+
+We'll define the following helper function
+
+\begin{equation}
+  f_l=rg_l
+\end{equation}
+
+thus the equation becomes
+
+\begin{equation}
+  \diffp*[2]{(f_l(r,r'))}{r}-\frac{l(l+1)}{r^2}f_l(r,r')=0
+\end{equation}
+
+rearranging
+
+\begin{equation}
+  r^2\diffp*[2]{(f_l(r,r'))}{r}-l(l+1)f_l(r,r')=0
+\end{equation}
+
+This is an euler ODE. The characteristic polynomial is $r^2-r-l(l+1)=0$ whose solutions are
+
+\begin{equation}
+  r_{1,2}=\frac{1\pm\sqrt{1+4l(l+1)}}{2}=\frac{1\pm(2l+1)}{2}\rightarrow r=\begin{cases}
+  	l+1\\- l
+  \end{cases}
+\end{equation}
+
+therefore the solution to the ODE is
+
+\begin{equation}
+  f_l=Ar^{l+1}+Br^{-l}
+\end{equation}
+
+therefore
+
+\begin{equation}
+  g_l=Ar^l+Br^{-(l+1)}
+\end{equation}
+
+We remember that we need different coefficients for both outside the shell and inside therefore
+
+\begin{equation}
+  g_l(r,r')=\begin{cases}
+  	Ar^l+Br^{-(l+1)} & r<r'\\
+  	A'r^l+B'r^{-(l+1)} & r<r'
+  \end{cases}
+\end{equation}
+
+\subsection{Boundary Conditions}
+
+We'll require that the Green function becomes zero at both shells, i.e
+
+\begin{align}
+	g_l(a,r')=g_l(b,r')=0
+\end{align}
+
+therefore
+
+\begin{align}
+	Aa^l+Ba^{-(l+1)}=0 &\rightarrow B=-a^{2l+1}A\\
+	A'b^l+B'b^{-(l+1)}=0&\rightarrow A'=-b^{-(2l+1)}B'
+\end{align}
+
+renaming B' to B for convenience, thus,
+
+\begin{equation}
+  g_l(r,r')=\begin{cases}
+  	A\left(r^l-a^{2l+1}r^{-(l+1)}\right) & r<r'\\
+  	B\left(-b^{-(2l+1)}r^l+'r^{-(l+1)}\right) & r<r'
+  \end{cases}
+\end{equation}
+
+\subsection{Finding C}
+
+We'll integrate equation \ref{glidentity} around r' and take the limit $\epsilon\rightarrow0$:
+
+\begin{align}
+	\int\limits_{r'-\epsilon}^{r'+\epsilon}\dd r \diffp*[2]{(rg_l)}{r}-\int\limits_{r'-\epsilon}^{r'+\epsilon}\dd r \frac{l(l+1)}{r}g_l=-\int\limits_{r'-\epsilon}^{r'+\epsilon}\dd r \frac{4\pi}{r}\delta(r-r')
+\end{align}
+
+noticing that the middle element is even in a symmetric segment thus
+
+\begin{align}
+	\int\limits_{r'-\epsilon}^{r'+\epsilon}\dd r \diffp*[2]{(rg_l)}{r}=-\int\limits_{r'-\epsilon}^{r'+\epsilon}\dd r \frac{4\pi}{r}\delta(r-r')
+\end{align}
+
+thus
+
+\begin{align}\label{limits}
+	\left[g_l+r\diffp*{g_l}{r}\right]_{r'-\epsilon}^{r'+\epsilon}&=\left.\diffp*{(rg_l)}{r}\right|_{r'-\epsilon}^{r'+\epsilon}\\
+	\left[g_l+r\diffp*{g_l}{r}\right]_{r'-\epsilon}^{r'+\epsilon} &= -\frac{4\pi}{r'}
+\end{align}
+
+Now we take the limit.
+
+\begin{align}
+	\lim\limits_{\epsilon\rightarrow0}\left[g_l+r\diffp*{g_l}{r}\right]_{r'-\epsilon}^{r'+\epsilon}&= \lim\limits_{\epsilon\rightarrow0}\left.\left(g_l+r\diffp*{g_l}{r}\right)\right|_{r'+\epsilon}-\lim\limits_{\epsilon\rightarrow0}\left.\left(g_l+r\diffp*{g_l}{r}\right)\right|_{r'-\epsilon}\\
+	&= C\left(r^l-\frac{a^{2l+1}}{r^{l+1}}\right)\left[\left(\frac{1}{r^{l+1}}-\frac{r^l}{b^{2l+1}}\right)+r\left(-(l+1)r^{-(l+2)}-l\frac{r^{l-1}}{b^{2l+1}}\right)\right]\\
+	&-C\left(r^{-(l+1)}-\frac{r^l}{b^{2l+1}}\right)\left[\left(r^l-\frac{a^{2l+1}}{r^{l+1}}\right)+r\left(lr^{l-1}-(l+1)\frac{a^{2l+1}}{r^{l+2}}\right)\right]
+\end{align}
+
+inserting into equation \ref{limits} we must find that
+
+\begin{equation}
+  C=\frac{4\pi}{(2l+1)\left(1-\left(\frac{a}{b}\right)^{2l+1}\right)}
+\end{equation}
+
+Therefore the full Green function is
+
+\begin{equation}
+  G_D(x,x')=4\pi\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{Y^*_{lm}(\theta,\varphi)Y_{lm}(\theta,\varphi)}{(2l+1)\left(1-\left(\frac{a}{b}\right)^{2l+1}\right)}\left(r_<^l-\frac{a^{2l+1}}{r_<^{l+1}}\right)\left(\frac{1}{r_>^{l+1}}-\frac{r_>^l}{b^{2l+1}}\right)
+\end{equation}
+
+\subsection{Taking a Limit}
+
+\begin{equation}
+ G_D(x,x')= 4\pi\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\frac{Y^*_{lm}(\theta,\varphi)Y_{lm}(\theta,\varphi)}{2l+1}\left(\frac{r_<^l}{r_>^{l+1}}\right)
+\end{equation}
+
+
+\clearpage
+\section{Alternating potentials on proceeding slices}
+\begin{colbox}
+	A hollow conductive shell with inner radius a is split into an even number of slices separated by planes coinciding with the z axis, where each plane is separated by an azimuthal angle $\frac{\pi}{n}$ from the next plane. Each slice is held at potential $\pm V$ where the sign alternates between slices.
+	\begin{itemize}
+		\item Write the potential inside the shell as an infinite sum with separation of variables in spherical coordinates, and write integral expressions for the coefficients of the expression.
+		\item Show that the coefficients of $Y_{l,m}$ are zero unless $l+m$ is even.
+		\item Show that the problem has symmetry of the form \begin{equation}
+			\phi(\varphi)\rightarrow A\phi(\varphi+\Delta\varphi)
+		\end{equation} and find A.
+		\item Determine for which values of m the coefficient of $Y_{l,m}$ in the expression from the previous part is zero. Write the non-zero coefficients as an integral on $\cos\theta$ only. What is the $Y_{l,m}$ with the smallest l which contributes to the potential?
+	\end{itemize}
+\end{colbox}
+
+\subsection{Potential in the shell}
+
+The solution for the laplace equation in spherical coordinates is
+
+\begin{equation}
+  \phi(r,\theta,\varphi)=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^l\left(A_{l,m}\left(\frac{r}{a}\right)^l+B_{l,m}\left(\frac{a}{r}\right)^{-(l+1)}\right)Y_{l,m}(\theta,\varphi)
+\end{equation}
+
+But since we know the potential is not infinite at the origin, $B_{l,m}=0$. Therefore
+
+\begin{equation}
+  \phi(r,\theta,\varphi)=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lA_{l,m}\left(\frac{r}{a}\right)^lY_{l,m}(\theta,\varphi)
+\end{equation}
+
+For convenience we'll define
+
+\begin{equation}
+  \Phi = \begin{cases}
+  	V & \frac{2\pi k}{n} < \varphi < \frac{(2k+1)\pi}{n}\\
+  	-V & \frac{(2k+1)\pi}{n} < \varphi < \frac{2(k+1)\pi}{n}\\
+  \end{cases}
+\end{equation}
+
+
+Next, we know the potential at $r=a$:
+
+\begin{equation}
+  \phi(a,\theta,\varphi)=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lA_{l,m}Y_{l,m}(\theta,\varphi)= \Phi
+\end{equation}
+
+And since the spherical harmonics are a complete orthonormal set, the coefficients thus must be
+
+\begin{equation}
+  A_{l,m}=\int\limits_0^{2\pi}\dd \varphi\int\limits_0^\pi \dd\theta\sin\theta Y^*_{l,m}(\theta,\varphi)\Phi
+\end{equation}
+
+\subsection{Coefficients are zero}
+
+We know that the following relation holds for Legendre polynomials:
+
+\begin{equation}
+  P_{l,m}(-x)=(-1)^{l+m}P_{l,m}(x)
+\end{equation}
+
+and we know that
+
+\begin{equation}
+  Y_{l,m} \propto P_{l,m}
+\end{equation}
+
+Finally we know that the problem is symmetric for rotations of $\pi$ radians. This is important because $-\cos\theta=\cos(\pi-\theta)$
+
+Therefore we find that
+
+\begin{equation}
+  Y_{l,m}(\theta,\varphi)=(-1)^{l+m}Y_{l,m}(\pi-\theta,\varphi)
+\end{equation}
+
+Which means that we must have $l+m$ to be even.
+
+\subsection{A Symmetry}
+
+From the question's conditions we find that
+
+\begin{equation}
+  V(\varphi+\Delta\varphi)=-V(\varphi)
+\end{equation}
+
+We also note that the laplacian operator is invariant for rotational translations, therefore we must find that
+
+\begin{equation}
+  \phi(\varphi+\Delta\varphi)=-\phi(\varphi)
+\end{equation}
+
+i.e we find that $A=-1$.
+
+\subsection{When it is zero}
+
+Since we found the symmetry for the problem, the solution we found earlier must also satisfy it, therefore the coefficients for each $Y_{l,m}$ must satisfy it.
+
+\begin{equation}
+  e^{im\varphi}=-e^{im(\varphi+\frac{\pi}{n})}
+\end{equation}
+
+therefore
+
+\begin{equation}
+  m=(2k-1)n
+\end{equation}
+
+I stop here because I simply can't concentrate enough to finish.
+
+\end{document}

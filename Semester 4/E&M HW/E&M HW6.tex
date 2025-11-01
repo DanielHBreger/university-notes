@@ -1,0 +1,234 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW6]{E\&M 2025 HW6}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{A grounded plane with a spherical bump}
+\begin{colbox}
+    A two-dimensional conducting infinite plane with a semi-spherical bump of radius a is given. The rest of the plane coincides with the XY plane. In addition to the plane, a point charge q is placed on the z axis at a distance of d from the center of the plane.
+    \begin{itemize}
+    	\item Describe the symmetries of the problem and find an expression for the electric potential in cartesian coordinates that applies to all space above the surface. Explain.
+    	\item Now we move the charge q a distance l in the x direction. Explain where the image charges should be placed so that the plane remains grounded and draw them. Additionally, write the potential above the surface in this new condition
+    \end{itemize}
+\end{colbox}
+
+\subsection{Symmetries}
+
+The described system has symmetries for rotation around the z axis as well as symmetries for mirroring relative to the x and y axes. To find the potential, we'll use the images method. We can combine the solution for a plane and the solution for a sphere, creating another image relative to the plane for the image for the sphere. The image we need to use for the sphere, as we saw in the lecture, is
+
+\begin{align}
+	q'=-\frac{aq}{d} && r'=\mtr{0\\0\\\frac{a^2}{d}}
+\end{align}
+
+and for both the real charge and this image charge we will create another image with opposite charge and position relative to the plane:
+
+\begin{align}
+	q''=\frac{aq}{d} && r''=\mtr{0\\0\\-\frac{a^2}{d}}\\
+	q'''=-q && r'''=\mtr{0\\0\\-d}
+\end{align}
+
+\subsection{And now it moved}
+
+We can still use a superposition of image charges, but their positions will change. The image charge for the sphere will need to be placed along the line connecting the middle of the sphere and our new position, then the plane's images will just be mirrorings of those positions relative to z. Specifically:
+
+\begin{align}
+	q'=-\frac{aq}{\sqrt{d^2+l^2}} && r'=\frac{a^2}{\sqrt{d^2+l^2}}\mtr{l\\0\\d}\\
+	q''=\frac{aq}{\sqrt{d^2+l^2}} && r''=\frac{a^2}{\sqrt{d^2+l^2}}\mtr{l\\0\\-d}\\
+	q'''=-q && r'''=\mtr{l\\0\\-d}
+\end{align}
+
+\clearpage
+\section{A charge between parallel planes}
+\begin{colbox}
+	\begin{itemize}
+		\item a charge e is given in position $\bold R_0$ above a grounded plane at z=0. Write the potential in the space above the grounded plane. Recommendation: use the images method. How many charges did you use?
+		\item A charge e is given at the origin of the axes between two charged planes at $z=\pm a/2$. Find the electric field in the area between the planes.
+		\item Now we'll assume the charge is not at the origin but at some z between the planes. Find the electric field.
+	\end{itemize}
+\end{colbox}
+
+\subsection{one plane}
+
+Using the images method, we just place an image at the same x,y coordinates and a flipped z, with a flipped charge:
+
+\begin{align}
+	e'=-e && \bold R'=\mtr{x_0\\y_0\\-z_0}
+\end{align}
+
+and we use superposition to find the potential:
+
+\begin{equation}
+  \phi=\frac{e}{\sqrt{(x-x_0)^2+(y-y_0)^2+(z-z_0)^2}}-\frac{e}{\sqrt{(x-x_0)^2+(y-y_0)^2+(z+z_0)^2}}
+\end{equation}
+
+\subsection{two planes}
+
+We will use infinite image charges. We create an image charge for the real charge for each plane, then we create image charges for the image charges relative to each other's plane, etc. The first two images are at
+
+\begin{align}
+	e'=-e && \bold R'=\mtr{0\\0\\-a}\\
+	e''=-e && \bold R''=\mtr{0\\0\\a}
+\end{align}
+
+each of these charges will have an image of their own created relative to the further plane, summarizing we find:
+
+\begin{align}
+	e_n=(-1)^ne && \bold R_n=\mtr{0\\0\\\pm na}
+\end{align}
+
+Now using superposition we can find that the potential is
+
+\begin{equation}
+  \phi = \sum\limits_0^\infty \frac{e_n}{|r-\bold R_n|}=\sum\limits_{-\infty}^\infty \frac{(-1)^ne}{\sqrt{x^2+y^2+(z- na)^2}}
+\end{equation}
+
+and the electric field is
+
+\begin{equation}
+  \bold E = -\nabla\phi=\sum\limits_{-\infty}^\infty\frac{(-1)^ne}{(x^2+y^2+(z-na)^2)^{3/2}}\mtr{x\\y\\z-na}
+\end{equation}
+
+\subsection{not along symmetry}
+
+When we move the charge away from z=0 we only need to shift the images by the respective amount:
+
+\begin{align}
+	e_n=(-1)^ne && \bold R_n=\mtr{0\\0\\(-1)^nz_0 \pm na}
+\end{align}
+
+So the electric field is
+
+\begin{equation}
+  \bold E =\sum\limits_{-\infty}^\infty\frac{(-1)^ne}{(x^2+y^2+(z-(-1)^nz_0-na)^2)^{3/2}}\mtr{x\\y\\z-(-1)^nz_0-na}
+\end{equation}
+
+\clearpage
+\section{Grounded planes at an angle}
+\begin{colbox}
+Two charged planes are placed such that the angle between them is $\pi/3$. The first is placed along $y=0$ and the other along $y=\sqrt{3}x$. Additionally, a charge e is placed between the planes at some point with z=0.
+\begin{itemize}
+	\item Assume the charge is exactly along the middle of the angle between the planes, i.e along $y=x/\sqrt{3}$, at distance d from the origin. Find the potential in space using the images method.
+	\item Find the potential without the assumption.
+\end{itemize}	
+\end{colbox}
+
+\subsection{Exactly in the middle}
+
+Images method! We'll add an image for the real charge relative to each plane, then an image for each image charge relative to the other plane. An additional charge is then needed to offset the original charge in the origin. In total we need 5 images. The first image charge is just at the position of the original with y flipped. The 2nd charge is mirrored with regard to the plane $y=\sqrt{3}x$ which is just a straight line going out at the angle $\frac{\pi}{3}$ relative to the x axis. Therefore the 2nd image charge will have an angle of $\frac{\pi}{2}$, or in other words, along the y axis. the distance from the origin must remain the same as the original charge. We then just mirror the 3 charges we have at this point relative to the plane perpendicular to $y=x/\sqrt{3}$ with opposite charges and get the rest of the charges. Since the charge is along that line, and $\sqrt{x^2+y^2}=d$ we also find that for the original charge $x=\frac{\sqrt{3}}{2}d$ and $y=\frac{1}{2}d$
+
+\begin{align}
+	e_0=e && r_0=\mtr{\frac{\sqrt{3}}{2}d\\\frac{1}{2}d\\0}\\
+	e_1=-e && r_1=\mtr{\frac{\sqrt{3}}{2}d\\-\frac{1}{2}d\\0}\\
+	e_2=-e && r_2=\mtr{0\\d\\0}\\
+	e_3=-e && e_3=\mtr{-\frac{\sqrt{3}}{2}d\\-\frac{1}{2}d\\0}\\
+	e_4=e && r_4=\mtr{-\frac{\sqrt{3}}{2}d\\\frac{1}{2}d\\0}\\
+	e_5=e && r_5=\mtr{0\\-d\\0}
+\end{align}
+
+Therefore the potential is just the sum of those, which I won't write explicitly but rather
+
+\begin{equation}
+  \phi = \sum\limits_{n=0}^5\frac{e_n}{\sqrt{(x-x_n)^2+(y-y_n)^2+z^2}}
+\end{equation}
+
+\subsection{And it moved!}
+
+The generalization is fairly simple: instead of assuming the angles add up to halves of the angle between the plate, we add an offset. We'll define $\theta=\sin^{-1}\left(\frac{y_0}{d}\right)$ thus:
+
+\begin{align}
+	e_0=e && r_0=\mtr{\cos\theta\\\sin\theta\\0}d\\
+	e_1=-e && r_1=\mtr{\cos\theta\\-\sin\theta\\0}d\\
+	e_2=-e && r_2=\mtr{\cos\left(\frac{2\pi}{3}-\theta\right)\\\sin\left(\frac{2\pi}{3}-\theta\right)\\0}d\\
+	e_3=-e && e_3=\mtr{\cos\left(\frac{4\pi}{3}-\theta\right)\\\sin\left(\frac{4\pi}{3}-\theta\right)\\0}d\\
+	e_4=e && r_4=\mtr{\cos\left(\frac{2\pi}{3}+\theta\right)\\\sin\left(\frac{2\pi}{3}+\theta\right)\\0}d\\
+	e_5=e && r_5=\mtr{\cos\left(\frac{4\pi}{3}+\theta\right)\\\sin\left(\frac{4\pi}{3}+\theta\right)\\0}d\\
+\end{align}
+
+And the potential is unsurprisingly:
+
+\begin{equation}
+  \phi=\sum\limits_{n=0}^5\frac{e_n}{\sqrt{(x-x_n)^2+(y-y_n)^2+z^2}}
+\end{equation}
+
+\clearpage
+\section{Charge distributions}
+\begin{colbox}
+	Write an expression, using Heaviside and delta functions, for the volumetric charge density of the following charge distributions in spherical coordinates:
+	\begin{itemize}
+		\item A sphere of radius R centered on the origin with total charge Q.
+		\item A spherical shell of radius R placed at the origin, whose northern half is charged with a surface density $\sigma_N$ and southern half is charged with surface charge $\sigma_S$.
+		\item An infinite wire passing through the origin, coinciding with $y=z=0$ and charged with a uniform linear charge density $\lambda$.
+		\item An infinite wire passing through the origin, coinciding with $x=y=0$ and charged with a uniform linear charge density $\lambda$.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Ball}
+
+The volume of a sphere is $V=\frac{4\pi R^3}{3}$ therefore $\rho=\frac{3Q}{4\pi R^3}$ when inside the ball. This means the charge distribution is
+
+\begin{equation}
+  \rho=\frac{3Q}{4\pi R^3}\Theta(R-r)
+\end{equation}
+
+\subsection{Shell}
+
+There is nothing really to say, it's direct:
+
+\begin{equation}
+  \rho = \delta(R-r)\left[\Theta\left(\frac{\pi}{2}-\theta\right)\sigma_N+\Theta\left(\theta-\frac{\pi}{2}\right)\sigma_S\right]
+\end{equation}
+
+\subsection{Wire along X axis}
+
+Again, pretty straight forward:
+
+\begin{align}
+  \rho &= \delta\left(\theta-\frac{\pi}{2}\right)\left[\delta(\phi)+\delta(\phi-\pi)\right]\lambda(r)\\
+  &= \delta\left(\theta-\frac{\pi}{2}\right)\left[\delta(\phi)+\delta(\phi-\pi)\right]\frac{\lambda}{r^2}
+\end{align}
+
+With the $r^2$ element coming in because we converted the charge density as given in cartesian coordinates to spherical coordinates.
+
+\subsection{Wire along Z axis}
+
+This time we don't even need to care about $\phi$:
+
+\begin{align}
+  \rho &= \left[\delta(\theta)+\delta(\theta-\pi)\right]\lambda(r)
+\end{align}
+
+We'll find the correction for lambda with an integral:
+
+\begin{align}
+	Q&=\iiint\limits_V\rho\dd V=\int\limits_0^R\dd rr^2\int\limits_0^\pi\dd\theta\sin(\theta)\int\limits_0^{2\pi}\dd\phi\rho\\
+	&= \int\limits_0^R\dd rr^2\int\limits_0^\pi\dd\theta\sin(\theta)\int\limits_0^{2\pi}\dd\phi \left[\delta(\theta)+\delta(\theta-\pi)\right]\lambda(r) \overset{!}{=} 2R\lambda
+\end{align}
+
+we can see that we must have $\lambda(r)=\frac{\lambda}{2\pi r^2\sin(\theta)}$
+
+\begin{align}
+  \rho &= \left[\delta(\theta)+\delta(\theta-\pi)\right]\lambda(r)\\
+  &= \left[\delta(\theta)+\delta(\theta-\pi)\right]\frac{\lambda}{2\pi r^2\sin(\theta)}
+\end{align}
+
+\end{document}

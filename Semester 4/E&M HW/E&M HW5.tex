@@ -1,0 +1,513 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW5]{E\&M 2025 HW5}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Question 1}
+\begin{colbox}
+    Start with Maxwell's equations in tensor form
+    \begin{align}
+    	\partial_\rho \tr{\tilde F}{^\rho^\sigma}=0 && \partial_\mu \tr{F}{^\mu^\nu}=\frac{4\pi}{c}J^\nu
+    \end{align}
+    and develop them into Maxwell's equations in cartesian coordinates
+    \begin{align}
+    	\nabla\cdot \bold B=0 && \nabla\cdot\bold E=4\pi\rho && \frac{1}{c}\frac{\dd}{\dd t}\bold B=-\nabla\times\bold E && \nabla\times\bold B=\frac{1}{c}\frac{\dd}{\dd t}\bold E+\frac{4\pi}{c}\bold J
+    \end{align}
+\end{colbox}
+
+We remember that the fields tensor and its dual are:
+
+\begin{align}
+  \tr{F}{^\rho^\sigma}=\mtr{&-E_1&-E_2&-E_3\\E_1&&-B_3&B_2\\E_2&B_3&&-B_1\\E_3&-B_2&B_1&} &&\tr{\tilde F}{^\rho^\sigma}=\mtr{&-B_1&-B_2&-B_3\\B_1&&E_3&-E_2\\B_2&-E_3&&E_1\\B_3&E_2&-E_1&}
+\end{align}
+
+therefore
+
+\begin{equation}
+  0=\partial_i\tr{\tilde F}{^i^0}=\partial_iB_i=\partial_1B_1+\partial_2B_2+\partial_3B_3=\nabla\cdot\bold B=0
+\end{equation}
+
+and
+
+\begin{equation}
+  \partial_\rho\tr{\tilde F}{^\rho^1}=-\partial_0B_1-\partial_2E_3+\partial_3E_2=0
+\end{equation}
+
+therefore
+
+\begin{equation}
+  \partial_0B_1=\partial_3E_2-\partial_2E_3
+\end{equation}
+
+but recalling that c=1 we can rewrite this as
+
+\begin{equation}
+  \frac{1}{c}\diff* {\bold B_1}{t}=-\ins{\nabla\times\bold E}_1
+\end{equation}
+
+and the derivations for the other elements are trivially the same.
+
+Next we look at the second equation 
+
+\begin{equation}
+  \partial_i\tr{F}{^i^0} = \partial_1E_1+\partial_2E_2+\partial_3E_3=\nabla\cdot\bold E =4\pi\rho=\frac{4\pi}{c}J^0
+\end{equation}
+
+and 
+
+\begin{equation}
+  \partial_\mu\tr{F}{^\mu^1}=-\partial_0E_1+\partial_2B_3-\partial_3B_2=\frac{4\pi}{c}J^1
+\end{equation}
+
+rearranging and using c=1
+
+\begin{equation}
+  \partial_2B_3-\partial_3B_2=\ins{\nabla\times\bold B}_1=\frac{1}{c}\diff*{E_1}{t}+\frac{4\pi}{c}J^1=\partial_0E_1+\frac{4\pi}{c}J^1
+\end{equation}
+
+We get what's required.
+
+\clearpage
+\section{Question 2}
+\begin{colbox}
+	The following 4-potential is given
+	\begin{equation}
+  		A^\mu(x) = x^\mu e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+	\end{equation}
+	where $\alpha > 0$.
+	\begin{itemize}
+		\item Find the electric and magnetic fields derived from the given potential.
+		\item calculate the 4-current for this potential. Show that the current fits conservation of charge.
+		\item Switch the potential to temporal gauge.
+		\item Instead of the above potential, the following potential is given: \begin{equation}
+			A^\mu(x) = x^\mu e^{-\alpha((x^0)^2-(x^1)^2-(x^2)^2-(x^3)^2)}
+		\end{equation} what are the electric and magnetic fields now? Explain the result using gauge invariance.
+	\end{itemize}
+\end{colbox}
+
+\subsection{finding the fields}\label{q2s1}
+
+We'll find the fields tensor instead and derive the fields from it. as we know, the fields tensor is:
+
+\begin{equation}
+  \tr{F}{^\mu^\nu} = \partial^\mu A^\nu-\partial^\nu A^\mu
+\end{equation}
+
+thus in our case
+
+\begin{align}
+  E_i &= \tr{F}{_0_i}=\partial_0A_i-\partial_iA_0\\
+  &= \partial_0\tr{\eta}{_i_\alpha}A^\alpha-\partial_i\tr{\eta}{_0_\beta}A^\beta\\
+  &= -\partial_0A^i-\partial_iA^0\\
+  &= -\diffp*{\ins{x^i e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}}{x^0}-\diffp*{\ins{x^0 e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}}{x^i}\\
+  &= 2\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+2\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &= 4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+
+and
+
+\begin{align}
+	B_1 &= \tr{F}{_3_2} = \partial_3A_2-\partial_2A_3\\
+	&= \partial_3\tr{\eta}{_2_2}A^2-\partial_2\tr{\eta}{_3_3}A^3\\
+	&= \partial_2A^3-\partial_3A^2\\
+	&= \partial_2\ins{x^3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}-\partial_3\ins{x^2e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -2\alpha x^3x^2e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+2\alpha x^2x^3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= 0
+\end{align}
+
+noticing that this behavior is agnostic to which index>0 we choose because it's symmetric for those indexes
+
+\begin{align}
+	B_2=B_3=0
+\end{align}
+
+therefore
+
+\begin{align}
+	\bold E=4\alpha x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\bold x && \bold B=0
+\end{align}
+
+\subsection{4-current}
+
+In the lectures we saw a relation between the 4-current and the fields tensor
+
+\begin{equation}
+  \frac{4\pi}{c}\bold J^\nu = \partial_\mu\tr{F}{^\mu^\nu}
+\end{equation}
+
+therefore
+
+\begin{align}
+	J^0&=\frac{c}{4\pi}\partial_\mu\tr{F}{^\mu^0}\\
+	&= \frac{c}{4\pi}\partial_i\tr{F}{^i^0}\\
+	&= \frac{c}{4\pi}\partial_i\ins{4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= \frac{c}{\pi}\alpha x^0\ins{3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}-2\alpha x^ix_ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= \frac{\alpha c}{\pi}x^0\ins{3-2\alpha x^ix_i}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+
+and
+
+\begin{align}
+	J^i&= \frac{c}{4\pi}\partial_\mu\tr{F}{^\mu^i}\\
+	&= \frac{c}{4\pi}\partial_0\tr{F}{^0^i}\\
+	&= -\frac{c}{4\pi}\partial_0\ins{4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -\frac{\alpha c}{\pi}\ins{x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}-2\alpha x^0x_0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -\frac{\alpha c}{\pi}x^i\ins{1-2\alpha x^0x_0}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+
+therefore
+
+\begin{equation}
+  \bold J^\mu = \frac{\alpha c}{\pi}\mtr{3-2\alpha x^ix_i\\2\alpha x^0x_0-1\\2\alpha x^0x_0-1\\2\alpha x^0x_0-1}\bold xe^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+
+We will show conservation of charge exists by showing the continuity equation results.
+
+explicitly the 4-current is
+
+\begin{equation}
+  \bold J^\mu = \frac{\alpha c}{\pi}\mtr{3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3}\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+
+\begin{align}
+	\partial_\mu\bold J^\mu &= \frac{\alpha c}{\pi}\diffp*{}{x^\mu}\mtr{3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3}\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= \frac{\alpha c}{\pi}\mtr{\partial_0&\partial_1&\partial_2&\partial_3}\mtr{3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3}\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= \frac{\alpha c}{\pi}\ins{3-2\alpha x^ix_i}\ins{1-2\alpha \ins{x^0}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^1}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^2}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^3}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+
+\begin{align}
+	&= \frac{\alpha c}{\pi}\ins{2\alpha x^ix_i}\ins{1-2\alpha \ins{x^0}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^1}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^2}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^3}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= 0
+\end{align}
+
+therefore the charge is indeed conserved.
+
+\subsection{Temporal Gauge}
+
+We want to find a gauge transformation $\Lambda$ such that $A^0+\partial^0\Lambda=0$. Explicitly,
+
+\begin{align}
+	x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+\diffp{\Lambda}{x^0} = 0
+\end{align}
+
+therefore
+
+\begin{equation}
+  \Lambda = -\int \dd x^0 x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}=\frac{1}{2\alpha}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+C
+\end{equation}
+
+$\Lambda$ has gauge freedom for constant values so we'll choose $C=0$ and get
+
+\begin{equation}
+  \Lambda = \frac{1}{2\alpha}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+
+Next we'll find all the derivatives of $\Lambda$:
+
+\begin{equation}
+  \partial_\mu\Lambda = -x_\mu e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+
+raising the index
+
+\begin{equation}
+  \partial^\mu \Lambda = \mtr{-x^0\\x^1\\x^2\\x^3}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+
+thus the potential is
+
+\begin{align}
+  A'^\mu=A^\mu+\partial^\mu\Lambda&=x^\mu e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &+\mtr{-x^0\\x^1\\x^2\\x^3}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &=2x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+
+\subsection{Switching potential}
+
+We notice that the new potential can be written as
+
+\begin{equation}
+  A^\mu=x^\mu e^{-\alpha\tr{\eta}{_\alpha_\beta}x^\alpha x^\beta}
+\end{equation}
+
+and we notice that this looks similar to the form of the gauge transformation we used in the previous subsection. We'll try to fit a gauge transformation of a similar form and see what we get. We'll try
+
+\begin{equation}
+  \Lambda = -\frac{1}{2\alpha}e^{-\alpha\tr{\eta}{_\alpha_\beta}x^\alpha x^\beta}
+\end{equation}
+
+This gives us the following derivatives:
+
+\begin{align}
+	\partial_\mu\Lambda&= -\frac{1}{2\alpha}\tr{\eta}{_\mu_\gamma}\partial^\gamma\Lambda\\
+	&= \tr{\eta}{_\mu_\gamma}x^\gamma e^{-\alpha\tr{\eta}{_\alpha_\beta}x^\alpha x^\beta}\\
+	&= x_\gamma e^{-\alpha\tr{\eta}{_\alpha_\beta}x^\alpha x^\beta}=A_\gamma
+\end{align}
+
+We found that we can define a gauge transformation that will just cancel out the potential giving us
+
+\begin{equation}
+  A'_\mu=A_\mu+\partial_\mu\Lambda=0
+\end{equation}
+
+And since the potential is zero, the fields tensor will also be 0, and since it's invariant for gauge transformations, we find that
+
+\begin{align}
+	\bold E=0 && \bold B=0
+\end{align}
+
+\clearpage
+\section{Question 3}
+\begin{colbox}
+	The following interaction of N charges is given:
+	\begin{equation}
+  S_{int}=-\frac{1}{c}\sum\limits_{i=1}^N e_i\int \dd x_i^\mu A_\mu(x_i)=-\frac{1}{c}\sum\limits_{i=1}^N e_i\int \dd \tau_i u_i^\mu A_\mu(x_i)
+\end{equation}
+\begin{itemize}
+	\item use the delta function \begin{equation}
+  1=\int \dd^4x'\delta^{(4)}(x_i(\tau_i)-x')
+\end{equation}and the definition of current\begin{equation}
+  J^\mu(x)=c\sum\limits_{i=1}^N e_i\int \dd\tau_i u_i^\mu\delta^{(4)}(x_i(\tau_i)-x')
+\end{equation} to write down the action in terms of current and potential.
+\item Find the equations of motion for the action \begin{equation}
+  S=S_A+S_{int}
+\end{equation} using variation. Where $S_A=-\frac{1}{16\pi c}\int \dd^4x\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}$.
+\end{itemize}
+\end{colbox}
+
+\subsection{Action using current and potential}
+
+We first notice that in the interaction all the potentials are of at specific points, thus we can use the delta to express them using the continuous space
+
+\begin{align}
+	S_{int}&=-\frac{1}{c}\sum\limits_{i=1}^N e_i\int \dd \tau_i u_i^\mu A_\mu(x_i)\\
+	&= -\frac{1}{c}\sum\limits_{i=1}^N e_i\int \dd \tau_iu_i^\mu \int \dd^4x'\delta^{(4)}(x_i-x')A_\mu(x')\\
+	&= -\frac{1}{c^2}\int\dd^4x'A_\mu(x')c\sum\limits_{i=1}^N e_i\int \dd\tau_i u_i^\mu\delta^{(4)}(x_i-x')\\
+	&= -\frac{1}{c^2}\int\dd^4x'A_\mu(x')\cdot J^\mu(x')
+\end{align}
+
+\subsection{Equations of motion}
+
+The total action is
+
+\begin{align}
+  S=S_A+S_{int}&=-\frac{1}{16\pi c}\int \dd^4x\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}-\frac{1}{c^2}\int\dd^4xA_\mu\cdot J^\mu\\
+  &= -\frac{1}{c}\int\dd^4x\ins{\frac{1}{16\pi}\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}+\frac{1}{c}A_\mu J^\mu}
+\end{align}
+
+Therefore the variation is
+
+\begin{align}
+	\delta S &= -\frac{1}{c}\int\dd^4x\frac{1}{16\pi}\delta(\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu})+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{16\pi}\ins{\delta\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}+\tr{F}{_\mu_\nu}\delta\tr{F}{^\mu^\nu}}+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{8\pi}\ins{\tr{F}{_\mu_\nu}\delta\tr{F}{^\mu^\nu}}+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{8\pi}\ins{\tr{\eta}{^\alpha^\mu}\tr{\eta}{^\beta^\nu}\tr{F}{_\mu_\nu}\delta\tr{F}{_\alpha_\beta}}+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{8\pi}\ins{\tr{\eta}{^\alpha^\mu}\tr{\eta}{^\beta^\nu}\tr{F}{_\mu_\nu}\delta\ins{\partial_\alpha A_\beta-\partial_\beta A_\alpha}}+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{8\pi}\ins{\tr{\eta}{^\alpha^\mu}\tr{\eta}{^\beta^\nu}\tr{F}{_\mu_\nu}\ins{\partial_\alpha \delta A_\beta-\partial_\beta \delta A_\alpha}}+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{4\pi}\tr{\eta}{^\alpha^\mu}\tr{\eta}{^\beta^\nu}\tr{F}{_\mu_\nu}\partial_\alpha \delta A_\beta+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\frac{1}{4\pi}\tr{F}{^\alpha^\beta}\partial_\alpha \delta A_\beta+\frac{1}{c}J^\mu\delta A_\mu\\
+	=\text{I.B.P}&= -\frac{1}{c}\int\dd^4x\frac{1}{4\pi}\partial_\alpha \tr{F}{^\alpha^\beta}\delta A_\beta+\frac{1}{c}J^\mu\delta A_\mu\\
+	= \text{renaming indexes} &= -\frac{1}{c}\int\dd^4x\frac{1}{4\pi}\partial_\nu \tr{F}{^\mu^\nu}\delta A_\mu+\frac{1}{c}J^\mu\delta A_\mu\\
+	&= -\frac{1}{c}\int\dd^4x\ins{\frac{1}{4\pi}\partial_\nu\tr{F}{^\mu^\nu}+\frac{1}{c}J^\mu}\delta A_\mu
+\end{align}
+
+Therefore we require that
+
+\begin{equation}
+  \frac{1}{4\pi}\partial_\nu\tr{F}{^\mu^\nu}+\frac{1}{c}J^\mu=0
+\end{equation}
+
+rearranging
+
+\begin{equation}
+  \partial_\nu\tr{F}{^\mu^\nu}=-\frac{4\pi}{c}J^\mu
+\end{equation}
+
+\clearpage
+\section{Question 4}
+\begin{colbox}
+	\begin{itemize}
+		\item Use the momentum-energy tensor of the fields in cartesian coordinates \begin{equation}
+  \tr{T}{^\mu_\nu}=-\frac{1}{4\pi c}\tr{F}{^\mu^\rho}\tr{F}{_\nu_\rho}+\frac{1}{16\pi c}\tr{\delta}{^\mu_\nu}\tr{F}{^\rho^\sigma}\tr{F}{_\rho_\sigma}
+\end{equation} and maxwell's equation with the presence of matter\begin{align}
+	\partial_\nu\tr{F}{_\rho_\mu}+\partial_\mu\tr{F}{_\nu_\rho}=0\\
+	\partial_\nu\tr{F}{^\mu^\nu}=-\frac{4\pi}{c}J^\mu
+\end{align} to show that in the presence of matter\begin{equation}
+  \partial_\mu\tr{T}{^\mu_\nu}=\frac{1}{c^2}\tr{F}{_\nu_\mu}J^\mu
+\end{equation}
+\item Show that the equation $\partial_\mu\tr{T}{^\mu_\nu} = \frac{1}{c^2}\tr{F}{_\nu_\mu}J^\mu$ produces the rules of conservation in presence of matter: \begin{itemize}
+\item for $\nu=0$: \begin{equation}
+  \partial_tE_{em}+\nabla\cdot\bold S=-\bold E\cdot\bold j
+\end{equation}
+\item for $\nu=1$:\begin{align}
+	\partial_t\bold p_{em}+\partial_t\bold p_{mech}=\nabla\cdot\overleftrightarrow\sigma\\
+	\partial_t\bold p_{mech}=\rho\bold E+\frac{1}{c}\bold j\times\bold B
+\end{align}
+\end{itemize}
+\end{itemize}
+\end{colbox}
+
+\subsection{Deriving that equation}
+
+we'll look at the following (on the next page):
+
+\begin{align}
+	\partial_\mu\tr{T}{^\mu_\nu} &= \partial_\mu\ins{-\frac{1}{4\pi c}\tr{F}{^\mu^\rho}\tr{F}{_\nu_\rho}+\frac{1}{16\pi c}\tr{\delta}{^\mu_\nu}\tr{F}{^\rho^\sigma}\tr{F}{_\rho_\sigma}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{4}\partial_\mu(\tr{\delta}{^\mu_\nu}\tr{F}{^\rho^\sigma}\tr{F}{_\rho_\sigma})-\partial_\mu(\tr{F}{^\mu^\rho}\tr{F}{_\nu_\rho})}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{4}\ins{\partial_\nu\tr{F}{^\rho^\sigma}\tr{F}{_\rho_\sigma}+\tr{F}{^\rho^\sigma}\partial_\nu\tr{F}{_\rho_\sigma}}-\ins{\partial_\mu\tr{F}{^\mu^\rho}\tr{F}{_\nu_\rho}+\tr{F}{^\mu^\rho}\partial_\mu\tr{F}{_\nu_\rho}}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{2}\tr{F}{^\rho^\sigma}\partial_\nu\tr{F}{_\rho_\sigma}+\partial_\mu\tr{F}{^\rho^\mu}\tr{F}{_\nu_\rho}+\tr{F}{^\rho^\mu}\partial_\mu\tr{F}{_\nu_\rho}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{2}\tr{F}{^\rho^\sigma}\partial_\nu\tr{F}{_\rho_\sigma}-\frac{4\pi}{c}J^\rho\tr{F}{_\nu_\rho}+\tr{F}{^\rho^\mu}\partial_\mu\tr{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tr{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\tr{F}{^\rho^\sigma}\partial_\nu\tr{F}{_\rho_\sigma}+\frac{1}{4\pi c}\tr{F}{^\rho^\mu}\partial_\mu\tr{F}{_\nu_\rho}\\
+	&= -\frac{1}{c^2}\tr{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\ins{\tr{F}{^\rho^\sigma}\partial_\nu\tr{F}{_\rho_\sigma}+\tr{F}{^\rho^\mu}\partial_\mu\tr{F}{_\nu_\rho}+\tr{F}{^\rho^\mu}\partial_\mu\tr{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tr{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\tr{F}{^\rho^\mu}\ins{\partial_\nu\tr{F}{_\rho_\mu}+\partial_\mu\tr{F}{_\nu_\rho}+\partial_\mu\tr{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tr{F}{_\nu_\rho}J^\rho
+\end{align}
+
+\subsection{conservation rules}
+
+\subsubsection{for $\nu = 0$}
+
+The equation we start with is
+
+\begin{equation}
+  \partial_\mu\tr{T}{^\mu_0} = \frac{1}{c^2}\tr{F}{_0_\mu}J^\mu
+\end{equation}
+
+Expanding we see
+
+\begin{align}
+	\partial_\mu\tr{T}{^\mu_0}&=\partial_0\tr{T}{^0_0}+\partial_i\tr{T}{^i_0}\\
+	&= -\frac{1}{c^2}\tr{F}{_0_0}J^0+\partial_i\tr{T}{^i_0}\\
+	&= \partial_i\tr{T}{^i_0}=-\frac{1}{c^2}\tr{F}{_0_i}J^i\\
+\end{align}
+
+therefore
+
+\begin{equation}
+  \diffp{W}{t}+\partial_i\tr{T}{^i_0}=-\frac{1}{c^2}\tr{F}{_0_i}J^i
+\end{equation}
+
+recalling the definition of the 4-current, fields tensor, and momentum-energy tensor we can rewrite that as
+
+\begin{equation}
+  \diffp{W}{t}+\nabla\cdot\bold S=-\bold E\cdot \bold j
+\end{equation}
+
+as required.
+
+\subsubsection{for $\nu=i$}
+
+The equation we start with is 
+
+\begin{equation}
+  \partial_\mu\tr{T}{^\mu_i} = \frac{1}{c^2}\tr{F}{_i_\mu}J^\mu
+\end{equation}
+
+expanding we get
+
+\begin{align}
+	\partial_\mu\tr{T}{^\mu_i} &= \partial_0\tr{T}{^0_i}+\partial_j\tr{T}{^j_i}\\
+	&= \frac{1}{c}\diffp{\bold S}{t} + \nabla\cdot\overleftrightarrow\sigma\\
+	&= \partial_t\bold p_{em}+ \nabla\cdot\overleftrightarrow\sigma
+\end{align}
+
+and on the other hand:
+
+\begin{align}
+	\frac{1}{c^2}\tr{F}{_i_\mu}J^\mu &= \frac{1}{c^2}\tr{F}{_i_0}J^0+\frac{1}{c^2}\tr{F}{_i_j}J^j\\
+	&= -\frac{1}{c^2}E_ic\rho+\frac{1}{c^2}\tr{\epsilon}{^k_j_i}B_kJ^j\\
+	&= -\frac{1}{c^2}E_ic\rho+\bold (B\times\bold J)_i\\
+	&= -\frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B}
+\end{align}
+
+combining
+
+\begin{align}
+	\partial_t\bold p_{em}+ \nabla\cdot\overleftrightarrow\sigma &= -\frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B}\\
+	\partial_t\bold p_{em} + \frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B} &= \nabla\cdot\overleftrightarrow\sigma\\
+	\partial_t\bold p_{em} + \partial_t\bold p_{mech} &= \nabla\cdot\overleftrightarrow\sigma
+\end{align}
+
+\clearpage
+\section{Question 5}
+\begin{colbox}
+	Find the transformation rule for energy density, energy current density, and the elements of the stress tensor under a lorentz transformation
+\end{colbox}
+
+We'll perform a lorentz boost in the 1 direction, and the other directions will be trivial extensions. The boost is
+
+\begin{equation}
+  \tr{\Lambda}{^\mu_\nu} = \mtr{\gamma&-\gamma\beta&&\\-\gamma\beta&\gamma&&\\&&1&\\&&&1}
+\end{equation}
+
+We'll now perform a boost on the momentum-energy tensor
+
+\begin{align}
+	\tr{T'}{^\mu^\nu} &= \tr{\Lambda}{^\mu_\alpha}\tr{T}{^\alpha^\beta}\tr{\Lambda}{^\nu_\beta}\\
+	&= \left[\Lambda T \Lambda^T\right]\\
+	&= \mtr{\gamma&-\gamma\beta&&\\-\gamma\beta&\gamma&&\\&&1&\\&&&1}\mtr{W&\frac{1}{c}S_x&\frac{1}{c}S_y&\frac{1}{c}S_z\\
+	\frac{1}{c}S_x&-\sigma_{xx}&-\sigma_{xy}&-\sigma_{xz}\\\frac{1}{c}S_y&-\sigma_{yx}&-\sigma_{yy}&-\sigma_{yz}\\
+	\frac{1}{c}S_z&-\sigma_{zx}&-\sigma_{zy}&-\sigma_{zz}}
+	\mtr{\gamma&-\gamma\beta&&\\-\gamma\beta&\gamma&&\\&&1&\\&&&1}\\
+	&= \mtr{\gamma&-\gamma\beta&&\\-\gamma\beta&\gamma&&\\&&1&\\&&&1}
+	\mtr{\gamma W-\frac{\gamma\beta}{c}S_x&-\gamma\beta W+\frac{\gamma}{c}S_x&\frac{1}{c}S_y&\frac{1}{c}S_z\\
+	\frac{\gamma}{c}S_x+\gamma\beta\sigma_{xx}&-\frac{\gamma\beta}{c}s_x-\gamma\sigma_{xx}&-\sigma_{xy}&-\sigma_{xz}\\
+	\frac{\gamma}{c}S_y+\gamma\beta\sigma_{yx}&-\frac{\gamma\beta}{c}s_x-\gamma\sigma_{yx}&-\sigma_{yy}&-\sigma_{yz}\\
+	\frac{\gamma}{c}S_z+\gamma\beta\sigma_{zx}&-\frac{\gamma\beta}{c}s_x-\gamma\sigma_{zx}&-\sigma_{zy}&-\sigma_{zz}}\\
+	&=\mtr{
+	\gamma^2\ins{W-2\frac{\beta}{c}S_x-\beta^2\sigma_{xx}}&-\gamma^2\ins{\beta W+\frac{\beta^2+1}{c}S_x+\beta\sigma_{xx}}&\frac{\gamma}{c}S_y+\gamma\beta\sigma_{xy}&\frac{\gamma}{c}S_z+\gamma\beta\sigma_{xz}\\
+	-\gamma^2\ins{\beta W-\frac{\beta^2+1}{c}S_x-\beta\sigma_{xx}}&\gamma^2\ins{\beta^2W-2\frac{\beta}{c}S_x-\sigma_{xx}}&-\frac{\gamma\beta}{c}S_y-\gamma\sigma_{xy}&-\frac{\gamma\beta}{c}S_z-\gamma\sigma_{xz}\\
+	\frac{\gamma}{c}S_y+\gamma\beta\sigma_{yx}&-\frac{\gamma\beta}{c}S_y-\gamma\sigma_{yx}&-\sigma_{yy}&-\sigma_{yz}\\
+	\frac{\gamma}{c}S_z+\gamma\beta\sigma_{zx}&-\frac{\gamma\beta}{c}S_z-\gamma\sigma_{zx}&-\sigma_{zy}&-\sigma_{zz}}
+\end{align}
+
+from this we can find that
+
+\begin{equation}
+  W'=\gamma^2\ins{W-2\frac{\beta}{c}S_x-\beta^2\sigma_{xx}}
+\end{equation}
+
+and
+
+\begin{equation}
+  S'=\gamma\mtr{\gamma\ins{-\beta W+\frac{\beta^2+1}{c}S_x+\beta\sigma_{xx}}\\
+  \frac{1}{c}S_y+\beta\sigma_{xy}\\
+  \frac{1}{c}S_z+\beta\sigma_{xz}}
+\end{equation}
+
+and
+
+\begin{equation}
+  \overleftrightarrow\sigma' = \mtr{
+	\gamma^2\ins{\sigma_{xx}+2\frac{\beta}{c}S_x-\beta^2W}&\gamma\ins{\frac{\beta}{c}S_y+\sigma_{xy}}&\gamma\ins{\frac{\beta}{c}S_z+\sigma_{xz}}\\
+	\gamma\ins{\frac{\beta}{c}S_y+\sigma_{yx}}&\sigma_{yy}&\sigma_{yz}\\
+	\gamma\ins{\frac{\beta}{c}S_z+\sigma_{zx}}&\sigma_{zy}&\sigma_{zz}}
+\end{equation}
+
+\end{document}

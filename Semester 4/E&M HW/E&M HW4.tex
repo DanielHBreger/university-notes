@@ -1,0 +1,535 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW3]{E\&M 2025 HW4}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Question 1}
+\begin{colbox}
+    A real scalar $\phi$ is given. We will develop the equations of motion of a real field given by the following Lagrangian density:
+    \begin{equation}
+  		\lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi
+	\end{equation}
+	Note that even though $\phi$ is a Lorentz scalar, $\partial_\mu\phi$ is not.
+	\begin{itemize}
+		\item Develop the equations of motion using E-L or variation on the action
+		\item We now add an element to the lagrangian: \begin{equation}\label{q1masslagr}
+  \lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi - \frac{1}{2}m^2\phi^2
+\end{equation} Find the new equations of motion.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Part 1}
+
+The E-L equation as found in the training sessions is
+
+\begin{equation}
+  \diffp \lagr\phi-\partial_\mu\ins{\frac{\partial\lagr}{\partial\partial_\mu\phi}}=0
+\end{equation}
+
+But we'll notice that
+
+\begin{equation}
+  \diffp \lagr\phi=0
+\end{equation}
+
+Thus we'll calculate
+
+\begin{align}\label{lagrangian derivation 1}
+	\frac{\partial\lagr}{\partial\partial_\nu\phi} &= \frac{1}{2}\ins{\frac{\partial\partial^\mu\phi}{\partial\partial_\nu\phi}\partial_\mu\phi+\frac{\partial\partial_\mu\phi}{\partial\partial_\nu\phi}\partial^\mu\phi}\\
+	&= \frac{1}{2}\ins{\frac{\partial\ins{\tr{g}{^\rho^\mu}\partial_\mu\phi}}{\partial\partial_\nu\phi}\partial_\mu\phi+\tr{\delta}{_\mu^\nu}\partial^\mu\phi}\\
+	&= \frac{1}{2}\ins{\tr{g}{^\rho^\mu}\frac{\partial\partial_\mu\phi}{\partial\partial_\nu\phi}\partial_\mu\phi+\tr{\delta}{_\mu^\nu}\partial^\mu\phi}\\
+	&= \frac{1}{2}\ins{\tr{g}{^\rho^\mu}\tr{\delta}{_\mu^\nu}\partial_\mu\phi + \tr{\delta}{_\mu^\nu}\partial^\mu\phi}\\
+	&= \frac{1}{2}\ins{\tr{g}{^\rho^\nu}\partial_\nu\phi+\partial^\nu\phi}\\
+	&= \partial^\nu\phi
+\end{align}
+
+Therefore the equations of motion are
+
+\begin{equation}
+  \partial_\nu\partial^\nu\phi=0
+\end{equation}
+
+\subsection{Part 2}
+
+We'll notice the only difference is that this time
+
+\begin{equation}
+  \diffp \lagr\phi=-m^2\phi
+\end{equation}
+
+Therefore the equations of motion are
+
+\begin{equation}
+  \partial_\nu\partial^\nu\phi+m^2\phi=0
+\end{equation}
+
+\clearpage
+\section{Question 2}
+\begin{colbox}
+	The following Lagrangian density is given:
+	\begin{equation}
+  \lagr = \frac{1}{2}\rho\dot y^2-\frac{1}{2}\tau y'^2
+\end{equation} The action is
+\begin{equation}
+  S=\int \int\limits_0^l\lagr \dd x\dd t
+\end{equation}
+\begin{itemize}
+	\item ignore surface terms and develop the equations of motion in two ways:\begin{itemize}
+	\item Using variation on the action
+	\item Using E-L equations\end{itemize}
+	\item Use the fact the Lagrangian is not explicitly dependent on time or space and find the energy-momentum tensor.
+\end{itemize}
+\end{colbox}
+
+\subsection{Part 1}
+\subsubsection{variation}
+
+We'll perform variation on the action:
+
+\begin{align}
+  \frac{\delta S}{\delta y(x',t')} &= \int \int\limits_0^l \dd x \dd t \frac{\lagr(\delta y',\delta\dot y)}{\delta y(x',t')}\\
+  &= \int \int\limits_0^l \dd x \dd t \frac{\frac{1}{2}\rho(\delta\dot y)^2-\frac{1}{2}\tau (\delta y')^2}{\delta y(x',t')}\\
+  &= \int\int\limits_0^l \dd x \dd t \frac{1}{2}\ins{\rho\frac{\partial_t(\delta y)^2}{\delta y(x',t')}-\tau\frac{\delta(\partial_xy)^2}{\delta y(x',t')}}\\
+  &= \int\int\limits_0^l \dd x \dd t \frac{1}{2}\ins{\rho\partial_t y\partial_t(\delta(x-x')\delta(t-t'))-\tau\partial_xy\partial_x(\delta(x-x')\delta(t-t'))}\\
+  &= -\frac{1}{2}\ins{\rho\partial^2_t y-\tau\partial^2_xy}
+\end{align}
+
+Therefore the equations of motion are
+
+\begin{equation}
+  \rho\ddot y=\tau y''
+\end{equation}
+
+
+\subsubsection{Euler-Lagrange}
+
+\begin{equation}
+  \diffp \lagr y=0
+\end{equation}
+
+and
+
+\begin{align}
+	\partial_\mu\ins{\frac{\partial\lagr}{\partial\partial_\mu y}} &= \partial_t\diffp \lagr{\dot y}+\partial_i\diffp \lagr{y'}\\
+	&= \rho\ddot y-\tau y''
+\end{align}
+
+Therefore the equation of motion is
+
+\begin{equation}
+  \rho\ddot y=\tau y''
+\end{equation}
+
+\subsection{Part 2}
+
+The definition of the momentum-energy tensor is
+
+\begin{equation}
+  \tr{T}{^\nu_\mu} = \diffp{\lagr}{\partial_\nu y_i}\diffp{y_i}{x_\mu}-\lagr\tr{\delta}{^\nu_\mu}
+\end{equation}
+
+Therefore via direction calculation
+
+\begin{align}
+	\tr{T}{^0_0} &= \diffp{\lagr}{\partial_0y_i}\diffp{y_i}{x_0}-\lagr\tr{\delta}{^0_0}\\
+	&= \diffp{\lagr}{\dot y_i}\dot y_i-\lagr\tr{\delta}{^0_0}\\
+	&= \rho\dot y^2-\ins{\frac{1}{2}\rho\dot y^2-\frac{1}{2}\tau y'^2}\\
+	&= \frac{1}{2}\rho\dot y^2+\frac{1}{2}\tau y'^2
+\end{align}
+
+\begin{align}
+	\tr{T}{^0_1} &= \diffp{\lagr}{\partial_1y_i}\diffp{y_i}{x_0}-\lagr\tr{\delta}{^1_0}\\
+	&= \diffp{\lagr}{y'}\dot y\\
+	&= -\tau y'\dot y
+\end{align}
+
+\begin{align}
+	\tr{T}{^1_0} &= \diffp{\lagr}{\partial_0y_i}\diffp{y_i}{x_1}-\lagr\tr{\delta}{^0_1}\\
+	&= \diffp{\lagr}{\dot y}y'\\
+	&= \rho\dot yy'
+\end{align}
+
+\begin{align}
+	\tr{T}{^1_1} &= \diffp{\lagr}{\partial_1y_i}\diffp{y_i}{x_1}-\lagr\tr{\delta}{^1_1}\\
+	&= \diffp{\lagr}{y'}y'-\ins{\frac{1}{2}\rho\dot y^2-\frac{1}{2}\tau y'^2}\\
+	&= -\frac{1}{2}\tau y'^2-\frac{1}{2}\rho\dot y^2
+\end{align}
+
+Therefore
+
+\begin{equation}
+  \tr{T}{^\nu_\mu} = \mtr{\frac{1}{2}\rho\dot y^2+\frac{1}{2}\tau y'^2&-\tau y'\dot y\\\rho\dot yy'&-\frac{1}{2}\tau y'^2-\frac{1}{2}\rho\dot y^2}
+\end{equation}
+
+
+\clearpage
+\section{Question 3}
+\begin{colbox}
+	A real scalar field $\phi(x)$ is given, as well as the following action: \begin{equation}
+  S[\phi]=\int\dd^4x\ins{\frac{1}{2}\partial^\mu\phi\partial_\mu\phi-V(\phi)}
+\end{equation} where the potential is given by
+\begin{equation}\label{q3potential}
+  V(\phi)=\frac{\lambda}{4}(\phi^2-v^2)^2
+\end{equation}with $\lambda>0$ and $v>0$.
+\begin{itemize}
+	\item Derive the E-L equations for a general potential.
+	\item Use the given potential.
+	\item Find all the constant solutions of the equation $\phi(x)=const.$ which satisfy the equations of motion. These solutions are called vacuum solutions.
+	\item Assume a solution of the form $\phi(x)=v+\eta(x)$ where $\eta(x)$ is a small disturbance around the constant solutions from the previous part. Linearize the equations of motion and determine what the effective mass of the field $\eta$ is.
+	\item The given action is invariant to spatial transformations, $x^\mu \rightarrow x^\mu+a^\mu$, where $a^\mu$ is a constant. Using Noether's theorem: \begin{itemize}
+	\item Find the conserved current resulting from this symmetry.
+	\item Write the momentum density and energy density down explicitly.
+	\item Calculate the momentum-energy tensor for the constant solutions you found in part 3\end{itemize}
+\end{itemize}
+\end{colbox}
+
+\subsection{Deriving the E-L equations}
+
+We notice that the integrand of the action is the Lagrangian density:
+
+\begin{equation}
+  \lagr = \frac{1}{2}\partial_\mu\phi\partial_\mu\phi-V(\phi)
+\end{equation}
+
+Therefore the E-L equations are
+
+\begin{equation}
+	\diffp L\phi = -\partial_\phi V(\phi)
+\end{equation}
+
+and copying the process in equation \ref{lagrangian derivation 1}
+
+\begin{equation}
+  \diffp{\lagr}{\partial_\mu\phi} = \partial^\mu\phi
+\end{equation}
+
+Therefore the E-L equations are
+
+\begin{equation}\label{q3el}
+  \partial_\mu\partial^\mu\phi+\partial_\phi V(\phi)=0
+\end{equation}
+
+\subsection{Applying the potential}
+
+Inserting equation \ref{q3potential} into equation \ref{q3el}:
+
+\begin{equation}
+  \partial_\mu\partial^\mu\phi+\lambda\phi(\phi^2-v^2)=0
+\end{equation}
+
+\subsection{Finding constant solutions}
+
+Since $\phi$ is constant we set $\phi = c$ and solve the differential equation:
+
+\begin{align}
+	\partial_\mu\partial^\mu\phi+\lambda\phi(\phi^2-v^2) &= \partial_\mu\partial^\mu c+\lambda c(c^2-v^2)\\
+	&= \lambda c(c^2-v^2)=0\\
+\end{align}
+therefore
+\begin{align}
+	c_1=\phi_1=0 && c_2=\phi_2=v && c_3=\phi_3=-v
+\end{align}
+
+\subsection{Finding effective mass}
+
+Inserting a solution of the form $\phi(x)=v+\eta(x)$ into the equations of motion we get
+
+\begin{align}
+	\partial_\mu\partial^\mu\phi+\partial_\phi V(\phi) &= \partial_\mu\partial^\mu\ins{v+\eta(x)}+\lambda\ins{v+\eta(x)}(\ins{v+\eta(x)}^2-v^2)\\
+	&= \Box\eta(x)+\lambda\ins{v+\eta(x)}\ins{v^2+2v\eta(x)+\eta^2(x)-v^2}\\
+	&= \Box\eta(x)+\lambda\ins{2v^2\eta(x)+v\eta^2(x)+2v\eta^2(x)+\eta^3(x)}\\
+	&\approx \Box\eta(x)+2\lambda v^2\eta(x)
+	\end{align}
+
+Next we fit this into the form of equation \ref{q1masslagr} and find
+
+\begin{equation}
+  m=2iv\sqrt{\lambda}
+\end{equation}
+
+\subsection{Spatial transformation}
+
+\subsubsection{conserved current}
+
+Since the action is invariant for spatial transformations, so is the Lagrangian density, therefore using E-L:
+
+
+\begin{align}
+  \diffp{\lagr}{x^\mu} &= \diffp{\lagr}{\phi_i}\diffp{\phi_i}{x^\mu} + \diffp{\lagr}{\partial^\nu\phi_i}\diffp{\partial^\nu\phi_i}{x^\mu} \\
+  &= \diffp{\lagr}{\phi_i}\diffp{\phi_i}{x^\mu} + \diffp{\lagr}{\partial^\nu\phi_i}\frac{\partial^2\phi_i}{\partial x^\mu\partial x^\nu}\\
+  &= \ins{\partial_\nu \diffp{\lagr}{\partial_\nu\phi_i}}\diffp{\phi_i}{x^\mu} + \diffp{\lagr}{\partial^\nu\phi_i}\frac{\partial^2\phi_i}{\partial x^\mu\partial x^\nu}\\
+  &= \frac{\partial}{\partial x^\nu}\ins{\diffp{\lagr}{\partial_\nu\phi_i}\diffp{\phi_i}{x^\mu}}
+\end{align}
+
+on the other hand
+
+\begin{equation}
+  \diffp {\lagr}{x^\mu} = \diffp{\lagr}{x^\nu}\diffp{x^\nu}{x^\mu}=\diffp{\lagr}{x^\nu}\tr{\delta}{^\nu_\mu}
+\end{equation}
+
+combining we get
+
+\begin{equation}
+  \frac{\partial}{\partial x^\nu}\ins{\diffp{\lagr}{\partial_\nu\phi_i}\diffp{\phi_i}{x^\mu}} = \diffp{\lagr}{x^\nu}\tr{\delta}{^\nu_\mu}
+\end{equation}
+
+rearranging
+
+\begin{equation}
+  \frac{\partial}{\partial x^\nu}\ins{\diffp{\lagr}{\partial_\nu\phi_i}\diffp{\phi_i}{x^\mu} - \lagr\tr{\delta}{^\nu_\mu}} =0
+\end{equation}
+
+and recalling the definition of the momentum-energy tensor
+
+\begin{equation}
+  \diffp{\tr{T}{^\nu_\mu}}{x^\nu}=0
+\end{equation}
+
+Which is our conserved current.
+
+\subsubsection{Explicit momentum and energy}
+
+The energy density is $\tr{T}{^0_0}$ therefore
+
+\begin{align}
+  \tr{T}{^0_0} &= \diffp{\lagr}{\partial_0\phi_i}\diffp{\phi_i}{x^0} - \lagr\tr{\delta}{^0_0}\\
+  &= \frac{1}{2}\partial^0\phi_i\partial_0\phi_i-\frac{1}{2}\partial^i\phi\partial_j\phi+V(\phi)\\
+  &= \frac{1}{2}\dot\phi^2-\frac{1}{2}\partial^i\phi\partial_j\phi+V(\phi)\\
+  &= \frac{1}{2}\dot\phi^2-\frac{1}{2}\partial^i\phi\partial_j\phi+\frac{\lambda}{4}\ins{\phi^2-v^2}^2\\
+  &= \frac{1}{2}\ins{\dot\phi^2-\partial^i\phi\partial_j\phi}+\frac{\lambda}{4}\ins{\phi^2-v^2}^2
+\end{align}
+
+The momentum density is $\tr{T}{^0_j}$ therefore
+
+\begin{align}
+	\tr{T}{^0_j} &= \diffp{\lagr}{\partial_0\phi_i}\diffp{\phi_i}{x^j} - \lagr\tr{\delta}{^0_j}\\
+	&= \diffp{\lagr}{\partial_0\phi_i}\diffp{\phi_i}{x^j}\\
+	&= \partial^0\phi\partial_j\phi\\
+	&= \dot\phi\partial_j\phi
+\end{align}
+
+\subsubsection{momentum-energy tensor for constant solutions}
+
+When $\phi=0$ then 
+
+\begin{align}
+  \tr{T}{^0_0}=\frac{\lambda}{4}v^4 && \tr{T}{^0_j}=0 && \tr{T}{^i_j}=\frac{\lambda}{4}v^4\tr{\delta}{^i_j}
+\end{align}
+
+thus
+
+\begin{equation}
+  \tr{T}{^\mu_\nu}=\frac{\lambda}{4}v^4\mtr{1&&\\&1&\\&&1}
+\end{equation}
+
+
+when $\phi = \pm v$
+
+\begin{align}
+  \tr{T}{^0_0}=0 && \tr{T}{^0_j}=0 && \tr{T}{^i_j}=0
+\end{align}
+
+therefore
+
+\begin{equation}
+  \tr{T}{^\mu_\nu}=\bold 0
+\end{equation}
+
+\clearpage
+\section{Question 4}
+\begin{colbox}
+	The following Lagrangian is given
+	\begin{equation}
+  \lagr = -\frac{1}{16\pi c}\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}+\frac{1}{2}m_A
+A_\mu A^\mu\end{equation}where $\tr{F}{_\mu_\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu$ and $m_A$ is a real constant.
+\begin{itemize}
+	\item What are the units of the constant $m_A$?
+	\item Is the given Lagrangian symmetric under gauge transformations?
+	\item Derive the equations of motion using either variation or Eular-Lagrange.
+\end{itemize}
+\end{colbox}
+
+\subsection{Units of m}
+
+The equation must satisfy that the units of both elements must be equal, so we'll check the units of the first element and deduce the units of m.
+
+\begin{align}
+  \left[\frac{\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}}{c}\right] &= \left[\frac{\ins{\partial_\mu A_\nu-\partial_\nu A_\mu}\ins{\partial^\mu A^\nu-\partial^\nu A^\mu}}{c}\right]\\
+  &= \frac{\left[\ins{\partial_\mu A_\nu-\partial_\nu A_\mu}\right]^2}{\left[\frac{length}{time}\right]}\\
+  &= \left[\partial_\mu A_\nu\right]^2\frac{[time]}{[length]}\\
+  &= \frac{1}{[length]^2}[A_\nu]^2\frac{[time]}{[length]}\\
+  &= \frac{[time]}{[length]^3}[A_\nu]^2
+\end{align}
+
+but on the other hand
+
+\begin{equation}
+  \left[m_AA_\mu A^\nu\right] = [m_A][A_\mu]^2
+\end{equation}
+
+therefore
+
+\begin{equation}
+  [m_A]=\frac{[time]}{[length]^3}
+\end{equation}
+
+\subsection{Lagrangian symmetry?}
+
+We'll look at the Lagrangian after changing the potential such that
+
+\begin{align}
+	A_\mu \rightarrow A_\mu+\partial_\mu\lambda
+\end{align}
+
+therefore
+
+\begin{equation}
+  A_\mu A^\mu \rightarrow \ins{A_\mu+\partial_\mu\lambda}\ins{A^\mu+\partial^\mu\lambda}=A_\mu A^\mu+A_\mu\partial^\mu\lambda+\partial_\mu\lambda A^\mu+\partial_\mu\lambda\partial^\mu\lambda
+\end{equation}
+
+We can immediately notice that any gauge transformation that isn't trivial (i.e $\lambda=const$) will result in the lagrangian NOT being symmetric under said transformation.
+
+\subsection{Equations of motion}
+
+I'll use E-L. First We'll rewrite the Lagrangian:
+
+\begin{align}
+  \lagr &= -\frac{1}{16\pi c}\tr{F}{_\mu_\nu}\tr{F}{^\mu^\nu}+\frac{1}{2}m_AA_\mu A^\mu\\
+  &= -\frac{1}{16\pi c}\ins{\partial_\mu A_\nu-\partial_\nu A_\mu}\ins{\partial^\mu A^\nu-\partial^\nu A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+  &= -\frac{1}{16\pi c}\ins{\partial_\mu A_\nu\partial^\mu A^\nu-\partial_\mu A_\nu\partial^\nu A^\mu-\partial_\nu A_\mu\partial^\mu A^\nu+\partial_\nu A_\mu\partial^\nu A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+  &= -\frac{1}{8\pi c}\ins{\partial_\mu A_\nu\partial^\mu A^\nu-\partial_\mu A_\nu\partial^\nu A^\mu}+\frac{1}{2}m_AA_\mu A^\mu
+\end{align}
+
+Next we'll raise all indices for the potentials and lower indices for derivatives
+
+\begin{align}
+	\lagr &= -\frac{1}{8\pi c}\ins{\partial_\mu A_\nu\partial^\mu A^\nu-\partial_\mu A_\nu\partial^\nu A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+	&= -\frac{1}{8\pi c}\ins{\partial_\mu\tr{\eta}{_\mu_\alpha}A^\alpha\partial^\mu A^\nu - \partial_\mu\tr{\eta}{_\nu_\beta}A^\beta\partial^\nu A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+	&= -\frac{1}{8\pi c}\ins{\partial_\mu\tr{\eta}{_\mu_\alpha}A^\alpha\tr{\eta}{^\mu^\gamma}\partial_\gamma A^\nu - \partial_\mu\tr{\eta}{_\nu_\beta}A^\beta\tr{\eta}{^\nu^\alpha}\partial_\alpha A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+	&= -\frac{1}{8\pi c}\ins{\tr{\eta}{_\mu_\alpha}\tr{\eta}{^\mu^\gamma}\partial_\mu A^\alpha\partial_\gamma A^\nu - \tr{\eta}{_\nu_\beta}\tr{\eta}{^\nu^\alpha}\partial_\mu A^\beta\partial_\alpha A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+\end{align}
+
+and after changing indices so it's less horrible
+
+\begin{align}
+  \lagr &= -\frac{1}{8\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\partial_\beta A^\nu - \tr{\delta}{_\beta^\alpha}\partial_\mu A^\beta\partial_\beta A^\mu}+\frac{1}{2}m_AA_\mu A^\mu\\
+  &= -\frac{1}{8\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\partial_\beta A^\nu - \partial_\mu A^\alpha\partial_\alpha A^\mu}+\frac{1}{2}m_AA_\mu A^\mu
+\end{align}
+
+We can now use E-L:
+
+\begin{align}
+  \diffp {\lagr}{A^\nu} &= \frac{1}{2}m_A\frac{\partial}{\partial A^\nu}\ins{A_\mu A^\mu}\\
+  &= \frac{1}{2}m_A\frac{\partial}{\partial A^\nu}\ins{\tr{\eta}{_\alpha_\mu}A^\alpha A^\mu}\\
+  &= \frac{1}{2}m_A\tr{\eta}{_\alpha_\mu}\frac{\partial}{\partial A^\nu}\ins{A^\alpha A^\mu}\\
+  &= \frac{1}{2}m_A\tr{\eta}{_\alpha_\mu}\ins{\diffp{A^\alpha}{A^\nu}A^\mu+A^\alpha\diffp{A^\mu}{A^\nu}}\\
+  &= \frac{1}{2}m_A\tr{\eta}{_\alpha_\mu}\ins{\tr{\delta}{^\alpha_\nu}A^\mu+A^\alpha\tr{\delta}{^\mu_\nu}}\\
+  &= \frac{1}{2}m_A\ins{\tr{\eta}{_\nu_\mu}A^\mu+\tr{\eta}{_\alpha_\nu}A^\alpha}\\
+  &= m_A A_\nu
+\end{align}
+
+And the second part
+
+\begin{align}
+	\diffp{\lagr}{\partial_\rho A^\sigma}&= -\frac{1}{8\pi c}\diffp{}{\partial_\rho A^\sigma}\ins{\partial_\mu A_\nu\partial^\mu A^\nu-\partial_\mu A_\nu\partial^\nu A^\mu}\\
+	&= -\frac{1}{8\pi c}\diffp{}{\partial_\rho A^\sigma}\ins{\partial_\mu\tr{\eta}{_\nu_\alpha} A^\alpha\tr{\eta}{^\mu^\beta}\partial_\beta A^\nu-\partial_\mu\tr{\eta}{_\nu_\alpha} A^\alpha\tr{\eta}{^\nu^\alpha} \partial_\alpha A^\mu}\\
+	&= -\frac{1}{8\pi c}\diffp{}{\partial_\rho A^\sigma}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\partial_\beta A^\nu-\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\nu^\alpha}\partial_\mu A^\alpha\partial_\alpha A^\mu}\\
+	&= -\frac{1}{8\pi c}\diffp{}{\partial_\rho A^\sigma}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\partial_\beta A^\nu-\partial_\mu A^\nu\partial_\nu A^\mu}\\
+	&= -\frac{1}{8\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\diffp{}{\partial_\rho A^\sigma}\ins{\partial_\mu A^\alpha\partial_\beta A^\nu}-\diffp{}{\partial_\rho A^\sigma}\ins{\partial_\mu A^\nu\partial_\nu A^\mu}}\\
+	&= -\frac{1}{8\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\ins{\diffp{\partial_\mu A^\alpha}{\partial_\rho A^\sigma}\partial_\beta A^\nu+\partial_\mu A^\alpha\diffp{\partial_\beta A^\nu}{\partial_\rho A^\sigma}}-\ins{\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}\partial_\nu A^\mu+\partial_\mu A^\nu\diffp{\partial_\nu A^\mu}{\partial_\rho A^\sigma}}}\\
+	&= -\frac{1}{4\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\diffp{\partial_\beta A^\nu}{\partial_\rho A^\sigma}-\partial_\mu A^\nu\diffp{\partial_\nu A^\mu}{\partial_\rho A^\sigma}}\footnotemark\\
+	&= -\frac{1}{4\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\diffp{\partial_\beta A^\nu}{\partial_\rho A^\sigma}-\partial_\mu A^\nu\diffp{\partial_\nu A^\mu}{\partial_\rho A^\sigma}}\\
+	&= -\frac{1}{4\pi c}\ins{\tr{\eta}{_\nu_\alpha}\tr{\eta}{^\mu^\beta}\partial_\mu A^\alpha\tr{\delta}{_\beta^\rho}\tr{\delta}{^\nu_\sigma} - \partial_\mu A^\nu\tr{\delta}{_\nu^\rho}\tr{\delta}{^\mu_\sigma}}\\
+	&= -\frac{1}{4\pi c}\ins{\tr{\eta}{_\sigma_\alpha}\tr{\eta}{^\mu^\rho}\partial_\mu A^\alpha-\partial_\sigma A^\rho}\\
+	&= -\frac{1}{4\pi c}\ins{\partial^\rho A_\sigma-\partial_\sigma A^\rho}\\
+	&= -\frac{1}{4\pi c}\tr{\eta}{^\rho^\zeta}\ins{\partial_\zeta A_\sigma-\partial_\sigma A_\zeta}\\
+	&= -\frac{1}{4\pi c}\tr{\eta}{^\rho^\zeta}\tr{F}{_\zeta_\sigma}
+\end{align}
+
+\footnotetext{This transition was done because we can change indices and find that in both expressions the summed elements are the same. Proof is provided in appendix 1.}
+
+Therefore 
+
+\begin{align}
+	\partial_\rho\ins{\diffp{\lagr}{\partial_\rho A^\sigma}} &= -\frac{1}{4\pi c}\tr{\eta}{^\rho^\zeta}\partial_\rho\tr{F}{_\zeta_\sigma}\\
+	&= -\frac{1}{4\pi c}\partial^\zeta\tr{F}{_\zeta_\sigma}\\
+	&= -\frac{1}{4\pi c}\partial^\rho\tr{F}{_\rho_\sigma}\\
+	&= -\frac{1}{4\pi c}\partial^\rho\tr{F}{_\sigma_\rho}\\
+	&= -\frac{1}{4\pi c}\partial^\nu\tr{F}{_\mu_\nu}
+\end{align}
+
+Inserting this into the E-L equations
+
+\begin{equation}
+  m_AA_\mu=-\frac{1}{4\pi c}\partial^\nu\tr{F}{_\mu_\nu}
+\end{equation}
+
+rearranging
+
+\begin{equation}
+  \partial^\nu\tr{F}{_\mu_\nu} + 4\pi c m_AA_\mu =0
+\end{equation} 
+
+\clearpage
+\section{Appendix 1}
+
+If we start with
+
+\begin{align}
+	\ins{\diffp{\partial_\mu A^\alpha}{\partial_\rho A^\sigma}\partial_\beta A^\nu+\partial_\mu A^\alpha\diffp{\partial_\beta A^\nu}{\partial_\rho A^\sigma}}
+\end{align}
+
+and do
+
+\begin{align}
+	\beta \rightarrow \mu && \alpha \rightarrow \nu
+\end{align}
+
+then it becomes
+
+\begin{equation}
+  \ins{\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}\partial_\mu A^\nu+\partial_\mu A^\nu\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}}
+\end{equation}
+
+which are the same. For the other element
+
+\begin{equation}
+  \ins{\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}\partial_\nu A^\mu+\partial_\mu A^\nu\diffp{\partial_\nu A^\mu}{\partial_\rho A^\sigma}}
+\end{equation}
+
+with the change
+
+\begin{align}
+	\nu\rightarrow\mu && \mu\rightarrow\nu
+\end{align}
+
+in the right element only becomes
+
+\begin{equation}
+  \ins{\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}\partial_\nu A^\mu+\partial_\nu A^\mu\diffp{\partial_\mu A^\nu}{\partial_\rho A^\sigma}}
+\end{equation}
+
+which are the same.
+
+
+\end{document}

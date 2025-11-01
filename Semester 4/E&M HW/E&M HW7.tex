@@ -1,0 +1,443 @@
+\documentclass[11pt]{penrose}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{witharrows}
+\usepackage{diffcoeff}
+\usepackage{cancel}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand{\tr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+
+\title[E\&M 2025 HW7]{E\&M 2025 HW7}
+\author{Daniel Haim Breger, 316136944}
+\affiliation{Technion}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Green's function for finding the position of a restrained particle}
+\begin{colbox}
+	The equation for an electric potential for Dirichlet boundary conditions is \begin{equation}
+		\varphi(\bold x) = \int\limits_V \dd^3x'\rho(\bold{x'})G_D(\bold x, \bold x') -\frac{1}{4\pi}\int\limits_S\dd \bold{S'}\cdot(\varphi(\bold x')\nabla G_D(\bold x, \bold{x'}))
+	\end{equation} We want to find $x(t)$ for a restrained particle. We will calculate a formula for finding the solution like in the electrostatic case: \begin{equation}
+		x(t)=\int\limits_{t_i}^{t_f}\dd t'F(t')G_x(t,t')-mx(t_i)\partial_{t'}G_x(t,t_i)+mx(t_f)\partial_{t'}G_x(t,t_f)
+	\end{equation} Note that in this situation what we called boundary conditions are translated to the starting conditions of the movement.
+	\begin{itemize}
+		\item A prticle under a momentary force is given \begin{equation}
+			m\ddot X+\alpha \dot X=P_0\delta(t-t')
+		\end{equation} what are $P_0$'s units?
+		\item In the training we found a solution for the velocity of a particle starting from rest: \begin{equation}
+			v(t)=\int\limits_0^t\frac{P_0\delta(t''-t')}{m}e^{-\alpha(t''-t')/m}\dd t''=\frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}
+		\end{equation}What will the particle's velocity be if it starts at $v_0=C$?
+		\item Find the solution for x(t) for the starting condition $x(0)=D$.
+		\item Find the solution that satisfies $x(t=0)=x(t=T)=0$. Assume $T>t'$.
+		\item The solution you found is completely analogous to finding the Green's function of the problem with Dirichlet boundary conditions at $t=0$ and $t=T$. We'll define \begin{equation}
+			G_x(t,t')=\frac{1}{P_0}\cdot x(t)
+		\end{equation} Use this Green's function to write down $x(t)$ of a particle restrained with an arbitrary force $F(t)$ in integral form. The intention is that the particle obeys the following equation: \begin{equation}
+			m\ddot x+\alpha \dot x=F(t)
+		\end{equation}Hint: You need to add a homogenous solution.
+	\item Set general boundary conditions on the solution: $x(0)=x_i,x(T)=x_f$. By calculating the appropriate derivatives of the Green's function show that you can write the solution as given in the beginning of the question where \begin{equation}
+		\partial_{t'}G_x(t,t_i)=\partial_{t'}\left.G_x(t,t')\right|_{t'=t_i}, t_i=0, t_f=T
+	\end{equation} Hint: remember that $G_x(T,t')=G_x(0,t')=0$ and that the derivative is with respect to t' rather than t.
+	\end{itemize} 
+\end{colbox}
+
+\subsection{$P_0$'s units}
+
+Since the equation must satisfy that the units on each side are the same, $P_0\delta(t-t')$ has units of mass times acceleration. The delta function has units of 1 over time, therefore $P_0$ has units of mass times speed, or
+
+\begin{equation}
+  [P_0] = \frac{M\cdot L}{T}
+\end{equation}
+
+\subsection{Particle's velocity}
+
+A particle starting with initial velocity C will obey the following equation for any $t\neq t'$:
+\begin{equation}
+  m\dot v+\alpha v=0
+\end{equation}
+
+The solution to which is
+
+\begin{equation}
+  v(t)=Ce^{-\alpha t /m}
+\end{equation}
+
+Next at $t=t'$ we know that the following is true:
+
+\begin{equation}
+  \frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}
+\end{equation}
+
+Since those are two solutions to linear equations at different times, we can sum them together and find
+
+\begin{equation}
+  v(t) = Ce^{-\alpha t /m} + \frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}
+\end{equation}
+
+for all t.
+
+\subsection{Position}
+
+\begin{align}
+	x(t) &= x(0)+\int\limits_0^t\dd t v(t)\\
+	&= D+\int\limits_0^t\dd t  Ce^{-\alpha t /m} + \frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}\\
+	&= D+\left.\frac{-Cm}{\alpha}e^{-\alpha t/m}\right|_0^t+\int\limits_0^t\dd t \frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}\\
+	&= D+\frac{mC}{\alpha}(1-e^{-\alpha t/m})+\int\limits_0^t\dd t \frac{P_0}{m}\Theta(t-t')e^{-\alpha(t-t')/m}\\
+	&= D+\frac{mC}{\alpha}(1-e^{-\alpha t/m})-\frac{P_0}{\alpha}\Theta(t-t')e^{-\alpha(t-t')/m}+\frac{P_0}{\alpha}\Theta(t-t')\\
+	&= D+\frac{mC}{\alpha}(1-e^{-\alpha t/m})+\frac{P_0}{\alpha}\Theta(t-t')(1-e^{-\alpha(t-t')/m})
+\end{align}
+
+\subsection{With starting conditions}
+
+First we find that $D=0$. Next,
+
+\begin{align}
+	0=x(T)&=\frac{mC}{\alpha}(1-e^{-\alpha T/m})+\frac{P_0}{\alpha}\Theta(T-t')(1-e^{-\alpha(T-t')/m})\\
+	=[T>t']&= \frac{mC}{\alpha}(1-e^{-\alpha T/m})+\frac{P_0}{\alpha}(1-e^{-\alpha(T-t')/m})
+\end{align}
+
+therefore
+
+\begin{equation}
+  C=-\frac{P_0}{m}\frac{1-e^{-\alpha(T-t')/m}}{e^{-\alpha T/m}-1}
+\end{equation}
+
+and inserting this into the solution
+
+\begin{equation}
+  x(t)=-\frac{P_0}{\alpha}\frac{1-e^{-\alpha(T-t')/m}}{e^{-\alpha T/m}-1}(1-e^{-\alpha t/m})+\frac{P_0}{\alpha}\Theta(t-t')(1-e^{-\alpha(t-t')/m})
+\end{equation}
+
+
+\subsection{Green's function}
+
+The non-homogenous solution for the position of the particle can be found using the Green's function by
+
+\begin{equation}
+  x(t)=\int\limits_0^T \dd t'G_x(t,t')F(t')
+\end{equation}
+
+Then adding the homogenous solution for the position requires us to solve
+
+\begin{equation}
+  m\ddot x+\alpha \dot x = 0
+\end{equation}
+
+Which is a 2nd order linear differential equation, so we'll use the characteristic polynomial
+
+\begin{equation}
+  mr^2+\alpha r=r(mr+\alpha)=0
+\end{equation}
+
+whose solutions are
+
+\begin{align}
+	r=0 && r=-\frac{\alpha}{m}
+\end{align}
+
+which means the solutions in terms of position are
+
+\begin{align}
+	x=C_1 && x=C_2e^{-\alpha t/m}
+\end{align}
+
+Thus the solution is
+
+\begin{equation}
+  x(t) = C_1+C_2e^{-\alpha t/m}+\int\limits_0^T \dd t'G_x(t,t')F(t')
+\end{equation}
+
+For convenience in the next section we retroactively choose to alter the basis for the solution to
+
+\begin{align}
+	x=C_1 && x=C_2\left(1-e^{-\alpha t/m}\right)
+\end{align}
+
+\subsection{Another representation}
+
+From the previous subsection we know that the Green's function we found becomes 0 at each of the boundary conditions, which means the integral over it also vanishes. Thus,
+
+\begin{align}
+	x(0)=C_1=x_i
+\end{align}
+
+and
+
+\begin{align}
+	x(T)&=x_f=x_i+C_2\left(1-e^{-\alpha t/m}\right) \rightarrow C_2=\frac{x_f-x_i}{1-e^{-\alpha T/m}}
+\end{align}
+
+Therefore the solution is
+
+\begin{equation}
+  x(t) = x_i+\frac{x_f-x_i}{1-e^{-\alpha T/m}}e^{-\alpha t/m}+\int\limits_0^T \dd t'G_x(t,t')F(t')
+\end{equation}
+
+Our Green's function is
+
+\begin{equation}
+  G_x(t,t')=\frac{1}{\alpha}\left[-\frac{1-e^{-\alpha(T-t')/m}}{e^{-\alpha T/m}-1}(1-e^{-\alpha t/m})+\Theta(t-t')(1-e^{-\alpha(t-t')/m})\right]
+\end{equation}
+
+And its derivative is
+
+\begin{align}
+	\partial_{t'}G_x(t,t')=\frac{1}{\alpha}\left[-\frac{1-e^{-\alpha t/m}}{e^{-\alpha T/m}-1}\frac{\alpha}{m}e^{-\alpha(T-t')/m}+\delta(t-t')(1-e^{-\alpha(t-t')/m})-\Theta(t-t')\frac{\alpha}{m}e^{-\alpha(t-t')/m}\right]
+\end{align}
+
+Next we know that $T>t>0$ therefore we can substitute t' with 0, zeroing out the delta and setting the heaviside to 1, and find
+
+\begin{align}
+	\partial_{t'}G_x(t,0) &= -\frac{1}{m}\frac{1-e^{-\alpha t/m}}{e^{-\alpha T/m}-1}e^{-\alpha T/m}-\frac{1}{m}e^{-\alpha t/m}\\
+	&= \frac{1}{m}\cdot\frac{-e^{-\alpha T/m}+e^{-\alpha(t+T)/m}-e^{-\alpha(t+T)/m}+e^{-\alpha t/m}}{e^{-\alpha T/m}-1}\\
+	&= \frac{1}{m}\cdot\frac{-e^{-\alpha T/m}+e^{-\alpha t/m}}{e^{-\alpha T/m}-1}\\
+	&= \frac{1}{m}\cdot\frac{e^{-\alpha T/m}-e^{-\alpha t/m}}{1-e^{-\alpha T/m}}
+\end{align}
+
+and since at t'=T both heaviside and delta become zero
+
+\begin{equation}
+	\partial_{t'}G_x(t,T)=\frac{1}{m}\cdot\frac{1-e^{-\alpha t/m}}{1-e^{-\alpha T/m}}
+\end{equation}
+
+Next we insert this into the parts from the equation in the beginning
+
+\begin{align}
+	-mx(t_i)\partial_{t'}G_x(t,t_i)+mx(t_f)\partial_{t_f}G_x(t,t_f) &= -mx_i\partial_{t'}G_x(t,0)+mx_f\partial_{t'}G_x(t,T)\\
+	&= -x_i\cdot\frac{e^{-\alpha T/m}-e^{-\alpha t/m}}{1-e^{-\alpha T/m}} + x_f\cdot\frac{1-e^{-\alpha t/m}}{1-e^{-\alpha T/m}}\\
+	&= x_f\cdot\frac{1-e^{-\alpha t/m}}{1-e^{-\alpha T/m}}+x_i\frac{1-e^{-\alpha T/m}}{1-e^{-\alpha T/m}}-x_i\frac{1-e^{-\alpha t/m}}{q-e^{-\alpha T/m}}\\
+	&= \frac{1-e^{-\alpha t/m}}{1-e^{-\alpha T/m}}\left(x_f-x_i\right)+x_i
+\end{align}
+
+\clearpage
+\section{Potential from infinite wires}
+\begin{colbox}
+	An infinite collection of wires in the z direction in the positions $(x_n,y)=(n\cdot a,0)$ is given. Additionally, the potential is zero on all the wires, i.e $\phi(a\cdot n,0)=0$.
+	\begin{itemize}
+		\item Perform separation of variables for the two-dimensional laplace problem and write the equations for each variable in the separation, and solve the equations. Specifically, set $\phi(x,y)=X(x)Y(y)$ in the equation $\partial_x^2\phi(x,y)+\partial_y^2\phi(x,y)=0$ and conclude what $X(x),Y(y)$ should satisfy under the assumption that $Y(\pm\infty)=0,\phi(a\cdot n,0)=0$ and that Y is continuous at $y=0$.
+		\item Write the general solution by taking a linear combination of the solutions you found. Show that the solution decays away from the plate and write down the leading order solution.
+		\item Calculate the field that results from the previous part's potential. Where is the jump?
+	\end{itemize}
+\end{colbox}
+
+\subsection{separation of variables}
+
+We'll use the ansatz
+
+\begin{equation}
+  \phi(x,y) = X(x)\cdot Y(y)
+\end{equation}
+
+which gives us
+
+\begin{equation}
+  \frac{X''}{X}=-\frac{Y''}{Y} = -\alpha^2
+\end{equation}
+
+which gives us two ODEs:
+
+\begin{align}
+	X''+\alpha^2X=0 && Y''-\alpha^2Y=0
+\end{align}
+
+These two ODEs' solutions are
+
+\begin{align}
+	X=A\cos(\alpha x)+B\sin(\alpha x) && Y=Ce^{\alpha y}+De^{-\alpha y}
+\end{align}
+
+Now we insert the boundary conditions of the question. Since Y must tend to 0 at both positive and negative infinity, we'll have to define D such that the exponent will have the absolute value of y, and $C=0$.
+
+\begin{align}
+	Y=\tilde De^{-\alpha|y|}
+\end{align}
+
+and as for X
+
+\begin{align}
+  X(na)=A\cos(\alpha na)+B\sin(\alpha na)=0 && X(0)=A=0
+\end{align}
+
+therefore we must have that
+
+\begin{equation}
+  \alpha = \frac{\pi k}{a}
+\end{equation}
+
+thus
+
+\begin{equation}
+  \phi(x,y)=\tilde C\sin\left(\frac{\pi k}{a}x\right)e^{-\frac{\pi k}{a}|y|}
+\end{equation}
+
+\subsection{General solution}
+
+The above is the potential resulting from a single wire, so we'll sum over all the wires:
+
+\begin{equation}
+  \phi(x,y)=\sum\limits_{k=1}^\infty\phi_k(x,y)=\sum\limits_{k=1}^\infty\tilde C\sin\left(\frac{\pi k}{a}x\right)e^{-\frac{\pi k}{a}|y|}
+\end{equation}
+
+When $|y| \rightarrow \infty$ we can see the exponent part goes to 0, therefore the elements in the sum tend to 0. the first order approximation is thus
+
+\begin{equation}
+  \phi(x,y) = \tilde C\sin\left(\frac{\pi}{a}x\right)e^{-\frac{\pi}{a}|y|}
+\end{equation}
+
+\subsection{Electric field}
+
+As we know, the field is given by $\bold E = -\nabla\phi$, therefore
+
+\begin{align}
+	\bold E &= -\nabla\phi\\
+	&= -\mtr{\partial_x\\\partial_y\\\partial_z}\sum\limits_{k=1}^\infty\tilde C\sin\left(\frac{\pi k}{a}x\right)e^{-\frac{\pi k}{a}|y|}\\
+	&= -\sum\limits_{k=1}^\infty\frac{\pi k}{a}\mtr{\cos\left(\frac{\pi k}{a}x\right)\\-sgn(y)sin\left(\frac{\pi k}{a}x\right)\\0}e^{-\frac{\pi k}{a}|y|}
+\end{align}
+
+We can see that $E_y$ is non-continuous at $y=0$.
+
+\clearpage
+\section{Semi-grounded plane}
+\begin{colbox}
+	A plane is placed at $y=0$ and split in two. Its half at $x>0$ is held at 0 potential and the half at $x<0$ is held at potential V. The two halves are separated by a non-conductive material.
+	\begin{itemize}
+		\item Show that the problem is symmetric under inflation and conclude that the potential above the plate in cylindrical coordinates satisfies $\phi(r,\theta,z)=\phi(\theta,\frac{z}{r})$. Hint: To show this, show that the laplace equation and boundary conditions are symmetric under inflation.
+		\item Show that the problem is symmetric under translation along z and conclude the potential above the plate in cylindrical coordinates satisfies $\phi(r,\theta,z)=\phi(\theta)$.
+		\item Write down the Green's function of the problem in cartesian coordinates and cylindrical coordinates.
+		\item Use Green's function to calculate the potential in the top half of space. To calculate the derivative of Green's function in cylindrical coordinates on the surface, use: \begin{equation}
+			\left.\diffp{G}{y'}\right|_{y'=0}=\begin{cases}
+				+\frac{1}{r'}\left.\diffp{G}{\theta'}\right|_{\theta'=0} & x'>0\\
+				-\frac{1}{r'}\left.\diffp{G}{\theta'}\right|_{\theta'=\pi} & x'<0
+			\end{cases}
+		\end{equation}
+		\item Calculate the surface charge density on the plate. Hint: notice that for $y<0$ the symmetry dictates that $\phi(x,y,z)=\phi(x,-y,z)$
+		\item A ring of radius R passing through the surface perpendicular to it so the ring's symmetry axis is along the z axis. The ring is non-conductive and is charged with charge Q uniformly. Write the charge density in spherical coordinates using delta functions.
+		\item Write down the electric potential in the top half of space using Green's function.
+	\end{itemize}
+\end{colbox}
+
+\subsection{Symmetry under inflation}
+
+First we show the boundary conditions do not change. The boundary conditions are:
+
+\begin{align}
+  \phi(x>0,y=0,z)=0 && \phi(x<0,y=0,z)=V
+\end{align}
+
+We'll perform the transformaition $(x,y,z) \rightarrow \alpha(x,y,z)$ where $\alpha >0$. Since Alpha is positive, it does not change the sign of x. 0 remains 0, and z is arbitrary, therefore the boundary conditions do not change under the transformation. Next we look at the laplace equation under the same transformation
+
+\begin{align}
+	\nabla^2\phi(\alpha x,\alpha y, \alpha z)=\alpha^2\nabla^2\phi(x,y,z)=0
+\end{align}
+
+Next we look at the problem in cylindrical coordinates and inflate them in the same manner. We know the result must remain the same therefore
+
+\begin{equation}
+  \phi(\alpha r,\theta,\alpha z) = \phi(r,\theta,z)
+\end{equation}
+
+This means the solution cannot depend on $\alpha$, which also means we only care about the relative ratio between r and z, rather than each one's value, so
+
+\begin{equation}
+  \phi(r,\theta,z)=\phi\left(\theta, \frac{z}{r}\right)
+\end{equation}
+
+
+\subsection{translation in z}
+
+This can be shown mathematically, but that is overkill. In terms of geometry, looking at the problem we can see that regardless of whether we say the point of interest we're looking at is $z=0$ or $z=5$ or $z=777,777$ it is identical. The boundary condition does not depend on z so any translation along it changes nothing either. Finally, adding a constant to z does not change $\nabla$ so the laplace equation remains true. This also means the potential cannot depend on z, which also means it cannot depend on the ratio between z and r, thus
+
+\begin{equation}
+  \phi(r,\theta,z)=\phi(\theta)
+\end{equation}
+
+\subsection{Green's function}
+
+Green's function in cartesian coordiantes is given by
+
+\begin{equation}
+  G=\frac{1}{\sqrt{(x-x')^2+(y-y')^2+(z-z')^2}}+\frac{1}{\sqrt{(x-x')^2+(y+y')^2+(z-z')^2}}
+\end{equation}
+
+We'll move to cylindrical coordinates using
+
+\begin{align}
+	x=r\cos\theta && y=r\sin\theta\\
+	x'=r'\cos\theta' && y'=r'\sin\theta'
+\end{align}
+
+and find (omitting the full development for brevity)
+
+\begin{equation}
+  G=\frac{1}{\sqrt{r^2+r'^2-2rr'\cos(\theta-\theta')+(z-z')^2}}-\frac{1}{\sqrt{r^2+r'^2-2rr'cos(\theta+\theta')+(z-z')^2}}
+\end{equation}
+
+\subsection{Top half}
+
+The potential is given by
+
+\begin{align}
+  \phi(\bold x) &= -\frac{1}{4\pi}\int\limits_{y'=0,x<0}\dd l\phi(\bold x')\diffp{G(\bold x,\bold x')}{n'}\\
+  &= -\frac{1}{4\pi}\int\limits_{\theta'=\pi}\dd l\phi(\bold x)\diffp{G(\bold x,\bold x')}{n'}\\
+  &= \frac{1}{4\pi}\int\limits_{\theta'=\pi}\dd l\phi(\bold x)\diffp{G(\bold x,\bold x')}{y'}\\
+  &= \frac{V}{2\pi}\int\limits_{-\infty}^0\dd x'\int\limits_{-\infty}^\infty\dd z'\frac{y}{\left[(x-x')^2+y^2+(z-z')^2\right]^{3/2}}\\
+  &= \frac{V}{2\pi}\int\limits_{-\infty}^0\dd x' \frac{y}{(x-x')^2+y^2}\cdot \left.\frac{z'-z}{\sqrt{(x-x')^2+y^2+(z-z')^2}}\right|_{z=-\infty}^{\infty}\\
+  &= \frac{V}{\pi}\int\limits_{-\infty}^0\dd x' \frac{y}{(x-x')^2+y^2}\\
+  &= \frac{V}{\pi}\left.\arctan\left(\frac{x-x'}{y}\right)\right|_{-\infty}^0\\
+  &= V\left(\frac{1}{2}-\frac{1}{\pi}\arctan\left(\frac{x}{y}\right)\right)
+\end{align}
+
+\subsection{surface charge}
+
+Since there is an infinite charged plane, we know the surface charge is given by
+
+\begin{equation}
+  \sigma(x) = \frac{1}{4\pi}[E_y(x,y=0^+)-E_y(x, y=0^-)]
+\end{equation}
+
+The field above the plate at 0 is
+
+\begin{equation}
+  E_y(x,y=0^+)=-\frac{V}{\pi x}
+\end{equation}
+
+Next we notice that if we reflect the y axis, everything remains the same, thus we have symmetry for flips along that axis, so
+
+\begin{equation}
+  E(x,y=0^-)=\frac{V}{\pi x}
+\end{equation}
+
+thus the charge density is
+
+\begin{equation}
+  \sigma(x) = -\frac{V}{2\pi^2 x}
+\end{equation}
+
+\subsection{A ring of charge}
+
+\begin{equation}
+  \rho(r,z)=\frac{Q}{2\pi R}\delta(r-R)\delta(z)
+\end{equation}
+
+\subsection{Another potential}
+
+The total potential is the sum of the potential as a result of the plate and the potential as a result of the charge present, i.e
+
+\begin{align}
+  \phi(x,y,z>0)&=\frac{V\theta}{\pi}+\iiint\limits_V\dd^3x\rho(\bold x)G(\bold x,\bold x')\\
+  &= \frac{V\theta}{\pi}+\int\limits_0^\infty r\dd r\int\limits_0^\pi\dd \theta \int\limits_{-\infty}^\infty\dd z\frac{Q}{2\pi R}\delta(r-R)\delta(z)G(x,x')\\
+  &= \frac{V\theta}{\pi}+\frac{Q}{2\pi}\int\limits_0^\pi\dd\theta\frac{1}{\sqrt{r^2+R^2+z^2-2rR\cos(\theta-\theta')}}-\frac{1}{\sqrt{r^2+R^2+z^2-2rR\cos(\theta+\theta')}}
+\end{align}
+
+and I'll stop there because this is not a fun integral.
+
+\end{document}
