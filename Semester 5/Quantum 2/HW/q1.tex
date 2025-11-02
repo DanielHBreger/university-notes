@@ -1,0 +1,20 @@
+\section{Question 1}
+
+\subsection{Part 1}
+
+\begin{colbox}
+		Show that
+		\begin{equation}
+			\left\lvert\int\limits_0^t \dd t' e^{iwt'}\right\rvert^2 = \frac{\sin\left(\frac{wt}{2}\right)}{\left(\frac{\omega}{2}\right)^2}
+		\end{equation}
+\end{colbox}
+
+\begin{align}
+	\int\limits_0^t\dd t' e^{i\omega t'} &= \left.\left(\frac{1}{i\omega}e^{i\omega t'}\right)\right\rvert^{t'=t}_{t'=0}\\
+	&= \frac{1}{i\omega}\left(e^{i\omega t}-1\right)\\
+	&\therefore \\
+	\left\lvert\int\limits_0^t \dd t' e^{iwt'}\right\rvert^2 &= \left\lvert\frac{1}{i\omega}\left(e^{i\omega t}-1\right)\right\rvert^2\\
+	&= \frac{1}{i\omega}\left(e^{i\omega t}-1\right) \cdot \overline{\frac{1}{i\omega}\left(e^{i\omega t}-1\right)}\\
+	&= \frac{1}{i\omega}\left(e^{i\omega t}-1\right) \cdot \frac{-1}{i\omega}\left(e^{-i\omega t}-1\right)\\
+	&= \frac{1}{\omega^2}\left(2-e^{i\omega t}-e^{-i\omega t}\right)
+\end{align}
