@@ -1,0 +1,76 @@
+\newcommand{\tsr}[2]{\tensor{#1}{#2}}
+\newcommand{\mtr}[1]{\begin{pmatrix}\end{pmatrix}}
+\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+\newcommand{\blankpage}{\newpage \thispagestyle{empty} \mbox{} \newpage}
+
+\newcommand{\course}[1]{\newcommand{\courseloc}{#1}}
+\newcommand{\institute}[1]{\newcommand{\instituteloc}{#1}}
+\newcommand{\roll}[1]{\newcommand{\classloc}{#1}}
+\newcommand{\class}[1]{\newcommand{\classloc}{#1}}
+\newcommand{\session}[1]{\newcommand{\sessionloc}{#1}}
+
+\newcommand*{\meloc}{}
+\newcommand*{\mynameloc}{}
+\newcommand*{\myemailloc}{}
+
+\newcommand*{\me}[2][]{
+	\renewcommand*{\mynameloc}{#2}
+	\if\relax\detokenize{#1}\relax
+		\renewcommand*{\meloc}{\textbf{#2}}
+		\renewcommand{\myemailloc}{}
+	\else
+		\renewcommand*{\meloc}{\textbf{\href{mailto:#1}{#2}}}
+		\renewcommand*{\myemailloc}{\texttt{\href{mailto:#1}{#1}}}
+	\fi
+}
+
+\newcommand*{\profloc}{}
+\newcommand*{\profnameloc}{}
+\newcommand*{\profemailloc}{}
+
+\newcommand*{\professor}[2][]{%
+   \renewcommand*{\profnameloc}{#2}%
+   \if\relax\detokenize{#1}\relax
+      \renewcommand*{\profloc}{\textbf{#2}}%
+      \renewcommand*{\profemailloc}{}%
+   \else
+      \renewcommand*{\profloc}{\textbf{\href{mailto:#1}{#2}}}%
+      \renewcommand*{\profemailloc}{\texttt{\href{mailto:#1}{#1}}}%
+   \fi
+}
+
+%these are auxiliary definitions used in the title section
+\newcommand{\CourseLang}{Course}
+\newcommand{\DateLang}{Submission date}
+\newcommand{\StudentLang}{Name}
+\newcommand{\ProfessorLang}{Professor}
+\newcommand{\RollLang}{Roll}          
+\newcommand{\ClassLang}{Class}                 
+\newcommand{\SessionLang}{Session}     
+\newcommand{\InstituteLang}{Institute}   
+\newcommand{\EmailLang}{Email}
+
+% Customize author command
+% \newcommand{\myname}[1]{\gdef\printmyname{#1}}
+\author{\huge \mynameloc}
+
+% Customize title command
+\newcommand{\mytitle}[1]{\gdef\printmytitle{#1}}
+\title{\Huge Lecture Notes: \\ \courseloc}
+
+% Custom command for equation numbering inside list (itemize...)
+\newcommand{\itemnumber}{\hfill\refstepcounter{equation}(\theequation)} 
+
+% Custom commands to indicate the parts where correction, details, clarifications and diagrams are needed to add  
+\newcommand{\eqdetails}{\textcolor{red}{[need details...] }}
+\newcommand{\details}{\textcolor{red}{[need to add details here...] }}
+\newcommand{\diagram}{\textcolor{red}{[need to add diagram \& details here...] }}
+
+\DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
+\newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\renewcommand{\vec}[2]{\ensuremath{\mathbf{#1}}}

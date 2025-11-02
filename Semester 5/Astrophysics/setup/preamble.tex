@@ -1,0 +1,76 @@
+\usepackage{changepage}
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage{diffcoeff}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{patterns, snakes}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{decorations.markings}
+%\usepackage{fullpage}
+\usepackage[margin=2.8cm]{geometry}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{braket}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{titlesec}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{hyperref}
+\titleformat{\chapter}[frame]
+	{\normalfont}
+	{\filright
+	\footnotesize
+	\enspace Lecture \arabic{chapter}.\enspace}
+	{8pt}
+	{\Large\bfseries\filcenter}
+\usepackage[dotinlabels]{titletoc}
+\titlecontents{chapter}[1.5em]{}{\contentslabel{2.3em}}{\hspace*{-2.3em}}{\hfill\contentspage}
+\titlespacing*{\chapter} {0pt}{0pt}{40pt}
+\usepackage{fancyhdr}
+\fancypagestyle{head}{
+	\fancyhf{}
+	\lhead{\courseloc}
+	\rhead{Lecture \thechapter}
+	\cfoot{\thepage}
+	\renewcommand{\headrulewidth}{0.5pt}
+	\renewcommand{\footrulewidth}{0.5pt}
+	}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\rhead{\courseloc}
+	\cfoot{\thepage}
+	\renewcommand{\headrulewidth}{0.5pt}
+	\renewcommand{\footrulewidth}{0.5pt}
+	}
+
+\usepackage{marginnote}
+\let\marginpart\marginnote
+\usepackage{witharrows}
+
+\newenvironment{myminipage}{
+	\begin{center}
+		\begin{minipage}{0.85\textwidth}
+			{
+			}
+		\end{minipage}
+	\end{center}
+}
+
+\newcommand{\nchapter}[2]{
+	\setcounter{chapter}{#1}
+	\addtocounter{chapter}{-1}
+	\chapter{#2}
+}
+
+\newcommand{\nsection}[3]{
+	\setcounter{chapter}{#1}
+	\setcounter{section}{#2}
+	\addtocounter{section}{-1}
+	\section{#3}
+}
+
+\usepackage{stys/annotate-equations}
+\setlength{\parindent}{0pt}

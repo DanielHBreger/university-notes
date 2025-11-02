@@ -1,82 +1,39 @@
-\documentclass[english,course]{lecturenotes}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{tensor}
-\usepackage{mathtools}
-\usepackage{witharrows}
-\usepackage{diffcoeff}
-\usepackage{cancel}
-\usepackage[integrals]{wasysym}
-\usepackage{pgfplots}
-\usepackage{caption}
-\usepackage{tikz}
-\usetikzlibrary{patterns, snakes}
-\usetikzlibrary{shapes.geometric}
-\usetikzlibrary {decorations.markings}
+\documentclass[a4paper]{report}
 
+\input{setup/preamble}
+\input{setup/macros}
 
-\title{Introduction to Astrophysics and Cosmology}
-\subtitle{Lectures}
-\shorttitle{Astrophysics} 
-\ccode{01160354} 
-\subject{Subject of the Talk}
-\author{Daniel Haim Breger}
-\spemail{sbialy@technion.ac.il}
-\email{danielbreger@campus.technion.ac.il}
-\speaker{Dr. Shmuel Bialy}
-\date{30}{10}{2025}
-\dateend{00}{02}{2026}
-\conference{Physics 620}
-\place{Technion}
-\attn{These notes were typed during the 2026 winter semester in the Technion. The lectures were given in Hebrew and were live-translated by me to English. The document is provided as is and likely contains many errors.}
+\course{Introduction to Astrophysics and Cosmology}
+\me[danielbreger@campus.technion.ac.il]{}
+\professor[sbialy@technion.ac.il]{ Dr. Shmuel Bialy}
+\institute{Technion}
+\class{test}
+\session{test}
+\date{Based on lectures by\profloc{} in 2025-26
+\\ Notes created by Daniel Haim Breger
+\\~\\ Draft updated on \today}
 
 \begin{document}
-\newcommand{\tsr}[2]{\tensor{#1}{#2}}
-\newcommand{\mtr}[1]{\begin{pmatrix}\end{pmatrix}}
-\newcommand\dd{\mathop{}\!\mathrm{d}}
-\newcommand{\lagr}{\mathcal{L}}
-\newcommand{\ins}[1]{\left(#1\right)}
-\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
-\clearpage
 
-\lecture[1 hour]{30}{10}{2025}
-\section{introduction}
+\renewcommand\thepage{Title}
+\maketitle
+\renewcommand\thepage{Preface}
 
-Since astrophysics is a very wide subject we won't be able to dive deep on each subject. The course is introductory so we'll be skipping some things like full solutions to integrals and the such. 
+\input{preface.tex}
+\pagenumbering{gobble}
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+%\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage
+\pagestyle{head}
+\pagenumbering{arabic}
 
-\subsection{So what is astrophysics?}
+\chapter{Thu, October 30, 2025}
+\input{lectures/301025.tex}
 
-Astrophysics and Cosmology could be broken down into:
-
-\begin{itemize}
-	\item Physics of stars
-	\item Solar systems (planets, comets, ...)
-	\item ISM (Inter-Stellar Medium), IGM (Inter-Galactic Medium)
-	\item Cosmology (development, the big bang, dark energy/matter)
-	\item Exotic objects (black holes, neutron stars, white dwarfs, ...)
-	\item Relativity (gravitational waves, gravitational lensing)
-	\item Galaxies (types, development, active galactic nuclei, quasars)
-	\item Explosions (novas, supernovas, gamma ray bursts)
-\end{itemize}
-
-and the methods used to research those things include
-
-\begin{itemize}
-	\item Observations 
-	\begin{itemize} 
-		\item Telescopes (IR, radio, xray, gamma rays, ...)
-		\item Gravitational waves
-		\item Neutrinos
-		\item Other particles (via probes)
-	\end{itemize}
-	\item Labs
-	\item Computer simulations (hydrodynamics, N-body simulations)
-	\item Analytical theory
-\end{itemize}
-
-We'll focus mostly on the analytical theory, but we'll mention the others too.
-
+%\input{endpage.tex}
 
 \vskip7ex
 \centering
