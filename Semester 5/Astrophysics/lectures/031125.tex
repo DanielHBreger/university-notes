@@ -1,10 +1,25 @@
-\section{Regular (Baryonic) Matter}
+\subsection{Regular (Baryonic) Matter}
 
 In our normal day to day life we meet protons, neutrons, and electrons. There are also other particles we come across, such as neutrinos, muons, taus, etc. Another particle we meet often is the photon, and some others we won't get into.
 
 When the universe came into being in the big bang quarks and photons were created. those quarks then combined into protons and neutrons. protons are basically hydrogen nuclei, so hydrogen was created in the big bang. For a short period of time after the big bang there were conditions for nuclear fusion across the early universe, so about 10\% of the matter created from the big bang ended up being helium, and in terms of mass it was about 25\% (Because Helium is heavier than hydrogen). Elements heavier than helium weren't created at any significant quantities in the big bang. If we plot this on a graph:
 
 % INSERT GRAPH
+
+\begin{wrapfigure}[19]{r}{0pt}
+	\begin{tikzpicture}
+		\begin{axis}[xlabel=$t$, ylabel=$\frac{M_i}{M}$, ymin=-0.25, ymax=1.25, xmin=0, xmax=15, ytick={0,0.25,0.75,1}, yticklabels={0,0.25,0.75,1}, xtick=\empty]
+			\addplot[domain=0:15, color=blue]{0.25*e^(-x)+0.75};\addlegendentry{H}
+			\addplot[domain=0:15, color=red]{0.25 - 0.25*e^(-x)};\addlegendentry{He}
+			\draw[dashed] (axis cs:6,-0.25) -- (axis cs:6,1.25);
+			\node (n1) at (axis cs:0,0.5) {};
+			\node (n2) at (axis cs:6,0.5) {};
+			\draw[->, thick] (n1) -- (n2) node [above, pos=0.5]{100-500 Myrs};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{The portion of mass of the universe by element in the universe's early times.}
+\end{wrapfigure}
+
 
 The portion of mass of hydrogen of the total mass is denoted by $X$, hydrogen by $Y$, and metals, which are all the elements heavier than helium and are denoted by $Z=\frac{M_{metals}}{M}$. For our sun:
 
@@ -65,6 +80,6 @@ Which gives us, for a completely ionized gas:
 and if you insert the numbers for our sun we find
 
 \begin{align}
-	\left\langleA\right\rangle &= 15-16
-	\mu_\mathSun \approxeq 0.6
+	\left\langle A\right\rangle &= 15-16\\
+	\mu_\mathSun &\simeq 0.6
 \end{align}

@@ -65,6 +65,13 @@
 	\chapter{#2}
 }
 
+\newcommand{\mychapter}[2]{
+    \setcounter{chapter}{#1}
+    \setcounter{section}{0}
+    \chapter*{#2}
+    \addcontentsline{toc}{chapter}{#2}
+}
+
 \newcommand{\nsection}[3]{
 	\setcounter{chapter}{#1}
 	\setcounter{section}{#2}
@@ -77,3 +84,18 @@
 \usepackage[
     starfontserif % comment for sans glyphs
     ]{starfont}
+    
+% --- Make ToC list sections (and below), not chapters ---
+\setcounter{tocdepth}{2}         % show sections + subsections in ToC
+\setcounter{secnumdepth}{2}      % number sections + subsections
+
+% Remove chapters from the ToC
+\makeatletter
+\renewcommand{\l@chapter}[2]{}   % gobble chapter entries in ToC
+\makeatother
+
+% --- Make section numbering global (not reset per chapter) ---
+\usepackage{chngcntr}
+\counterwithout{section}{chapter}       % no reset at each chapter
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
