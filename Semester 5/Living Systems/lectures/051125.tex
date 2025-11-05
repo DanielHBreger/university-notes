@@ -1,0 +1,167 @@
+The profile $p(x)$ is at the point where the functional derivative  (with deltas) of F with respect to p is 0, i.e
+
+\begin{equation}
+	0=\diffp{f}{p}-\ins{\diffp{f}{p'}}' \; ; F=\int\dd xf
+\end{equation}
+
+If we apply this to our specific functional we find
+
+\begin{equation}
+	0 = \frac{\delta F}{\delta p} = ap+bp^3-kp''
+\end{equation}
+
+which if we simplify it we find
+
+\begin{equation}
+	\frac{k}{a}p''=p+\frac{b}{a}p^3
+\end{equation}
+
+if we focus on the case where $a<0$ and $p_{eq}^2=\frac{L}{a}$ then
+
+\begin{equation}
+	-\frac{k}{\lvert a \rvert}p'' = p\ins{1-\frac{p^2}{p_{eq}^2}}
+\end{equation}
+
+which using dimensional analysis we found a length scale that goes with $\sqrt{\frac{k}{\lvert a \rvert}}$. Looking back at figure \ref{smooth_phase_transition} we guess a solution of the form
+
+\begin{equation}
+	p_0(x) = p_{eq}\tanh\frac{x}{\xi}
+\end{equation}
+
+and use the following identity
+
+\begin{equation}
+	\tanh'x=\frac{1}{\cosh^2x}=1-\tanh^2x
+\end{equation}
+
+we find
+
+\begin{align}
+	p'' &= \frac{p_{eq}}{\xi}\ins{1-\tanh^2\frac{x}{\xi}}'\\
+	&= -2\frac{p_{eq}}{\xi^2}\tanh\frac{x}{\xi}\ins{1-\tanh^2\frac{x}{\xi}}\\
+	&= -\frac{2}{\xi^2}p_0\ins{1-\frac{p_0^2}{p_{eq}^2}}
+\end{align}
+
+and from this we conclude
+
+\begin{equation}
+	\frac{2}{\xi^2}\frac{k}{\lvert a \rvert}=1 \rightarrow \xi = \sqrt{\frac{2k}{\lvert a \rvert}}
+\end{equation}
+
+in particular, near the phase transition ($a\approx 0$), $\xi$ diverges. Additionally, the excess free energy in the $\xi$ width layer in comparison to the energy in phases at $\pm p_{eq}$ is called the interfacial tension ($\gamma$). It can be shown (in homework) that 
+
+\begin{equation}
+	\gamma = \int kp_0'^2\dd x = \sqrt{\frac{-8ka^3}{9b^2}}
+\end{equation}
+
+\subsection{The Mermin-Wagner(-Hohenberg) Theorem}
+
+So far we dealt with spatial change of a binary order parameter $p$, like spin, such that $\vec p == p\hat y$ but in a more general case $\vec p == p(\cos\theta,\sin\theta)$ and $\theta$ can change continuously. We'll notice that
+
+\begin{equation}
+	F_p = \frac{a}{2}\lvert\vec p\rvert\rvert^2+\frac{b}{4}\lvert\vec p\rvert\rvert^4
+\end{equation}
+
+is invariant under a change of $\theta$. This is a continuous symmetry and $\theta$ is called the Goldstone/soft mode.
+
+\subsubsection{The Theorem Itself}
+
+\emph{A system under equilibrium at temperature $T>0$ of dimension $d\leq 2$ will NOT develop a long range order which breaks a continuous symmetry.}
+
+\subsubsection{Explanation}
+
+Let's look at how the free energy is dependent on $\theta$. There is no homogeneous contribution but rather only from derivatives. As before, we'll write
+
+\begin{equation}
+	F = \frac{k}{2}\int \dd \vec r ((\nabla\theta)^2
+\end{equation}
+
+Looking at a configuration such as
+
+% INSERT FIGURE 1
+
+How much free energy does it cost to create a continuous change in $\theta$ in a system of dimension $d$ with characteristic length $L$? From dimensional considerations $\nabla^2 \sim L^{-2}$ and $\int\dd \vec r \sim \sim L^d$ therefore $F\sim L^{d-2}$. For a large L and $d\leq 2$ the cost is low. Therefore change in $\theta$ will happen in a spontaneous manner from thermal 	fluctuations at $T>0$.
+
+A couple notes
+
+\begin{enumerate}
+	\item In this course we will focus on \emph{active systems out of equilibrium}. The theorem is violated and we can achieve long range order in 2D. This was the first result in active matter which created significant interest in the field.
+	\item Even in equilibrium a phase transition under the theorem's conditions is possible ($d=2$, $T>0$). In this case the order is not exactly long-range and is characterized by topological defects of the order parameter (we'll deal with defects later in the course). Sometimes such a transition is viewed as a KT transition (Kosterlitz-Thouless, 2016 Nobel prize in Physics)
+\end{enumerate}
+
+\clearpage
+\section{Matter Out of Thermal Equilibrium}
+
+\subsection{Types of Systems Out of Thermal Equilibrium}
+
+In general two main types of systems out of thermal equilibrium exist:
+
+\begin{description}
+	\item[Non-Equilibrium Steady State] In this case an outside energy source is injecting energy into the system, mostly through the system's edge, which dissipates. Examples: \begin{enumerate}
+		\item Shear flow - Energy flows through the externally driven surfaces and dissipates through viscosity.
+		\item Electric circuits - A source is driving an electric current through the circuit, which dissipates at the resistor.
+	\end{enumerate}
+	\item[Near-Equilibrium Systems] The system was previously in thermal equilibrium, which it left due to a controlled change in a thermodynamical parameter (T,P) or of an external potential. We can characterize the dynamics of the system arriving at the new equilibrium (relaxation). Examples: \begin{enumerate}
+		\item Moving an optical trap - a colloid is captive in an optical trap which is suddenly moved. How does the colloid's position change over time?
+		\item Polymers stretching - a polymer is held on both ends by a force $f$. The force is suddenly changed. How will the edge-to-edge length of the polymer change?
+	\end{enumerate}
+\end{description}
+
+In this course we will focus on active matter in which the energy is consumed locally by the system's elements. We will mostly focus on the case of a steady state. In general, given a system with measurable dynamics (such as a biological system), we will want to know whether it is in thermal equilibrium or not.
+
+\subsection{Macroscopic Description of Movement}\label{macro_movement}
+
+\emph{In thermal equilibrium a closed system can only carry out a combination of uniform linear motion and rigid body rotation. Therefore, movement out of equilibrium will mostly be characterized by:}
+
+\begin{description}
+	\item[Wet Active Matter] A closed system with non-uniform motion, such as a liquid with shearing. a relevant active system example for this case is active particles in a liquid.
+	\item[Dry Active Matter] An open system with uniform or non-uniform motion. A relevant active system example for this case is active particles on a surface.
+\end{description}
+
+\subsubsection{Intuition}
+
+A system in which heat is created is out of equilibrium, since its entropy grows. In the first example heat is created due to viscosity and in the second due to friction. In an active system heat can be created from the active mechanism itself too (e.g a chemical reaction).
+
+\subsection{Proof of the statement in \ref{macro_movement}}
+
+We'll section a body into small but macroscopic parts with mass, energy, and momentum $m_i$, $E_i$, $p_i$ respectively. The entropy results from the internal energy, and not from the kinetic energy of the center of mass.
+
+\begin{equation}
+	S = \sum\limits_i S_i(E_i-\frac{p_i^2}{2m_i^2})
+\end{equation}
+
+In a closed system the angular and linear momenta are conserved:
+
+\begin{align}
+	\sum\limits_i \vec p__i = const. && \sum\limits_i \vec r__i \times \vec p__i = const.
+\end{align}
+
+In thermal equilibrium the entropy is maximized while conforming to the constraints.
+
+\begin{align}
+	0 &= \diffp*{}{\vec p__i}\sum\limits_j \left[S_j\left(E_j-\frac{p_j^2}{2m_j}\right)+\vec a \cdot\cdot \vec p__j + \vec b \cdot\cdot \left(\vec r__i\times \vec p__j\right)\right]\\
+	&= -\frac{1}{T}\frac{\vec p__i}{m_i}+\vec a ++ \vec b \times\times \vec r__i\\
+	&\rightarrow \vec v__i = \vec u ++ \vec\Omega \times\times \vec r__i
+\end{align}
+
+where
+
+\begin{align}
+	\vec{u} == T \vec{a} && \vec{\Omega} == T \vec{b}
+\end{align}
+
+\subsection{Detailed Balance \& Time Reversal Symmetry}
+
+\subsubsection{Detailed Balance}
+
+Assume a system with microstates $\{s\}$ and a probability function $P_s$ which changes with time. Its dynamics are given by a Master Equation:
+
+\begin{equation}
+	\diffp{}{t}P_s = \sum\limits_{s'}\left(P_{s'}W_{s'\rightarrow s} - P_sW_{s\rightarrow s'}\right)
+\end{equation}
+
+where $W_{s\rightarrow s'}$ is the transition rate between $s$ and $s'$. At equilibrium a detailed balance exists - each element in the sum cancels out:
+
+\begin{equation}
+	P_{s'}W_{s'\rightarrow s} = P_sW_{s\rightarrow s'}
+\end{equation}

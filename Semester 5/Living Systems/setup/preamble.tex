@@ -73,3 +73,18 @@
 }
 
 \usepackage{stys/annotate-equations}
+
+% --- Make ToC list sections (and below), not chapters ---
+\setcounter{tocdepth}{2}         % show sections + subsections in ToC
+\setcounter{secnumdepth}{2}      % number sections + subsections
+
+% Remove chapters from the ToC
+\makeatletter
+\renewcommand{\l@chapter}[2]{}   % gobble chapter entries in ToC
+\makeatother
+
+% --- Make section numbering global (not reset per chapter) ---
+\usepackage{chngcntr}
+\counterwithout{section}{chapter}       % no reset at each chapter
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}

@@ -1,5 +1,5 @@
 
-\section{Phase transitions in equilibrium}
+\section{Phase Transitions in Equilibrium}
 \subsection{Motivation}
 
 Phase is a distinct state of matter which can be described by an "order parameter". We'll focus on isotropic polar phase transition. In this case the order parameter is the polarization \( \vec{p}== \langle\hat n\rangle\) where $\hat n$ is the unit vector of the particles' direction. 
@@ -12,7 +12,7 @@ Phase is a distinct state of matter which can be described by an "order paramete
   	\caption{Polar and Isotropic ordering of matter.}
 \end{figure}
 
-\subsection{Physical description}
+\subsection{Physical Description}
 
 We'll assume free energy of the following form:
 
@@ -196,7 +196,7 @@ the fixed points are $\diffp{F}{p}=0$, the extremums of the free energy. The sta
 \begin{figure}[!htb]
 	\centering
 	\begin{tikzpicture}
-		\begin{axis}[axis lines = center,axis equal=true, xmin=-1, xmax=1, ymin=-1, ymax=1, xlabel=p, ylabel=$\dot p$]
+		\begin{axis}[axis lines = center,axis equal=true, xmin=-1, xmax=1, ymin=-1, ymax=1, xlabel=$p$, ylabel=$\dot p$]
 			\plot[domain=-1:1, blue, samples=100]{x-2*x^3};
 			\addplot[domain=-1:1, red, samples=100, ]{-x-2*x^3};
 			\addplot coordinates{(0,0)};
@@ -226,6 +226,7 @@ We saw that the direction of $\vec p\relax$ is arbitrary, in practice different 
 \begin{figure}[!htb]
 	\centering\includegraphics[width=0.5\textwidth]{images/transitionarea}
 	\caption{A smooth phase transition with Domain Wall $\xi$.}
+	\label{smooth_phase_transition}
 \end{figure}
 
 We'll find a finite range around 0 of width $\rchi$ in which $\abs{\vec p} \neq p_{eq}$. This region is called the Domain Wall. To quantify the cost to change $\vec p\relax$ in space we'll write the density of free energy per length unit:
