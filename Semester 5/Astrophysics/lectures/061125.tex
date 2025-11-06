@@ -11,7 +11,7 @@ The luminosity of the sun follows
 Observationally we can measure the luminosity and find
 
 \begin{equation}
-	L_\mathSun = 3.8 \times 10^{33} erg/s
+	L_\mathSun = \SI{3.8e33}{\erg\per\s}
 \end{equation}
 
 and we can say that
@@ -24,8 +24,8 @@ Let's look at the total energy the Sun will output in its entire life $E_{tot}$.
 
 \begin{align}
 	E_{tot} &= L_\mathSun \cdot t_\mathSun\\
-	&\simeq (3.8\times 10^{33} erg/s)(4.6 Gyr)\\
-	&= 5.6 \times 10^{50} erg
+	&\simeq (\SI{3.8e33}{\erg\per\s})(\SI{4.6}{\giga\year})\\
+	&= \SI{5.6e50}{\erg}
 \end{align}
 
 Let's look at what contributes more to the energy of the sun, the gravitational or the nuclear energy. 
@@ -34,7 +34,7 @@ Let's look at what contributes more to the energy of the sun, the gravitational 
 	\lvert E_G\rvert &= \int\frac{GM(r)}{r}\dd m\\
 	&= \int4\pi\rho GM(r)r \dd r\\
 	\text{(assuming $\rho=const.$)}&= \frac{3}{5}G\frac{M_\mathSun^2}{R_\mathSun}\\
-	&= 2\times 10^{48} erg
+	&= \SI{2e48}{\erg}
 \end{align}
 
 To estimate the nuclear energy the sun produces we can look at the nuclear fusion process in which $4H \rightarrow He$ which gives a mass difference of
@@ -47,7 +47,7 @@ To estimate the nuclear energy the sun produces we can look at the nuclear fusio
 defining 
 
 \begin{equation}
-	\eta = \frac{\Delta E}{M_{He}c^2} = 0.7 \%
+	\eta = \frac{\Delta E}{M_{He}c^2} = \SI{0.7}{\percent}
 \end{equation}
 
 then the nuclear energy produced in the sun is
@@ -59,13 +59,13 @@ then the nuclear energy produced in the sun is
 and using this we can find the age of the sun
 
 \begin{equation}
-	t_\mathSun = \frac{E_{nuc}}{L_\mathSun} \approx 100 Gyr
+	t_\mathSun = \frac{E_{nuc}}{L_\mathSun} \approx \SI{100}{\giga\year}
 \end{equation}
 
 but since the sun hasn't burned through all the hydrogen it has access to, we can replace
 
 \begin{equation}
-	M_\mathSun \rightarrow M_{core} \approx 5\% M_\mathSun
+	M_\mathSun \rightarrow M_{core} \approx \SI{5}{\percent} M_\mathSun
 \end{equation}
 
 which would give us a better estimate.
@@ -76,14 +76,19 @@ We'll use the Sun as an example, then we'll hit equations.
 
 \subsection{The Sun}
 
-% INSERT FIGURE 1
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/IMG_0474}
+	\caption{The temperature in the sun as a function of the distance from it core, the relative pressure compared to the core, and the density.}
+\end{figure}
+
 
 Our goal in the coming weeks will be to derive differential equations to figure out how the different profiles behave. As for some numbers:
 
 \begin{align}
-	R_\mathSun &= 7\times 10^10 cm && T_C &= 1.5\times 10^7 && \rho_C = 150 g cm^{-3}\\
-	\overline{\rho} &= 1.4 g cm^{-3} && P_C &= 10^{11} Atm && M_\mathSun = 2\times 10^{33}\\
-	L_\mathSun &= 3.8\times 10^{33} erg/s
+	R_\mathSun = \SI{7e10}{\cm} && T_C = \SI{1.5e7}{\kelvin} && \rho_C = \SI{150}{\gram.\cm^{-3}}\\
+	\overline{\rho} = \SI{1.4}{\gram.\cm^{-3}} && P_C = \SI{e11}{\atm} && M_\mathSun = \SI{2e33}{\gram}\\
+	L_\mathSun = 3.8\times 10^{33} erg/s
 \end{align}
 
 \subsection{Star Structure Equations}
@@ -148,6 +153,6 @@ so
 
 \begin{align}
 	g &\sim \diff{P}{\rho}\frac{1}{h}\\
-	&= \frac{(340 m/s)^2}{10 km}\\
-	&= 10 m/s^2
+	&= \frac{(\SI{340}{\meter\per\second})^2}{\SI{10}{\kilo\meter}}\\
+	&= \SI{10}{\meter\per\second^2}
 \end{align}
