@@ -1,0 +1,153 @@
+\subsection{The meaning of the symbol $\simeq$}
+
+The symbol $\simeq$ usually implies a good understanding of the physics behind the calculations. It says there's a good understanding of what can be considered negligible and what can't.
+
+The luminosity of the sun follows
+
+\begin{equation}
+	L_\mathSun = \dot E_{\text{nuc}} + \lvert \dot E_G \rvert
+\end{equation}
+
+Observationally we can measure the luminosity and find
+
+\begin{equation}
+	L_\mathSun = 3.8 \times 10^{33} erg/s
+\end{equation}
+
+and we can say that
+
+\begin{equation}
+	L_\mathSun \simeq \dot E_{\text{nuc}}
+\end{equation}
+
+Let's look at the total energy the Sun will output in its entire life $E_{tot}$.
+
+\begin{align}
+	E_{tot} &= L_\mathSun \cdot t_\mathSun\\
+	&\simeq (3.8\times 10^{33} erg/s)(4.6 Gyr)\\
+	&= 5.6 \times 10^{50} erg
+\end{align}
+
+Let's look at what contributes more to the energy of the sun, the gravitational or the nuclear energy. 
+
+\begin{align}
+	\lvert E_G\rvert &= \int\frac{GM(r)}{r}\dd m\\
+	&= \int4\pi\rho GM(r)r \dd r\\
+	\text{(assuming $\rho=const.$)}&= \frac{3}{5}G\frac{M_\mathSun^2}{R_\mathSun}\\
+	&= 2\times 10^{48} erg
+\end{align}
+
+To estimate the nuclear energy the sun produces we can look at the nuclear fusion process in which $4H \rightarrow He$ which gives a mass difference of
+
+\begin{align}
+	\Delta m &= M(4H)-M(He)\\
+	\rightarrow\Delta &E = \Delta m c^2\\
+\end{align}
+
+defining 
+
+\begin{equation}
+	\eta = \frac{\Delta E}{M_{He}c^2} = 0.7 \%
+\end{equation}
+
+then the nuclear energy produced in the sun is
+
+\begin{equation}
+	\eta\cdot M_\mathSun c^2
+\end{equation}
+
+and using this we can find the age of the sun
+
+\begin{equation}
+	t_\mathSun = \frac{E_{nuc}}{L_\mathSun} \approx 100 Gyr
+\end{equation}
+
+but since the sun hasn't burned through all the hydrogen it has access to, we can replace
+
+\begin{equation}
+	M_\mathSun \rightarrow M_{core} \approx 5\% M_\mathSun
+\end{equation}
+
+which would give us a better estimate.
+
+\section{The Structure of Stars}
+
+We'll use the Sun as an example, then we'll hit equations.
+
+\subsection{The Sun}
+
+% INSERT FIGURE 1
+
+Our goal in the coming weeks will be to derive differential equations to figure out how the different profiles behave. As for some numbers:
+
+\begin{align}
+	R_\mathSun &= 7\times 10^10 cm && T_C &= 1.5\times 10^7 && \rho_C = 150 g cm^{-3}\\
+	\overline{\rho} &= 1.4 g cm^{-3} && P_C &= 10^{11} Atm && M_\mathSun = 2\times 10^{33}\\
+	L_\mathSun &= 3.8\times 10^{33} erg/s
+\end{align}
+
+\subsection{Star Structure Equations}
+
+The equations describing the structure of stars are:
+
+\begin{align}
+	\diff{P}{r} &= -G\frac{M_r\rho}{r^2}\\
+	\diff{M_r}{r} &= 4\pi r^2 \rho\\
+	\diff{L_r}{r} &= 4\pi r^2\rho\epsilon\\
+	\diff{T}{r} &= -\frac{3\kappa\rho}{4acT^3}\frac{L_r}{4\pi r^2}
+\end{align}
+
+The first equation is called the hydrostatic equation and is equivalent to conservation of momentum, the second is the continuum equation and is equivalent to conservation of mass, the third is the energy production equation and is equivalent to conservation of energy, and the final one is the radiation diffusion equation.
+
+\subsection{The Hydrostatic Equation}
+
+The equation can be derived from an equality of forces. We look at a shell at radius $r$ with mass $\dd m$ and ask which forces act on it. On one hand there's gravitation pulling it inwards and on the other side there's a force resulting from a difference in pressure.
+
+\begin{align}
+	\lvert \dd F_g \rvert &= \frac{GM_r\dd m}{r^2}\\
+	&= \frac{GM_r}{r^2}4\pi r^2\rho \dd r\\
+	\lvert\dd F_P\rvert &= A\cdot\ins{P(r)-P(r+\dd r)}\\
+	&= 4\pi r^2\ins{-\diff{P}{r}\dd r}
+\end{align}
+
+equating the two forces we can find
+
+\begin{align}
+	\diff{P}{r} = -\rho\frac{GM_r}{r^2}
+\end{align}
+
+which is indeed the hydrostatic equation.
+
+\subsubsection{Applying The Equation To Earth}
+
+As a back of the envelope calculation, we can use the equation to find the gravitational acceleration of earth. Noticing that
+
+\begin{equation}
+	\frac{GM_r}{r^2} = g
+\end{equation}
+
+we can rewrite the hydrostatic equation as
+
+\begin{equation}
+	\diff{P}{r} = -\rho g
+\end{equation}
+
+We can also find the speed of sound
+
+\begin{equation}
+	c_s = \sqrt{\gamma \diff{P}{\rho}}
+\end{equation}
+
+which means
+
+\begin{equation}
+	\diff{P}{\rho} \approx c_s^2
+\end{equation}
+
+so
+
+\begin{align}
+	g &\sim \diff{P}{\rho}\frac{1}{h}\\
+	&= \frac{(340 m/s)^2}{10 km}\\
+	&= 10 m/s^2
+\end{align}
