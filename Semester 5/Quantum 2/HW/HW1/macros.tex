@@ -1,5 +1,6 @@
 \newcommand{\tsr}[2]{\tensor{#1}{#2}}
-\newcommand{\mtr}[1]{\begin{pmatrix}\end{pmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
 \newcommand\dd{\mathop{}\!\mathrm{d}}
 \newcommand{\lagr}{\mathcal{L}}
 \newcommand{\ins}[1]{\left(#1\right)}
@@ -7,3 +8,18 @@
 \newcommand{\blankpage}{\newpage \thispagestyle{empty} \mbox{} \newpage}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \DeclarePairedDelimiter{\abs}{\left\lvert}{\right\rvert}
+
+\renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
+
+\newcommand{\umat}{\pmat{1&0\\0&1}}
+\newcommand{\sigx}{\pmat{0&1\\1&0}}
+\newcommand{\sigy}{\pmat{0&-i\\i&0}}
+\newcommand{\sigz}{\pmat{1&0\\0&-1}}
+
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\reals}{\mathbb{R}}
+\DeclareMathOperator{\Tr}{Tr}
+\let\uglyepsilon\epsilon
+\let\epsilon\varepsilon
+\newcommand{\ketbra}[2]{\left\lvert#1\right\rangle\left\langle#2\right\rvert}
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}

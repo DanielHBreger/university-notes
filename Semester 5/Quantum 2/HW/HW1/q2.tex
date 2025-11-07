@@ -1,0 +1,96 @@
+\clearpage
+\section{Question 2}
+
+\begin{colbox}
+	The matrix representation of the $\vec \sigma$ operators in the eigenbasis of $\sigma_z$ is
+	\begin{align}
+		\mathds{1}=\pmat{1&0\\0&1} && \sigma_x=\pmat{0&1\\1&0} && \sigma_y=\pmat{0&-i\\i&0} && \sigma_z=\pmat{1&0\\0&-1}
+	\end{align}
+	\begin{enumerate}
+		\item Show that you can write any $2\times 2$ hermitian matrix as a superposition of Pauli matrices.
+		\item Show that for a unitary matrix $M^\dagger M=\mathds{1}$, $\left\lvert n_0\pm \sqrt{n_x^2+n_y^2+n_z^2}\right\rvert=1$
+		\item Show that no $M\neq 0$ exists such that $\{M,\sigma_\alpha\}=0$ for all $\sigma_\alpha$
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Part 1}
+
+Let
+
+\begin{equation}
+	M = \pmat{a_1+ib_1&a_2+ib_2\\a_3+ib_3&a_4+ib_4} \rightarrow M^\dagger = \pmat{a_1-ib_1&a_3-ib_3\\a_2-ib_2&a_4-ib_4}
+\end{equation}
+
+Since $M=M^\dagger$:
+
+\begin{equation}
+	\begin{cases}
+		a_1+ib_1 = a_1-ib_1\\
+		a_2+ib_2 = a_3-ib_3\\
+		a_3+ib_3 = a_2-ib_2\\
+		a_4+ib_4 = a_4-ib_4
+	\end{cases}
+	\rightarrow
+	\begin{cases}
+		b_1=b_4=0\\
+		b_2 = -b_3\\
+		a_2=a_3
+	\end{cases}
+	\rightarrow
+	M=\pmat{a_1&a_2+ib\\a_2-ib&a_4}
+\end{equation}
+
+which we can decompose into
+
+\begin{equation}
+	M = \frac{a_1+a_4}{2}\umat + \frac{a_1-a_4}{2}\sigz + a_2\sigx-b\sigy
+\end{equation}
+
+therefore
+
+\begin{equation}
+	M = \pmat{n_0+n_z & n_x-in_y\\n_x+in_y&n_0-n_z}
+\end{equation}
+
+\subsection{Part 2}
+
+I assume the matrix M in this part is still the hermitian matrix we decomposed in part 1. Since it is now also unitary, all of its eigenvalues lie on the unit circle in \complex.
+
+\begin{align}
+	\abs{\lambda\mathds{1}-M} &= \vmat{\lambda-n_0-n_z&-n_x+in_y\\-n_x-in_y&\lambda-n_0+n_z}\\
+	&= (\lambda-n_0-n_z)(\lambda-n_0+n_z)+(-n_x+in_y)(n_x+in_y)\\
+	&= \lambda^2 -2\lambda n_0+n_0^2-n_z^2 - n_x^2-n_y^2\\
+	&= (\lambda-n_0)^2-(n_x^2+n_y^2+n_z^2) = 0
+\end{align}
+
+rearranging
+
+\begin{align}
+	\lambda = n_0\pm\sqrt{n_x^2+n_y^2+n_z^2}
+\end{align}
+
+and since we know all the eigenvalues are on the unit circle, then
+
+\begin{equation}
+	\left\lvert n_0\pm\sqrt{n_x^2+n_y^2+n_z^2}\right\rvert = 1
+\end{equation}
+
+as needed.
+
+\subsection{Part 3}
+
+I continue to assume we mean $M$ is a hermitian matrix as we decomposed earlier. In that case:
+
+\begin{align}
+	\{M,\sigma_\alpha\} &= \{\vec \sigma \cdot \vec n ,\sigma_\alpha\}\\
+	&= \{n_0\mathds{1}+n_x\sigma_x+n_y\sigma_y+n_z\sigma_z,\sigma_\alpha\}\\
+	&= n_0\{\mathds{1},\sigma_\alpha\}+n_x\{\sigma_x,\sigma_\alpha\}+n_y\{\sigma_y,\sigma_\alpha\}+n_z\{\sigma_z,\sigma_\alpha\} \label{2p3}
+\end{align}
+
+From the exercise session we know that
+
+\begin{equation}
+	\{\sigma_i,\sigma_j\} = 2\delta_{ij}\mathds{1}
+\end{equation}
+
+So we can immediately notice that the only way for \ref{2p3} to be zero is for each element to be zero, which is only possible if all the coefficients $n_\alpha=0$, which means the only matrix for which the anti-commutative relation holds is the 0 matrix.

@@ -4,9 +4,9 @@
 
 \begin{colbox}
 		Show that
-		\begin{equation}
+		\begin{equation*}
 			\left\lvert\int\limits_0^t \dd t' e^{iwt'}\right\rvert^2 = \frac{\sin\left(\frac{wt}{2}\right)}{\left(\frac{\omega}{2}\right)^2}
-		\end{equation}
+		\end{equation*}
 \end{colbox}
 
 \begin{align}
@@ -16,5 +16,118 @@
 	\left\lvert\int\limits_0^t \dd t' e^{iwt'}\right\rvert^2 &= \left\lvert\frac{1}{i\omega}\left(e^{i\omega t}-1\right)\right\rvert^2\\
 	&= \frac{1}{i\omega}\left(e^{i\omega t}-1\right) \cdot \overline{\frac{1}{i\omega}\left(e^{i\omega t}-1\right)}\\
 	&= \frac{1}{i\omega}\left(e^{i\omega t}-1\right) \cdot \frac{-1}{i\omega}\left(e^{-i\omega t}-1\right)\\
-	&= \frac{1}{\omega^2}\left(2-e^{i\omega t}-e^{-i\omega t}\right)
+	&= \frac{1}{\omega^2}\left(2-e^{i\omega t}-e^{-i\omega t}\right)\\
+	&= \frac{1}{\omega^2}\ins{2-2\cos(\omega t)}\\
+	&= \frac{4\sin^2\ins{\frac{\omega t}{2}}}{\omega^2}\\
+	&= \frac{\sin^2\ins{\frac{\omega t}{2}}}{\ins{\frac{\omega}{2}}^2}
 \end{align}
+
+\clearpage
+\subsection{Part 2}
+\begin{colbox}
+	Calculate the limit
+	\begin{equation*}
+		\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t}
+	\end{equation*}	
+	for both $\alpha = 0$ and $\alpha \neq 0$. Conclude that
+	\begin{equation*}
+		\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} \propto \delta(\alpha)
+	\end{equation*}
+	and find the proportional constant using
+	\begin{equation*}
+		\frac{1}{\pi}\int_{-\infty}^\infty \dd\xi \frac{\sin^2\xi}{\xi^2}=1
+	\end{equation*}
+\end{colbox}
+
+\subsubsection{$\alpha=0$}
+
+Since the limit when alpha is zero isn't well defined, we'll take the limit of alpha approaching zero first.
+
+\begin{align}
+	\left.\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} \right\rvert_{\alpha=0} &= \lim\limits_{\alpha\rightarrow0}\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} \label{sined}\\
+	&= \lim\limits_{t\rightarrow\infty}\frac{(\alpha t)^2}{\alpha^2 t} \label{unsined} \\
+	&= \lim\limits_{t\rightarrow\infty} t\\
+	&= \infty
+\end{align}
+
+The transition between \ref{sined} and \ref{unsined} being because the sine is very small.
+
+\subsubsection{$\alpha \neq 0$}
+
+\begin{align}
+	0=\lim\limits_{t\rightarrow\infty}-\frac{1}{\alpha^2 t}\leq\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} \leq \lim\limits_{t\rightarrow\infty}\frac{1}{\alpha^2 t} = 0
+\end{align}
+
+Therefore
+
+\begin{equation}
+	\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} = \begin{cases}
+		\infty & \alpha=0\\
+		0 & \alpha \neq 0
+	\end{cases}
+\end{equation}
+
+which is the exact behavior of the delta function. To find the proportion constant we solve
+
+\begin{align}
+	\int_{-\infty}^\infty \frac{\sin^2(\alpha t)}{\alpha^2 t} \dd \alpha = [x=\alpha t] &= \int_{-\infty}^\infty \frac{\sin^2(x)}{x^2} \dd x\\
+	&= \pi
+\end{align}
+
+therefore
+
+\begin{equation}
+	\lim\limits_{t\rightarrow\infty}\frac{\sin^2(\alpha t)}{\alpha^2 t} = \pi\delta(\alpha) \label{1.2}
+\end{equation}
+
+\subsection{Part 3}
+\begin{colbox}
+	Use the previous parts to show that
+	\begin{equation*}
+		\lim\limits_{t\rightarrow\infty}\frac{\sin^2\ins{\frac{\omega t}{2}}}{\ins{\frac{\omega}{2}}^2} \sim \pi t \delta\ins{\frac{\omega}{2}}
+	\end{equation*}
+\end{colbox}
+
+if we insert $\alpha = \frac{\omega}{2}$ into \ref{1.2} we get the correct expression.
+
+\subsection{Part 4}
+\begin{colbox}
+	Calculate the limit
+	\begin{equation*}
+		\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2}
+	\end{equation*}
+	for $\alpha=0$ and $\alpha\neq 0$ and conclude that
+	\begin{equation*}
+		\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2} \propto \delta(\alpha)
+	\end{equation*}
+	and find the proportion constant using
+	\begin{equation*}
+		\frac{1}{\pi}\int_{-\infty}^\infty \dd\alpha \frac{\xi}{\alpha^2+\xi^2}=1
+	\end{equation*}
+\end{colbox}
+
+\begin{align}
+	\left.\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2}\right\rvert_{\alpha=0} &= \lim\limits_{\lambda\rightarrow0}\frac{1}{\lambda} = \infty
+\end{align}
+
+\begin{align}
+	\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2} = [\alpha\neq0] = 0
+\end{align}
+
+Therefore
+
+\begin{equation}
+	\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2} \propto \delta(\alpha)
+\end{equation}
+
+and to find the proportion constant
+
+\begin{align}
+	\int_{-\infty}^\infty \frac{\lambda}{\alpha^2+\lambda^2} &= \pi
+\end{align}
+
+therefore
+
+\begin{equation}
+	\lim\limits_{\lambda\rightarrow0}\frac{\lambda}{\alpha^2+\lambda^2} = \pi\delta(\alpha)
+\end{equation}

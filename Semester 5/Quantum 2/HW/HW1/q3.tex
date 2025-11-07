@@ -1,0 +1,111 @@
+\clearpage
+\section{Question 3}
+\begin{colbox}
+	Prove the following identites:
+	\begin{enumerate}
+		\item $\Tr(\sigma_\alpha\sigma_\beta\sigma_\gamma) = 2i\tsr{\epsilon}{_\alpha_\beta_\gamma}$ and $\Tr(\sigma_\alpha\sigma_\beta) = 2\delta_{\alpha\beta}$
+		\item Given $\vec a,\vec b, \vec c \in \reals^3$ calculate $(\vec \sigma \cdot \vec a)(\vec \sigma \cdot \vec b)(\vec \sigma \cdot \vec c)$ in two ways: first the two elements then the last 2 elements. What does the result mean?
+		\item Write down $e^{i\sigma_x}$ and $e^{\sigma_x}$ as $2\times2$ matrices.
+		\item Given $\theta \in [0,2\pi]$ and $\vec n \in \reals^3$ a unit vector show that
+		\begin{equation*}
+			e^{i\theta\vec n \cdot \vec\sigma} = \cos\theta + i(\vec n \cdot \vec \sigma ) \sin\theta
+		\end{equation*}
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Part 1}
+
+From the exercise we know that
+
+\begin{align}
+	\Tr(\sigma_\alpha\sigma_\beta) &= \Tr\ins{\delta_{\alpha\beta}\mathds{1}+i\tsr{\epsilon}{_\alpha_\beta_\gamma}\sigma_\gamma}\\
+	&= 2\delta_{\alpha\beta}+0
+\end{align}
+
+and
+
+\begin{align}
+	\Tr(\sigma_\alpha\sigma_\beta\sigma_\gamma) &= \Tr((\delta_{\alpha\beta}\mathds{1}+i\tsr{\epsilon}{_\alpha_\beta_\kappa}\sigma_\kappa)\sigma_\gamma)\\
+	&= \Tr(\delta_{\alpha\beta}\mathds{1}\sigma_\gamma)+\Tr(i\tsr{\epsilon}{_\alpha_\beta_\kappa}\sigma_\kappa\sigma_\gamma)\\
+	&= \Tr(i\tsr{\epsilon}{_\alpha_\beta_\kappa}\sigma_\kappa\sigma_\gamma)\\
+	&= i\tsr{\epsilon}{_\alpha_\beta_\kappa}\Tr(\sigma_\kappa\sigma_\gamma)\\
+	&= 2i\tsr{\epsilon}{_\alpha_\beta_\gamma}
+\end{align}
+
+\subsection{Part 2}
+
+\begin{align}
+	[(\vec \sigma \cdot \vec a)(\vec \sigma \cdot \vec b)](\vec \sigma \cdot \vec c) &= [\sigma_ia_i\sigma_jb_j](\vec \sigma \cdot \vec c)\\
+	&= [a_ib_j(\delta_{ij}\mathds{1}+i\tsr{\epsilon}{_i_j_k}\sigma_k)](\vec \sigma \cdot \vec c)\\
+	&= a_ib_i(\vec \sigma \cdot \vec c)+ia_ib_j\sigma_l\tsr{\epsilon}{_i_j_l}(\vec \sigma \cdot \vec c)\\
+	&= a_ib_i\sigma_kc_k+ia_ib_jc_m\tsr{\epsilon}{_i_j_l}\sigma_l\sigma_m\\
+	&= a_ib_ic_k\sigma_k + ia_ib_jc_m\tsr{\epsilon}{_i_j_l}(\delta_{lm}\mathds{1}+i\tsr{\epsilon}{_l_m_p}\sigma_p)\\
+	&= a_ib_ic_k\sigma_k + ia_ib_jc_m\tsr{\epsilon}{_i_j_m}-a_ib_jc_m\tsr{\epsilon}{_i_j_l}\tsr{\epsilon}{_m_p_l}\sigma_p\\
+	&= a_ib_ic_k\sigma_k + ia_ib_jc_m\tsr{\epsilon}{_i_j_m}-a_ib_jc_m (\delta_{_i_m}\delta{_j_p}-\delta_{_i_p}\delta{_j_m})\sigma_p\\
+	&= a_ib_ic_k\sigma_k + ia_ib_jc_m\tsr{\epsilon}{_i_j_m}-a_ib_jc_i\sigma_j+a_ib_jc_j\sigma_i
+\end{align}
+
+\begin{align}
+	&= (\vec a \cdot \vec b)(\vec c \cdot \vec \sigma) - (\vec a \cdot \vec c)(\vec b \cdot \vec \sigma)+(\vec b \cdot \vec c)(\vec a \cdot \vec \sigma)+i(\vec a\times \vec b)\cdot\vec c
+\end{align}
+
+on the other hand
+
+\begin{align}
+	(\vec \sigma \cdot \vec a)[(\vec \sigma \cdot \vec b)(\vec \sigma \cdot \vec c)] &= [\sigma_ic_i\sigma_jb_j](\vec \sigma \cdot \vec a)\\
+	&= [c_ib_j(\delta_{ij}\mathds{1}+i\tsr{\epsilon}{_i_j_k}\sigma_k)](\vec \sigma \cdot \vec a)\\
+	&= c_ib_i(\vec \sigma \cdot \vec c)+ic_ib_j\sigma_l\tsr{\epsilon}{_i_j_l}(\vec \sigma \cdot \vec a)\\
+	&= c_ib_i\sigma_kc_k+ic_ib_ja_m\tsr{\epsilon}{_i_j_l}\sigma_l\sigma_m\\
+	&= c_ib_ia_k\sigma_k + ic_ib_ja_m\tsr{\epsilon}{_i_j_l}(\delta_{lm}\mathds{1}+i\tsr{\epsilon}{_l_m_p}\sigma_p)\\
+	&= c_ib_ia_k\sigma_k + ic_ib_ja_m\tsr{\epsilon}{_i_j_m}-c_ib_ja_m\tsr{\epsilon}{_i_j_l}\tsr{\epsilon}{_m_p_l}\sigma_p\\
+	&= c_ib_ia_k\sigma_k + ic_ib_ja_m\tsr{\epsilon}{_i_j_m}-c_ib_ja_m (\delta_{_i_m}\delta{_j_p}-\delta_{_i_p}\delta{_j_m})\sigma_p\\
+	&= c_ib_ia_k\sigma_k + ic_ib_ja_m\tsr{\epsilon}{_i_j_m}-c_ib_ja_i\sigma_j+c_ib_ja_j\sigma_i\\
+	&= (\vec c \cdot \vec b)(\vec a \cdot \vec \sigma) - (\vec c \cdot \vec a)(\vec b \cdot \vec \sigma)+(\vec b \cdot \vec a)(\vec c \cdot \vec \sigma)+i(\vec c\times \vec b)\cdot\vec a
+\end{align}
+
+The two expressions are identical (the vector product element is different in writing but the vector operations result in the same).
+
+\subsection{Part 3}
+
+\begin{align}
+	e^{\sigma_x} = \sum\limits_{k=0}^\infty \frac{\sigma_x^k}{k!}
+\end{align}
+
+we'll find the eigenvalues and eigenvectors:
+
+\begin{equation}
+	\vmat{\lambda&-1\\-1&\lambda} \implies \lambda = \pm 1, \;v_1=\pmat{1\\1}, \; v_2=\pmat{1\\-1}
+\end{equation}
+
+Therefore 
+
+\begin{equation}
+	e^{\sigma_x} = e^{\pmat{1&0\\0&-1}} = \pmat{e&0\\0&e^{-1}}
+\end{equation}
+
+and
+
+\begin{equation}
+	e^{i\sigma_x} = \pmat{e^i&0\\0&e^{-i}}
+\end{equation}
+
+\subsection{Part 4}
+
+\begin{align}
+	e^{i\theta\vec n\cdot \vec \sigma} &= \sum\limits_{k=0}^\infty \frac{(i\theta \vec n \cdot \vec \sigma)^k}{k!}\\
+	&= \sum\limits_{k=0}^\infty \left(\frac{(i\theta \vec n \cdot \vec \sigma)^{2k}}{(2k)!}+\frac{(i\theta\vec n \cdot \vec \sigma)^{2k+1}}{(2k+1)!}\right)
+\end{align}
+
+And we notice that 
+
+\begin{equation}
+	(\vec n^2 \cdot \vec \sigma^2)^{k} = \mathds{1}
+\end{equation}
+
+because of the identity with pauli matrices and their relationship to deltas and epsilon. This gives us
+
+\begin{align}
+	e^{i\theta\vec n\cdot \vec \sigma} &= \sum\limits_{k=0}^\infty \left(\frac{(i\theta)^{2k}}{(2k)!}+\frac{(i\theta)^{2k+1}}{(2k+1)!}\vec n \cdot \vec \sigma\right)\\
+	&= \sum\limits_{k=0}^\infty \frac{(i\theta)^{2k}}{(2k)!} + \sum\limits_{k=0}^\infty \frac{(i\theta)^{2k+1}}{(2k+1)!}\vec n \cdot \vec \sigma\\
+	&= \cos\theta + i(\vec n \cdot \vec \sigma)\sin\theta
+\end{align}
