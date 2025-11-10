@@ -1,0 +1,171 @@
+\subsection{The State Equation}
+
+The gas in stars is to a good approximation an ideal gas so we can use the state equation of an ideal gas
+
+\begin{equation}
+	P = Nk_BT
+\end{equation}
+
+we can multiply and divide by the average mass of each particle 
+
+\begin{equation}
+	P = \frac{n\overline{m}}{\overline{m}}k_BT = \frac{\rho}{m_p\mu}k_BT
+\end{equation}
+
+\subsubsection{A quick aside on why the state equation is true}
+
+This is taken from Feynman's lectures on physics volume 2 chapter 39-2. Assume we have a wall of area A and particles with density n, each having velocity $v_x$ and they impact the wall head on. As we know $F=\diff{p}{t}$.
+
+The distance the particles travel over a period of time of $\delta t$ is $\delta x = v_x\delta t$. So the rate at which particles hit over the same time period is $\delta N = \frac{1}{2}nAv\delta t$. Each particles transfers a momentum of $2p_1=2mv$ therefore the total momentum transferred is
+
+\begin{equation}
+	\delta p = mnAv_x^2\delta t
+\end{equation}
+
+therefore the force is 
+
+\begin{equation}
+	F = \diff{p}{t} = mnAv_x^2
+\end{equation}
+
+and the pressure is
+
+\begin{equation}
+	P=\frac{F}{A}=mnv_x^2
+\end{equation}
+
+and if the velocity isn't a constant but rather there's a distribution of velocities then
+
+\begin{equation}
+	P=mn\langle v_x^2\rangle
+\end{equation}
+
+when in 3 dimensions
+
+\begin{equation}
+	\langle v^2 \rangle = \langle v_x^2 \rangle + \langle v_y^2 \rangle + \langle v_z^2 \rangle = 3\langle v_x^2 \rangle
+\end{equation}
+
+So the pressure is
+
+\begin{equation}
+	P=\frac{1}{3}mn\langle v^2 \rangle
+\end{equation}
+
+If we define temperature as follows
+
+\begin{equation}
+	\frac{1}{2}m\langle v^2 \rangle = \frac{3}{2}k_BT
+\end{equation}
+
+and then insert this into our equation for pressure we get
+
+\begin{equation}
+	P=nk_BT
+\end{equation}
+
+Thermal energy is 
+
+\begin{equation}
+	U = \frac{1}{2}m\langle v^2 \rangle N
+\end{equation}
+
+so its density is
+
+\begin{equation}
+	u = \frac{1}{2}m\langle v^2c \rangle n
+\end{equation}
+
+therefore we can insert this into the expression for pressure we have and find
+
+\begin{equation}
+	P = \frac{2}{3}u
+\end{equation}
+
+This is correct for mono-atomic gas such as hydrogen. In the more complicated case we can define the adiabatic index 
+
+\begin{equation}
+	\gamma_{ad} = \frac{C_p}{C_v} = 1+\frac{2}{f}
+\end{equation}
+
+where $f$ is the number of degrees of freedom, and then we can find that
+
+\begin{equation}
+	P = (\gamma_{ad}-1)u
+\end{equation}
+
+
+\subsection{Generalizing To Radiation Pressure}
+
+The distribution of the velocities of the massive particles is the Boltzmann distribution. On the other hand, the distribution of the momenta of the photons is the Planck distribution:
+
+\begin{equation}
+	\diff{n}{\nu}=n_\nu = \frac{8\pi \nu^2}{c^3}\frac{1}{e^{\frac{h\nu}{k_BT}}-1}
+\end{equation}
+
+and
+
+\begin{equation}
+	u_\nu = n_\nu h\nu = \frac{8\pi h\nu^3}{c^3}\frac{1}{e^{\frac{h\nu}{k_BT}}-1}
+\end{equation}
+
+To get the pressure, rather than doing an entirely new development, we can say our previous development of the pressure using a wall and particles was good it just needs some adjustments. We had:
+
+\begin{align}
+	P =\frac{1}{3}mn\langle v^2 \rangle = \langle \frac{1}{3}nv\cdot mv\rangle = \langle \frac{1}{3}nv\cdot p\rangle
+\end{align}
+
+inserting the momentum and velocity of photons we find
+
+\begin{align}
+	P &= \langle \frac{1}{3}nc\frac{h\nu}{c}\\
+	&= \langle \frac{1}{3}nh\nu\rangle\\
+	&= \frac{1}{3}\langle u \rangle\\
+	&= \frac{1}{3}u
+\end{align}
+
+And if we equate this to the more general pressure equation using the adiabatic constant we find
+
+\begin{equation}
+	\gamma_{\text{photons}} = \frac{4}{3}
+\end{equation}
+
+to rewrite this in terms of temperature we remember that
+
+\begin{align}
+	u &= \int\limits_0^\infty u_\nu\dd\nu = \int\frac{8\pi h\nu^3}{c^3}\frac{1}{e^{\frac{h\nu}{k_BT}}-1}\\
+	=[x=\frac{h\nu}{k_BT}] &= 8\pi\frac{(kT)^4}{(hc)^3}\int\limits_0^\infty x^3\frac{\dd x}{e^x-1}\\
+	&= 8\pi\frac{(kT)^4}{(hc)^3} \cdot \frac{\pi^4}{15}
+\end{align}
+
+we can define a constant
+
+\begin{equation}
+	a = \frac{8\pi^5 k_B^4}{15(hc)^3}
+\end{equation}
+
+and have
+
+\begin{equation}
+	u = aT^4
+\end{equation}
+
+and find that the total pressure is
+
+\begin{equation}
+	P_{tot} = nk_BT+\frac{1}{3}aT^4
+\end{equation}
+
+\subsection{Nuclear Fusion}
+
+quick look at the periodic table. quick look at the standard model. the dominant nuclear fusion process is the pp-chain. 
+
+% insert pp-chain diagram
+
+The efficiency of the process is 
+
+\begin{equation}
+	\eta = \frac{E}{Mc^2} = \frac{26.7 MeV}{4m_pc^2} = 0.7\%
+\end{equation}
+
+for context of how much energy that is, we know that the sun's luminosity is $l_\mathSun = \SI{4e33}{\erg\per\sec}$. This means that per second it produces $\SI{4e26}{\joule}$, which is $10^6$ times the yearly consumption of all humanity.
