@@ -1,0 +1,157 @@
+To find the luminosity we need to also figure out the pace of the processes, which we'll call $r_{xi}$ whose units are $\SI{}{\second^{-1}\centi\meter^{-3}}$, $x$ indicating the target particle being hit by the particle $i$. First though let's check if nuclear fusion can happen in the sun at all.
+
+The electrostatic potential (in cgs) is given by 
+
+\begin{equation}
+	U = \frac{e^2}{r}=\frac{\SI{1.44}{\mega\electronvolt}}{(r/fm)}
+\end{equation}
+
+where
+
+\begin{align}
+	e = \SI{4.8e-10}{\esu} && fm = \SI{e-13}{\meter}
+\end{align}
+
+and the temperature at the core of the sun is $T_c \simeq \SI{1e7}{\kelvin}$ and using the expression for the energy at the core
+
+\begin{equation}
+	\frac{3}{2}k_BT = E \implies E_c \sim keV
+\end{equation}
+
+% insert figure
+
+This means that the thermal particles have only 0.1\% of the energy required to jump the energy barrier imposed by the coulomb force's repulsion to reach the area the strong force attracts them. Seemingly if the system were purely classical, fusion could not happen. Let's consider an edge case where maybe fusion happens because a random small number of particles just happen to have a high enough energy to pass the barrier.
+
+To do that we can calculate how many particles on average there are that have an energy with approximately a mega-electronvolt of energy. For a rough estimate we can use statistical mechanics
+
+\begin{align}
+	e^{-\frac{E}{k_BT}} \sim e^{-1000} = 10^{-435}
+\end{align}
+
+where we inserted the temperature at the core of the sun and the energy we want to have to breach the barrier. The number is so small that there would on average be less than one particle in the entire universe that would have that energy. For that reason we didn't calculate it accurately, since it wouldn't have mattered.
+
+We'll need to take into consideration the effects of quantum tunneling, but before we do that, we need to discuss the action cross-section. We'll imagine a ball $x$ with effective surface area $\sigma$ being bombarded with particles $i$. 
+
+% insert figure
+
+The number of particles hitting the area is given by 
+
+\begin{equation}
+	\dd N = \sigma v\delta t \cdot n_i
+\end{equation}
+
+so the rate at which they hit is
+
+\begin{equation}
+	\diff{N}{t} = \sigma vn_i
+\end{equation}
+
+If we have an environment with many $x$ particles then
+
+\begin{equation}
+	r_{xi} = \sigma vn_i\cdot n_x
+\end{equation}
+
+where $n_x$ is the density of the particles $x$. In the more general case if we have a distribution of velocities then we have
+
+\begin{align}
+	v \implies v(E) && n_i \implies \diff{n_i}{E}\dd E
+\end{align}
+
+and then
+
+\begin{equation}
+	r_{xi} = \int\sigma(E)v(E)n_x\diff{n_i]{E}\dd E
+\end{equation}
+
+with the Stefan-Boltzmann law being
+
+\begin{equation}
+	\diff{n_i}{E} = \frac{2n_i}{\sqrt{\pi}}\frac{\sqrt{E}}{(k_BT)^{3/2}}e^{-\frac{E}{k_BT}}
+\end{equation}
+
+our goal now is to find $\sigma(E)$. For quantum tunneling we'll write 
+
+\begin{equation}
+	\sigma = \sigma_0P
+\end{equation}
+
+where $P$ is the chance to tunnel and $\sigma_0$ is the effective area. As for $\sigma_0$:
+
+\begin{align}
+	\sigma_0 &\approx \pi R^2\\
+	&= 	\pi \lambda_{DB}^2\\
+	&= \pi \ins{\frac{h}{p}}^2\\
+	&= \pi \frac{h^2}{2\mu E}
+\end{align}
+
+where $\mu$ is the reduced mass, since we're working with a collision of two particles. or, in a general more accurate form
+
+\begin{equation}
+	\sigma_0 = \frac{S}{E}
+\end{equation}
+
+To find the chance to tunnel we'll refer to quantum mechanics but this isn't a course on quantum mechanics so it's just a quick overview. 
+
+% insert figure
+
+The Schrödinger equation is
+
+\begin{equation}
+	\frac{\hbar^2}{2\mu}\nabla^2\Psi = \ins{V(r)-E}\Psi
+\end{equation}
+
+where our energy is
+
+\begin{equation}
+	E = \frac{3}{2}k_BT = \frac{z_1z_2e^2}{r_1}
+\end{equation}
+
+and our potential is
+
+\begin{equation}
+	V(r) = \begin{cases}
+		\frac{Z_AZ_Be^2}{r} & r > r_0\\
+		0 & r < r_0
+	\end{cases}
+\end{equation}
+
+Solving for this potential is complicated. We'll approximate it using a step function.
+
+% insert figure
+
+Its height should be the average of the potential
+
+\begin{align}
+	\langle V(r) \rangle = \frac{\int\limits_{r_0}^{r_1}4\pi r^2V(r)\dd r}{\int\limits_{r_0}^{r_1}4\pi r^2\dd r} = \frac{3}{2}E
+\end{align}
+
+and a step function is a problem we know how to solve. Inside the step we have
+
+\begin{equation}
+	\frac{\hbar^2}{2\mu}\nabla^2\Psi = \ins{\frac{3}{2}E-E}\Psi\\
+\end{equation}
+
+and since we're working in spherical coordinates
+
+\begin{equation}
+	\frac{\hbar}{2\mu r}\diffp*[2]{\ins{r\Psi}}{r} = \frac{1}{2}E\Psi
+\end{equation}
+
+whose solution is
+
+\begin{align}
+	\Psi = A\frac{e^{\beta r}}{r} && \beta = \frac{\sqrt{\mu E}}{\hbar}
+\end{align}
+
+and therefore the chance to find a particle in an area $\delta r$ is proportional to $\left\lvert\Psi\right\rvert \delta r$ and the probability of tunneling is
+
+\begin{equation}
+	P_{\text{tunnel}} = \frac{4\pi r_0^2\delta r \left\lvert\Psi(r_0)\right\rvert^2}{4\pi r_1^2\delta r \left\lvert\Psi(r_1)\right\rvert^2} = \frac{e^{2\beta r_0}}{e^{2\beta r_1}} = e^{2\beta(r_0-r_1)} \approx e^{-2\beta r_1}
+\end{equation}
+
+inserting the parameters we found earlier we find
+
+\begin{equation}
+	P = e^{-\frac{2\sqrt{\mu E}}{\hbar}\frac{Z_AZ_Be^2}{E}}
+\end{equation}
