@@ -1,0 +1,117 @@
+\clearpage
+\section{Question 4}
+
+\begin{colbox}
+	For a two-dimensional Hilbert space we'll define the bases $\mathcal{B}=\set{\ket{+}, \ket{-}}$. This is the eigenbasis of $\sigma_z$.
+	\begin{enumerate}
+		\item Any matrix representing an operator in the space spanned by the basis can be singularly represented as the linear combination \begin{equation*}
+			A=\frac{1}{2}(\alpha_0\mathds{1}_2+\vec\alpha\cdot\vec\sigma)
+		\end{equation*}
+		where $\vec\alpha\in\complex^3$, $\vec\sigma=(\sigma_x,\sigma_y,\sigma_z)$, and $\mathds{1}_2$ is the identity operator. Show that $\alpha_0=\Tr(A)$ and $\vec\alpha = \Tr(A\vec\sigma)$
+		\item We'll define the operator $P=\ket{\psi(t)}\bra{\psi(t)}$, where $\ket{\psi(t)}=a_+(t)\ket{+}+a_-(t)\ket{-}$ where $a_\pm \in \complex$. Calculate $P^2$. Write down P as a matrix in the basis $\mathcal{B}$.
+		\item Let $P=\frac{1}{2}(M_0(t)\mathds{1}_2+\vec M(t)\cdot\vec\sigma)$. Show that $\Tr[P]=1$ and conclude $M_0(t)$.
+		\item From the connection between $P$ and $P^2$ and $P$'s form show that $\norm{\vec M(t)} = 1$
+		\item Show that for a general operator $O$: $\Tr[\ketbra{\psi(t)}{\psi(t)}O]=\bra{\psi(t)}O\ket{\psi(t)}$
+		\item Use the previous parts to find a connection between $\langle\vec\sigma\rangle$ and $\vec M$.
+		\item Assume the Hamiltonian $H$ describes the time development of the system. Use the relation between $\vec M$ and $\langle\vec\sigma\rangle$ and the Schrödinger equation to prove that
+		\begin{equation*}
+			\diff{\vec M}{t} = \frac{i}{\hbar}\bra{\psi(t)}[H,\vec\sigma]\ket{\psi(t)}
+		\end{equation*}
+		\item Assume that H has a trace of zero, i.e it can be expressed as $H = \frac{\hbar}{2}\vec\omega\cdot\vec\sigma$ with $\vec\omega\in\reals^3$. Show that $\vec M$ fulfills $\diff{\vec M}{t}=\vec\omega\times\vec M$.
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Part 1}
+
+\begin{align}
+	\Tr(A) = \frac{1}{2}\Tr(\alpha_o\mathds{1}+\vec\alpha\cdot\vec\sigma)
+\end{align}
+
+Since the trace of all pauli matrices is zero, the element including it vanishes. Since we're in a 2 dimensional hilbert space, the trace of the unit matrix is 2, therefore:
+
+\begin{equation}
+	\Tr(A) = \alpha_0
+\end{equation}
+
+\begin{align}
+	\Tr(A\vec\sigma) &= \frac{1}{2}\Tr(\alpha_0\vec\sigma + (\vec\alpha\cdot\vec\sigma)\vec\sigma)\\
+	&= \frac{1}{2}\Tr((\vec\alpha\cdot\vec\sigma)\vec\sigma)\\
+	&= \frac{1}{2}\left(\alpha_1\Tr(\sigma_x\vec\sigma)+\alpha_2\Tr(\sigma_y\vec\sigma)+\alpha_3\Tr(\sigma_z\vec\sigma)\right)\\
+	&= \frac{1}{2}(2\alpha_1+2\alpha_2+2\alpha_3)\\
+	&= \vec\alpha
+\end{align}
+
+\subsection{Part 2}
+
+\begin{equation}
+	P^2 = \ket{\psi(t)}\bra{\psi(t)}\ket{\psi(t)}\bra{\psi(t)} = \ket{\psi(t)}\bra{\psi(t)} = P
+\end{equation}
+
+since the state psi is normalized.
+
+\begin{align}
+	P &= \ket{\psi(t)}\bra{\psi(t)}\\
+	&= (a_+(t)\ket{+}+a_-(t)\ket{-})(a_+^*(t)\bra{+}+a_-^*(t)\bra{-})\\
+	&= \abs{a_+}^2\ketbra{+}{+}+\abs{a_-}^2\ketbra{-}{-}+a_+a_-^*\ketbra{-}{+}+a_-a_+^*\ketbra{+}{-}\\
+	&= \pmat{\abs{a_+}^2 & a_-a_+^*\\a_+a_-^* & \abs{a_-}^2}
+\end{align}
+
+\subsection{Part 3}
+
+We notice that the trace of $P$ is $\abs{a_+}^2+\abs{a_-}^2$ which is identical to $\bra{\psi(t)}\ket{\psi(t)}$, and since the state is normalized it's equal to 1. The trace of $\vec M(t)\cdot \vec \sigma$ is 0 because the trace of each of the pauli matrices is zero. In total the trace of P is 1. Since the trace of P through the previous section must match the trace in the new writing, we find that $M_0(t) = 1$.
+
+\subsection{Part 4}
+
+We know that $P^2=P$ and $P=\frac{1}{2}(\mathds{1}_2+\vec M(t)\cdot\vec\sigma)$. We'll square the decomposed form of $P$:
+
+\begin{align}
+	P^2 &= \frac{1}{4}(\mathds{1}_2+\vec M(t)\cdot\vec\sigma)^2\\
+	&= \frac{1}{4}(\mathds{1}_2^2+2\mathds{1}_2\vec M(t)\cdot\vec\sigma+(\vec M(t)\cdot\vec\sigma)^2)\\
+	&= \frac{1}{4}(\mathds{1}_2+2\vec M(t)\cdot\vec\sigma + \norm{\vec M}^2\mathds{1}) = P
+\end{align}
+
+so we must have
+
+\begin{align}
+	\frac{1}{4}(\mathds{1}_2+2\vec M(t)\cdot\vec\sigma + \norm{\vec M}^2\mathds{1}) &= \frac{1}{2}(\mathds{1}_2+\vec M(t)\cdot\vec\sigma)\\
+	\frac{1}{4}(\mathds{1}_2 + \norm{\vec M}^2\mathds{1}) &= \frac{1}{2}\mathds{1}_2\\
+	\norm{\vec M}^2 &= 4\left(\frac{1}{2}-\frac{1}{4}\right)=1
+\end{align}
+
+\subsection{Part 5}
+
+\begin{align}
+	\Tr[\ketbra{\psi(t)}{\psi(t)}O] &= \bra{+}\ketbra{\psi(t)}{\psi(t)}O\ket{+}+\bra{-}\ketbra{\psi(t)}{\psi(t)}O\ket{-}\\
+	&= \bra{\psi(t)}O\ketbra{+}{+}\ket{\psi(t)}+\bra{\psi(t)}O\ketbra{-}{-}\ket{\psi(t)}\\
+	&= \bra{\psi(t)}O\ket{\psi(t)}
+\end{align}
+
+\subsection{Part 6}
+
+\begin{align}
+	\bra{\psi(t)}\vec\sigma\ket{\psi(t)} &= \Tr[\ketbra{\psi(t)}{\psi(t)}\vec\sigma]\\
+	&= \Tr[P\vec\sigma]\\
+	&= \frac{1}{2}\Tr[M_0(t)\vec\sigma+\vec M(t)\cdot\vec\sigma^2]\\
+	&= \vec M(t)
+\end{align}
+
+\subsection{Part 7}
+
+\begin{align}
+	\diff{\vec M}{t} &= \diff{}{t}(\bra{\psi(t)}\vec\sigma\ket{\psi(t)})\\
+	&= \bra{\dot\psi(t)}\vec\sigma\ket{\psi(t)}+\bra{\psi(t)}\vec\sigma\ket{\dot\psi(t)}\\
+	&= \frac{1}{-i\hbar}\bra{\psi(t)}H\vec\sigma\ket{\psi(t)}+\frac{1}{i\hbar}\bra{\psi(t)}\vec\sigma H\ket{\psi(t)}\\
+	&= \frac{i}{\hbar}\bra{\psi(t)}H\vec\sigma\ket{\psi(t)}-\frac{i}{\hbar}\bra{\psi(t)}\vec\sigma H\ket{\psi(t)}\\
+	&= \frac{i}{\hbar}\bra{\psi(t)}[H,\vec\sigma]\ket{\psi(t)}
+\end{align}
+
+\subsection{Part 8}
+
+\begin{align}
+	\diff{\vec M}{t} &= \frac{i}{\hbar}\bra{\psi(t)}[H,\vec\sigma]\ket{\psi(t)}\\
+	&= \frac{i}{\hbar}\bra{\psi(t)}[\frac{\hbar}{2}\vec\omega\cdot\vec\sigma,\vec\sigma]\ket{\psi(t)}\\
+	&= \frac{i}{2}\vec\omega\cdot\bra{\psi(t)}[\vec\sigma,\vec\sigma]\ket{\psi(t)}\\
+	&= -\omega_i \bra{\psi(t)}\tsr{\epsilon}{_i_j_k}\sigma_k\ket{\psi(t)}\\
+	&= \tsr{\epsilon}{_j_i_k}\omega_i\langle\sigma_k\rangle\\
+	&= \vec\omega\times\vec M
+\end{align}

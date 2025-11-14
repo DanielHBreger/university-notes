@@ -1,0 +1,79 @@
+\section{Question 1}
+
+\subsection{Part 1}
+
+\begin{colbox}
+		What are the probabilities $P_\pm$ to measure a magnetic moment $\mu_z = \pm\mu_0$, when the neutron's position doesn't matter?
+\end{colbox}
+
+Since the neutron's position doesn't matter, the probability of finding a specific magnetic moment will be the sum of the probabilities in all positions, therefore
+
+\begin{equation}
+	P_\pm = \int\limits_{\mathds{R}^3}\dd P = \int\limits_{\mathds{R}^3}\lvert\psi_\pm(\vec r, t)\rvert^2\dd \vec r
+\end{equation}
+
+\subsection{Part 2}
+
+\begin{colbox}
+	Calculate $\langle\mu_x\rangle$ in the state $\ket{\psi(\vec r,t)}$ in terms of $\psi_\pm(\vec r,t)$.
+\end{colbox}
+
+First we notice that $\mu_x = \mu_0\sigma_x$, therefore
+
+\begin{align}
+	\langle\mu_x\rangle &= \mu_0\bra{\psi(t)}\sigma_x\ket{\psi(t)}\\
+	&= \mu_0\int\limits_{\mathds{R}^3}\psi^*(\vec r,t)\sigma_x\psi(\vec r,t)\dd \vec r\\
+	&= \mu_0\int\limits_{\mathds{R}^3}\ins{\psi_-^*(\vec r,t)\bra{-}+\psi_+^*(\vec r,t)\bra{+}}\sigma_x\ins{\psi_-(\vec r,t)\ket{-}+\psi_+(\vec r,t)\ket{+}} \dd \vec r\\
+	&= \mu_0\int\limits_{\mathds{R}^3}\ins{\psi_-^*(\vec r,t)\bra{-}+\psi_+^*(\vec r,t)\bra{+}}\ins{\ketbra{+}{-}+\ketbra{-}{+}}\ins{\psi_-(\vec r,t)\ket{-}+\psi_+(\vec r,t)\ket{+}} \dd \vec r\\
+	&= \mu_0\int\limits_{\mathds{R}^3}\psi_+^*(\vec r,t)\psi_-(\vec r,t)+\psi_-^*(\vec r,t)\psi_+(\vec r,t) \dd \vec r\\
+	 &= 2\mu_0\int\limits_{\mathds{R}^3}\Re\ins{\psi_-^*(\vec r,t)\psi_+(\vec r,t)} \dd \vec r
+\end{align}
+
+\newpage
+\subsection{Part 3}
+
+\begin{colbox}
+	Calculate $\langle\vec r\rangle$ and $\langle \vec p \rangle$ in the state $\ket{\psi(t)}$.
+\end{colbox}
+
+\begin{align}
+	\langle\vec r\rangle &= \bra{\psi(t)}\vec r \ket{\psi(t)}\\
+	&= \int \psi^*(\vec r,t)\vec r \psi(\vec r, t)\dd \vec r\\
+	&= \int \ins{\psi_-^*(\vec r,t)\bra{-}+\psi_+^*(\vec r,t)\bra{+}}\vec r\ins{\psi_-(\vec r,t)\ket{-}+\psi_+(\vec r,t)\ket{+}}\dd \vec r\\
+	&= \int \ins{\lvert\psi_-(\vec r,t)\rvert^2+\lvert\psi_+(\vec r,t)\rvert^2}\vec r\dd\vec r
+\end{align}
+
+\begin{align}
+	\langle\vec p\rangle &= \bra{\psi(t)}\vec p \ket{\psi(t)}\\
+	&= -i\hbar\int \psi^*(\vec r,t) \vec\nabla\psi(\vec r, t)\dd \vec r\\
+	&= -i\hbar\int \ins{\psi_-^*(\vec r,t)\bra{-}+\psi_+^*(\vec r,t)\bra{+}}\nabla\ins{\psi_-(\vec r,t)\ket{-}+\psi_+(\vec r,t)\ket{+}}\dd \vec r\\
+	&= -i\hbar\int \psi_-^*(\vec r,t)\nabla\psi_-(\vec r,t)+\psi_+^*(\vec r,t)\nabla\psi_+(\vec r,t)\dd\vec r
+\end{align}
+
+\subsection{Part 4}
+
+\begin{colbox}
+	Assume that $c_\pm(t) = \alpha_\pm$ and is not time dependent. We'll define $\psi_+'(\vec r,t) = \psi_-'(\vec r,t)\equiv \psi(\vec r,t)$ so that the neutron's state now is
+	\begin{equation*}
+		\ket{\psi(\vec r,t)} = \psi(\vec r,t)\pmat{\alpha_+\\\alpha_-}
+	\end{equation*}
+	How do your answers to parts 2 and 3 change?
+\end{colbox}
+
+\begin{align}
+	\langle\mu_x\rangle &= 2\mu_0\int\limits_{\mathds{R}^3}\Re\ins{\psi_-^*(\vec r,t)\psi_+(\vec r,t)} \dd \vec r\\
+	&= 2\mu_0\int\limits_{\mathds{R}^3}\Re\ins{\psi^*(\vec r,t)\psi(\vec r,t)\alpha_-^*\alpha_+} \dd \vec r\\
+	&= 2\mu_0\Re\ins{\alpha_-^*\alpha_+}
+\end{align}
+
+\begin{align}
+	\langle\vec r\rangle &= \int \ins{\lvert\psi_-(\vec r,t)\rvert^2+\lvert\psi(\vec r,t)\rvert^2}\vec r\dd\vec r\\
+	&= \int \ins{\ins{\lvert\alpha_-\rvert^2+\lvert\alpha_+\rvert^2}\lvert\psi(\vec r,t)\rvert^2}\vec r\dd\vec r\\
+	&= \int \lvert\psi(\vec r,t)\rvert^2\vec r\dd\vec r
+\end{align}
+
+\begin{align}
+	\langle\vec p\rangle &=-i\hbar\int \psi_-^*(\vec r,t)\nabla\psi_-(\vec r,t)+\psi_+^*(\vec r,t)\nabla\psi_+(\vec r,t)\dd\vec r\\
+	&= -i\hbar\int \ins{\lvert\alpha_-\rvert^2+\lvert\alpha_-\rvert^2}\psi^*(\vec r,t)\nabla\psi(\vec r,t)\dd\vec r\\
+	&= -i\hbar\int \psi^*(\vec r,t)\nabla\psi(\vec r,t)\dd\vec r
+\end{align}

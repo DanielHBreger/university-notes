@@ -1,0 +1,15 @@
+\clearpage
+\section{Question 5}
+
+\begin{colbox}
+	Assume that spin is the angular momentum of the electron spinning around itself and that its magnitude is $\hbar/2$. Use the fact we know from measurements that the electron's classical radius is cmaller than $\SI{e-18}{\meter}$ to find the electron's speed of rotation. Does the result make sense?
+\end{colbox}
+
+The electron's mass is $\SI{9.109e-31}{\kg}$, and the formula for its classical angular momentum is $S=I\omega$ where $I$ is the moment of inertia of a sphere: $I=\frac{2}{5}MR^2$ and $\omega=\frac{v}{R}$. Plugging this all in we find
+
+\begin{align}
+	\frac{\hbar}{2} = \frac{2}{5}m_eRv \implies v &= \frac{5\hbar}{4m_eR} = \frac{5\cdot\SI{1.054e-34}{\meter^2\kg\per\second}}{4\cdot\SI{9.109e-31}{\kg}\cdot\SI{e-18}{\meter}}\\
+	&\approx \SI{1.446e14}{\meter\per\second}
+\end{align}
+
+Which is significantly above the speed of light. This of course makes no sense, meaning that electron spin cannot be viewed as classical angular momentum.
