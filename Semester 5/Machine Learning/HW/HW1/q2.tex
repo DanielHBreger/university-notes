@@ -1,0 +1,15 @@
+\clearpage
+\section{Maximum A Posteriori Estimation with a Specific Prior}
+
+\begin{colbox}
+	Assume the same Rayleigh distributed observations as in question 1, but now suppose tht prior knowledge about $\theta$ is modeled as an inverse-gamma distribution
+	\begin{equation*}
+		p(\theta) = \frac{\beta^\alpha}{\Gamma(\alpha)}\theta^{-(\alpha+1)}e^{-\beta/\theta}, \;\;\;\; \theta>0
+	\end{equation*}
+	\begin{enumerate}
+		\item Derive the MAP esrtimator $\hat\theta_{MAP}$
+		\item Compare $\hat\theta_{ML}$ and $\hat\theta_{MAP}$ in terms of bias and asymptotic behavior.
+		\item Analyze how the choice of prior parameters $\alpha$ and $\beta$ influences the MAP estimate.
+		\item Discuss the limiting cases ($\alpha,\beta \rightarrow 0$) and ($\alpha,\beta \rightarrow \infty$) and interpret their effects on the posterior estimate.
+	\end{enumerate}
+\end{colbox}

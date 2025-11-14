@@ -1,0 +1,148 @@
+\section{Maximum Likelihood Estimation for Non-Gaussian DIstribution}
+
+\begin{colbox}
+	Let $\ins{X_1,X_2,\dots,X_n}$ be i.i.d samples from a Rayleign distribution with unknown scale parameter $(\theta > 0)$:
+	\begin{equation*}
+		f(x,\theta) = \frac{x}{\theta^2}e^{-x^2/(2\theta^2)}, \;\;\;\; x\geq0
+	\end{equation*}
+	\begin{enumerate}
+		\item Derive the maximum likelihood estimator $\hat\theta_{ML}$.
+		\item Show that it is a consistent estimator of $\theta$.
+		\item Determine whether $\hat\theta_{ML}$ is biased. If it is, derive the bias expression.
+		\item Compute the Fisher Information and Cramer-Rao lower bound for estimating $\theta$ and check if $\hat\theta_{ML}$ attains it asymptotically.
+	\end{enumerate}
+\end{colbox}
+
+\subsection{Deriving MLE}
+
+The log-likelihood is
+
+\begin{equation}
+	l(\theta)=\sum\limits_{i=1}^n\ins{\log X_i-2\log\theta-\frac{X_i^2}{2\theta^2}}
+\end{equation}
+
+The definition of the MLE is
+
+\begin{equation}
+	\hat\theta_{MLE} = \arg\max L(\theta,x)
+\end{equation}
+
+To find the argmax we'll differentiate the log-likelihood:
+
+\begin{equation}
+	\diff{l}{\theta} = \sum\limits_{i=1}^n\ins{-\frac{2}{\theta}+\frac{X_i^2}{\theta^3}} = \frac{-2n}{\theta}+\frac{1}{\theta^3}\sum\limits_{i=1}^nX_i^2
+\end{equation}
+
+we require the derivative is equal to zero and find
+
+\begin{align}
+	&\diff{l}{\theta} = \frac{-2n}{\theta}+\frac{1}{\theta^3}\sum\limits_{i=1}^nX_i^2 = 0\\
+	&\rightarrow -2n\theta^2+\sum\limits_{i=1}^nX_i^2=0\\
+	&\rightarrow \theta_{\max} = \sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2}
+\end{align}
+
+verifying the point we found is indeed a maximum
+
+\begin{align}
+	\left.\diff[2]{l}{\theta}\right\vert_{\theta_{\max}} &= \left.\frac{2n}{\theta^2}-\frac{3}{\theta^4}\sum\limits_{i=1}^nX_i^2\right\vert_{\theta_{\max}}\\
+	&= \frac{2n}{\theta_{\max}^2}-\frac{3}{\theta_{\max}^4}\cdot 2n\theta_{\max}^2\\
+	&= \frac{2n-6n}{\theta_{\max}^4} = -\frac{4n}{\theta_{\max}^4}<0
+\end{align}
+
+Therefore it is indeed a maximum, so our MLE is
+
+\begin{equation}
+	\hat\theta_{MLE} = \sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2}
+\end{equation}
+
+\subsection{Consistency Check}
+
+An estimator is called consistent if
+
+\begin{equation}
+	\lim\limits_{n\rightarrow\infty}\hat\theta_n = \theta
+\end{equation}
+
+So we'll look at the limit
+
+\begin{align}
+	\lim\limits_{n\rightarrow\infty}\hat\theta_{MLE} &=  \lim\limits_{n\rightarrow\infty}\sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2}
+\end{align}
+
+Using the law of large numbers we can say
+
+\begin{equation}
+	\lim\limits_{n\rightarrow\infty}\sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2} = \sqrt{\frac{1}{2n}\sum\limits_{i=1}^n\mathds{E}(X_i^2)} = \sqrt{\frac{1}{2n}2n\theta^2} = \theta
+\end{equation}
+
+Using the 2nd moment of the Rayleigh distribution. Thus it is a consistent estimator.
+
+\subsection{Bias Check}
+
+The bias is defined as
+
+\begin{equation}
+	\text{Bias}(\hat\theta) = \mathds{E}(\hat\theta)-\theta
+\end{equation}
+
+thus for our MLE estimator
+
+\begin{align}
+	\text{Bias}(\hat\theta) &= \mathds{E}\ins{\sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2}}-\theta\\
+	&= \frac{1}{\sqrt{2n}}\mathds{E}\ins{\sqrt{\sum\limits_{i=1}^nX_i^2}}-\theta
+\end{align}
+
+to find the expectation value we'll notice that if $X_i\sim \text{Rayleigh}(\theta)$ then $\sum X_i \sim \Gamma(n, 2\theta^2)$. We can use the formula for the moments of the gamma distribution for the $1/2$-th moment
+
+\begin{equation}
+	\mathds{E}(\sqrt{\sum X_i}) = \sqrt{2}\theta\frac{\Gamma(n+\frac{1}{2})}{\Gamma(n)}
+\end{equation}
+
+and inserting back we find
+
+\begin{align}
+	\text{Bias}(\hat\theta) &=\frac{1}{\sqrt{2n}}\mathds{E}\ins{\sqrt{\sum\limits_{i=1}^nX_i^2}}-\theta\\
+	&= \frac{1}{\sqrt{2n}}\sqrt{2}\theta\frac{\Gamma(n+\frac{1}{2})}{\Gamma(n)}-\theta\\
+	&= \theta\ins{\frac{1}{\sqrt{n}}\frac{\Gamma(n+\frac{1}{2})}{\Gamma(n)}-1}
+\end{align}
+
+The expression in the brackets is non-zero so the estimator is biased.
+
+\subsection{Fisher Information and CRLB}
+
+The Fisher Information is defined by
+
+\begin{align}
+	I &= -\mathds{E}\ins{\diffp*[2]{\log f}{\theta}} = -\mathds{E}\ins{\diffp*[2]{}{\theta}\ins{\log x-2\log\theta-\frac{x^2}{2\theta^2}}}\\
+	&= -\mathds{E}\ins{\diffp*{}{\theta}\ins{-\frac{2}{\theta}+\frac{x^2}{\theta^3}}}\\
+	&= -\mathds{E}\ins{\frac{2}{\theta^2}-\frac{3x^2}{\theta^4}}\\
+	&= -\ins{\frac{2}{\theta^2}-\frac{3}{\theta^4}\expect{x^2}}\\
+	&= -\ins{\frac{2}{\theta^2}-\frac{3}{\theta^4}2\theta^2}\\
+	&= \frac{-2+6}{\theta^2}=\frac{4}{\theta^2}
+\end{align}
+
+And since the Fisher information is based on expectation value it is linear and thus the fisher information of n i.i.d variables is
+
+\begin{equation}
+	I_n = \frac{4n}{\theta^2}
+\end{equation}
+
+The CRLB is therefore
+
+\begin{equation}
+	\text{Var}(\hat\theta_{MLE}) \geq \frac{\theta^2}{4n}
+\end{equation}
+
+The MLE estimator is indeed asymptotically efficient as we saw in the lecture, but to show this we can use the asymptotic normalit property 
+
+\begin{equation}
+	\sqrt{n}\ins{\hat\theta_{MLE}-\theta} \rightarrow N(0,\frac{\theta^2}{4n})
+\end{equation}
+
+therefore asymptotically 
+
+\begin{equation}
+	\text{Var}(\hat\theta_{MLE}) = \frac{\theta^2}{4n}
+\end{equation}
+
+which is indeed the CRLB.
