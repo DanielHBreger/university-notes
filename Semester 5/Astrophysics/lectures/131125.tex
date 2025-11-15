@@ -18,10 +18,10 @@ and the temperature at the core of the sun is $T_c \simeq \SI{1e7}{\kelvin}$ and
 	\frac{3}{2}k_BT = E \implies E_c \sim keV
 \end{equation}
 
-\begin{figure}[!htb]
+\begin{wrapfigure}[20]{r}{0pt}
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/wbafhakjwaga.png}
-\end{figure}
+\end{wrapfigure}
 
 This means that the thermal particles have only 0.1\% of the energy required to jump the energy barrier imposed by the coulomb force's repulsion to reach the area the strong force attracts them. Seemingly if the system were purely classical, fusion could not happen. Let's consider an edge case where maybe fusion happens because a random small number of particles just happen to have a high enough energy to pass the barrier.
 
@@ -35,10 +35,12 @@ where we inserted the temperature at the core of the sun and the energy we want 
 
 We'll need to take into consideration the effects of quantum tunneling, but before we do that, we need to discuss the action cross-section. We'll imagine a ball $x$ with effective surface area $\sigma$ being bombarded with particles $i$. 
 
-\begin{figure}[!htb]
+\newpage
+
+\begin{wrapfigure}[18]{r}{0pt}
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/Screenshot251113.png}
-\end{figure}
+\end{wrapfigure}
 
 The number of particles hitting the area is given by 
 
@@ -67,7 +69,7 @@ where $n_x$ is the density of the particles $x$. In the more general case if we 
 and then
 
 \begin{equation}
-	r_{xi} = \int\sigma(E)v(E)n_x\diff{n_i]{E}\dd E
+	r_{xi} = \int\sigma(E)v(E)n_x\diff{n_i}{E}\dd E
 \end{equation}
 
 with the Stefan-Boltzmann law being
@@ -99,10 +101,12 @@ where $\mu$ is the reduced mass, since we're working with a collision of two par
 
 To find the chance to tunnel we'll refer to quantum mechanics but this isn't a course on quantum mechanics so it's just a quick overview. 
 
-\begin{figure}[!htb]
+\newpage
+
+\begin{wrapfigure}[22]{r}{0pt}
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/4D41D264-A427-4786-8221-93799F6BC35A_1_105_c.jpeg}
-\end{figure}
+\end{wrapfigure}
 
 The Schrödinger equation is
 
@@ -127,10 +131,10 @@ and our potential is
 
 Solving for this potential is complicated. We'll approximate it using a step function.
 
-\begin{figure}[!htb]
+\begin{wrapfigure}[22]{l}{0pt}
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/IMG_0509.jpeg}
-\end{figure}
+\end{wrapfigure}
 
 
 Its height should be the average of the potential
