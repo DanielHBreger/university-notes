@@ -68,7 +68,7 @@ where $n_x$ is the density of the particles $x$. In the more general case if we 
 
 and then
 
-\begin{equation}
+\begin{equation}\label{fusionrate}
 	r_{xi} = \int\sigma(E)v(E)n_x\diff{n_i}{E}\dd E
 \end{equation}
 
@@ -170,5 +170,17 @@ and therefore the chance to find a particle in an area $\delta r$ is proportiona
 inserting the parameters we found earlier we find
 
 \begin{equation}
-	P = e^{-\frac{2\sqrt{\mu E}}{\hbar}\frac{Z_AZ_Be^2}{E}}
+	P \approx e^{-\frac{2\sqrt{\mu E}}{\hbar}\frac{Z_AZ_Be^2}{E}}
 \end{equation}
+
+while the exact solution is
+
+\begin{equation}
+	P = e^{-\sqrt{E_G/E}}
+\end{equation}
+
+where
+
+\begin{align}
+	E_G = \ins{\pi \alpha Z_AZ_B}^2 2\mu c^2 && \alpha = \frac{e^2}{\hbar c} \approx \frac{1}{137}
+\end{align}
