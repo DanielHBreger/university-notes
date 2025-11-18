@@ -2,14 +2,120 @@
 \section{Question 2}
 
 \begin{colbox}
-	The matrix representation of the $\vec \sigma$ operators in the eigenbasis of $\sigma_z$ is
-	\begin{align}
-		\mathds{1}=\pmat{1&0\\0&1} && \sigma_x=\pmat{0&1\\1&0} && \sigma_y=\pmat{0&-i\\i&0} && \sigma_z=\pmat{1&0\\0&-1}
-	\end{align}
 	\begin{enumerate}
-		\item Show that you can write any $2\times 2$ hermitian matrix as a superposition of Pauli matrices.
-		\item Show that for a unitary matrix $M^\dagger M=\mathds{1}$, $\left\lvert n_0\pm \sqrt{n_x^2+n_y^2+n_z^2}\right\rvert=1$
-		\item Show that no $M\neq 0$ exists such that $\{M,\sigma_\alpha\}=0$ for all $\sigma_\alpha$
+		\item Write down the Hamiltonian for the Neutron. Write down the time-dependent Schrödinger equation for the state of the Neutron and show it can be decomposed into two similar equations for $\psi_\pm$
+		\item Show that if $\ket{\psi(t)}$ is of the form in the previous question then 
+		\begin{equation*}
+			\diff*{\ins{\int\left\lvert\psi_\pm(\vec r, t)\right\rvert\dd \vec r}}{t} = 0
+		\end{equation*} What can we deduce for the probability to measure $\mu_z = \pm\mu_0$
+		\item Long question I won't copy
+		\item Use Ehrenfest's theorem to find $\diff*{\left\langle\vec r\right\rangle_\pm}{t}$ and $\diff*{\left\langle\vec p\right\rangle_\pm}{t}$. Solve the resulting system of equations and find the time development for both. Give a physical interpretation for the result and explain why the original beam splits into two beams.
+		\item What is the distance D between the two marks on the screen when $L=1m$? Assume $L\gg D$. What is the ratio of the lengths $D$ and the Neutron's radius?
 	\end{enumerate}
 \end{colbox}
 
+\subsection{Hamiltonian}
+
+As we know the Hamiltonian is
+
+\begin{equation}
+	H = \frac{p^2}{2m}-\vec\mu\cdot\vec B = \frac{p^2}{2m}\mathds{1}-\mu_0\ins{B_0+bz}\sigma_z
+\end{equation}
+
+And the time-dependent Schrödinger equation is
+
+\begin{equation}
+	i\hbar \diff*{\ket{\psi(t)}}{t} = H\ket{\psi(t)}
+\end{equation}
+
+If we replace the generic wave equation with the vector wave equation from question 1 then the ODE that is the Schrödinger equation becomes two:
+
+\begin{equation}
+	i\hbar \diff*{\psi(\vec r,t)\pmat{\alpha_+\\\alpha_-}}{t} = H_\pm\ket{\psi(t)} = -\frac{\hbar^2}{2m}\nabla^2\psi_\pm\mp\mu_0\ins{B_0+bz}\psi_\pm
+\end{equation}
+
+The $\mp$ appearing because of the inverted magnetic moment.
+
+\subsection{Integral Derivative}
+
+Since $\ket{\psi(t)}$ is of the form $\ket{\psi(\vec r,t)}=\psi(\vec r,t)\pmat{\alpha_+\\\alpha_-}$, then 
+
+\begin{equation}
+	\int\left\lvert\psi_\pm(\vec r,t)\right\rvert\dd \vec r = \left\lvert\alpha_\pm\right\rvert^2
+\end{equation}
+
+then it is a constant and therefore also not time-dependent, which gives us the needed identity. This expression is also the same as the probability of measuring $\mu_\pm$, which means the probabilities of those are also constant.
+
+\subsection{Part 3}
+
+From the structure of the integral we can tell that this is some kind of observation value. The values noted represent the probability of finding the particle in a certain position.
+
+\subsection{Time Development}
+
+Recalling Ehrenfest's Theorem:
+
+\begin{equation}
+	i\hbar \diff*{\langle\vec\mu\rangle}{t} = \left\langle[H,\vec\mu]\right\rangle
+\end{equation}
+
+then (shortening $\vec p_\pm$ to $p$)
+
+\begin{align}
+	\diff*{\left\langle\vec r_\pm\right\rangle}{t} &= -\frac{i}{\hbar}\left\langle[H,\vec r]\right\rangle\\
+	&= -\frac{i}{\hbar} \int\psi^*[H,\vec r]\psi\dd \vec r\\
+	&= -\frac{i}{\hbar} \int\psi^*[\frac{p^2}{2m},\vec r]\psi\dd \vec r\\
+	&= -\frac{i}{2m\hbar} \int\psi^*[p^2,\vec r]\psi\dd \vec r
+\end{align}
+
+where
+
+\begin{align}
+	[p^2,r] &= p^2r-rp^2\\
+	&= ppr-rpp\\
+	&= p(rp-(rp-pr))-(pr-(pr-rp))p\\
+	&= p(rp-[r,p])-(pr-[p,r])p\\
+	&= prp-p[r,p]-prp+[p,r]p\\
+	&= 2i\hbar p
+\end{align}
+
+therefore
+
+\begin{align}
+	-\frac{i}{2m\hbar} \int\psi^*[p^2,\vec r]\psi\dd \vec r &= \frac{1}{m}\int\psi^*p\psi\dd \vec r\\
+	&= \frac{\langle \vec p_\pm\rangle}{m}
+\end{align}
+
+and
+
+\begin{align}
+	\diff*{\langle\vec p_\pm\rangle}{t} &= -\frac{i}{\hbar}\langle[H,\vec p_\pm]\rangle\\
+\end{align}
+
+we notice immediately that 
+
+\begin{align}
+	\diff*{\langle p_x\rangle}{t} = \diff*{\langle p_y\rangle}{t} = 0
+\end{align}
+
+and now
+
+\begin{align}
+	\diff*{\langle p_{z\pm}\rangle}{t} &= -\frac{i}{\hbar}\int\psi^*[H,p_{z\pm}]\psi\dd\vec r\\
+	&= -\frac{i}{\hbar}\int\psi^*[-\mu_0bz,p_{z\pm}]\psi\dd\vec r\\
+	&= \frac{i\mu_0b}{\hbar}\int\psi^*[z,p_{z\pm}]\psi\dd \vec r\\
+	&= -\mp\mu_0b\int \psi^*\psi\dd \vec r\\
+	&= \pm\mu_0b
+\end{align}
+
+Therefore
+
+\begin{align}
+	\vec p_\pm = \pmat{p_0\\0\\\pm\mu_0bt} && \vec r = \pmat{0\\0\\\frac{\pm\mu_0bt^2}{2m}}
+\end{align}
+
+\subsection{Finding D}
+
+\begin{align}
+	D &= \langle z_+ \rangle - \langle z_- \rangle = \frac{\mu_0bt^2}{m} = \frac{\mu_0bL^2}{mv^2} = \frac{\mu_0bL^2}{2E}\\
+	= [\text{inserting the numbers into a calculator}] &= 
+\end{align}

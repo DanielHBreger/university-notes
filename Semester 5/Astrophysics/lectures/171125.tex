@@ -53,6 +53,17 @@ then it looks like
 
 % INSERT FIGURE
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[xlabel=$E$, ylabel=$f$, ymin=0, ymax=2, xmin=0, xmax=2]
+			\addplot[domain=0:2, color=blue]{x^8};\addlegendentry{H}
+			\addplot[domain=0.01:2, color=red]{1/(x^8)};\addlegendentry{He}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{The portion of mass of the universe by element in the universe's early times.}
+\end{figure}
+
 and the peak is found at
 
 \begin{equation}
