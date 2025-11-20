@@ -1,5 +1,74 @@
 \clearpage
 \section{Question 3}
 \begin{colbox}
-
+	We'll look at the following time-dependent hamiltonian:
+	\begin{equation*}
+		H(t) = \frac{\ins{P+mv}^2}{2m}+\frac{1}{2}m\omega^2\ins{X-vt}^2-\frac{1}{2}mv^2
+	\end{equation*}
+	where $X,P$ are canonically conjugate operators with $[X,P]=i\hbar\mathds{1}$ and $m,v,\omega \in \mathds{R}$.
+	\begin{enumerate}
+		\item Find a time-independent hamiltonian using the operator $S(t) = e^{\frac{i}{\hbar}vtP}$.
+		\item Explain the physical meaning to the operator $S(t)$ and of the result.
+	\end{enumerate} 
 \end{colbox}
+
+\subsection{Eliminating Time-Dependence}
+
+As we know, given an operator $S(t)$ (not necessarily the one given in the question) and a time-dependent hamiltonian $H$, we can get a time-independent hamiltonian by
+
+\begin{equation}
+	H_S(t) = i\hbar\diff{S}{t}S^\dagger(t)+S(t)H(t)S^\dagger(t)
+\end{equation}
+
+We'll check if the operator we were given gives us the required result
+
+\begin{align}
+	i\hbar\diff{S}{t}S^\dagger(t) &= i\hbar\cdot\frac{i}{\hbar}vPS(t)S^\dagger(t)\\
+	&= -vP
+\end{align}
+
+\begin{align}
+	S(t)H(t)S^\dagger(t) &= S(t)\ins{\frac{\ins{P+mv}^2}{2m}+\frac{1}{2}m\omega^2\ins{X-vt}^2-\frac{1}{2}mv^2}S^\dagger(t)
+\end{align}
+
+We can immediately see that the first and last elements will be zero (S is a function of P and thus commutates with P, the last element is a constant) therefore
+
+\begin{align}
+	S(t)H(t)S^\dagger(t) &= S(t)\ins{\frac{1}{2}m\omega^2\ins{X-vt}^2}S^\dagger(t)\\
+	&= S(t)\ins{\frac{1}{2}m\omega^2\ins{X^2-2vtX+v^2t^2}}S^\dagger(t)\\
+	&= \frac{1}{2}m\omega^2\ins{S(t)\ins{X^2-2vtX+v^2t^2}S^\dagger(t)}\\
+	&= \frac{1}{2}m\omega^2 \ins{\ins{X^2-2vtX+v^2t^2}S(t)S^\dagger(t)-[X^2-2vtX+v^2t^2,S(t)]S^\dagger(t)}\\
+	&= \frac{1}{2}m\omega^2 \ins{\ins{X^2-2vtX+v^2t^2}-[X^2-2vtX+v^2t^2,S(t)]S^\dagger(t)}
+\end{align}
+
+To continue we calculate:
+
+\begin{align}
+	[X,S] &= \left[X,\exp\left(\frac{i}{\hbar}vtP\right)\right]\\
+	&= \comm{X,P}\cdot\frac{i}{\hbar}vt\exp\left(\frac{i}{\hbar}vtP\right)\\
+	&= -vtS(t)
+\end{align}
+
+and
+
+\begin{align}
+	\comm{X^2,S} &= X\comm{X,S}+\comm{X,S}X\\
+	&= -vt\ins{XS(t)+S(t)X}\\
+	&= -vt\ins{2XS(t)+\comm{S,X}}\\
+	&= -vt\ins{2XS(t)+vtS(t)}\\
+	&= -2vtXS(t)-v^2t^2S(t)
+\end{align}
+
+therefore
+
+\begin{align}
+	S(t)H(t)S^\dagger(t) &= \frac{1}{2}m\omega^2 \ins{\ins{X^2-2vtX+v^2t^2}-[X^2-2vtX+v^2t^2,S(t)]S^\dagger(t)}\\
+	&= \frac{1}{2}m\omega^2 \ins{\ins{X^2-2vtX+v^2t^2}-\ins{-2vtXS(t)+v^2t^2S(t)}S^\dagger(t)}\\
+	&= \frac{1}{2}m\omega^2 X^2
+\end{align}
+
+Which is indeed time-independent.
+
+\subsection{Physical Meaning}
+
+The hamiltonian looked like it is of a harmonic oscillator which is moving at a certain velocity too. The operator S brought the hamiltonian back to the form of a stationary harmonic oscillator. This likely means the operator S is a galileo transformation operator. The result means that we can solve the hamiltonian for the system in its own rest frame when possible (at least classically, special relativity is probably more complex)
