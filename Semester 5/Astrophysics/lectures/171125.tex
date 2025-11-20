@@ -51,14 +51,13 @@ to figure out which particles are most responsible for the fusion process, the h
 
 then it looks like
 
-% INSERT FIGURE
-
-\begin{figure}
+\begin{figure}[!htb]
 	\centering
 	\begin{tikzpicture}
-		\begin{axis}[xlabel=$E$, ylabel=$f$, ymin=0, ymax=2, xmin=0, xmax=2]
-			\addplot[domain=0:2, color=blue]{x^8};\addlegendentry{H}
-			\addplot[domain=0.01:2, color=red]{1/(x^8)};\addlegendentry{He}
+		\begin{axis}[xlabel=$E$, ylabel=$f$, ymin=0, ymax=2, xmin=0, xmax=2, ticks=none]
+			\addplot[domain=0:2, color=blue]{x^2};
+			\addplot[domain=0:2, color=red]{(2-x)^2)};
+			\addplot[domain=0:2, color=black, samples=100]{1.5*e^(-5*((x-1)^2))};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{The portion of mass of the universe by element in the universe's early times.}
@@ -88,11 +87,17 @@ a power law approximation for this would look like
 	r_{xi} \approx An^2T^\beta
 \end{equation}
 
-Why do we do this? Often in astrophysics we look at relationships between values of parameters which span very large ranges, often entire orders of magnitude. for this reason instead of plotting regular linear graphs, we use log-log graphs.
+\begin{wrapfigure}[24]{r}{0pt}
+	\begin{tikzpicture}
+		\begin{axis}[xlabel=$\log(T)$, ylabel=$\log(r)$, ymin=0, ymax=2, xmin=0, xmax=2, ticks=none]
+			\addplot[domain=0:2, color=blue]{x^(1/2)};
+			\addplot[domain=0:2, color=red]{x/2+0.5};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{The portion of mass of the universe by element in the universe's early times.}
+\end{wrapfigure}
 
-% INSERT FIGURE
-
-If we take a taylor series at some point and look at the first order it's a linear function. A linear line on a log-log graph fits a function of the form $T^\beta$. Back to the case of our Sun
+Why do we do this? Often in astrophysics we look at relationships between values of parameters which span very large ranges, often entire orders of magnitude. for this reason instead of plotting regular linear graphs, we use log-log graphs. If we take a taylor series at some point and look at the first order it's a linear function. A linear line on a log-log graph fits a function of the form $T^\beta$. Back to the case of our Sun
 
 \begin{align}
 	r_{xi} = An_in_xf(T) = A\rho_i\rho_x T^\beta
@@ -100,9 +105,9 @@ If we take a taylor series at some point and look at the first order it's a line
 
 and if we define
 
-\begin{equation}
+\begin{align}
 	x_i = \frac{\rho_i}{\rho} && x_x = \frac{\rho_x}{\rho}
-\end{equation}
+\end{align}
 
 then
 
@@ -168,7 +173,11 @@ which gives us
 
 \subsection{Diffusion of Photons}
 
-% INSERT FIGURE
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/Example-of-Compton-scattering-Brownian-motion-Random-walk-of-a-photon.png}
+	\caption{Example of Compton scattering Brownian motion (Random walk) of a photon.}
+\end{figure}
 
 Suppose we have a star and inside a photon is created in the middle and moves around inside until it reaches the outside. This process is called a random walk. Each step is of length $\lambda$ and the star's radius is $R$. 
 

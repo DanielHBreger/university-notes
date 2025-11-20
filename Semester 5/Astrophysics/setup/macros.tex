@@ -73,7 +73,8 @@
 \newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-\renewcommand{\vec}[2]{\ensuremath{\mathbf{#1}}}
+%\renewcommand{\vec}[2]{\ensuremath{\mathbf{#1}}}
+\let\vec\mathbf
 
 \DeclareSymbolFont{starfontsym}{OT1}{sts}{m}{n}
 \DeclareMathSymbol{\mathSun}{\mathord}{starfontsym}{115}
