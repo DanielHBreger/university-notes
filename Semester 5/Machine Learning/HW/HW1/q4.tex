@@ -1,0 +1,27 @@
+\clearpage
+\section{Neural Network Regression Implementation}
+
+The implementation for this is found in the included file \textbf{q4.ipynb}. This section will cover the discussion on comparison between the NN estimator and the linear regression.
+
+For personal curiosity reasons we ran multiple NN architectures to see the effects of different depths and layer sizes. Of all the runs which can be found in detail in the jupyter notebook, the better performing ones all were similar in size and depth.
+
+\begin{table}[hbt]\label{comparisons}
+\centering
+  \begin{tabular}{l|c}
+   Method & MSE \\
+    \hline
+   Linear Regression & 0.524 \\
+   NN (8-32-32-1) & 0.270 \\
+   NN (8-32-16-1) & 0.276 \\
+   NN (8-16-16-16-1) & 0.275
+  \end{tabular}
+  \caption{Different estimators for mean house value used on the scikit-learn California housing dataset and their mean square error. Neural Networks are designated NN and their architecture is described in parentheses with the first number being the input layer size and the final number the output layer size. The linear regression MSE was taken for the entire dataset while for the NN it was taken for the test dataset portion.}
+\end{table}
+
+As can be seen from table \ref{comparisons}, the linear regression performed significantly worse than the neural networks. As we know from estimation theory, the MSE of an estimator can be written as
+\begin{equation}
+	MSE = \text{Var}+\text{Bias}^2
+\end{equation}
+which for linear regression is more strongly affected by the bias, as it is not strongly affected by small changes in the data, since it can't approximately non-linear relationships in the data. For neural networks, the bias tends to be lower as they can fit data with more complex relationships but is more perceptible to variance increasing the MSE, such as in the case of overfitting.
+
+Looking at the model NN (8-32-64-16-1) in the jupyter notebook we can see that it achieved a final training loss of $0.208$ but its test loss was $0.281$. This difference of 35\% is quite significant and indicates possible overfitting. Additionally, model NN (8-262144-1) exhibited unstable behavior with its loss fluctuating wildly. In comparison, the best models' test loss was similar to their training and evaluation losses.
