@@ -14,3 +14,216 @@
 		\item Show that $\hat\lambda_{ML}$ achieves the CRLB and hence is an effective estimator.
 	\end{enumerate}
 \end{colbox}
+
+\subsection*{1. Maximum Likelihood Estimator}
+
+Let \(X_1,\dots,X_n\) be i.i.d.\ samples from the exponential distribution
+
+\[
+f(x;\lambda) = \lambda e^{-\lambda x}, \qquad x \ge 0,\ \lambda > 0.
+\]
+
+The likelihood function is
+
+\[
+L(\lambda)
+= \prod_{i=1}^n \lambda e^{-\lambda x_i}
+= \lambda^n e^{-\lambda\sum_{i=1}^n x_i}.
+\]
+
+The log-likelihood is
+
+\[
+\ell(\lambda)
+= n\log \lambda - \lambda \sum_{i=1}^n x_i.
+\]
+
+Differentiating with respect to \(\lambda\),
+
+\[
+\frac{\partial \ell}{\partial \lambda}
+= \frac{n}{\lambda} - \sum_{i=1}^n x_i.
+\]
+
+Setting the derivative equal to zero,
+
+\[
+\frac{n}{\lambda} = \sum_{i=1}^n x_i
+\qquad \Longrightarrow \qquad
+\hat{\lambda}_{ML} = \frac{n}{\sum_{i=1}^n x_i}
+= \frac{1}{\bar X}.
+\]
+
+Since the second derivative is
+
+\[
+\frac{\partial^2 \ell}{\partial \lambda^2}
+= -\frac{n}{\lambda^2} < 0,
+\]
+
+the solution is indeed a maximum. Hence
+
+\[
+\boxed{\hat{\lambda}_{ML} = \dfrac{1}{\bar X}}.
+\]
+
+\subsection*{2. Fisher Information}
+
+For one observation,
+
+\[
+\log f(X;\lambda) = \log \lambda - \lambda X.
+\]
+
+The first derivative is
+
+\[
+\frac{\partial}{\partial \lambda} \log f(X;\lambda)
+= \frac{1}{\lambda} - X,
+\]
+
+and the second derivative is
+
+\[
+\frac{\partial^2}{\partial \lambda^2} \log f(X;\lambda)
+= -\frac{1}{\lambda^2}.
+\]
+
+Thus the Fisher information for one sample is
+
+\[
+I_1(\lambda)
+= -\mathbb{E}\!\left[
+\frac{\partial^2}{\partial \lambda^2} \log f(X;\lambda)
+\right]
+= \frac{1}{\lambda^{2}}.
+\]
+
+For \(n\) independent samples,
+
+\[
+I_n(\lambda) = n I_1(\lambda)
+= \frac{n}{\lambda^{2}}.
+\]
+
+Therefore
+
+\[
+\boxed{I(\lambda) = \dfrac{n}{\lambda^2}}.
+\]
+
+\subsection*{3. Cramér--Rao Lower Bound}
+
+The Cramér--Rao inequality states that for any unbiased estimator \(\hat{\lambda}\),
+
+\[
+\mathrm{Var}(\hat{\lambda})
+\ge \frac{1}{I_n(\lambda)}
+= \frac{1}{n/\lambda^{2}}
+= \frac{\lambda^2}{n}.
+\]
+
+Hence the CRLB is
+
+\[
+\boxed{\mathrm{Var}(\hat{\lambda}) \ge \dfrac{\lambda^2}{n}}.
+\]
+
+\subsection*{4. Asymptotic Efficiency of the Maximum Likelihood Estimator}
+
+Let \(S = \sum_{i=1}^n X_i\). Since the exponential distribution is memoryless, \(S\) has a Gamma\((n,\lambda)\) distribution with density
+
+\[
+f_S(s) = \frac{\lambda^n}{(n-1)!} s^{n-1} e^{-\lambda s}, \qquad s > 0.
+\]
+
+The MLE can be written as
+
+\[
+\hat{\lambda}_{ML} = \frac{n}{S}.
+\]
+
+\subsubsection*{Bias computation}
+
+We compute
+
+\[
+\mathbb{E}\!\left( \frac{1}{S} \right)
+= \frac{\lambda^n}{(n-1)!}
+\int_0^\infty s^{n-2} e^{-\lambda s}\,ds.
+\]
+
+Using the Gamma integral
+
+\[
+\int_0^\infty s^{k-1} e^{-\lambda s}\,ds = \frac{\Gamma(k)}{\lambda^{k}},
+\]
+
+we obtain
+
+\[
+\mathbb{E}\!\left( \frac{1}{S} \right)
+= \frac{\lambda}{n-1}.
+\]
+
+Thus
+
+\[
+\mathbb{E}(\hat{\lambda}_{ML})
+= n \, \mathbb{E}\!\left( \frac{1}{S} \right)
+= \lambda \frac{n}{n-1}.
+\]
+
+The estimator is slightly biased for finite \(n\), but the bias vanishes as \(n\to\infty\).
+
+\subsubsection*{Variance computation}
+
+Similarly,
+
+\[
+\mathbb{E}\!\left( \frac{1}{S^2} \right)
+= \frac{\lambda^n}{(n-1)!}
+\int_0^\infty s^{n-3} e^{-\lambda s}\,ds
+= \frac{\lambda^{2}}{(n-1)(n-2)}.
+\]
+
+Therefore
+
+\[
+\mathrm{Var}\!\left( \frac{1}{S} \right)
+= \frac{\lambda^{2}}{(n-1)(n-2)}
+- \left( \frac{\lambda}{n-1} \right)^{2}
+= \frac{\lambda^{2}}{(n-2)(n-1)^2}.
+\]
+
+Since \(\hat{\lambda}_{ML}=n/S\),
+
+\[
+\mathrm{Var}(\hat{\lambda}_{ML})
+= n^{2}\mathrm{Var}\!\left( \frac{1}{S} \right)
+= \frac{\lambda^{2} n^{2}}{(n-2)(n-1)^{2}}.
+\]
+
+As \(n \to \infty\),
+
+\[
+\mathrm{Var}(\hat{\lambda}_{ML})
+\longrightarrow \frac{\lambda^{2}}{n}.
+\]
+
+\subsubsection*{Conclusion}
+
+The CRLB is \(\lambda^{2}/n\), and the variance of the MLE satisfies
+
+\[
+\mathrm{Var}(\hat{\lambda}_{ML}) \sim \frac{\lambda^{2}}{n}
+\qquad \text{as } n\to\infty.
+\]
+
+At the same time, the bias of the MLE tends to zero. Hence the MLE achieves the Cramér--Rao bound asymptotically and is therefore an asymptotically efficient estimator.
+
+\[
+\boxed{
+\hat{\lambda}_{ML} \text{ is asymptotically efficient.}
+}
+\]
