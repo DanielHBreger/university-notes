@@ -56,7 +56,7 @@ in particular, near the phase transition ($a\approx 0$), $\xi$ diverges. Additio
 
 \subsection{The Mermin-Wagner(-Hohenberg) Theorem}
 
-So far we dealt with spatial change of a binary order parameter $p$, like spin, such that $\vec p == p\hat y$ but in a more general case $\vec p == p(\cos\theta,\sin\theta)$ and $\theta$ can change continuously. We'll notice that
+So far we dealt with spatial change of a binary order parameter $p$, like spin, such that $\vec{p} = p\hat y$ but in a more general case $\vec{p} = p(\cos\theta,\sin\theta)$ and $\theta$ can change continuously. We'll notice that
 
 \begin{equation}
 	F_p = \frac{a}{2}\lvert\vec p\rvert\rvert^2+\frac{b}{4}\lvert\vec p\rvert\rvert^4
@@ -80,7 +80,7 @@ Looking at a configuration such as
 
 % INSERT FIGURE 1
 
-How much free energy does it cost to create a continuous change in $\theta$ in a system of dimension $d$ with characteristic length $L$? From dimensional considerations $\nabla^2 \sim L^{-2}$ and $\int\dd \vec r \sim \sim L^d$ therefore $F\sim L^{d-2}$. For a large L and $d\leq 2$ the cost is low. Therefore change in $\theta$ will happen in a spontaneous manner from thermal 	fluctuations at $T>0$.
+How much free energy does it cost to create a continuous change in $\theta$ in a system of dimension $d$ with characteristic length $L$? From dimensional considerations $\nabla^2 \sim L^{-2}$ and $\int\dd \vec{r} \sim \sim L^d$ therefore $F\sim L^{d-2}$. For a large L and $d\leq 2$ the cost is low. Therefore change in $\theta$ will happen in a spontaneous manner from thermal 	fluctuations at $T>0$.
 
 A couple notes
 
@@ -133,21 +133,21 @@ We'll section a body into small but macroscopic parts with mass, energy, and mom
 In a closed system the angular and linear momenta are conserved:
 
 \begin{align}
-	\sum\limits_i \vec p__i = const. && \sum\limits_i \vec r__i \times \vec p__i = const.
+	\sum\limits_i \vec{p_i} = const. && \sum\limits_i \vec{r_i} \times \vec{p_i} = const.
 \end{align}
 
 In thermal equilibrium the entropy is maximized while conforming to the constraints.
 
 \begin{align}
-	0 &= \diffp*{}{\vec p__i}\sum\limits_j \left[S_j\left(E_j-\frac{p_j^2}{2m_j}\right)+\vec a \cdot\cdot \vec p__j + \vec b \cdot\cdot \left(\vec r__i\times \vec p__j\right)\right]\\
-	&= -\frac{1}{T}\frac{\vec p__i}{m_i}+\vec a ++ \vec b \times\times \vec r__i\\
-	&\rightarrow \vec v__i = \vec u ++ \vec\Omega \times\times \vec r__i
+	0 &= \diffp*{}{\vec{p_i}}\sum\limits_j \left[S_j\left(E_j-\frac{p_j^2}{2m_j}\right)+\vec a \cdot \vec p_j + \vec b \cdot \left(\vec r_i\times \vec p_j\right)\right]\\
+	&= -\frac{1}{T}\frac{\vec p_i}{m_i}+\vec a + \vec b \times \vec r_i\\
+	&\rightarrow \vec v_i = \vec u + \vec\Omega \times \vec r_i
 \end{align}
 
 where
 
 \begin{align}
-	\vec u_ = T \cdot \vec a_ && \vec \Omega_ = T \cdot \vec b_
+	\vec u = T \cdot \vec a && \vec \Omega = T \cdot \vec b
 \end{align}
 
 \subsection{Detailed Balance \& Time Reversal Symmetry}
