@@ -1,0 +1,59 @@
+\subsubsection{Order Parameter Near Critical Points (Type 2 Transition)}
+If we look at the Ginzburg-Landau free energy
+\begin{equation}
+	F = \int d\vec r \ins{\frac{a}{2}\phi^2 + \frac{b}{4}\phi^4+\frac{K}{2}\ins{\vec\nabla \phi}^2}
+\end{equation}
+near the critical point ($a=0$) $\phi = 0$ and the free energy almost does not change with $\phi$, similarly to the soft mode. The slowing down of the dynamics near a critical point is called \emph{critical slowing down}.
+
+\section{Hydrodynamic Theory For Polar Active Matter On a Surface (Toner Tu, 1995)}
+As a reminder, a polarization field is
+\begin{equation}
+	\vec P = \langle \vec n \rangle
+\end{equation}
+what are the slow parameters?
+\begin{description}
+	\item[Mass / Number of Particles] are a conserved quantity
+	\item[Momentum?] NO! Since we're interacting with a surface there is friction, thus momentum is not conserved.
+	\item[The direction $\frac{\vec P}{\lvert\vec P\rvert}$] is a soft mode.
+	\item[$\vert\vec P\rvert$] is a slow parameter near the critical points if $P$ changes continuously in phase transition.
+\end{description}
+We'll write equations for $\rho$ and $\vec P$ as if they were passive and add phenomenology of active elements. Active matter on a surface is called "dry". Later in the course we'll deal with "wet" active matter too in which the particles are in a liquid medium and there is conservation of momentum.
+\subsection{Equations for Density}
+\begin{align}
+	\diffp{\rho}{t} = -\vec\nabla\cdot\vec j && \vec j = -\gamma_\rho \vec\nabla \frac{\delta F}{\delta\rho}+\rho v_0\vec P \quad \gamma_\rho > 0
+\end{align}
+where $\frac{\delta F}{\delta\rho}$ is the chemical potential and $\rho v_0\vec P$ is the active current element which is equivalent to assuming speed $v\hat n$ for each particle in the absence of gradients. How did we define this element? We need to find a vector, and the only vectors in the system are $\vec P$ and $\vec\nabla$. In the hydrodynamic limit $\vec\nabla \sim L^{-1}$ and is small in comparison to $\vec P$. In addition, many gradient element can be found from the passive element.
+\subsection{Equation for Polarization}
+\begin{equation}
+	\diffp{\vec P}{t} + \lambda_1\ins{\vec P\cdot\vec\nabla}\vec P = -\gamma_P \frac{\delta F}{\delta \vec P}
+\end{equation}
+where $\lambda_1\ins{\vec P\cdot\vec\nabla}\vec P$ is an element added which is similar to the advection element in Navier-Stokes ($\diff*{\vec u(t,\vec x)}{t} = \partial_t\vec u + \ins{\vec v \cdot \vec \nabla}\vec u$). In an active system $\vec P$ plays a double role of both an order parameter and of the velocity such that its equation is similar to NS. Why didn't we choose other elements? Elements without derivatives can be found from $\frac{\delta F}{\delta \vec P}$. Other elements with first order derivatives we can also find from F. $\lambda_1$ is a phenomenological element and doesn't necessarily satisfy $\lambda_1=v_0$ like in NS. This is because there is no conservation of momentum or Galileo invariance.
+\subsection{Isotropic-Polar Transition (Flocking Transition)}
+If we look at a homogenous system, the equation for $\vec P$ is equivalent to a passive system. The isotropic-polar transition will be determined by the form of the free energy. We'll write down free energy like in Landau theory where the density is the critical parameter:
+\begin{equation}
+	F = \int d\vec r \ins{\frac{a}{2}\ins{1-\frac{\rho}{\rho_c}}P^2+\frac{b}{4}P^4+\dots} \quad b>0
+\end{equation}
+\begin{description}
+	\item[for $\rho < \rho_c$] a minimum F at $P=0$ and the system is isotropic.
+	\item[for $\rho \geq \rho_c$] we'll find a minimum $P_0=\sqrt{\frac{-a}{b}}$ and then the system is polar.
+\end{description}
+
+% FIGURE
+
+In a more general manner the transition can be described depending on the density and the effective temperature $T$. In hydrodynamic theory, F will include a contribution from an ordering interaction like in the XY model, in which case $1/T$ acts as the strength of the interaction. In the Vicsek model, T is tied to the strength of the noise in determining the direction of the particles.
+\subsection{What's Special About the Active System?}
+Coexistence has special dynamics of traveling bands. Additionally, the stability of the polar phase is different to that of a passive system. In particular, in contradiction of the MW theorem there can be long range order which breaks continuous symmetry in 2D. How is this possible? First, this is a system out of equilibrium, so the theorem doesn't apply. In as simple terms as possible, we'll explain how the polar phase is stable thanks to the active advection element ($\lambda_1\ins{\vec P\cdot\vec\nabla}\vec P$).
+
+We'll analyze the instability in a passive system in a new way. We'll assume an ordered system with $\theta=0$ and a point deviation at $\vec r=0$ to the angle $\delta\theta$. Since it's a soft mode, the deviation decays diffusively ($\partial_t\delta\theta \sim \nabla^2\delta\theta$). In d dimensions at time $\tau$, the deviation is "smeared" over the volume $V_e \sim \tau^{d/2}$. Deviations are constantly created, so at time $\tau$ there are
+\begin{equation}
+	n_e \sim V_e\cdot\tau\sim\tau^{1+d/2}
+\end{equation}
+deviations in the volume. The deviations are in random directions. From the central limit theorem, the standard deviation satisfies
+\begin{equation}
+	\Omega_e \sim \sqrt{n_e}\sim\sqrt{\tau V_e}
+\end{equation}
+and the average deviation per particle is
+\begin{equation}
+	\Delta\theta\sim\frac{\Omega_e}{V_e}\sim\sqrt{\frac{\tau}{V_e}}\sim r^{1-d/2}
+\end{equation}
+where $r\sim\sqrt{\tau}$, and in the thermodynamic limit $r$ is large. We found $\Delta\theta$ is insignificant for $d>2$, and grows with the system's size for $d<2$. The case $d=2$ is marginal and gives $\Delta\theta\sim l_nL$. This is similar to the calculation at equilibrium. It is important that the order is continuous because noise causes small fluctuations, in contrast to domain wall energy.

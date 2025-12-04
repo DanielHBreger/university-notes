@@ -1,0 +1,151 @@
+\subsubsection{Example: Movement on a 1D lattice}
+
+Let's look at a 1-dimensional lattice with $N$ sites such that the probability to be at each site is $1/N$. For a random walk (such as diffusion)
+
+\begin{equation}
+	W_{i,i+1} = W_{i+1,i}
+\end{equation}
+
+since the probability of moving in either direction is equal. This results in a detailed balance. Next let's assume an active particle with a "positive spin" (i.e it moves to the right), therefore
+
+\begin{equation}
+	W_{i,i+1} > W_{i+1,i}
+\end{equation}
+
+and as a result there is no detailed balance. It is possible to connect the rate $W_{i,i+1}$ compared to $W_{i+1,i}$ to the difference between a step forward or backwards in time. Therefore systems with time reversal symmetry also are in detailed balance.
+
+\subsubsection{Time Reversal Symmetry}
+
+Systems in Equilibrium are symmetric to time reversal. If we watch a video of their dynamics and run it backwards, we won't feel a difference. This isn't necessarily true for active particles (like swimming fish). We'll assume a system with a hamiltonian which is a function of the momenta $p^N$ (e.g $H=\sum\limits_i\frac{p^2}{2m}+U(\vec r)$) and that there is no magnetic field or global rotation which will add linear elements to the momenta. The dynamics of this system are given by Hamilton's equations:
+
+\begin{align}
+	\diff{r_k}{t} = \diffp{H}{p_k} && \diff{p_k}{t} = -\diffp{H}{r_k}
+\end{align}
+
+Since $H$ is an even function w.r.t $p$, $\diffp{H}{p_k}$ is odd. Looking at
+
+\begin{align}
+	t = -\overline{t} && r_k = \overline{r_k} && p_k = -\overline{p_k}
+\end{align}
+
+we see that we'll get the same equations for $\overline{t}, \overline{r_k}, \overline{p_k}$. What does this mean? Assume we start moving in phase space at the point $(r^N,p^N)$. After any time period $\tau$ we'll reach the point $(r^{N'},p^{N'})$. Next we'll start at the point $(r^{N'},p^{N'})$, and after another time period $\tau$ we'll reach $(r^N,p^N)$. This is called time reversal symmetry.
+
+When there is no time reversal symmetry the system is out of equilibrium. For example, looking at an active particle in 2D with velocity
+
+\begin{align}
+	\diff{\vec r_k}{t} = v(\cos\theta_k,\sin\theta_k)
+\end{align}
+
+where $\theta$ is a random variable distributed between $0$ and $2\pi$. When we reverse time, the left side of the equation will inverse but the right side won't.
+
+\newpage
+\subsection{The Fluctuation Dissipation Theorem}
+
+In thermal equilibrium or near it there is a fundamental connection between thermal fluctuations and the reaction to external forces, and it's called the FDT (Fluctuation-Dissipation Theorem). It has many versions and many implications and it is one of the most important and useful results in statistical mechanics. The connection between spontaneous fluctuations and reactions to external disturbances was identified by Lars Onsager, and he received the 1968 Nobel prize in chemistry for it (Onsager's regression hypothesis)
+
+\subsubsection{Static Version (In equilibrium)}
+
+We'll assume a system with hamiltonian $H_0$ and we'll apply an external force $f$ with a tied field $x$ such that $H=H_0-fx$. In equilibrium:
+
+\begin{equation}
+	\langle x \rangle = \frac{\sum\limits_i x_i e^{-\beta(H_0-fx_i)}}{e^{-\beta (H_0-fx_i)}}
+\end{equation}
+
+therefore
+
+\begin{align}
+	\diffp{\langle x \rangle}{\beta f} &= \frac{\sum\limits_i x_i^2 e^{-\beta H}}{\sum\limits_i e^{-\beta H}} - \langle x \rangle \frac{\sum\limits_i e^{-\beta H} x_i}{\sum\limits_i e^{-\beta H_i}}
+\end{align}
+
+noticing the first element is the average of $x_i$ squared we get
+
+\begin{equation}
+	k_BT\diffp{\langle x \rangle}{f} = \langle x^2\rangle - \langle x \rangle^2
+\end{equation}
+
+\subsubsection{Near Equilibrium}
+
+We'll assume a system near equilibrium such that the deviation from equilibrium is linear in the field which takes it out of equilibrium. We'll assume a quantity $x$ with a time independent equilibrium average $\langle x \rangle$. Still, $x$ performs thermal fluctuations such that $\delta x(t) = x(t)-\langle x \rangle$ while $\langle \delta x \rangle = 0$. We can learn information about the system from its time correlation function:
+
+\begin{equation}
+	C(t,t') = \langle\delta x(t) \delta x(t')\rangle = [\text{in equilibrium}] = C(t-t')
+\end{equation}
+
+therefore we can write
+
+\begin{equation}
+	C(t) = \langle \delta x(0)\delta x(t) \rangle = \langle x(0)x(t)\rangle - \langle x \rangle ^2
+\end{equation}
+
+which is a generalization of the variance to include time dependence. The averages used above are for different starting conditions
+
+\begin{equation}
+	C(t) = \int \dd r^N\dd p^N \delta x(0)\delta x(t)g(r^N,p^N)
+\end{equation}
+
+in thermal equilibrium $g$ is defined by the Boltzmann distribution. Looking at a system in which a field $f$ is acting starting at $t'\rightarrow-\infty$ such that at $t=0$ the system is in thermal equilibrium with $H=H_0-fx$. We'll assume that at time $t=0$ the field is switched off. We find that
+
+\begin{equation}
+	k_BT \frac{\overline{x}(t)-\langle x \rangle}{f} = \langle x(t)x(0)\rangle -\langle x \rangle^2
+\end{equation}
+
+where $\overline{x}(t)$ is the average given by the starting conditions out of equilibrium. A full development can be found in appendix .
+
+% INSERT APPENDIX FOR DEVELOPMENT FROM MOODLE
+
+\newpage
+\subsubsection{In Terms of Reaction Function}
+
+In general
+
+\begin{equation}
+	\delta \overline{x}(t) = \int\limits_{-\infty}^\infty \dd t' \chi (t,t') f(t')
+\end{equation}
+
+where $\chi$ is a reaction function. $\chi$ is determined by the properties of the system in equilibrium (taking into consideration corrections of order f to $\delta x$) therefore $\chi(t,t') = \chi(t-t')$, there is no meaning to absolute time but only for the time since the disturbance. In addition, the disturbance only affects the future (causality). We'll define
+
+\begin{equation}
+	f(t) = \begin{cases}
+		f & t<0\\
+		0 & t \geq 0
+	\end{cases}
+\end{equation}
+
+and we found that
+
+\begin{align}
+	\langle \delta x(0)\delta x(t)\rangle &= \frac{k_BT}{f}\overline{\delta x} = \frac{k_BT}{f}\int\limits_{-\infty}^0\dd t' \chi(t-t') f\\
+	&= k_BT\int\limits_t^\infty\dd t'' \chi(t'')
+\end{align}
+
+differentiating we find
+
+\begin{equation}
+	\diff{C}{t} = -k_BT\chi(t),\;\;t\geq 0
+\end{equation}
+
+Which is a more popular formulation of the same. We'll look at yet another alternative formulation. In an experiment we can examine whether FDT happens (if the system is near thermal equilibrium) by looking at the spectrum of the response and correlation functions.
+
+\begin{align}
+	\hat C(\omega) = \int\limits_{-\infty}^{\infty}\dd t C(t)e^{i\omega t} && \hat \chi (\omega) = \int\limits_0^\infty \dd t\chi(t)e^{i\omega t} = \chi'(\omega) + i\chi''(\omega)
+\end{align}
+
+and we find
+
+\begin{equation}
+	\hat C(\omega) = \frac{2k_BT}{\omega}\hat\chi''(\omega)
+\end{equation}
+
+Why is $\hat\chi''$ dissipation? For a periodic force $f = f_0\cos(\omega t)$ we find
+
+\begin{align}
+	\chi (t) &= Re[\chi(\omega)f(\omega)e^{-i\omega t}]\\
+	&= \hat \chi'(\omega)f_0\cos\omega t+\hat\chi''(\omega)f_0\sin\omega t\\
+	&\rightarrow \dot x(t) = -f_0\hat\chi'(\omega)\cdot\omega\sin\omega t+f_0\hat\chi'\cdot\omega\cos\omega t
+\end{align}
+
+then the average dissipation in a period $T$ is
+
+\begin{equation}
+	\frac{1}{T}\int\limits_0^T\dd t f(x)\dot x(t) = \frac{1}{2}f_0^2\omega\hat\chi''(\omega)
+\end{equation}

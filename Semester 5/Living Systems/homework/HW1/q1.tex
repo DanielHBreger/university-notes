@@ -1,0 +1,50 @@
+\clearpage
+\section{Interfacial Tension}
+\begin{colbox}
+	Consider the Ginzburg-Landau free energy in 1D
+	\begin{equation}
+		F[p] = A\int dx \ins{\frac{a}{2}p^2+\frac{b}{4}p^4+\frac{K}{2}p'^2}
+	\end{equation}
+	where $A$ is the cross section (area) and where $a<0$ and $b,K>0$. The equilibrium value of $p$ in the homogenous case is $p=\pm p_{eq}$ with $p_{eq}=\sqrt{-a/b}$. Given the boundary conditions $p(x\rightarrow\pm\infty)=\pm p_{eq}$, we have found the equilibrium profile $p_0(x) = p_{eq}\tanh(x/\xi)$, where $\xi = \sqrt{2K/\lvert a \rvert}$. Calculate the interfacial tension $\gamma = \ins{F[p_0]-F[\pm p_{eq}]}/A$. Show that
+	\begin{equation}
+		\gamma = \int dx Kp_0'^2 = \sqrt{\frac{-8Ka^3}{9b^2}}
+	\end{equation}
+\end{colbox}
+First we find
+\begin{align}
+	p_0'=\diff{p_0}{x}=p_{eq}\diff{\tanh(x/\xi)}{x}=\frac{p_{eq}}{\xi\cosh^2(x/\xi)}=\frac{p_{eq}}{\xi}\sech^2(x/\xi)
+\end{align}
+therefore
+\begin{equation}
+	p_0'^2 = \frac{p_{eq}^2}{\xi^2}\sech^4(x/\xi) = -\frac{a}{b\xi^2}\sech^4(x/\xi)
+\end{equation}
+Next we directly calculate the interfacial tension
+\begin{align}
+	\gamma &= \ins{F[p_0]-F[\pm p_{eq}]}/A\\
+	&= \ins{A\int dx \ins{\frac{a}{2}p_0^2+\frac{b}{4}p_0^4+\frac{K}{2}p_0'^2} - A\int dx \ins{\frac{a}{2}p_{eq}^2+\frac{b}{4}p_{eq}^4+\frac{K}{2}p_{eq}'^2}}/A\\
+	&= \int dx\frac{a}{2}p_0^2+\frac{b}{4}p_0^4+\frac{K}{2}p_0'^2-\frac{a}{2}p_{eq}^2-\frac{b}{4}p_{eq}^4\\
+	&= \frac{1}{2}\int dx\; ap_0^2+\frac{b}{2}p_0^4+Kp_0'^2-ap_{eq}^2-\frac{b}{2}p_{eq}^4\\
+	&= \frac{1}{2}\int dx \; a\ins{p_0^2-p_{eq}^2}+\frac{b}{2}\ins{p_0^4-p_{eq}^4}+Kp_o'^2\\
+	&= \frac{1}{2}\int dx \; ap_0^2+\frac{a^2}{2b}+\frac{b}{2}p_0^4-\frac{a^2}{2b}+Kp_0'^2\\
+	&= \frac{1}{2}\int dx \; ap_0^2+\frac{b}{2}p_0^4+Kp_0'^2\\
+	&= \frac{1}{2}\int dx \; ap_{eq}^2\tanh^2(x/\xi)+\frac{b}{2}p_{eq}^4\tanh^4(x/\xi)+K\frac{p_{eq}^2}{\xi^2}\sech^4(x/\xi)\\
+	&= \frac{1}{2}\int dx \; ap_{eq}^2\ins{1-\sech^2(x/\xi)}+\frac{b}{2}p_{eq}^4\ins{1-\sech^2(x/\xi)}^2+K\frac{p_{eq}^2}{\xi^2}\sech^4(x/\xi)
+\end{align}
+\begin{align}
+	\gamma &= \frac{1}{2}\int dx \; ap_{eq}^2\ins{1-\sech^2(x/\xi)}+\frac{b}{2}p_{eq}^4\ins{1-\sech^2(x/\xi)}^2+K\frac{p_{eq}^2}{\xi^2}\sech^4(x/\xi)\\
+	&= \int dx \; ap_{eq}^2+bp_{eq}^4+p_{eq}^2\sech^2(x/\xi)\ins{\frac{K}{\xi^2}\sech^2(x/\xi)-a-bp_{eq}^2}\\
+	&= \int dx \; \frac{-a^2}{b}+\frac{a^2}{b}-\frac{a}{b}\sech^2(x/\xi)\ins{\frac{K}{\xi^2}\sech^2(x/\xi)}\\
+	&= \int dx \; -\frac{aK}{b\xi^2}\sech^4(x/\xi)\\
+	&= \int dx \; Kp_0'^2
+\end{align}
+next to find the actual value of $\gamma$ we calculate the integral itself
+\begin{align}
+	\gamma &= \int dx \; Kp_0'^2=\int dx \; -\frac{aK}{b\xi^2}\sech^4(x/\xi)\\
+	&= -\frac{aK}{b\xi^2}\int dx \; \sech^4(x/\xi)\\
+	=[u=\tanh(x/\xi)]&= -\frac{aK}{b\xi^2}\xi\int\limits_{-1}^1 du \ins{1-u^2}\\
+	&= -\frac{aK}{b\xi^2} \xi \cdot\frac{4}{3}\\
+	&= -\frac{4aK}{3b\xi}\\
+	&= -\frac{4aK}{3b\sqrt{\frac{2K}{\lvert a \rvert}}}\\
+	&= \sqrt{\frac{-8Ka^3}{9b^2}}
+\end{align}
+as required.

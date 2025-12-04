@@ -1,0 +1,58 @@
+\clearpage
+\section{FDT}
+\begin{colbox}
+	The fluctuation-dissipation theorem (FDT) related the correlation function $C(t)$ with the response function $\chi(t)$ according to
+	\begin{equation}\label{diffC}
+		\diffp{C}{t} = -k_BT\chi(t) \quad t>0
+	\end{equation}
+	we define the fourier transformations
+	\begin{align}
+		\tilde C(\omega) &= \int\limits_{-\infty}^\infty dt C(t)e^{i\omega t}\\
+		\tilde \chi(\omega) &= \int\limits_0^\infty dt \chi(t)e^{i\omega t} \equiv \tilde \chi'(\omega)+i\tilde\chi''(\omega)
+	\end{align}
+	where $\tilde\chi'(\omega)$ and $\tilde\chi''(\omega)$ are the real and imaginary parts of the transformed response function, respectively. Show that $C(t)$ is an even function and derive FDT in the frequency domain,
+	\begin{equation}
+		\tilde C(\omega) = \frac{2k_BT}{\omega}\tilde\chi''(\omega)
+	\end{equation}
+\end{colbox}
+In the lecture we saw that $C$ does not depend on the explicit times but rather only on the time that has passed, therefore we can rewrite
+\begin{equation}
+	C(t) = \langle\delta x(0)\delta x(t)\rangle \rightarrow C(t) = \langle\delta x(-t/2)\delta x(t/2)\rangle
+\end{equation}
+which we can immediately notice that, assuming the system is invariant to time reversal,
+\begin{equation}
+	C(-t) = \langle\delta x(t/2)\delta x(-t/2)\rangle = C(t)
+\end{equation}
+therefore $C$ is even. Next, we look at
+\begin{equation}
+	\diffp{C}{t} = -k_BT\chi(t) \quad t>0
+\end{equation}
+and notice that since $C$ is even w.r.t time, its first time derivative must be odd. This means $\chi$ must be odd as well and only depend on the absolute amount of time between t and 0:
+\begin{equation}
+	\diffp{C}{t} = -k_BT\chi(\lvert t \rvert)\text{sgn}(t)
+\end{equation}
+we'll take the fourier transform of the derivative
+\begin{align}
+	\int\limits_{-\infty}^\infty dt \diffp{C}{t}e^{i\omega t} &= -k_BT\int\limits_{-\infty}^\infty dt \chi(\lvert t \rvert)\text{sgn}(t)e^{i\omega t}\\
+	&= -k_BT\ins{\int\limits_0^\infty dt \chi(\lvert t \rvert)e^{i\omega t}-\int\limits_{-\infty}^0 dt \chi(\lvert t \rvert)e^{i\omega t}}\\
+	&= -k_BT\ins{\tilde\chi(\omega)-\tilde\chi(-\omega)}
+\end{align}
+since $\chi$ is real, we can use the identity $\tilde\chi(-\omega) = \tilde\chi^*(\omega)$ and find
+\begin{align}
+	\tilde\chi(\omega)-\tilde\chi(-\omega) &= \tilde\chi(\omega)-\tilde\chi^*(\omega)\\
+	&= 2i\Im(\tilde\chi(\omega))\\
+	&= 2i\tilde\chi''(\omega)
+\end{align}
+as for the other side of the equation we can use another fourier transform identity to find
+\begin{equation}
+	\int\limits_{-\infty}^\infty dt \diffp{C}{t}e^{i\omega t} = i\omega\tilde C(\omega)
+\end{equation}
+therefore
+\begin{equation}
+	i\omega\tilde C(\omega) = 2ik_BT\tilde\chi''(\omega)
+\end{equation}
+cancelling out terms we find
+\begin{equation}
+	\tilde C(\omega) = \frac{2k_BT}{\omega}\tilde\chi''(\omega)
+\end{equation}
+as required.

@@ -13,3 +13,44 @@
 		\item Discuss the limiting cases ($\alpha,\beta \rightarrow 0$) and ($\alpha,\beta \rightarrow \infty$) and interpret their effects on the posterior estimate.
 	\end{enumerate}
 \end{colbox}
+
+\subsection{MAP Estimator}
+
+We are given a prior density, therefore the posterior is
+\begin{align}
+	p(\theta\vert x) &\propto f(x\vert\theta)p(\theta)\\
+	&= \ins{\frac{x}{\theta^2}e^{-x^2/(2\theta^2)}}\ins{\frac{\beta^\alpha}{\Gamma(\alpha)}\theta^{-(\alpha+1)}e^{-\beta/\theta}}\\
+	&= x\theta^{-\ins{\alpha+3}}\frac{\beta^\alpha}{\Gamma(\alpha)}e^{-x^2/(2\theta^2)-\beta/\theta}\\
+	&\propto \theta^{-\ins{\alpha+3}}\exp\ins{-\frac{x^2}{2\theta^2}-\frac{\beta}{\theta}}
+\end{align}
+The last line being correct because $x$ and $\frac{\beta^\alpha}{\Gamma(\alpha)}$ are constants w.r.t $\theta$. For ease, we'll work with the log-posterior, and introduce the sum to cover for the n i.i.d samples (noticing we need to multiply theta's power by n too)
+\begin{equation}
+	l(\theta\vert x) = \log p(\theta\vert x) = -\ins{\alpha+2n+1}\log\theta-\frac{\sum\limits_{i=1}^N x_i^2}{2\theta^2}-\frac{\beta}{\theta}
+\end{equation}
+therefore, marking $S=\sum x_i^2$
+\begin{align}
+	\diffp{l}{\theta}=-\frac{\alpha+2n+1}{\theta}+\frac{S}{\theta^3}+\frac{\beta}{\theta^2} &\demand 0\\
+	\rightarrow \ins{\alpha+2n+1}\theta^2-\beta\theta-S &\demand 0\\
+	\rightarrow \theta_{1,2} = \frac{\beta\pm\sqrt{\beta^2+4\ins{\alpha+2n+1}S}}{2\alpha+4n+2}
+\end{align}
+$\theta$ is positive therefore we only need the positive root. Therefore the MAP estimator is 
+\begin{equation}
+	\hat\theta_{\text{MAP}} = \frac{\beta+\sqrt{\beta^2+4\ins{\alpha+2n+1}\sum x_i^2}}{2\alpha+4n+2}
+\end{equation}
+
+\newpage
+\subsection{Comparison to MLE \& Prior Parameter Influence}
+Recalling the MLE is 
+\begin{align}
+	\hat\theta_{MLE} = \sqrt{\frac{1}{2n}\sum\limits_{i=1}^nX_i^2} && \text{Bias}\ins{\hat\theta_{MLE}}=\theta\ins{\frac{1}{\sqrt{n}}\frac{\Gamma(n+\frac{1}{2})}{\Gamma(n)}-1}
+\end{align}
+
+We can notice that while the MLE estimator is strictly biased to be smaller than the real value, the MAP estimator doesn't overtly have to be. The MAP estimator will heavily depend on the prior distribution's parameters $\alpha,\beta$. If they are both quite small the MAP estimator will behave similarly to the MLE estimator, therefore will be biased to be below the real value, but with large values it will be biased to be above the real value.
+\begin{align}
+	\lim\limits_{n\rightarrow\infty} \hat\theta_{MAP} &= \lim\limits_{n\rightarrow\infty}\frac{\beta+\sqrt{\beta^2+4\ins{\alpha+2n+1}\sum x_i^2}}{2\alpha+4n+2}\\
+	&\approx \lim\limits_{n\rightarrow\infty}\frac{\sqrt{\ins{\alpha+2n+1}\sum x_i^2}}{2n}\\
+	&\approx \lim\limits_{n\rightarrow\infty}\frac{\sqrt{2n\sum x_i^2}}{2n}\\
+	&= \lim\limits_{n\rightarrow\infty}\sqrt{\frac{\sum x_i^2}{2n}}\\
+	&= \lim\limits_{n\rightarrow\infty} \hat\theta_{MLE}
+\end{align}
+We already know the MLE estimator is consistent and since the MAP estimator at infinity behaves like the MLE estimator, it too much be consistent. For this reason both are also asymptotically unbiased, as the MLE estimator's bias tends to 0 at infinity. We can see that for the case $\alpha,\beta\rightarrow0$ the MAP estimator effectively behaves just like the MLE estimator, which makes sense as that means the prior knowledge is effectively none. In the limit $\alpha,\beta\rightarrow\infty$ the effective meaning is that the prior distribution uniquely and completely determines the real value. It will mean the MAP estimator will effectively become a delta function at the real value with no variance.

@@ -1,0 +1,163 @@
+\subsection{Example: Brownian Motion \& The Einstein Relation}
+Assume a system of particles, specifically colloids (large brownian particle) which is moved with an external force $F$ in 1 dimension. The particle's motion is given by
+\begin{equation}
+	\dot x = \mu F + v_B
+\end{equation}
+where $\mu$ is the colloid's mobility, $v_B$ is the noise element of brownian motion. This noise element has the following properties
+\begin{align}
+	\langle v_B(t)\rangle = 0 && \langle v_B(t)v_B(t')\rangle = 2D\delta(t-t')
+\end{align}
+where D is the diffusion parameter. Without a force we will find
+\begin{align}
+	\langle x(t) \rangle = \int\limits_0^t\dd t' \langle v_B(t')\rangle = 0
+\end{align}
+as the expectation value of a sum is the sum of the expectation values. Additionally,
+\begin{align}
+	\langle x^2 \rangle &= \left\langle \int\limits_0^t\dd t' v_B(t')\int\limits_0^t\dd t'' v_B(t'')\right\rangle\\
+	&= \int\limits_0^t\dd t' 2D \int\limits_0^t\dd t'' \delta(t'-t'') = 2Dt
+\end{align}
+which is the same result we would find from other methods in considering a random walk. To find the response function we can notice that
+\begin{equation}
+	-w\omega \tilde x = \mu \tilde F
+\end{equation}
+therefore
+\begin{equation}
+	\tilde \chi(\omega) = \frac{i\mu}{\omega} \implies \tilde\chi'' = \frac{\mu}{\omega}
+\end{equation}
+If we compare this to the correlation function
+\begin{equation}
+	C_v(t) = \langle v_B(t)v_B(0)\rangle = 2D\delta(t) \implies \tilde C_v = 2D
+\end{equation}
+and
+\begin{equation}
+	v=\dot x \implies \tilde v = i\omega \tilde x \implies \tilde C_v(\omega) = \omega^2\tilde C_x(\omega)
+\end{equation}
+and therefore
+\begin{equation}
+	\boxed{\tilde C_x(\omega) = \frac{2D}{\omega^2}}
+\end{equation}
+and now applying the FDT
+\begin{equation}
+	\frac{2D}{\omega^2} = \frac{2k_BT}{\omega}\hat\chi''(\omega) = 2k_BT\frac{\mu}{\omega^2}
+\end{equation}
+implies
+\begin{equation}
+	\boxed{D = k_BT\mu}
+\end{equation}
+This concludes the introduction prior to discussing active matter.
+\newpage
+\section{Hydrodynamic Theory Of Polar Active Matter}
+\subsection{Hydrodynamic Theory And Slow Variables}
+The hydrodynamic theory is a continuum theory made to describe the changes in fields over large time scales and large distances. Such a theory can be developed in two main ways:
+\begin{description}
+	\item[Start From a Microscopic Model] and perform coarse-graining.
+	\item[Directly Write Macroscopic equations] based on conservation laws and symmetries. 
+\end{description}
+We will focus on the 2nd approach. Later in the course we will present a standardized method to develop such a theory from considerations of entropy production.
+\subsubsection{Slow Variables}
+We'll assume a set of fast variables $\{\psi_k\}$ and slow variables $\{\phi_i\}$ which satisfy equations of the form
+\begin{align}
+	\diffp{\psi_k}{t} &= \frac{1}{\tau_f}G_k(\{\psi_j\}, \{\phi_j\})\\
+	\diffp{\phi_i}{t} &= \frac{1}{\tau_s}F_i(\{\psi_j\},\{\phi_j\})
+\end{align}
+where $\tau_s$ and $\tau_f$ are time constants which satisfy
+\begin{align}
+	\tau_f = O(1) && \tau_s = O(L^\alpha)
+\end{align}
+with $\alpha>0$ and $L$ the size of the system. For large systems we'll find separation on time scales. For large systems we'll write
+\begin{equation}
+	G_k(\{\psi_j\}, \{\phi_j\}) = 0
+\end{equation}
+and we'll express the fast variables in terms of the slow variables. Explicitly, we'll normalize times using $\tau_s$ such that
+\begin{equation}
+	\tilde t = \frac{t}{\tau_s}
+\end{equation}
+and we'll find
+\begin{align}
+	\diffp{\psi_k}{\tilde t} &= \frac{\tau_s}{\tau_f}G_k(\dots)\\
+	\diffp{\phi_i}{t} &= F_i(\dots)
+\end{align}
+and since
+\begin{equation}
+	\frac{\tau_s}{\tau_f} = O(L^\alpha)>>1
+\end{equation}
+we'll find that to leading order
+\begin{equation}
+	G_k=0
+\end{equation}
+next we express $\{\psi_k\}$ in terms of $\{\phi_i\}$ and find
+\begin{equation}
+	\diffp{\phi_i}{t} = \frac{1}{\tau_s}\overline{F}(\{\phi_j\}) + \xi_i(t)
+\end{equation}
+where
+\begin{equation}
+	\overline{F}(\{\phi_j\}) = F(\{\phi_j\}, \{\psi_k(\{\phi_j\})\})
+\end{equation}
+The influence of the fast variables comes into effect through the noise function $\xi_i$ which has $\langle\xi_i\rangle=0$. For short correlation times it is customary to assume
+\begin{equation}
+	\langle\xi_i(t)\xi_j(t')\rangle \propto \delta_{ij}\delta(t-t')
+\end{equation}
+in this course we'll focus on an average description without the noise. Otherwise the theory is called Fluctuating Hydrodynamics.
+\subsubsection{Types Of Slow Variables}
+\begin{description}
+	\item[Conserved Quantities] They satisfy a continuum equation\begin{equation}
+		\diffp{\phi}{t}=-\nabla\cdot\vec{j}
+	\end{equation}
+	without a spatial change in $\phi$ there is no current therefore
+	\begin{equation}
+		\vec{j} = -\alpha\nabla\phi
+	\end{equation}
+	we can insert this and find
+	\begin{equation}
+		\diffp{\phi}{t} = \alpha\nabla^2\phi+\dots
+	\end{equation}
+	we'll perform a fourier transform
+	\begin{equation}
+		\tilde\phi_\vec{q} = \int\dd \vec{r} e^{-i\vec{q}\cdot\vec{r}}\phi(\vec{r})
+	\end{equation}
+	therefore
+	\begin{equation}
+		\diffp{\tilde\phi_\vec{q}}{t} = -\alpha q^2\tilde\phi_\vec{q}+\dots
+	\end{equation}
+	in conclusion, the time to decay to mode $\vec{q}$ is
+	\begin{equation}
+		\tau_\vec{q} \sim q^{-2}
+	\end{equation}
+	The hydrodynamic theory focuses on large length scales (small $q$-s). The smallest $q$ is $\frac{\pi}{L}$, therefore $\tau \sim L^2$. In a more general case, the dynamics of a conserved quantity is described by Model B:
+	\begin{align}
+		\diffp{\phi}{t} &= -\nabla\cdot \vec{j}\\
+		\vec{j} &= -\gamma\nabla\frac{\delta F}{\delta t}+\vec{\xi}\\
+		F[\phi] &= \int\dd \vec{r}f(\phi,\nabla\phi)
+	\end{align}
+	where $F$ is the free energy functional, $\gamma$ is a kinetic parameter, and $\vec{xi}$ is noise which satisifies
+	\begin{equation}
+		\langle\xi_i\rangle = 0
+	\end{equation}
+	and
+	\begin{equation}
+		\langle\xi_i(t)\xi_j(t')\rangle = 2k_BT\gamma\delta_{ij}\delta(t-t')
+	\end{equation}
+	and we'll notice that
+	\begin{align}
+		\dot F &= \int\frac{\delta F}{\delta \phi}\dot\phi\dd r = \gamma\int\frac{\delta F}{\delta \phi}\partial_\alpha\partial_\alpha\frac{\delta F}{\delta\phi}\dd \vec{r}\\
+		&= -\gamma\int\ins{\partial_\alpha\frac{\delta F}{\delta\phi}}\ins{\partial_\alpha\frac{\delta F}{\delta\phi}}<0, \qquad \gamma > 0
+	\end{align}
+	in a classical hydrodynamic theory (NS) the conserved quantities are the mass and momentum.
+	\item[Soft/Goldstone Mode] When a free energy is invariant w.r.t a continuous quantity, that quantity is called a soft mode. We mentioned this when we discussed the MW theorem when we looked at the mode $x$ (magnetization with continuous angle). We'll look at two configurations which have a different structure but the same free energy. both have the same free energy, therefore there is no reason for one to decay into the other. The typical time to decay will be proportional to the size of the system. The dynamics of such quantities which aren't conserved are described by Model A:
+	\begin{equation}
+		\diffp{\phi}{t} = -\gamma\frac{\delta F}{\delta \phi}+\xi
+	\end{equation}
+	where
+	\begin{equation}
+		\dot F = \int\frac{\delta F}{\delta \phi}\diffp{\phi}{t}\dd r = -\gamma\int\ins{\frac{\delta F}{\delta \phi}}^2\dd r < 0, \qquad \gamma > 0
+	\end{equation}
+	so
+	\begin{equation}
+		F = \int\dd \vec{r}\ins{\frac{1}{2}K\ins{\nabla\phi}^2+\dots}
+	\end{equation}
+	where
+	\begin{equation}
+		\frac{\delta F}{\delta\phi} = -k\nabla^2\phi
+	\end{equation}
+	and again we find a diffusion equation with $\tau\sim L^2$.
+\end{description}
