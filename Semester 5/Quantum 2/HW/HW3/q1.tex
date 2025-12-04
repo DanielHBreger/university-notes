@@ -1,0 +1,37 @@
+\section{Simple Model for Quantization of the Electromagnetic Field}
+\begin{colbox}
+	\begin{enumerate}
+		\item Use Maxwell's equations to write time development equations for $\mathcal{E}$ and $\mathcal{B}$.
+		\item Express $U(t)$ using $V,\mathcal E(t), \mathcal B(t), \mu_0,\epsilon_0$. Use
+		\begin{equation*}
+			\int_V\dd \vec r \sin^2kz=\int_V\dd \vec r \cos^2kz=\frac{V}{2}
+		\end{equation*}
+		\item We'll define $\omega=ck$ and
+		\begin{align*}
+			\chi(t) = \sqrt{\frac{\epsilon_oV}{2\hbar\omega}}\mathcal E(t) && \Pi(t)=\sqrt{\frac{V}{2\mu_0\hbar\omega}}\mathcal B(t)
+		\end{align*}
+		show that the equations of motion for $\chi(t)$ and $\Pi(t)$ are identical in their form to those of $X$  and $P$ in subsection 1.
+	\end{enumerate}
+\end{colbox}
+\subsection{Time Development}
+The relevant Maxwell's equations for time development are
+\begin{align}
+	\nabla\times\vec E = -\diffp{\vec B}{t} && \nabla\times \vec B = \mu_0\ins{\vec J + \epsilon_0\diffp{\vec E}{t}}
+\end{align}
+and since no current or charges at all other than out waves were specified, we assume the current $\vec J=0$. Plugging the given fields into the equations we find
+\begin{align}
+	k\mathcal E = \diffp{\mathcal B}{t} && k\mathcal B = -\mu_0\epsilon_0\diffp{\mathcal E}{t}
+\end{align}
+we can take the derivative of the equations and plug them into the other ones to find 2nd order differential equations
+\begin{align}
+	\diffp[2]{\mathcal E}{t} + \frac{k^2}{\mu_0\epsilon_0}\mathcal E =0 && \diffp[2]{\mathcal B}{t} + \frac{k^2}{\mu_0\epsilon_0}\mathcal B =0
+\end{align}
+\newpage
+\subsection{Energy in Time}
+\begin{align}
+	U(t) &= \int_V\dd \vec r\ins{\frac{\epsilon_0}{2}\vec E^2+\frac{1}{2\mu_0}\vec B^2}\\
+	&= \int _V\dd \vec r\ins{\frac{\epsilon_0}{2}\mathcal E^2\sin^2(kz)+\frac{1}{2\mu_0}\mathcal B^2\cos^2(kz)}\\
+	&= \frac{V}{2}\ins{\frac{\epsilon_0}{2}\mathcal E^2+\frac{1}{2\mu_0}\mathcal B^2}
+\end{align}
+\subsection{Same Form}
+The equations of motion for $\mathcal E$ and $\mathcal B$ are 2nd order linear ODEs, which are invariant to multiplication by scalars. The transformation of parameters from $\mathcal E$ and $\mathcal B$ to $\chi$ and $\Pi$ simply multiplies by a scalar, therefore the equations of motion will remain the same.
