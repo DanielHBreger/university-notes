@@ -1,6 +1,10 @@
 \clearpage
 \section{Coherent States of the Electromagnetic Field}
 \begin{colbox}
+	The coherent states of the Electromagnetic field are defined as
+	\begin{equation}
+		\ket{\alpha}=e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}\ket{n},\qquad\alpha\in\complex
+	\end{equation}
 	\begin{enumerate}
 		\item Show that the state $\ket{\alpha}$ is a normalized eigenstate of the annihilation operator $a$. Find the corresponding eigenvalue. Calculate the expectation value $\langle N\rangle_\alpha$ in this state.
 		\item Given $\ket{\psi(t=0)}=\ket{\alpha}$, show that
@@ -13,3 +17,93 @@
 		\item Assume $\lvert\alpha\rvert \gg 1$ and justify the statement that the states $\ket{\alpha}$ have a "classical" character.
 	\end{enumerate}
 \end{colbox}
+\subsection{Normalized Eigenstate}
+To show $\ket{\alpha}$ is an eigenstate of the annihilation operator we'll activate it on the state:
+\begin{align}
+	a\ket{\alpha} &= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}\cdot a\ket{n}\\
+	&= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=1}^\infty\frac{\alpha^n}{\sqrt{n!}}\sqrt{n}\ket{n-1}\label{removedzero}\\
+	&= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=1}^\infty\frac{\alpha^n}{\sqrt{(n-1)!}}\ket{n-1}\\
+	&= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{\alpha^{n+1}}{\sqrt{n!}}\ket{n}\\
+	&= \alpha e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}\cdot a\ket{n}\\
+	&= \alpha \ket{\alpha}
+\end{align}
+therefore $\ket{\alpha}$ is an eigenstate of the annihilation operator with eigenvalue $\alpha$. In line \ref{removedzero} the sum begins from 1 because the ground state annihilates into a zero, so it can be removed from the sum. Next we check that the state is normalized:
+\begin{align}
+	\braket{\alpha\vert\alpha} &= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{\alpha^n}{\sqrt{n!}}\cdot e^{-\frac{\lvert\alpha^*\rvert^2}{2}}\sum\limits_{n=0}^\infty\frac{(\alpha*)^n}{\sqrt{n!}}\braket{n\vert n}\\
+	&= e^{-\lvert\alpha\rvert^2}\sum\limits_{n=0}^\infty\frac{{\alpha^*}^n\cdot\alpha^n}{n!}\\
+	&= e^{-\lvert\alpha\rvert^2}\sum\limits_{n=0}^\infty\frac{{\lvert\alpha\rvert^2}^n}{n!}\\
+	&= e^{-\lvert\alpha\rvert^2}\cdot e^{\lvert\alpha\rvert^2}\\
+	&= 1
+\end{align}
+noting that in the general case it should be expanded as $\braket{n\vert m}$ but since it obviously becomes $\delta_{nm}$ I just skipped there directly. Next the expectation value of $N$ is:
+\begin{align}
+	\langle N\rangle_\alpha &= \bra{\alpha}N\ket{\alpha}
+	= \bra{\alpha}a^\dagger a\ket{\alpha}
+	= \alpha^*\alpha
+\end{align}
+\subsection{Showing That}
+We know that $\ket{\alpha}$ is an eigenstate of the annihilation operator with eigenvalue $\alpha$. As we know from question 2, the hamiltonian (which is time independent) of the EM field can be expressed using the creation and annihilation operators. This means the state $\ket{\alpha}$ is also an eigenstate of the EM field, which means we can use standard time evolution of eigenstates inserting the energy from question 2:
+\begin{align}
+	\ket{\psi(t)}&=e^{-i\omega t\ins{N+\frac{1}{2}}}\ket{\alpha}\\
+	&= e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{n=0}^\infty e^{-i\omega t\ins{n+\frac{1}{2}}} \frac{\alpha^n}{\sqrt{n!}}\ket{n}\\
+	&= e^{-\frac{\lvert\alpha\rvert^2-i\omega t}{2}}\sum\limits_{n=0}^\infty  \frac{\ins{\alpha\cdot e^{-i\omega t}}^n}{\sqrt{n!}}\ket{n}\\
+	=\left[\beta\equiv\alpha\cdot e^{-i\omega t}\right] &= e^{-\frac{\lvert\beta\rvert^2-i\omega t}{2}}\sum\limits_{n=0}^\infty  \frac{\beta^n}{\sqrt{n!}}\ket{n}
+\end{align}
+so
+\begin{equation}
+	\ket{\psi(t)} = e^{-\frac{i\omega t}{2}}\ket{\beta}=\exp\ins{-i\frac{\omega t}{2}}\ket{\alpha e^{-i\omega t}}
+\end{equation}
+\subsection{Expectation Values}
+\begin{align}
+	\langle \vec E(\vec r)\rangle_t &= \braket{\psi(t)\vert \vec E \vert \psi(t)}\\
+	&= \braket{\alpha e^{i\omega t}\vert\vec E \vert\alpha e^{-i\omega t}}\\
+	&= \epsilon_x\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\sin\ins{kz}\braket{\alpha e^{i\omega t}\vert \ins{\alpha^\dagger + \alpha} \vert\alpha e^{-i\omega t}}\\
+	&= \epsilon_x\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\sin\ins{kz}\ins{\alpha e^{-i\omega t}+\alpha e^{i\omega t}}\\
+	&= 2\alpha\epsilon_x\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\sin\ins{kz}\cos(\omega t)
+\end{align}
+and
+\begin{align}
+	\langle \vec B(\vec r)\rangle_t &= \braket{\alpha e^{i\omega t}\vert \vec B \vert \alpha e^{-i\omega t}}\\
+	&= i\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\braket{\alpha e^{i\omega t}\vert \ins{a^\dagger-a} \vert \alpha e^{-i\omega t}}\\
+	&= i\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\ins{\alpha e^{i\omega t}-\alpha e^{-i\omega t}}\\
+	&= -2\alpha\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\sin\ins{\omega t}
+\end{align}
+\subsection{Satisfying Maxwell's Equations}
+For the first equation, on one hand
+\begin{align}
+	\nabla\times \langle E\rangle &= \nabla\times \ins{2\alpha\epsilon_x\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\sin\ins{kz}\cos(\omega t)}\\
+	&= 2\alpha k\epsilon_y\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\cos\ins{kz}\cos(\omega t)\\
+	=[\omega=ck,\,c=\frac{1}{\sqrt{\mu_0\epsilon_0}}] &= 2\alpha ck\sqrt{\frac{\mu_0\hbar ck}{V}}\cos\ins{kz}\cos(ckt)\epsilon_y
+\end{align}
+on the other hand
+\begin{align}
+	\diffp{\langle B\rangle}{t} &= -2\alpha\omega\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\sin\cos{\omega t}\\
+	&= -2\alpha ck\sqrt{\frac{\mu_0\hbar ck}{V}}\cos\ins{kz}\cos\ins{ckt}\epsilon_y
+\end{align}
+next
+\begin{align}
+	\nabla\times\langle B \rangle &= \nabla\times\ins{-2\alpha\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\sin\ins{\omega t}}\\
+	&= -2\alpha k\epsilon_x\sqrt{\frac{\mu_0\hbar\omega}{V}}\sin\ins{kz}\sin\ins{\omega t}\\
+	&= -2\alpha k\sqrt{\frac{\mu_0\hbar ck}{V}}\sin\ins{kz}\sin\ins{ckt}\epsilon_x
+\end{align}
+and
+\begin{align}
+	\mu_0\epsilon_0\diffp{\langle E \rangle}{t} &= -2\alpha\omega\epsilon_x\mu_0\sqrt{\frac{\epsilon_0\hbar\omega}{V}}\sin\ins{kz}\sin(\omega t)\\
+	&= -2\alpha k\sqrt{\frac{\mu_0\hbar ck}{V}}\sin\ins{kz}\sin(ckt)\epsilon_x
+\end{align}
+\newpage
+\subsection{Classical Energy}
+The classical energy of the EM field is
+\begin{align}
+	U &= \int_V\dd \vec r \ins{\frac{\epsilon_0}{2}\langle E\rangle^2+\frac{1}{2\mu_0}\langle B\rangle^2}\\
+	&= \int_V\dd \vec r \ins{\frac{\epsilon_0}{2}\ins{2\alpha\epsilon_x\sqrt{\frac{\hbar\omega}{\epsilon_0V}}\sin\ins{kz}\cos(\omega t)}^2+\frac{1}{2\mu_0}\ins{-2\alpha\epsilon_y\sqrt{\frac{\mu_0\hbar\omega}{V}}\cos\ins{kz}\sin\ins{\omega t}}^2}\\
+	&= 2\alpha^2\frac{\hbar\omega}{V}\int_V\dd \vec r \ins{\sin^2\ins{kz}\cos^2(\omega t)+\cos^2\ins{kz}\sin^2\ins{\omega t}}\\
+	&= \alpha^2\hbar\omega
+\end{align}
+In comparison, the energy from $H_F$ is
+\begin{equation}
+	\langle H_F\rangle = \hbar\omega \ins{\braket{\psi\vert N \vert\psi}+\frac{1}{2}} = \hbar\omega\ins{\alpha^2+\frac{1}{2}}
+\end{equation}
+So the classical energy is lower than the quantized energy.
+\subsection{Justification}
+If $\lvert\alpha\rvert\gg1$ then the classical energy and the quantized energy are effectively the same, the $1/2$ term becoming too small to notice. In that case, the quantized behavior of the energy levels is effectively the same as the classical behavior.
