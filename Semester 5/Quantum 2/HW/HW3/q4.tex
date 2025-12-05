@@ -1,6 +1,5 @@
 \clearpage
 \section{Question 4}
-
 \begin{colbox}
 	\begin{enumerate}
 		\item Show that the set of states $A$ is an eigenbasis of $H_0 = H_A+H_F$. Find the eigenvalues.
@@ -16,3 +15,52 @@
 		\end{enumerate}
 	\end{enumerate}
 \end{colbox}
+\subsection{Eigenbasis}
+I'll assume the meaning of the question is to prove the states in set A are eigenstates of the hamiltonian, not to prove they span the energy space.
+\begin{align}
+	H_0\ket{g,n} &= \ins{\frac{\hbar\omega_A}{2}\sigma_z+\frac{\hbar\omega}{2}\ins{\chi^2+\Pi^2}}\ket{g,n}\\
+	&= -\frac{\hbar\omega_A}{2}+\hbar\omega\ins{n+\frac{1}{2}}\ket{g,n}
+\end{align}
+and
+\begin{align}
+	H_0\ket{e,n} &= \ins{\frac{\hbar\omega_A}{2}\sigma_z+\frac{\hbar\omega}{2}\ins{\chi^2+\Pi^2}}\ket{e,n}\\
+	&= \frac{\hbar\omega_A}{2}+\hbar\omega\ins{n+\frac{1}{2}}\ket{e,n}
+\end{align}
+\newpage
+\subsection{Drawing}
+Since $\omega_A=\omega$ the energies are now
+\begin{align}
+	H_0\ket{g,n} = \hbar\omega n\ket{g,n} && H_0\ket{e,n} = \hbar\omega\ins{n+1}\ket{e,n}
+\end{align}
+we can see that the ground state energy is $0$, then every energy level has is degenerate with 2 options for achieving that energy.
+\begin{figure}[!htb]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=left,
+			ytick=\empty,
+			ylabel near ticks,
+			xtick distance=1,
+			xlabel={n},
+			ylabel={Energy},
+			axis x line = center,
+			xmin=-1,
+			xmax=5
+		]
+			\addplot[color=black, mark=square, only marks] coordinates {(0,0)(1,0.99)(1,1.01)(2,1.99)(2,2.01)};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+\subsection{Coupling}
+\subsubsection{Action of W}
+\begin{align}
+	W\ket{g,n} &= \gamma\ins{a\sigma_++a^\dagger\sigma_- }\ket{g,n}\\
+	&= \gamma a\sigma_+\ket{g,n}\\
+	&= \gamma \sqrt{n} \ket{e,n - 1}\\
+	W\ket{e,n} &= \gamma\ins{a\sigma_++a^\dagger\sigma_- }\ket{e,n}\\
+	&= \gamma a^\dagger\sigma_-\ket{g,n}\\
+	&= \gamma\sqrt{n+1}\ket{g,n+1}
+\end{align}
+and of course the $W\ket{g,0}=0$.
+\subsubsection{Physical Process}
+$a\sigma_+$ desribes a photon being absorbed by the atom raising it to the excited state. $a^\dagger\sigma_-$ describes the opposite.
