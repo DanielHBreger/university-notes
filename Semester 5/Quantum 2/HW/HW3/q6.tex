@@ -1,0 +1,61 @@
+\clearpage
+\section{Interactions Between the Atom and Coherent States}
+\begin{colbox}
+    The system is prepared in the excited state $\ket{e}$ and the field in the coherent state $\ket{\alpha}$.
+    \begin{enumerate}
+        \item Calculate the probability $P_g(T,n)$ to find the atom in the ground state $\ket{g}$ and the field in the state $\ket{n+1}$ at time $T$. What is the probability of the state $\ket{g,0}$?
+        \item Find the probability $P_g(T)$ to find the atom in the ground state regardless of the field's state.
+        \item Experimental measurements are shown. The resonator is the same but the field was prepared in the coherent state. The most influential frequencies are 
+        \begin{align}
+            \nu_0=\qty{47}{\kilo\hertz} && \nu_1=\qty{65}{\kilo\hertz} && \nu_2=\qty{81}{\kilo\hertz}
+        \end{align}
+        \begin{enumerate}
+            \item Do the ratios $\frac{\nu_1}{\nu_0}$ and $\frac{\nu_2}{\nu_0}$ have the value you expected?
+            \item Use the values of $J(\nu_0)$ and $J(\nu_1)$ to estimate the number of photons $\lvert\alpha\rvert^2$ in the resonator.
+        \end{enumerate}
+    \end{enumerate}
+\end{colbox}
+\subsection{Ground Probability}
+The probability is
+\begin{equation}\label{pgt}
+    P_g(T) = \lvert \braket{g,n+1\vert U(t)\vert e,\alpha} \rvert^2
+\end{equation}
+side calculation:
+\begin{align}
+    \bra{g,n+1}U(t) &= \frac{1}{\sqrt{2}}\ins{\bra{\psi_{+,n}}-\bra{\psi_{-,n}}}U(t)\\
+    &= \frac{1}{\sqrt{2}}e^{i\omega T}\ins{e^{i\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{\psi_{+,n}}-e^{-i\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{\psi_{-,n}}}\\
+    &= e^{i\omega T}\ins{i\sin\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{e,n}+\cos\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{g,n+1}}
+\end{align}
+inserting back into \autoref{pgt}
+\begin{align}
+    P_g(T) &= \left\lvert \ins{i\sin\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{e,n}+\cos\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\bra{g,n+1}}\ket{e,\alpha} \right\rvert^2\\
+    &= \sin^2\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\lvert\braket{n\vert\alpha}\rvert^2\\
+    &= \sin^2\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}\left\lvert e^{-\frac{\lvert\alpha\rvert^2}{2}}\sum\limits_{m=0}^\infty\frac{\alpha^m}{\sqrt{m!}}\braket{n\vert m}\right\rvert^2\\
+    &= \sin^2\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}e^{-\lvert\alpha\rvert^2}\frac{\alpha^{2n}}{n!}
+\end{align}
+The probability of finding the system in the state $\ket{g,0}$ is 0, because that would require the system to both give off energy to come down to the ground state but also for no photon to carry that energy away, which is not physical. Mathematically, there is no state $\ket{e,\alpha}$ with which it is paired through the interactions of the question so there is no way to reach it through the operation we defined from an excited state.
+\subsection{No Field Dependence}
+This is simply a sum over all field states for the previous part's probability
+\begin{equation}
+    P_g(T) = \sum\limits_{n=0}^\infty \ins{\sin^2\ins{\frac{\gamma}{\hbar}\sqrt{n+1}T}e^{-\lvert\alpha\rvert^2}\frac{\alpha^{2n}}{n!}}
+\end{equation}
+\subsection{Coherent Experiment}
+\subsubsection{Ratio values}
+The ratios are 
+\begin{align}
+    \frac{\nu_1}{\nu_0} = \frac{65}{47} = \sim 1.38 && \frac{\nu_2}{\nu_0} = \frac{81}{47} = \sim 1.72
+\end{align}
+while the theoretical ratios are
+\begin{align}
+    \frac{\nu_1}{\nu_0} = \frac{\sqrt{2}}{\sqrt{1}}=\sim 1.4 && \frac{\nu_2}{\nu_0} = \frac{\sqrt{3}}{\sqrt{1}} = \sim 1.73
+\end{align}
+which are indeed quite similar.
+\subsubsection{Number of Photons}
+Since $J$ is a fourier transform of $P$, they are both proportional to the same constants. Therefore
+\begin{align}
+    \frac{J(\nu_1)}{J(\nu_0)}=\frac{P(n=1)}{P(n=0)}=\lvert\alpha\rvert^2
+\end{align}
+which from the graph looks like it is
+\begin{equation}
+    \lvert\alpha\rvert^2 \approx \frac{4}{4.5} = \sim 0.88
+\end{equation}
