@@ -2,3 +2,8 @@
 Semester 4/E&M HW/diffcoefflocal.sty
 *.gz
 *.hiddenFalsePositives.en-US.txt
+*.aux
+*.log
+*.out
+*.fdb_latexmk
+*.fls

@@ -1,115 +1,66 @@
 \clearpage
 \section{Question 4}
-
 \begin{colbox}
 	\begin{enumerate}
-		\item What is the hamiltonian to 0-th order, and how will the states $\ket{g}, \ket{e}$ develop>?
-		\item What will the states of $\ket{g}, \ket{e}$ be after a half-pi pulse?
-		\item For an initial state $\ket{g}$, after a half-pi pulse, we'll turn the electric field off and let the system develop in time. What is the state now?
-		\item After the free propagation we'll send another half-pi pulse. What will the state be after this? What is the likelihood to find the atom in the excited state ($P_e(\Delta)$)?
-		\item We can measure $P_e(\Delta)$ and tune $\omega$ using it. The sensitivity is defined by $S\equiv\left\lvert\diff{P_e}{\Delta}\right\rvert$. \begin{enumerate}
-			\item What is the meaning of this value?
-			\item What is our clock's sensitivity?
-			\item When will we get maximum sensitivity?
-			\item What is our error range?
+		\item Show that the set of states $A$ is an eigenbasis of $H_0 = H_A+H_F$. Find the eigenvalues.
+		\item Draw qualitatively on the energy axis the location of the five first eigenenergies of $H_0$. Show that aside from the ground state, $H_0$'s eigenstates are bunched in pairs of degenerate states.
+		\item The coupling between the field and the atom is a dipole coupling and is given by
+		\begin{equation*}
+			W = \gamma\ins{a\sigma_++a^\dagger\sigma_-}
+		\end{equation*}
+		where $\gamma = -d\sin\ins{kz_0}\sqrt{\hbar\omega/\epsilon_0V}$ where d is the dipole moment, determined experimentally.
+		\begin{enumerate}
+			\item Write the action of $\hat W$ on the states $\ket{g,n}$ and $\ket{e,n}$
+			\item Which physical processes to the operators $a\sigma_+$ and $a^\dagger\sigma_-$ describe?
 		\end{enumerate}
-		\item Estimate how long until the clock will be 1 second off.
 	\end{enumerate}
 \end{colbox}
-
-\subsection{0-th Order Hamiltonian}
-Given that $\Omega \gg \Delta$, The 0th order hamiltonian is just the element that doesn't include $\Delta$
-\begin{equation}
-	H = \frac{1}{2}\hbar\Omega\sigma_x
-\end{equation}
-and to find the time development of the states, since the hamiltonian is time indepdendent
+\subsection{Eigenbasis}
+I'll assume the meaning of the question is to prove the states in set A are eigenstates of the hamiltonian, not to prove they span the energy space.
 \begin{align}
-	U(t) &= e^{-\frac{i}{\hbar}Ht}=e^{-\frac{1}{2}i\Omega\sigma_x}\\
-	&= \cos\ins{\frac{\Omega t}{2}}\mathds{1} -i\sin\ins{\frac{\Omega t}{2}}\sigma_x\\
-	&= \cos\ins{\frac{\Omega t}{2}}\ins{\ketbra{g}{g}+\ketbra{e}{e}}-i\sin\ins{\frac{\Omega t}{2}}\ins{\ketbra{g}{e}+\ketbra{e}{g}}
+	H_0\ket{g,n} &= \ins{\frac{\hbar\omega_A}{2}\sigma_z+\frac{\hbar\omega}{2}\ins{\chi^2+\Pi^2}}\ket{g,n}\\
+	&= -\frac{\hbar\omega_A}{2}+\hbar\omega\ins{n+\frac{1}{2}}\ket{g,n}
 \end{align}
-Therefore 
+and
 \begin{align}
-	\ket{g(t)}&=U(t)\ket{g}\\
-	&=\cos\ins{\frac{\Omega t}{2}}\ket{g}-i\sin\ins{\frac{\Omega t}{2}}\ket{e}\\
-	\ket{e(t)}&=U(t)\ket{e}\\
-	&=\cos\ins{\frac{\Omega t}{2}}\ket{e}-i\sin\ins{\frac{\Omega t}{2}}\ket{g}
+	H_0\ket{e,n} &= \ins{\frac{\hbar\omega_A}{2}\sigma_z+\frac{\hbar\omega}{2}\ins{\chi^2+\Pi^2}}\ket{e,n}\\
+	&= \frac{\hbar\omega_A}{2}+\hbar\omega\ins{n+\frac{1}{2}}\ket{e,n}
 \end{align}
-
 \newpage
-\subsection{After Half-Pi Pulse}
-The states will be
+\subsection{Drawing}
+Since $\omega_A=\omega$ the energies are now
 \begin{align}
-	\ket{g'} &= \cos\ins{\frac{\pi}{4}}\ket{g}-i\sin\ins{\frac{\pi}{4}}\ket{e}\\
-	&= \frac{1}{\sqrt{2}}\ket{g}-\frac{i}{\sqrt{2}}\ket{e}\\
-	\ket{e'} &= \cos\ins{\frac{\pi}{4}}\ket{e}-i\sin\ins{\frac{\pi}{4}}\ket{g}\\
-	&= \frac{1}{\sqrt{2}}\ket{e}-\frac{i}{\sqrt{2}}\ket{g}
+	H_0\ket{g,n} = \hbar\omega n\ket{g,n} && H_0\ket{e,n} = \hbar\omega\ins{n+1}\ket{e,n}
 \end{align}
-\subsection{Free Development}
-When the electric field is turned off, the hamiltonian is
-\begin{equation}
-	H=\frac{1}{2}\hbar\Delta\sigma_z
-\end{equation}
-so the time development operator is
+we can see that the ground state energy is $0$, then every energy level has is degenerate with 2 options for achieving that energy.
+\begin{figure}[!htb]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=left,
+			ytick=\empty,
+			ylabel near ticks,
+			xtick distance=1,
+			xlabel={n},
+			ylabel={Energy},
+			axis x line = center,
+			xmin=-1,
+			xmax=5
+		]
+			\addplot[color=black, mark=square, only marks] coordinates {(0,0)(1,0.99)(1,1.01)(2,1.99)(2,2.01)};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+\subsection{Coupling}
+\subsubsection{Action of W}
 \begin{align}
-	U_2(t) &= e^{-\frac{i}{\hbar}Ht}=e^{-\frac{1}{2}i\Delta\sigma_z}\\
-	&= \cos\ins{\frac{\Delta t}{2}}\mathds{1}+i\sin\ins{\frac{\Delta t}{2}}\sigma_z
+	W\ket{g,n} &= \gamma\ins{a\sigma_++a^\dagger\sigma_- }\ket{g,n}\\
+	&= \gamma a\sigma_+\ket{g,n}\\
+	&= \gamma \sqrt{n} \ket{e,n - 1}\\
+	W\ket{e,n} &= \gamma\ins{a\sigma_++a^\dagger\sigma_- }\ket{e,n}\\
+	&= \gamma a^\dagger\sigma_-\ket{g,n}\\
+	&= \gamma\sqrt{n+1}\ket{g,n+1}
 \end{align}
-therefore
-\begin{align}
-	\ket{g''} &= U_2(t)\ket{g'}\\
-	&= \cos\ins{\frac{\Delta T}{2}}\ket{g'}+i\sin\ins{\frac{\Delta T}{2}}\ins{\ketbra{e}{e}-\ketbra{g}{g}}\ket{e'}\\
-	&= \cos\ins{\frac{\Delta T}{2}}\ket{g'}+i\sin\ins{\frac{\Delta T}{2}}\ins{\ketbra{e}{e}-\ketbra{g}{g}}\ins{\frac{1}{\sqrt{2}}\ket{e}-\frac{i}{\sqrt{2}}\ket{g}}\\
-	&= \cos\ins{\frac{\Delta T}{2}}\ket{g'}+i\sin\ins{\frac{\Delta T}{2}}\ins{\frac{1}{\sqrt{2}}\ket{e}+\frac{i}{\sqrt{2}}\ket{g}}\\
-	&= \frac{1}{\sqrt{2}}\ins{\cos\ins{\frac{\Delta T}{2}}\ins{\ket{g}-\ket{e}}+i\sin\ins{\frac{\Delta T}{2}}\ins{\ket{e}+\ket{g}}}\\
-	&= \frac{1}{\sqrt{2}}\ins{\ins{\cos\ins{\frac{\Delta T}{2}}+i\sin\ins{\frac{\Delta T}{2}}}\ket{g}-\ins{\cos\ins{\frac{\Delta T}{2}}-i\sin\ins{\frac{\Delta T}{2}}}\ket{e}}\\
-	&= \frac{1}{\sqrt{2}}\ins{e^{\frac{i\Delta t}{2}}\ket{g}-ie^{-\frac{i\Delta t}{2}}\ket{e}}
-\end{align}
-
-\newpage
-\subsection{Another Pulse}
-We are back to using the electric field time propagator, therefore
-\begin{align}
-	\ket{g'''} &= U(\frac{\pi}{2\Omega})\ket{g''}\\
-	&= \ins{\cos\ins{\frac{\pi}{4}}\ins{\ketbra{g}{g}+\ketbra{e}{e}}-i\sin\ins{\frac{\pi}{4}}\ins{\ketbra{g}{e}+\ketbra{e}{g}}}\frac{1}{\sqrt{2}}\ins{e^{\frac{i\Delta t}{2}}\ket{g}-ie^{-\frac{i\Delta t}{2}}\ket{e}}\\
-	&= \frac{1}{\sqrt{2}}\ins{\cos\ins{\frac{\pi}{4}}\ins{e^{\frac{i\Delta t}{2}}\ket{g}-ie^{-\frac{i\Delta t}{2}}\ket{e}}-i\sin\ins{\frac{\pi}{4}}\ins{e^{\frac{i\Delta t}{2}}\ket{e}-ie^{-\frac{i\Delta t}{2}}\ket{g}}}\\
-	&= \frac{1}{2}\ins{\ins{e^{\frac{i\Delta t}{2}}-e^{-\frac{i\Delta t}{2}}}\ket{g}-i\ins{e^{\frac{i\Delta t}{2}}+e^{-\frac{i\Delta t}{2}}}\ket{e}}\\
-	&= \sinh\ins{\frac{i\Delta t}{2}}\ket{g}-i\cosh\ins{\frac{i\Delta t}{2}}\ket{e}\\
-	&= i\sin\ins{\frac{\Delta t}{2}}\ket{g}-i\cos\ins{\frac{\Delta t}{2}}\ket{e}
-\end{align}
-therefore
-\begin{align}
-	P_e(\Delta) &= \lvert\braket{e|g'''}\rvert^2\\
-	&= \cos^2\ins{\frac{\Delta t}{2}}
-\end{align}
-
-\subsection{Tuning and Sensitivity}
-\subsubsection{Meaning}
-
-The meaning of the sensitivity S is how strongly a deviation from the resonant frequency affects the operation of the clock. A high value means even small deviations will cause significant changes to the probability of the states flipping.
-
-\subsubsection{Our Clock's Sensitivity}
-
-\begin{equation}
-	S = \left\lvert\diff{P_e(\Delta)}{\Delta}\right\rvert=\left\lvert=t\sin\ins{\frac{\Delta t}{2}}\cos\ins{\frac{\Delta t}{2}}\right\rvert = \left\lvert \frac{t}{2}\sin\ins{\Delta t}\right\rvert 
-\end{equation}
-
-\subsubsection{Maximum Sensitivity}
-
-We can see the maximums will be found at $t=\frac{(2k+1)\pi}{2\Delta}$
-
-\subsubsection{Error Range}
-
-\begin{align}
-	\delta\Delta &= \frac{3\pi-\pi}{2T}=\frac{\pi}{T}
-\end{align}
-
-\subsection{Time Until 1s Error}
-Using the given equation
-\begin{equation}
-	\delta t = \frac{\delta f}{f_0}t \implies t=\frac{f_0\delta t}{\delta f}
-\end{equation}
-therefore
-\begin{align}
-	t &= \frac{\SI{9192631770}{\hertz}\cdot \SI{1}{\second}}{\SI{\pi}{\per\second}}= \SI{92.72}{\year}
-\end{align}
+and of course the $W\ket{g,0}=0$.
+\subsubsection{Physical Process}
+$a\sigma_+$ desribes a photon being absorbed by the atom raising it to the excited state. $a^\dagger\sigma_-$ describes the opposite.

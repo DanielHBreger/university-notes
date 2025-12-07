@@ -1,6 +1,5 @@
 \clearpage
 \section{Maximum A Posteriori Estimation with a Specific Prior}
-
 \begin{colbox}
 	Assume the same Rayleigh distributed observations as in question 1, but now suppose tht prior knowledge about $\theta$ is modeled as an inverse-gamma distribution
 	\begin{equation*}
@@ -13,9 +12,7 @@
 		\item Discuss the limiting cases ($\alpha,\beta \rightarrow 0$) and ($\alpha,\beta \rightarrow \infty$) and interpret their effects on the posterior estimate.
 	\end{enumerate}
 \end{colbox}
-
 \subsection{MAP Estimator}
-
 We are given a prior density, therefore the posterior is
 \begin{align}
 	p(\theta\vert x) &\propto f(x\vert\theta)p(\theta)\\
@@ -53,4 +50,4 @@ We can notice that while the MLE estimator is strictly biased to be smaller than
 	&= \lim\limits_{n\rightarrow\infty}\sqrt{\frac{\sum x_i^2}{2n}}\\
 	&= \lim\limits_{n\rightarrow\infty} \hat\theta_{MLE}
 \end{align}
-We already know the MLE estimator is consistent and since the MAP estimator at infinity behaves like the MLE estimator, it too much be consistent. For this reason both are also asymptotically unbiased, as the MLE estimator's bias tends to 0 at infinity. We can see that for the case $\alpha,\beta\rightarrow0$ the MAP estimator effectively behaves just like the MLE estimator, which makes sense as that means the prior knowledge is effectively none. In the limit $\alpha,\beta\rightarrow\infty$ the effective meaning is that the prior distribution uniquely and completely determines the real value. It will mean the MAP estimator will effectively become a delta function at the real value with no variance.
+We already know the MLE estimator is consistent and since the MAP estimator at infinity behaves like the MLE estimator, it too much be consistent. For this reason both are also asymptotically unbiased, as the MLE estimator's bias tends to 0 at infinity. We can see that for the case $\alpha,\beta\rightarrow0$ the MAP estimator effectively behaves just like the MLE estimator, which makes sense as that means the prior knowledge is effectively none. In the limit $\alpha,\beta\rightarrow\infty$ the effective meaning is that the prior distribution uniquely and completely determines the real value. It will mean the MAP estimator will effectively become a delta function at the real value with no variance. In the limit $n \rightarrow \infty$ we see the a-priori estimator becomes the same as the MLE estimator, which means the prior information we have becomes effectively irrelevant, since we can estimate the real value with arbitrary precision from the existing data.

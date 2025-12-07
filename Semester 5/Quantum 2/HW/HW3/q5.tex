@@ -1,0 +1,68 @@
+\clearpage
+\section{Rabi Oscillations}
+\begin{colbox}
+    \begin{enumerate}
+        \item Find the state of the system $\ket{\psi(t)}$ at a time $t>0$.
+        \item What is the probability $P_g(T)$ to find the atom in the ground state $\ket{g}$ at time $T$, when the atom leaves the resonator? Show that $P_g(T)$ is a periodic function.
+        \item For Rubidium atoms $d=\qty{1.1e-26}{\coulomb.\meter}$ and $\frac{\omega}{2\pi}=\qty{5.0e10}{\hertz}$ and the experiment is done in a resonator of volume $V=\qty{1.87e-6}{\meter\cubed}$. The graph of $P_g(T)$ and of the real part of the fourier transform $J(\nu)=\int_0^\infty\dd TP_g(T)\cos\ins{2\pi\nu T}$ are presented. Compare theory to experiment.
+    \end{enumerate}
+\end{colbox}
+\subsection{State at Time}
+First we need to check if the hamiltonian $H=H_0+W$ can even be diagonalized and for that we check if $H_0$ and $W$ share an eigenbasis. To check that we look at their commutator
+\begin{align}
+    [H_0,W] &= \left[\ins{\frac{\hbar\omega}{2}\sigma_z+\hbar\omega\ins{N+\frac{1}{2}}},\gamma\ins{a\sigma_++a^\dagger\sigma_-}\right]\\
+    &= \frac{\hbar\omega\gamma}{2}\ins{\left[\sigma_z,a\sigma_++a^\dagger\sigma_-\right]+2\left[N,a\sigma_++a^\dagger\sigma_-\right]}\\
+    &= \hbar\omega\gamma\ins{a\sigma_+-a^\dagger\sigma_--a\sigma_++a^\dagger\sigma_-}\\
+    &= 0
+\end{align}
+So $H$ can be diagonalized by diagonalizing $H_0$ and $W$ together. We'll try to express the eigenstates of $W$ using the eigenstates of $H_0$. Since $W$ moves excited states to ground states and vice versa while removing or adding a photon respectively I'll guess normalized vectors of the from
+\begin{equation}
+    \ket{\psi_{\pm,n}}=\frac{1}{\sqrt{2}}\ins{\ket{e,n}\pm\ket{g,n+1}}
+\end{equation}
+since they represent superpositions of states with an excited atom and n photons and ground state atoms with n+1 photons. We'll check
+\begin{align}
+    W\ket{\psi_{+,n}} &= W\frac{1}{\sqrt{2}}\ins{\ket{e,n}+\ket{g,n+1}}\\
+    &= \gamma\ins{a\sigma_++a^\dagger\sigma_-}\frac{1}{\sqrt{2}}\ins{\ket{e,n}+\ket{g,n+1}}\\
+    &= \frac{\gamma}{\sqrt{2}}\ins{a^\dagger\ket{g,n}+a\ket{e,n+1}}\\
+    &= \frac{\gamma}{\sqrt{2}}\sqrt{n+1}\ins{\ket{g,n+1}+\ket{e,n}}\\
+    &= \gamma\sqrt{n+1}\ket{\psi_{+,n}}
+\end{align}
+and
+\begin{align}
+    W\ket{\psi_{-,n}} &= W\frac{1}{\sqrt{2}}\ins{\ket{e,n}-\ket{g,n+1}}\\
+    &= \gamma\ins{a\sigma_++a^\dagger\sigma_-}\frac{1}{\sqrt{2}}\ins{\ket{e,n}-\ket{g,n+1}}\\
+    &= \frac{\gamma}{\sqrt{2}}\ins{a^\dagger\ket{g,n}-a\ket{e,n+1}}\\
+    &= \frac{\gamma}{\sqrt{2}}\sqrt{n+1}\ins{\ket{g,n+1}-\ket{e,n}}\\
+    &= -\gamma\sqrt{n+1}\ket{\psi_{-,n}}
+\end{align}
+So those are indeed eigenstates of W too, therefore these are also eigenstates of the full hamiltonian. The energies of these eigenstates are
+\begin{equation}
+    E_{\pm,n} = \hbar\omega\ins{n+1}\pm\gamma
+\end{equation}
+We can now express the initial state as a combination of these
+\begin{align}
+    \ket{\psi(0)} &= \ket{e,0} = \frac{1}{\sqrt{2}}\ins{\ket{\psi_{+,0}}+\ket{\psi_{-,0}}}
+\end{align}
+and use the time independent propagator
+\begin{align}
+    \ket{\psi(t)} &= \frac{1}{\sqrt{2}}U(t)\ins{\ket{\psi_{+,0}}+\ket{\psi_{-,0}}}\\
+    &= \frac{1}{\sqrt{2}}e^{-i\ins{\omega+\frac{\gamma}{\hbar}}t}\ket{\psi_{+,0}}+\frac{1}{\sqrt{2}}e^{-i\ins{\omega-\frac{\gamma}{\hbar}}t}\ket{\psi_{-,0}}\\
+    &= \frac{1}{\sqrt{2}}e^{-i\omega t}\ins{e^{-\frac{i\gamma}{\hbar}t}\ket{\psi_{+,0}}+e^{\frac{i\gamma}{\hbar}t}\ket{\psi_{-,0}}}\\
+    &= \frac{1}{2}e^{-i\omega t}\ins{e^{-\frac{i\gamma}{\hbar}t}\ins{\ket{e,0}+\ket{g,1}}+e^{\frac{i\gamma}{\hbar}t}\ins{\ket{e,0}-\ket{g,1}}}\\
+    &= \frac{1}{2}e^{-i\omega t}\ins{\ins{e^{-\frac{i\gamma}{\hbar}t}+e^{\frac{i\gamma}{\hbar}t}}\ket{e,0}+\ins{e^{-\frac{i\gamma}{\hbar}t}-e^{\frac{i\gamma}{\hbar}t}}\ket{g,1}}\\
+    &= e^{-i\omega t}\ins{\cos\ins{\frac{\gamma t}{\hbar}}\ket{e,0}-i\sin\ins{\frac{\gamma t}{\hbar}}\ket{g,1}}
+\end{align}
+\subsection{Probability of Ground State}
+\begin{equation}
+    P_g(T) = \lvert\braket{g,1\vert \psi(T)}\rvert^2=\sin^2\ins{\frac{\gamma T}{\hbar}}
+\end{equation}
+which is periodic.
+\subsection{Rubidium}
+We found the probability to be periodic and since it's a sine square the period is twice the expression in the sine So
+\begin{align}
+    \nu = f/2\pi &= \frac{\gamma}{\pi\hbar}\\
+    &= \frac{d\sin\ins{kz_0}\sqrt{\hbar\omega/\epsilon_0V}}{\pi\hbar}\\
+    &= \qty{1.1e-26}{\coulomb.\meter}\cdot\sqrt{\frac{2\cdot\qty{5.0e10}{\hertz}}{\pi\cdot\qty{1.05e-34}{\joule.\second}\cdot\qty{8.85e-12}{\farad\per\meter}\cdot\qty{1.87e-6}{\meter\cubed}}}\\
+    &= \qty{47}{\kilo\hertz}
+\end{align}
+which fits the peak in the frequency graph nicely.
