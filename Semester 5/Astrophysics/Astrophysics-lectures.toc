@@ -28,5 +28,14 @@
 \contentsline {chapter}{\numberline {9}Thu, November 27th, 2025}{23}{chapter.9}%
 \contentsline {chapter}{\numberline {10}Mon, December 1st, 2025}{24}{chapter.10}%
 \contentsline {chapter}{\numberline {11}Thu, December 4th, 2025}{25}{chapter.11}%
-\contentsline {chapter}{\numberline {12}Mon, December 8th, 2025}{26}{chapter.12}%
+\contentsline {section}{\numberline {4}Remnants of Stars - Exotic Objects}{25}{section.11.4}%
+\contentsline {subsection}{\numberline {4.1}White Dwarfs}{25}{subsection.11.4.1}%
+\contentsline {subsubsection}{Which density does this start at?}{25}{subsubsection*.20}%
+\contentsline {subsubsection}{At The Quantum Limit}{25}{subsubsection*.21}%
+\contentsline {subsubsection}{The Pressure}{26}{subsubsection*.22}%
+\contentsline {subsubsection}{An Estimate For a Typical Radius}{27}{subsubsection*.23}%
+\contentsline {subsubsection}{What is \(P_e\) at the relativistic limit?}{27}{subsubsection*.24}%
+\contentsline {subsubsection}{Cooling of White Dwarfs}{27}{subsubsection*.25}%
+\contentsline {subsection}{\numberline {4.2}What Happens To More Massive Stars (\(M>8M_\mathSun \))?}{28}{subsection.11.4.2}%
+\contentsline {chapter}{\numberline {12}Mon, December 8th, 2025}{29}{chapter.12}%
 \contentsfinish 
