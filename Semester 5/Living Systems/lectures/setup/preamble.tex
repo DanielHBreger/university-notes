@@ -21,9 +21,9 @@
 \usepackage{hyperref}
 \titleformat{\chapter}[frame]
 	{\normalfont}
-	{\filright
+	{\filright{}
 	\footnotesize
-	\enspace Lecture \arabic{chapter}.\enspace}
+	\enspace{} Lecture \arabic{chapter}.\enspace}
 	{8pt}
 	{\Large\bfseries\filcenter}
 \usepackage[dotinlabels]{titletoc}
@@ -47,7 +47,7 @@
 	}
 
 \usepackage{marginnote}
-\let\marginpart\marginnote
+\let\marginpart\marginnote{}
 \usepackage{witharrows}
 
 \newenvironment{myminipage}{
@@ -88,3 +88,4 @@
 \counterwithout{section}{chapter}       % no reset at each chapter
 \renewcommand{\thesection}{\arabic{section}}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\pgfplotsset{compat=1.18}
