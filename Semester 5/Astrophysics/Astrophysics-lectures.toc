@@ -1,0 +1,32 @@
+\contentsline {chapter}{\numberline {1}Thu, October 30, 2025}{1}{chapter.1}%
+\contentsline {section}{\numberline {1}introduction}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1}So what is astrophysics?}{1}{subsection.1.1.1}%
+\contentsline {chapter}{\numberline {2}Mon, November 3rd, 2025}{2}{chapter.2}%
+\contentsline {subsection}{\numberline {1.2}Regular (Baryonic) Matter}{2}{subsection.2.1.2}%
+\contentsline {chapter}{\numberline {3}Thu, November 6th, 2025}{4}{chapter.3}%
+\contentsline {subsection}{\numberline {1.3}The meaning of the symbol \( \simeq \)}{4}{subsection.3.1.3}%
+\contentsline {section}{\numberline {2}The Structure of Stars}{5}{section.3.2}%
+\contentsline {subsection}{\numberline {2.1}The Sun}{5}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {2.2}Star Structure Equations}{5}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {2.3}The Hydrostatic Equation}{5}{subsection.3.2.3}%
+\contentsline {subsubsection}{Applying The Equation To Earth}{6}{subsubsection*.4}%
+\contentsline {chapter}{\numberline {4}Mon, November 10th, 2025}{7}{chapter.4}%
+\contentsline {subsection}{\numberline {2.4}The State Equation}{7}{subsection.4.2.4}%
+\contentsline {subsubsection}{A quick aside on why the state equation is true}{7}{subsubsection*.5}%
+\contentsline {subsection}{\numberline {2.5}Generalizing To Radiation Pressure}{8}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {2.6}Nuclear Fusion}{9}{subsection.4.2.6}%
+\contentsline {chapter}{\numberline {5}Thu, November 13th, 2025}{10}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Mon, November 17th, 2025}{14}{chapter.6}%
+\contentsline {subsection}{\numberline {2.7}Diffusion of Photons}{16}{subsection.6.2.7}%
+\contentsline {chapter}{\numberline {7}Thu, November 20th, 2025}{18}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Mon, November 24th, 2025}{19}{chapter.8}%
+\contentsline {section}{\numberline {3}L-M ties}{19}{section.8.3}%
+\contentsline {subsection}{\numberline {3.1}The Most Massive Stars}{20}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {3.2}The Lifespan Of Stars}{21}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {3.3}Convection}{21}{subsection.8.3.3}%
+\contentsline {subsubsection}{A more concrete criteria for convection}{21}{subsubsection*.19}%
+\contentsline {chapter}{\numberline {9}Thu, November 27th, 2025}{23}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Mon, December 1st, 2025}{24}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Thu, December 4th, 2025}{25}{chapter.11}%
+\contentsline {chapter}{\numberline {12}Mon, December 8th, 2025}{26}{chapter.12}%
+\contentsfinish 
