@@ -15,12 +15,12 @@ we can write this as a table
 \begin{table}[!htb]
 	\centering
 	\begin{tabular}{l|cc}
-	  $M/M_\mathSun$ & $A$ & $\alpha$ \\
+	  \(M/M_\mathSun \) & \(A\) & \(\alpha \) \\
 	  \hline
-	  $<0.43$& 0.23 & 2.3 \\
-	  0.43-2 & 1 & 4\\
-	  2-55 & 1.4 & 3.5\\
-	  $>55$ & $\SI{3.2e4}{}$ & 1
+	  \(<0.43\)& 0.23 & 2.3 \\
+	  0.43--2 & 1 & 4\\
+	  2--55 & 1.4 & 3.5\\
+	  \(>55\) & \(\qty{3.2e4}{}\) & 1
 	\end{tabular}
 \end{table}
 To get a feeling for why this behaves like this, we'll do the following. We'll assume
@@ -47,7 +47,7 @@ and inserting that into C
 \begin{equation}
 	L\propto\frac{\ins{M/r}^4r}{\rho}=\frac{M^4/r^3}{\rho} \propto M^3
 \end{equation}
-For extremely massive stars ($>55M_\mathSun$), the radiation pressure is dominant, at which point D no longer holds and instead
+For extremely massive stars (\(>55M_\mathSun \)), the radiation pressure is dominant, at which point D no longer holds and instead
 \begin{equation}
 	P \propto T^4
 \end{equation}
@@ -72,7 +72,7 @@ we can rearrange it to
 \begin{equation}
 	\frac{1}{3}\diff*{\ins{aT^4}}{r} = -\kappa\rho\frac{L_r}{4\pi r^2c}
 \end{equation}
-and remembering that $\frac{1}{3}aT^4$ is the radiation pressure
+and remembering that \(\frac{1}{3}aT^4\) is the radiation pressure
 \begin{equation}
 	\diff{P_{\text{rad}}}{r} = -\kappa\rho\frac{L_r}{4\pi r^2c}
 \end{equation}
@@ -84,7 +84,7 @@ setting our two expression to equal we find
 \begin{equation}
 	\frac{GM_r\rho}{r^2} = \kappa\rho\frac{L_r}{4\pi r^2c}
 \end{equation}
-isolating $L_r$ and inserting $r=R$
+isolating \(L_r\) and inserting \(r=R\)
 \begin{equation}
 	L_r = 4\pi c\frac{GM}{\kappa}
 \end{equation}
@@ -92,7 +92,7 @@ this expression for luminosity is often called Eddington Luminosity. This expres
 \begin{equation}
 	L = \SI{3.8e4}{}\frac{M}{M_\mathSun}L_\mathSun
 \end{equation}
-and for a mass of $M=60M_\mathSun$
+and for a mass of \(M=60M_\mathSun \)
 \begin{equation}
 	L = \SI{2.3e6}{L_\mathSun}
 \end{equation}
@@ -111,7 +111,7 @@ Convection becomes important if
 	t_{\text{rad}} \gg t_{\text{dyn}} = \frac{l}{c_s}
 \end{equation}
 \subsubsection{A more concrete criteria for convection}
-Let's look at a element of gas with density $\rho$ and temperature $T$ at radius $r$ in a star, which moves to $r+dr$ and its parameters change to $\rho+\delta\rho$ and $T+\delta T$. The criterion for convection is
+Let's look at a element of gas with density \(\rho\) and temperature \(T\) at radius \(r\) in a star, which moves to \(r+dr\) and its parameters change to \(\rho+\delta\rho\) and \(T+\delta T\). The criterion for convection is
 \begin{equation}
 	\rho_{\text{element}}+\delta\rho_{\text{element}} < \rho_{\text{env}} + d\rho_{\text{env}}
 \end{equation}
@@ -131,7 +131,7 @@ which gives us
 \begin{equation}\label{drhooverrho}
 	\frac{d\rho}{\rho} = \frac{dP}{P}-\frac{dT}{T}
 \end{equation}
-We can now insert both \ref{deltarhooverrho} and \ref{drhooverrho} into \ref{deltadrho} we find
+We can now insert both~\ref{deltarhooverrho} and~\ref{drhooverrho} into~\ref{deltadrho} we find
 \begin{equation}
 	\frac{1}{\gamma}\frac{1}{P}\diff{P}{r} < \frac{1}{P}\diff{P}{r}-\frac{1}{T}\diff{T}{r}
 \end{equation}
@@ -139,7 +139,7 @@ rearranging
 \begin{equation}
 	\diff{T}{r} < \frac{\gamma-1}{\gamma}\frac{T}{P}\diff{P}{r}
 \end{equation}
-both the differentials are smaller than 0, so we'll multiply both sides by $-1$ and find
+both the differentials are smaller than 0, so we'll multiply both sides by \(-1\) and find
 \begin{equation}\label{convection4}
 	\left\lvert\diff{T}{r}\right\rvert > \frac{\gamma-1}{\gamma}\frac{T}{P}\left\lvert\diff{P}{r}\right\rvert
 \end{equation}
@@ -148,4 +148,4 @@ The effect this has is that it improves the transfer of heat which in turn balan
 \begin{equation}\label{convection5}
 	\left\lvert\diff{T}{r}\right\rvert = \frac{\gamma-1}{\gamma}\frac{T}{P}\left\lvert\diff{P}{r}\right\rvert
 \end{equation}
-which is a stable state. If \ref{convection4} is satisfied, we replace the radiation diffusion equation for the structure of stars with the convection equation \ref{convection5}.
+which is a stable state. If~\ref{convection4} is satisfied, we replace the radiation diffusion equation for the structure of stars with the convection equation~\ref{convection5}.

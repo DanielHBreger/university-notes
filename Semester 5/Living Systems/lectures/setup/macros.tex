@@ -62,17 +62,17 @@
 \title{\Huge Lecture Notes: \\ \courseloc}
 
 % Custom command for equation numbering inside list (itemize...)
-\newcommand{\itemnumber}{\hfill\refstepcounter{equation}(\theequation)} 
+\newcommand{\itemnumber}{\hfill\refstepcounter{equation} (\theequation)} 
 
 % Custom commands to indicate the parts where correction, details, clarifications and diagrams are needed to add  
-\newcommand{\eqdetails}{\textcolor{red}{[need details...] }}
-\newcommand{\details}{\textcolor{red}{[need to add details here...] }}
-\newcommand{\diagram}{\textcolor{red}{[need to add diagram \& details here...] }}
+\newcommand{\eqdetails}{\textcolor{red}{[need details\dots] }}
+\newcommand{\details}{\textcolor{red}{[need to add details here\dots]}}
+\newcommand{\diagram}{\textcolor{red}{[need to add diagram \& details here\dots]}}
 
 \DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
-\newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}}
+\newcommand{\irchi}[2]{\raisebox{\depth}{\(#1\chi \)}}
 
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 %\renewcommand{\vec}[2]{\ensuremath{\mathbf{#1}}}
-\let\vec\mathbf
-\let\phi\varphi
+\let\vec\mathbf{}
+\let\phi\varphi{}

@@ -1,4 +1,4 @@
-In the active case, the volume \(V_{int}\) is determined not only by diffusion but also by advection. A deviation \(\delta\theta\) creates different separation between particles in the \(\hat n \parallel \hat p\) direction and the \(\hat n \perp \hat p\) direction. This gives us
+In the active case, the volume \(V_{int}\) is determined not only by diffusion but also by advection. A deviation \(\delta\theta \) creates different separation between particles in the \(\hat n \parallel \hat p\) direction and the \(\hat n \perp \hat p\) direction. This gives us
 \begin{equation}
     \hat P = \ins{\cos\theta,\sin\theta} \approx \ins{1-\frac{1}{2}\delta\theta^2,\delta\theta}
 \end{equation}
@@ -18,7 +18,7 @@ and
 \begin{equation}
     \omega_\parallel \sim \delta x_\parallel + D_\parallel\tau^{1/2} \sim \tau\delta\theta^2+D_\parallel\tau^{1/2}\sim\tau^\gamma
 \end{equation}
-if we define \(\delta\theta\sim\tau^\gamma\) then we also find
+if we define \(\delta\theta\sim\tau^\gamma \) then we also find
 \begin{equation}
     \delta\theta \sim \sqrt{\frac{\tau}{V_e}} \sim \frac{\tau^{1/2}}{\sqrt{\omega_\perp^{d-1}\omega\parallel}}\sim\tau^\gamma
 \end{equation}
@@ -50,7 +50,7 @@ for
 \begin{equation}
     \frac{\delta \rho}{\rho_0},\frac{\lvert\vec{P}\rvert}{\lvert\vec{P}\rvert} \ll 1
 \end{equation}
-we'll linearize the equations and keep leading elements in the derivatives (first order). For simplicity we'll assume \(\vec{P} = \hat{x} + \delta P\hat{y}\implies\) the steady state is completely ordered and only rotations of the polarizations are possible. In this case, there is a steady current \(\vec{j_0}=\rho_0v_0\hat{x}\). In this case we won't interest ourselves with the Landau elements of the free energy (\(\frac{a}{2}P^2+\frac{b}{4}P^4\)).
+we'll linearize the equations and keep leading elements in the derivatives (first order). For simplicity we'll assume \(\vec{P} = \hat{x} + \delta P\hat{y}\implies \) the steady state is completely ordered and only rotations of the polarizations are possible. In this case, there is a steady current \(\vec{\jmath_0}=\rho_0v_0\hat{x}\). In this case we won't interest ourselves with the Landau elements of the free energy (\(\frac{a}{2}P^2+\frac{b}{4}P^4\)).
 \begin{align}
     F = \int\dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2+\frac{1}{2}k\partial_\alpha P_\beta\partial_\alpha P_\beta + \ins{\omega_0-\omega_1\frac{\delta\rho}{\rho_0}}\partial_\alpha P_\alpha\right]
 \end{align}
@@ -59,9 +59,9 @@ What does the last element mean? From integration by parts
     F &= \int\dd^2 r \left[\dots - P_\alpha\partial_\alpha\ins{\omega_0-\omega_1\frac{\delta\rho}{\rho_0}}\right] + \text{boundary element}\\
     &= \int\dd^2 r \left[\dots + \frac{\omega_1}{\rho}\vec{P}\cdot\nabla\rho\right]
 \end{align}
-\(\omega_0\) only contributes a boundary element. \(\omega_1\) determines whether \(\vec{P}\) likes to order itself with or against the gradients in the density.
+\(\omega_0\) only contributes a boundary element.\  \(\omega_1\) determines whether \(\vec{P}\) likes to order itself with or against the gradients in the density.
 % figure
-We'll develop the equation in \ref{polarwaves1} to first order in \(\delta\rho, \delta P\) and up to derivatives of first order and find
+We'll develop the equation in~\ref{polarwaves1} to first order in \(\delta\rho, \delta P\) and up to derivatives of first order and find
 \begin{align}
     \partial_t\delta\rho = -\partial_\alpha\ins{v_0\delta\rho P_\alpha^0 + v_0\rho_0\delta P_\alpha}
 \end{align}
@@ -74,7 +74,7 @@ because
 \begin{equation}
     \frac{\delta F}{\delta P_\alpha} = -k\partial_{\beta\beta}\delta P_\alpha + \frac{\omega_1}{\rho_0}\partial_\alpha\delta\rho
 \end{equation}
-If the system is homogenous in the \(y\) direction, we find that \(\delta P, \delta\rho\) are independent up to first order. One moves at velocity \(v_0\) and the other at velocity \(\lambda\). If the system is homogenous in the \(x\) direction, we find
+If the system is homogenous in the \(y\) direction, we find that \(\delta P, \delta\rho \) are independent up to first order. One moves at velocity \(v_0\) and the other at velocity \(\lambda \). If the system is homogenous in the \(x\) direction, we find
 \begin{align}
     \partial_t\delta\rho = -v_0\rho_0\partial_y\delta P \\
     \partial_t\delta P = -\gamma_P\omega_1\partial_y\frac{\delta\rho}{\rho_0}
@@ -91,7 +91,7 @@ Changes in the density reorganize \(\vec{P}\) and changes in \(\vec{P}\) transpo
 \newpage
 \section{Nematic Active Matter}
 \subsection{The Nematic Order Parameter}
-So far we dealt with polar order \(\vec{P} = \langle\hat l\rangle\) with a distinct direction. Sometimes there is only a distinct axis. This kind of order is called nematic. The order parameter is the Nematic Tensor:
+So far we dealt with polar order \(\vec{P} = \langle\hat l\rangle \) with a distinct direction. Sometimes there is only a distinct axis. This kind of order is called nematic. The order parameter is the Nematic Tensor:
 \begin{equation}
     Q_{\alpha\beta} = \left\langle\hat{l_\alpha}\hat{l_\beta}-\frac{\delta_{\alpha\beta}}{d}\right\rangle = Q\ins{n_\alpha n_\beta-\frac{\delta_{\alpha\beta}}{d}}
 \end{equation}
@@ -112,7 +112,7 @@ in general, in the direction \(\theta \rightarrow \hat{n}=\ins{\cos\theta,\sin\t
         \cos\ins{2\theta} && \sin\ins{2\theta} \\ \sin\ins{2\theta} && -\cos\ins{2\theta}
     \end{pmatrix}
 \end{equation}
-with the angle being \(2\theta\) representing the fact that \(\hat{n}\iff-\hat{n}\) (\(\theta\iff\theta+\pi\)). A physical theory of nematic matter can be also written in terms of \(\hat{n}\) while maintaining the symmetry for \(\hat{n}\iff-\hat{n}\) and a scalar parameter \(Q\). In practice, it is customary to sometimes use \(\vec{P}\) instead of \(\hat{n}\). \underline{Remember} this does not mean there is a preferred direction. Even if we can write \(\left\langle\hat{l}_\alpha\right\rangle\) we can write
+with the angle being \(2\theta \) representing the fact that \(\hat{n}\iff-\hat{n}\) (\(\theta\iff\theta+\pi \)). A physical theory of nematic matter can be also written in terms of \(\hat{n}\) while maintaining the symmetry for \(\hat{n}\iff-\hat{n}\) and a scalar parameter \(Q\). In practice, it is customary to sometimes use \(\vec{P}\) instead of \(\hat{n}\).\ \underline{Remember} this does not mean there is a preferred direction. Even if we can write \(\left\langle\hat{l}_\alpha\right\rangle \) we can write
 \begin{equation}
     Q_{\alpha\beta} = P_\alpha P_\beta -P_\mu P_\mu \frac{\delta_{\alpha\beta}}{d}
 \end{equation}
@@ -128,12 +128,12 @@ the final element in the right hand equation also cannot be used for the same re
 \begin{equation}
     \diffp{P_\alpha}{t} + \cancel{\lambda \ins{P_\mu\partial_y}P_\alpha} = -\gamma_P\rho \frac{\delta F}{\delta P_\alpha}
 \end{equation}
-The unintuitively cancelled element is \(\ins{\vec{P}\cdot\nabla}\vec{P}\). Why is it unallowed? Intuitively it comes from advection which no longer exists. Mathematically, we'll multiply by \(P_\beta\) and find
+The unintuitively cancelled element is \(\ins{\vec{P}\cdot\nabla}\vec{P}\). Why is it unallowed? Intuitively it comes from advection which no longer exists. Mathematically, we'll multiply by \(P_\beta \) and find
 \begin{align}
     P_\beta\partial_t P_\alpha + \lambda P_\beta\ins{P_\mu \partial_\mu}P_\alpha = \dots \\
     \partial_t Q_{\alpha\beta} + \cancel{\lambda\ins{P_\mu\partial_\mu}Q_{\alpha\beta}} = \dots
 \end{align}
 What is the active contribution? We need to take into consideration active currents. How can we build it from \(Q_{\alpha\beta}\)? We need to apply a vector on it. Without a defined direction, the only vector is \(\vec{\nabla}\):
 \begin{equation}
-    \vec{j} = -\gamma_\rho\vec{\nabla}\frac{\delta F}{\delta\rho}-\Lambda\vec{\nabla}\cdot\vec{Q}
+    \vec{\jmath} = -\gamma_\rho\vec{\nabla}\frac{\delta F}{\delta\rho}-\Lambda\vec{\nabla}\cdot\vec{Q}
 \end{equation}
