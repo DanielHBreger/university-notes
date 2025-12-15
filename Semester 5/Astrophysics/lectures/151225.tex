@@ -1,0 +1,157 @@
+\subsection{Pulsars}
+Pulsars are supernova remnants which appear to have pulsing fluxes of radaition.
+% figure
+For examples, at the center of the Crab Nebula there is a pulsar which pulses with every 33 miliseconds. The current theory is that these pulses come from neutron stars with magnetic fields which rotate very rapidly. These magnetic fields create jets that go in opposite directions.
+% figure
+We only observe these as pulsars if the jets point at us. 
+\subsubsection{Why do they spin so fast?}
+If we look at a typical netron star of radius 10 km, and if it spins with period of 1 ms, then the speed of its surface is as fast as \(0.2c\). Where does that speed come from? Conservation of angular momentum. Angular momentum for a sphere is
+\begin{equation}
+    J = I\omega = \frac{2}{5}MR^2\omega
+\end{equation}
+to satisfy conservation of angular momentum we have
+\begin{align}
+    J_0&=J_1 \\
+    \eta MR_1^2\omega_1 &= \eta MR_0^2\omega_0 \\
+    \implies\frac{\omega_1}{\omega_0} &= \ins{\frac{R_1}{R_0}}^{-2}
+\end{align}
+for example, plugging in the sun's radius for the initial and a neutron star radius for the final radius, then we have
+\begin{equation}
+    \ins{\frac{R_1}{R_0}}^{-2} = \qty{5e9}{}
+\end{equation}
+and since the sun's rotation's period is \(\tau_0 = \qty{25}{\day}=\qty{2e6}{\second}\), we have
+\begin{equation}
+    \tau_1 = \tau_0/\qty{5e9}{} \sim \qty{}{\milli\second}
+\end{equation}
+\subsubsection{Where does the magnetic field come from?}
+The magnetic field of a pulsar is of approximately \(\qty{e13}{\gauss}\). In comparison, the sun's magnetic field strength is \(\qty{1}{\gauss}\), and the earth's is \(\qty{e-5}{\gauss}\). We can think of a pulsar as a rotating magnetic dipole.
+% figure
+The radiation from this dipole is given by
+\begin{equation}
+    L = \frac{1}{6c^3}B^2R^6\omega^4\sin^2\theta
+\end{equation}
+For the pulsar in the crab nebula we measure
+\begin{align}
+    L &= \qty{5e38}{\erg\per\second} \\
+    \omega &= \qty{190}{\per\second}
+\end{align}
+and if we assume a typical 10 km radius, we find \(B\approx\qty{e13}{\gauss}\).
+\subsubsection{How does the magnetic field get so strong?}
+During the collapse process, another process called flux freezing takes place. The magnetic flux is defined by, for stars
+\begin{equation}
+    \Phi_B \propto BA = B\cdot\pi R^2
+\end{equation}
+doing a similar conservation of flux calculation we find
+\begin{align}
+    B_0R_0^2 &= B_1R_1^2 \\
+    B_1 = B_0 \ins{\frac{R_1}{R_0}}^{-2}
+\end{align}
+which fits our comparison earlier to the sun, if we plug in the numbers. 
+
+\subsubsection{Observation of the Crab Nebula}
+Observation of the crab nebulas show that the frequency of pulses from the pulsar in the crab nebula today is
+\begin{equation}
+    \omega_0 = \qty{190}{\per\second}
+\end{equation}
+and the rate of change in the frequency is
+\begin{equation}
+    \dot\omega = \qty{2.4e-9}{\per\second^2}
+\end{equation}
+so it's slowing down. To see why it's slowing down, we'll look at the energy it loses through radiation
+\begin{equation}
+    \diff{E}{t} \propto \omega^4
+\end{equation}
+on the other hand
+\begin{equation}
+    E = I\omega^2 \implies \diff{E}{t}=\omega\dot\omega
+\end{equation}
+equating the two we find
+\begin{equation}
+    \dot\omega = c\omega^3
+\end{equation}
+after solving we find
+\begin{equation}
+    t = \frac{1}{2c}\ins{\frac{1}{\omega_o^2}-\frac{1}{\omega_i^2}}
+\end{equation}
+and with a little rearranging we have
+\begin{equation}
+    t = \frac{\omega_0^3}{\dot\omega_0}\ins{\frac{1}{\omega_0^2}-\frac{1}{\omega_i^2}}
+\end{equation}
+if we assume significant deceleration \(\omega_0\ll\omega_i\)
+\begin{equation}
+    t = \frac{\omega_0}{\dot\omega_0}
+\end{equation}
+inserting the numbers we observed we find
+\begin{equation}
+    t = \qty{1260}{\year}
+\end{equation}
+\subsection{Black Holes}
+If the mass of the star is greater than the maximum mass allowed for neutron stars it becomes a black hole. This gives us a lot of mass concentrated in a very small radius.
+\subsubsection{What is the escape velocity?}
+The kinetic energy of an object is
+\begin{equation}
+    E_k = \frac{1}{2}mv^2
+\end{equation}
+while the gravitational potential energy is
+\begin{equation}
+    E_G = \frac{GMm}{R}
+\end{equation}
+equating the two we find
+\begin{equation}
+    v_{esc} = \sqrt{\frac{2GM}{R}}
+\end{equation}
+if we equate this to the speed of light we find
+\begin{equation}
+    R_s = \frac{2GM}{c^2}
+\end{equation}
+which means that if \(R,R_s\) even light cannot escape the star's surface. This is called a black hole. Some examples for Scwartzchild radii are
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{l|c}
+        \(R_s\) & M \\
+        \hline
+        \(\qty{0.9}{\centi\meter}\) & \(M_\mathTerra = \qty{6e27}{\gram}\) \\
+        \(\qty{3}{\kilo\meter}\) & \(M_\mathSun = \qty{2e33}{\gram}\) \\
+        \(\qty{0.08}{\astronomicalunit}\) & \(M = \qty{4e6}{}M_\mathSun \) \\
+        \(\qty{8}{\astronomicalunit}\) & \(\qty{4e8}{} M_\mathSun \)
+    \end{tabular}
+\end{table}
+this calculation is technically incorrect because we ignored the effects of relativity. The results are correct mostly by accident.
+\section{General Relativity}
+The Einstein equation is
+\begin{equation}
+    G_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}
+\end{equation}
+where \(T_{\mu\nu}\) is the momentum-energy tensor and it describes the `sources' and \(G_{\mu\nu}\) describes the curvature of spacetime. \(G_{\mu\nu}\) is comprised of the metric \(g_{\mu\nu}\) and its derivatives. The simplest metric is the Minkowski metric which describes flat spacetime. We work with mostly minus, therefore the metric looks like
+\begin{equation}
+    g_{\mu\nu} = \begin{pmatrix}
+        1&0&0&0\\0&-1&0&0\\0&0&-1&0\\0&0&0&-1
+    \end{pmatrix}
+\end{equation}
+and the four-position is defined by
+\begin{equation}
+    \dd x^\mu = \begin{cases}
+        \dd x^0 = c\dd t\\
+        \dd x^1 = \dd x\\
+        \dd x^2 = \dd y\\
+        \dd x^3 = \dd z
+    \end{cases}
+\end{equation}
+As we know many quantities aren't invariant to lorentz boosts, e.g lengths and time. But there are some quantities which are invariant. An important lorentz invariant is the `interval' \(\dd s\):
+\begin{equation}
+    \dd s^2 = g_{\mu\nu} \dd x^\mu \dd x^\nu
+\end{equation}
+this value can be either positive, negative, or zero. We can look at this through a figure.
+% figure
+the volume inside the cone represents events which are causally linked. Massive objects could have moved between those two events, and for those events the interval is positive and a different frame of refence can be found in which both events happen at the same location. These events are called timelike. There are also events outside the cone. These events are not causally linked so no information can reach them. For them the interval is negative. A different frame of reference can be found in which both events happen at the same time. These events are called spacelike. The final kind of events are those directly on the cone. These events are called lightlike and for these events they are causally linked only for massless particles and the interval is equal 0.
+\subsection{The Minkowski Metric in Spherical Coordinates}
+We know what the metric looks like in cartesian coordinates, and we know the transformation to spherical coordinates, therefore
+\begin{equation}
+    ds^2 = \ins{c\dd t}^2 - \dd r^2 - \ins{r\dd \theta}^2 - \ins{r\sin\theta\dd \varphi}^2
+\end{equation}
+therefore the metric is
+\begin{equation}
+    g_{\mu\nu} = \begin{pmatrix}
+        1&0&0&0 \\ 0&-1&0&0 \\ 0&0&-r^2&0 \\ 0&0&0&-r^2\sin^2\theta
+    \end{pmatrix}
+\end{equation}
