@@ -1,0 +1,132 @@
+If our space does have a mass \(M\) at the position \(r=0\) then the metric for the space is the Schwartzchild metric (in spherical):
+\begin{equation}
+    g_{\mu\nu} = \begin{pmatrix}
+        1-\frac{2GM}{rc^2}&&&\\
+        &-\ins{1-\frac{2GM}{rc^2}}^{-1}&&\\
+        &&-r^2&\\
+        &&&-r^2\sin^2\theta
+    \end{pmatrix}
+\end{equation}
+where empty places are zeroes. We'll define the time t to be measured at infinity, therefore the interval is
+\begin{align}
+    ds^2 &= dx^\mu dx^\nu g_{\mu\nu}\\
+    &= \ins{1-\frac{2GM}{rc^2}}\ins{cdt}^2 - \left[\ins{1-\frac{2GM}{rc^2}^{-1}dr^2 + \ins{rd\theta}^2+\ins{r\sin\theta d\phi}^2}\right]
+\end{align}
+If we define \(\frac{2GM}{rc^2} = R_s\) then
+\begin{equation}
+    ds^2 = \ins{r-\frac{R_s}{r}}\ins{cdt}^2 - \left[\ins{1-\frac{R_s}{r}}^{-1}dr^2+\dots\right]
+\end{equation}
+and we can use this to define the proper time
+\begin{equation}
+    \tau = \frac{ds}{c}
+\end{equation}
+Let's look at the following scenario: we have a mass \(M\) at position \(r=0\), and our friend Yossi is located at position \(\vec{r}\). We're located at infinity.\ we measure a time interval \(dt\). What time interval \(\tau \) did Yossi measure? We look at the interval between the two events.\ both events happened at the same position so \(dr = d\theta = d\phi = 0\). This means that
+\begin{equation}
+    ds^2 = \ins{1-\frac{R_s}{r}}\ins{cdt}^2
+\end{equation}
+therefore\begin{equation}
+    \tau = \frac{ds}{c} = \sqrt{1-\frac{R_s}{r}}dt
+\end{equation}
+if we define \(\Delta r = r-R_s\) then
+\begin{equation}
+    d\tau = dt \sqrt{\frac{\Delta r}{r}}
+\end{equation}
+and if we look at some numerical examples
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{l|c}
+        \(\frac{\Delta r}{r}\) & \(\frac{\Delta \tau}{\tau}\) \\
+        \hline
+        0.5 & \(1/1.4\) \\
+        0.1 & \(\sim 1/3\) \\
+        0.01 & \(1/10\) \\
+        \(\qty{e-4}{}\) & \(1/100\) 
+    \end{tabular}
+\end{table}
+
+Let's give Yossi a flashlight and throw him into a black hole. We could have thrown the flashlight on its own, but that would be less fun. What we'll see is that Yossi's radius asymptotically approaches \(R_s\) but never crosses it. If we look at what the flashlight does, we'll notice the wavelength of the light increases and the magnitude of the light decreases. If we define the period of the wavelength of the light to be \(T_0\) and the frequency to be \(\nu_0\) then the period at infinity is
+\begin{equation}
+    T_\infty = \frac{1}{\sqrt{1-\frac{R_s}{r}}}T_0
+\end{equation}
+and
+\begin{equation}
+    \nu_\infty = \nu_0\sqrt{1-\frac{R_s}{r}}
+\end{equation}
+and the wavelength would be
+\begin{equation}
+    \lambda_\infty = \frac{\lambda_0}{\sqrt{1-\frac{R_s}{r}}}
+\end{equation}
+if we look at a source of light which sends pulses of photons with frequency \(\nu_0\) at the rate \(\kappa (s^{-1})\) then the power output of it is
+\begin{equation}
+    P_0 = h\nu_0\kappa
+\end{equation}
+and at infinity
+\begin{equation}
+    P_\infty = P_0\ins{1-\frac{R_s}{r}}
+\end{equation}
+Let's now look at the behavior of light near black holes. To do that we'll look at the case of the interval being zero, \(ds = 0\):
+\begin{equation}
+    0 = \ins{1-\frac{R_s}{r}}\ins{cdt}^2 - \ins{1-\frac{R_s}{r}}^{-1}dr^2+dots
+\end{equation}
+for a radial path \(d\theta = d\phi = 0\)and we'll find
+\begin{equation}
+    \diff{r}{t} = \pm \ins{1-\frac{R_s}{r}}c
+\end{equation}
+but does this not violate the principle that light moves at the speed of light? No. This is the speed we observe as an external observer at infinity. the velocity as experienced by the light itself is
+\begin{equation}
+    v = \diff{l}{\tau} = \diff{r}{t}\frac{\frac{1}{\sqrt{1-\frac{R_s}{r}}}}{\sqrt{1-\frac{R_s}{r}}} = \frac{\diff{r}{t}}{1-\frac{R_s}{r}} = c
+\end{equation}
+\subsection{Thermodynamics of Black Holes}
+\footnote{This is a very complex subject so we won't go deep into it but it's very interesting so we'll briefly cover it. Some interesting subtopics we won't cover are the information paradox, the Unruh effect, and Hologram Universe.}
+The 2nd law of thermodynamics states that entropy increases, i.e \(ds \geq 0\). The entropy of a black hole is proportional to it surface area \(S_{BH} \propto A_{BH}\). If mass is absorbed by a black hole, its mass increases. This in turn increases the radius which increases the surface area, and thus the entropy increases. A more accurate calculation done by Hawking and Bekerstein yields
+\begin{equation}
+    S_{BH} = k_B \frac{A}{4l_p^2}
+\end{equation}
+where
+\begin{equation}
+    l_p = \sqrt{\frac{G\hbar}{c^3}}
+\end{equation}
+for a Schwartzchild black hole, \(A = 4\pi R_s^2\). The black hole having an entropy which changes when mass is absorbed implies that it might have a definable temperature, which itself implies that we may be able to measure a radaition being emitted from the black hole as a black body. We can define temperature using statistical mechanics to be
+\begin{equation}\label{temp_bh}
+    T = \diff{U}{S} = \diff{U}{M}\ins{\diff{S}{M}}^{-1}
+\end{equation}
+as we are looking at a Schwartzchild black hole we can define \(U=Mc^2\) and find
+\begin{equation}
+    S = k_B\frac{A}{l_p^2}=k_B\frac{4\pi R_s^2}{4l_p^2}=k_B\frac{\pi}{l_p^2}\ins{\frac{2GM}{c^2}}^2
+\end{equation}
+therefore
+\begin{equation}
+    \diff{S}{M} = k_B\frac{8\pi GM}{\hbar c}
+\end{equation}
+and
+\begin{equation}
+    \diff{U}{M} = c^2
+\end{equation}
+inserting back into \ref{temp_bh}
+\begin{equation}
+    k_B T = \frac{\hbar c^3}{8\pi GM}
+\end{equation}
+if we plug in numbers then the temperature is
+\begin{equation}
+    T = \qty{60}{\nano\kelvin}\ins{\frac{M}{M_\mathSun}}^{-1}
+\end{equation}
+now since the black hole has a temperature, it'll radiate as a black body. How long would it take for a black hole then to radiate away all its mass?
+\begin{equation}
+    \diff{E}{t} = \diff{Mc^2}{t} = c^2 \dot M
+\end{equation}
+but on the other hand
+\begin{equation}
+    \diff{E}{t} = 4\pi R_s^2\sigma T^4 \propto M^2\cdot\ins{\frac{1}{M}}^4 \propto \frac{1}{M^2}
+\end{equation}
+which gives us a differential equation whose solution is
+\begin{equation}
+    t_{evap} = \frac{5120 \pi G^2M^3}{\hbar c^4}
+\end{equation}
+inserting the numbers find
+\begin{equation}
+    t_{evap} = \qty{2e67}{\year}\ins{\frac{M}{M_\mathSun}}^3
+\end{equation}
+so black holes practically never evaporate. For a black hole to evaporate within the age of the universe, they'd have to have mass
+\begin{equation}
+    M \leq \qty{e8}{\gram}
+\end{equation}
