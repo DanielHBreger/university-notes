@@ -1,0 +1,37 @@
+\clearpage
+\section{Quantization of the Field}
+\begin{colbox}
+	\begin{enumerate}
+		\item Express $\hat H_F$ in terms of $\hat a$ and $\hat a^\dagger$ and the number operator $\hat N = \hat a^\dagger\hat a$.
+		\item Calculate the expectation values $\langle \vec\hat E(\vec r)\rangle_n,\langle \vec\hat B(\vec r)\rangle_n, \langle\hat H_F\rangle $ in state $\ket{n}$.
+	\end{enumerate}
+\end{colbox}
+\subsection{Field Hamiltonian}
+From the definitions for the photon creation and annihilation operators we can find expressions for $\chi$ and $\Pi$ using the operators:
+\begin{align}
+	\hat\chi=\frac{1}{\sqrt{2}}\ins{\hat a+\hat a^\dagger} && \hat \Pi = \frac{1}{\sqrt{2}i}\ins{\hat a - \hat a^\dagger}
+\end{align}
+therefore
+\begin{align}
+	\hat H_F &= \frac{\hbar\omega}{2}\ins{\hat\chi^2+\hat\Pi^2}\\
+	&= \frac{\hbar\omega}{4}\ins{\ins{\hat a+\hat a^\dagger}^2-\ins{\hat a-\hat a^\dagger}}\\
+	&= \frac{\hbar\omega}{4}\ins{\hat a^2+\hat a\hat a^\dagger+\hat a^\dagger\hat a+\hat {a^\dagger}^2-\hat a^2+\hat a\hat a^\dagger+\hat a^\dagger\hat a-\hat {a^\dagger}^2}\\
+	&= \frac{\hbar\omega}{2}\ins{\hat a\hat a^\dagger+\hat N}\\
+	&= \frac{\hbar\omega}{2}\ins{\hat a^\dagger\hat a - \hat a^\dagger\hat a +\hat a\hat a^\dagger+\hat N}\\
+	&= \frac{\hbar\omega}{2}\ins{2\hat N+[\hat a,\hat a^\dagger]}\\
+	&= \frac{\hbar\omega}{2}\ins{2\hat N+1}\\
+	&= \hbar\omega\ins{\hat N+\frac{1}{2}}
+\end{align}
+\subsection{Expectation Values}
+First we notice
+\begin{equation}
+	\langle \vec\hat E(\vec r)\rangle_n = \bra{n}\hat E\ket{n}
+\end{equation}
+which if we look at the definition of the creation and annihilation operators which define $\hat E$, the result of the above equation is always zero, therefore
+\begin{equation}
+	\langle \vec\hat E(\vec r)\rangle_n = 0
+\end{equation}
+and the same holds for $\langle \vec\hat B(\vec r)\rangle_n $. For $\hat H_F$:
+\begin{equation}
+	\bra{n}\hat H_F\ket{n} = \hbar\omega\bra{n}\ins{\hat N+\frac{1}{2}}\ket{n}=\hbar\omega\ins{n+\frac{1}{2}}
+\end{equation}
