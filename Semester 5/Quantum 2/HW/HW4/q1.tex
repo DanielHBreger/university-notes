@@ -1,0 +1,124 @@
+\section{The Optical Theorem}
+\subsection{Why \(S\) is unitary}
+In an elastic scattering the kinetic energy of the incident particle is conserved. Therefore applying the operator S to a state does not change its magnitude in the energy space, therefore it is unitary.
+
+\subsection{Show VS}
+We know that
+\begin{align}
+	H_0\ket{\psi_i} = E\ket{\psi_i} \\
+	H\ket{\psi_o} = E\ket{\psi_o}
+\end{align}
+inserting the full form of the hamiltonian
+\begin{equation}
+	\ins{H_0+V}\ket{\psi_o} = E\ket{\psi_o}
+\end{equation}
+subtracting a zero on the right hand side
+\begin{align}
+	\ins{H_0+V}\ket{\psi_o} &= E\ket{\psi_o} - 0 \\
+	\ins{H_0+V}\ket{\psi_o} &= E\ket{\psi_o} - \ins{E-H_0}\ket{\psi_i} \\
+	\ins{H_0+V}S\ket{\psi_i} &= ES\ket{\psi_i}- \ins{E-H_0}\ket{\psi_i} \\
+	VS\ket{\psi_i} &= ES\ket{\psi_i}- \ins{E-H_0}\ket{\psi_i} - H_0S\ket{\psi_i} \\
+	VS &= ES - E + H_0 - H_0S\\
+	VS &= \ins{E-H_0}\ins{S-\mathds{1}}
+\end{align}
+in the limit \(v\rightarrow 0\) S is the identity, since both sides of the equation must equal 0 always.
+\subsection{Resolvant}
+If we apply \(G_0\) to both sides
+\begin{equation}
+	G_0 VS = G_0\ins{E-H_0}\ins{S-\mathds{1}} \implies G_0 VS = S-\mathds{1} \implies S = \mathds{1} + G_0 VS
+\end{equation}
+\subsection{Projection}
+We'll apply the above equation to the state \(\ket{k}\)
+\begin{align}
+	S\ket{k} &= \mathds{1}\ket{k} + G_0 VS\ket{k} \\
+	\ket{\psi_o} &= \ket{k} + G_0 V\ket{\psi_o}
+\end{align}
+\subsection{Collision Operator}
+directly
+\begin{align}
+	S = \mathds{1} + G_0 VS \implies S = \mathds{1} + G_0 T
+\end{align}
+\subsection{Applying to the State}
+applying state \(\ket{k}\)
+\begin{align}
+	S\ket{k} &= \mathds{1}\ket{k} + G_0 T\ket{k} \\
+	\ket{\psi_o} &= \ket{k} + G_0 T\ket{k}
+\end{align}
+This is another representation of the Lippman Schwinger equation.
+\subsection{Projection Again}
+the form we found for \(\psi_o(r)\) is
+\begin{equation}
+	\psi_o(r) = \frac{1}{\ins{2\pi}^{3/2}}\ins{e^{i\vec{k}\cdot\vec{r}} + \frac{e^{ikr}}{r}f(k,k')}
+\end{equation}
+where
+\begin{equation}
+	f(k,k') = -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\braket{k'\vert V \vert \psi_o}
+\end{equation}
+transforming using our known operators
+\begin{align}
+	f(k,k') &= -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\braket{k'\vert VS \vert k} \\
+	&= -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\braket{k'\vert T \vert k}
+\end{align}
+\subsection{Showing Things}
+directly
+\begin{equation}
+	V\ket{\psi_o} = VS\ket{k} = T\ket{k}
+\end{equation}
+using LS we found earlier
+\begin{align}
+	V\ket{\psi_o} &= V\ket{k} + V G_0 T\ket{k} \\
+	T\ket{k} &= V\ket{k} + V G_0 T\ket{k} \\
+	T &= V + V G_0 T
+\end{align}
+\subsection{Showing More Things}
+\begin{align}
+	\Im\ins{\braket{k\vert T \vert k}} &= \Im\ins{\braket{k\vert VS \vert k}} \\
+	&= \Im\ins{\braket{k\vert V \vert \psi_o}} \\
+	&= \Im\ins{\braket{\psi_o\vert V \vert \psi_o} - \braket{\psi_o\vert VG_0 V \vert \psi_o}}\\
+	&= \Im\ins{\braket{\psi_o\vert V \vert \psi_o}} - \Im\ins{\braket{\psi_o\vert VG_0 V \vert \psi_o}}\\
+	&= \Im\ins{\braket{\psi_o\vert V \vert \psi_o}} - \Im\ins{\braket{\psi_o\vert V \ins{\Re G_0 + i\Im G_0} V \vert \psi_o}}\\
+	&= - \Im\ins{\braket{\psi_o\vert V \Re G_0 V \vert \psi_o}} + \Im\ins{i\braket{\psi_o\vert V \Im G_0 V \vert \psi_o}}\\
+	&= - \Im\ins{i\braket{\psi_o\vert V \Im G_0 V \vert \psi_o}}\\
+	&= - \Im\ins{i\braket{\psi_o\vert V \Im\ins{\frac{1}{E-H_0+o\epsilon}} V \vert \psi_o}}\\
+	&= - \pi\Im\ins{i\braket{\psi_o\vert V \delta\ins{E-H_0} V \vert \psi_o}}\\
+	&= - \pi\braket{\psi_o\vert V \delta\ins{E-H_0} V \vert \psi_o}
+\end{align}
+\subsection{Conclude}
+\begin{align}
+	- \pi\braket{\psi_o\vert V \delta\ins{E-H_0} V \vert \psi_o} &= - \pi\braket{k\vert S^\dagger V \delta\ins{E-H_0} VS \vert k} \\
+	&= - \pi\braket{k\vert T^\dagger \delta\ins{E-H_0} T \vert k}
+\end{align}
+inserting an identity
+\begin{align}
+	- \pi\braket{k\vert T^\dagger \delta\ins{E-H_0} T \vert k} &= -\pi\int\dd k' \braket{k\vert T^\dagger \delta\ins{E-H_0}\vert k'}\braket{k' \vert T \vert k}
+\end{align}
+next we notice that since the momentum is \(P = \hbar k\) the hamiltonian is \(H_0 = \frac{\hbar^2 k^2}{2m}\)
+\begin{align}
+	-\pi\int\dd k' \braket{k\vert T^\dagger \delta\ins{E-H_0}\vert k'}\braket{k' \vert T \vert k} &= -\pi\int\dd k' \delta\ins{E-\frac{\hbar^2 k'^2}{2m}}\braket{k\vert T^\dagger \vert k'}\braket{k' \vert T \vert k}\\
+	&= -\pi\int\dd k' \delta\ins{E-\frac{\hbar^2 k'^2}{2m}}\lvert\braket{k'\vert T \vert k}\rvert^2
+\end{align}
+moving integration parameter to the energy we notice \(\diff{E}{k} = \frac{\hbar^2 k}{m}\) therefore \(\diff{k}{E} = \frac{m}{\hbar^2 k}\) and remembering we're now integrating over a sphere in energy phase space
+\begin{align}
+	-\pi\int\dd k' \delta\ins{E-\frac{\hbar^2 k'^2}{2m}}\lvert\braket{k'\vert T \vert k}\rvert^2 &= -\pi\int\dd E \dd \Omega k^2 \frac{m}{\hbar^2 k} \delta\ins{E-\frac{\hbar^2 k'^2}{2m}}\lvert\braket{k'\vert T \vert k}\rvert^2 \\
+	&= -\frac{\pi m}{\hbar^2 k}\int\dd E \dd \Omega k^2 \delta\ins{E-\frac{\hbar^2 k'^2}{2m}}\lvert\braket{k'\vert T \vert k}\rvert^2\\
+	&= -\frac{\pi mk}{\hbar^2 }\int \dd \Omega \lvert\braket{k'\vert T \vert k}\rvert^2
+\end{align}
+\subsection{Prove Optical Theorem}
+In subsection 7 we found
+\begin{align}
+	f(k,k') = -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\braket{k'\vert T \vert k}
+\end{align}
+therefore
+\begin{align}
+	\Im\ins{f(\theta = 0)} &= \Im\ins{f(k,k)} \\
+	&= -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\Im\ins{\braket{k\vert T \vert k}}\\
+	&= -\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3\ins{-\frac{\pi mk}{\hbar^2 }\int \dd \Omega \lvert\braket{k'\vert T \vert k}\rvert^2}\\
+	&= \frac{k}{2\hbar^4}\ins{2\pi}^3\int \dd \Omega \lvert\braket{k'\vert T \vert k}\rvert^2 \\
+	&= \frac{k}{2\hbar^4}\ins{2\pi}^3 \ins{-\frac{1}{4\pi}\frac{2m}{\hbar^2}\ins{2\pi}^3}^{-2}\int\dd\Omega \lvert f(k,k)\rvert \\
+	&= \frac{k}{4\pi}\int\dd\Omega \lvert f(k,k)\rvert
+\end{align}
+using the definition for the differential cross section \(\diff{\sigma}{\Omega} = \lvert f(k,k')\rvert^2\)
+\begin{align}
+	\Im\ins{f(\theta = 0)} &= \frac{k}{4\pi}\int\dd\Omega\diff{\sigma}{\Omega}\\
+	&= \frac{k}{4\pi}\sigma
+\end{align}
