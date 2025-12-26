@@ -1,0 +1,63 @@
+\emph{I missed this lecture. This lecture. The notes I'm including here for this lecture are copied from Shmuel's handwritten notes as closely to word for word as I could, and are not based on the lecture itself.}
+\section{Intestellar Medium}
+The ISM includes
+\begin{itemize}
+    \item Gas
+    \item Dust
+    \item Cosmic Rays
+    \item EM Radiation
+    \item Magnetic Fields
+    \item Dark Matter
+\end{itemize}
+There isn't a property that is uniform across all the ISM, and the ISM is inhomogenous. Some areas are molecular, some are atomic, and some are ionized. Typical values for the temperature and density of the various states of matter are
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{l|c|c}
+        Chemical State & Temperature [\(K\)] & Density [\(\qty{}{\per\centi\meter^3}\)] \\
+        \hline
+        Molecular & \(10-100\) & \(100-\qty{e6}{}\) \\
+        Atomic & \(100-\qty{e4}{}\) & \(\qty{e-1}{} - 100\) \\
+        Ionized & \(\qty{e4}{}-\qty{e7}{}\) & \(\qty{e-4}{}-\qty{e-1}{}\)
+    \end{tabular}
+\end{table}
+on average, there is about 1 particle of the above per cubic centimeter. For comparison, in Earth's atmosphere there are approximately \(\qty{e9}{\per\centi\meter^3}\) particles. The densest areas collapse and create stars. Those regions are called `Molecular Clouds' and their parameters are
+\begin{align}
+    M = 100-\qty{e5}{}M_\mathSun && n = \qty{e2}{}-\qty{e4}{\per\centi\meter^3} && T \sim 10-100 K
+\end{align}
+Even the most dense regions are still very far from the density of stars. The process of collapse is not completely understood and is an active area of research.
+\subsection{Hydrodynamics}
+To describe the behavior of these regions we'll describe particles in a statistical manner and we'll want to characterize them using their density \(\rho(\vec{r},t)\), their velocity \(\vec{v}(\vec{r},t)\), the pressure \(P(\vec{r},t)\), and the temperature \(T(\vec{r},t)\). The minimum free pass distance for the randomly moving particles is
+\begin{equation}
+    \lambda_{mfp} = \frac{1}{\sigma n} \sim \qty{e13}{\centi\meter}
+\end{equation}
+The variables used to describe the system are described by a set of interconnected partial differential equations called the Navier-Stokes equations, or the Magneto-Hydrodynamics equations. The equations result from conservation laws, such as conservation of mass, conservation of momentum, and conservation of energy. There are several ways to develop the equations, we'll follow a (shortened) development which follows mass elements in a fluid from a lagrangian frame of reference (which moves with the element). To turn an ODE into a PDE we can use the following trick
+\begin{equation}\label{nsidentity}
+    \diff{A}{t} = \diffp{A}{t} + \diffp{A}{x}\diffp{x}{t} + \diffp{A}{y}\diffp{y}{t} + \diffp{A}{z}\diffp{z}{t} = \left[\diffp{}{t}+\vec{v}\cdot\vec{\nabla}\right]A
+\end{equation}
+where the expression \(\diff{}{t}=\ins{\diffp{}{t}+\vec{v}\cdot\nabla}\) is called the convective/mass/material derivative. 
+\subsubsection{Conservation of Mass: Continuity Equation}
+The first equation we'll look at is the equation for conservation of mass,
+\begin{equation}
+    \diff{M}{t}=0
+\end{equation}
+rewriting using the identity~\ref{nsidentity} 
+\begin{equation}\label{idkwhattocallthis}
+    \diffp{}{t}\ins{\rho dV} = -\rho \vec{v}\cdot d\vec{A}
+\end{equation}
+recalling the divergence theorem
+\begin{equation}
+    \oiint\limits_S \rho\vec{v}\cdot\dd\vec{A} = \iiint\limits_V \nabla\ins{\rho\vec{v}}\dd V
+\end{equation}
+we can thus rewrite~\ref{idkwhattocallthis} as
+\begin{equation}
+    \diffp{\rho}{t} = -\nabla\ins{\rho\vec{v}}
+\end{equation}
+which gives us
+\begin{equation}
+    \diffp{\rho}{t} + \nabla\ins{\rho\vec{v}} =0
+\end{equation}
+which is the continuity equation. For an incompressible gas (such as water) \(\rho = const\) therefore \(\rho\nabla\vec{v}=0\) and thus the continuity equation becomes
+\begin{equation}
+    \nabla\vec{v}=0
+\end{equation}
+the ISM is sometimes very compressible, meaning shockwaves can happen.
