@@ -1,7 +1,10 @@
 \subsection{Deformations in Nematic Order: Free Energy}
 As we've seen so far, it's useful to understand the free energy it takes to deform the order parameter. We'll imagine a completely ordered state, such that changes in the nematic order are only the result of changes in the angle. It is possible to develop the elements in the free energy phenomenologically from symmetry. In the nematic case we find three elements.
 
-% figure
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{images/nematic_deformations.jpg}
+\end{figure}
 
 \begin{description}
     \item[Splays] The elements have the form \(\sim\ins{\nabla \cdot \hat{n}}^2\).\  \(\hat{n}\) is perpendicular to the gradient and \(\delta\hat{n}\) is parallel to the gradient.
@@ -17,7 +20,11 @@ the coefficients \(K_{1,2,3}\) are called the Frank coefficients and in general 
     F = \int \dd \vec{r} \frac{K}{2}\partial_\alpha n_\beta\partial_\alpha n_\beta = \int\dd \vec{r} \frac{K}{2}\ins{\nabla\hat{n}}^2
 \end{equation}
 in practice the final expression has another boundary element called the sadlle-splay. We'll return to the active current \(-\Lambda\partial_\beta Q_{\alpha\beta}\) in 2D. We'll look at how a current can result from a splay or a bend.
-%figure
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/polar_deformations.jpg}
+\end{figure}
 It is possible to think of each line as a force dipole. When they are non-homogenous there are regions which will contribute to the creation of a total force (like electric dipoles and charge). For case 1 in the above figure:
 \begin{align}
     \hat{n} = \hat{r} \implies \partial_\beta\ins{n_\alpha n_\beta} = n_\alpha\partial_\beta n_\beta + \cancel{n_\beta \partial_\beta n_\alpha} = 2\hat{r}
@@ -27,15 +34,15 @@ and for case 2:
     \hat{n} = \hat{\theta} \implies \partial_\beta\ins{n_\alpha n_\beta} = \cancel{n_\alpha\partial_\beta n_\beta} + n_\beta\partial_\beta n_\alpha = \frac{1}{r}\partial_\theta\ins{-\sin\theta,\cos\theta} = -\frac{\hat{r}}{r}
 \end{align}
 \section{Topological Defects (in 2D)}
-Unlike the deformations we saw already, there are deformations with singularities in the direction \(\hat{r}\), i.e places where the direction is undefined. Such deformations are called topolotical defects. We'll focus on them in 2 dimensions.
-%figure
-It is possible to characterize defects by the `topological charge' q. It is called as the winding number. We'll assume that \(\hat{n} = \ins{\cos\theta,\sin\theta}\). In that case the topological charge is given by
+Unlike the deformations we saw already, there are deformations with singularities in the direction \(\hat{r}\), i.e places where the direction is undefined. Such deformations are called topolotical defects. We'll focus on them in 2 dimensions. It is possible to characterize defects by the `topological charge' q. It is called as the winding number. We'll assume that \(\hat{n} = \ins{\cos\theta,\sin\theta}\). In that case the topological charge is given by
 \begin{equation}
     \boxed{\oint\dd\theta = 2\pi q}
 \end{equation}
-where the integral is over any closed path which encloses the defect and its direction is counter-clockwise. For polar order, \(q\) is a whole number.
-%figure
-For nematic order, q can be a multiple of \(1/2\) since \(\hat{n}\) and \(-\hat{n}\) are equivalent. In particular, the identification of a half-whole defect shows that the summetry of the problem is nematic rather than polar. This is important in experiments in real systems which are not supplied with built in arrows. A couple notes:
+\begin{wrapfigure}[15]{r}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/nematic_defects.jpg}
+\end{wrapfigure}
+where the integral is over any closed path which encloses the defect and its direction is counter-clockwise. For polar order, \(q\) is a whole number. A couple notes:
 \begin{itemize}
     \item The value of q is independent of the path.
     \item If there are two or more defects enclosed by the path, \(q\) will be the total charge.
