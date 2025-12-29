@@ -1,0 +1,188 @@
+\subsection{Conservation of Momentum}
+% fill missing part from handwritten notes
+we reached the equation
+\begin{equation}\label{alltheforces}
+    \rho\delta V \diff{\vec{v}}{t} = \sum \delta \vec{F_i}
+\end{equation}
+where \(F_i\) is the parts that depend on the pressure, EM field, gravitation, and viscosity. 
+\subsubsection{The pressure element \(\delta F_p\) is}
+\begin{align}
+    \vec{F_p} = \iint -p\dd \vec{s} = -\iint\limits_V \nabla p \dd V\\
+    \implies \delta \vec{F_p} = -\nabla p\delta V
+\end{align}
+\subsubsection{the electromagnetic element \(\delta\vec{F_B}\)} Assuming a neutral plasma, we can find from the lorentz force on a particle
+\begin{equation}
+    \vec{F} = \frac{q\vec{v}}{c}\times\vec{B}
+\end{equation}
+and in the continuum limit it is
+\begin{equation}
+    q\vec{v} \rightarrow \vec{J}\delta V
+\end{equation}
+so
+\begin{align}
+    \vec{F_B} &= \frac{\vec{J}}{c}\times \vec{B} \dd V\\
+    \delta\vec{F_B} &= \frac{\vec{J}}{c}\times \vec{B}\delta V \label{em1}
+\end{align}
+the maxwell equation relating \(\vec{J}\) to \(\vec{B}\) is
+\begin{equation}
+    \nabla\times\vec{B} = \frac{4\pi}{c}\vec{J} \implies \vec{J} = \frac{c}{4\pi}\ins{\nabla\times\vec{B}}
+\end{equation}
+inserting this back into~\ref{em1} we find
+\begin{equation}
+    \delta\vec{F_B} = \frac{1}{4\pi}\ins{\nabla\times\vec{B}}\times\vec{B}
+\end{equation}
+using a the `BAC-CAB' tensor rule
+\begin{equation}
+    \delta\vec{F_B} = \frac{1}{4\pi}\left[-\frac{1}{2}\nabla\ins{B^2}+\ins{\vec{B}\cdot\nabla}\vec{B}\right]\delta V
+\end{equation}
+\subsubsection{The graitationa element \(\delta F_g\)}
+If we assume a potential \(\Phi(\vec{r},t)\) then
+\begin{align}
+    \delta\vec{F_g} &= -\delta m \nabla\Phi \\
+    \delta \vec{F_g} &= -\rho\nabla\Phi\delta V
+\end{align}
+\subsubsection{The viscosity element \(\delta F_\nu \)}
+A way to write this element is
+\begin{equation}\label{viscous1}
+    F_{\nu i} = \int \sigma_{ij}\dd A_j
+\end{equation}
+where \(\sigma_{ij}\) is the viscous stress tensor. Specifically for liquids it is often written as
+\begin{equation}
+    \sigma_{ij} = \mu\left[\diffp{v_i}{x_j}+\diffp{v_j}{x_i}-\frac{2}{3}\delta_{ij}\nabla\cdot\vec{v}\right]
+\end{equation}
+inserting back into \ref{viscous1} and using Gauss' law
+\begin{equation}
+    \delta\vec{F_\nu} = \mu\ins{\nabla^2\vec{v} + \frac{1}{3}\nabla\ins{\nabla\cdot\vec{v}}}\delta V
+\end{equation}
+\subsubsection{Returning to \ref{alltheforces}}
+inserting all the elements back into \ref{alltheforces} we find
+\begin{equation}
+    \rho\diff{\vec{v}}{t} = -\nabla\ins{p+\frac{B^2}{8\pi}}+\frac{1}{4\pi}\ins{\vec{B}\cdot\nabla}\vec{B}-\rho\nabla\Phi_g + \mu\ins{\nabla^2\vec{v}+\frac{1}{3}\nabla\ins{\nabla\cdot\vec{v}}}
+\end{equation}
+Which is the Navier-Stokes equation for MHD. The left hand side can be expanded to partial derivatives.
+\subsection{Important Dimensionless Numbers}
+\subsubsection{Mach Number}
+The isothermic speed of sound is given by
+\begin{equation}
+    c_s^2 = \frac{P}{\rho}
+\end{equation}
+and a number called the `mach number' as 
+\begin{equation}
+    M_s = \frac{v}{c_s}
+\end{equation}
+If we look at the ratio between the dynamic element of naviert stokes and the pressure element
+\begin{equation}
+    \frac{\lvert\rho\ins{\vec{v}\cdot\nabla}\vec{v}\rvert}{\lvert\nabla p\rvert} \sim \frac{\rho v^2}{\rho c_s^2} = \ins{\frac{v}{c_s}}^2 = M_s^2
+\end{equation}
+If \(M_s \ll 1\) then \(v\ll c_s\) and disturbances have time to move through the liquid and it equalizes and reorganizes neatly. If \(M_s \gg 1\) then \(v \gg c_s\) and shockwaves are created in the gas.
+\subsubsection{Alfvenic Mach Number}
+If we look at the ratio 
+\begin{equation}
+    \left\lvert\frac{\rho\ins{\vec{v}\cdot\nabla}\vec{v}}{\nabla\ins{\frac{B^2}{8\pi}}}\right\rvert \sim \frac{\rho v^2}{\frac{B^2}{8\pi}}=\ins{\frac{v}{\frac{B}{\sqrt{8\pi\rho}}}}^2
+\end{equation}
+The element
+\begin{equation}
+    v_A = \frac{B}{\sqrt{8\pi\rho}}
+\end{equation}
+is called the Alfvenic speed, and the ratio is thus
+\begin{equation}
+    M_A^2 = \ins{\frac{v}{\frac{B}{\sqrt{8\pi\rho}}}}^2 = \ins{\frac{v}{v_A}}^2
+\end{equation}
+and is called the Alfvenic mach number. If \(M_A \ll 1\) then the magnetic field is strong and it dampens the disturbances. If \(M_A \gg 1\) then the magnetic field is weak.
+\subsubsection{Reynolds Number}
+The Reynolds number is defined as
+\begin{equation}
+    R_e = \frac{vL}{\nu}
+\end{equation}
+where
+\begin{equation}
+    \nu = \frac{\mu}{\rho}
+\end{equation}
+If we look at the ratio
+\begin{equation}
+    \left\lvert\frac{\rho\ins{\vec{v}\cdot\nabla}\vec{v}}{\mu\nabla^2\vec{v}} \sim \frac{\rho v^2}{\mu\frac{1}{L}v} = \frac{\rho v^2 L}{\rho \nu v} = \frac{vL}{\nu}\right\rvert = R_e
+\end{equation}
+If \(R_e\) is small the viscosity is important. If \(R_e\) is small then viscosity is negligible.
+\subsubsection{Typical Values in ISM}
+\begin{align}
+    M_S \sim 0.1 - 50 && M_A \sim 0.3 - 50 && R_e \sim 100 - \qty{e8}{}
+\end{align}
+\subsubsection{Example - Molecular Cloud}
+We have a Giant Molecular Cloud whose typical parameters are
+\begin{align}
+    n = \qty{e3}{\per\centi\meter^3} && T = \qty{20}{\kelvin} && v_{rms} = \qty{5}{\kilo\meter\per\second} && L = \qty{10}{\parsec} && B = \qty{30}{\micro\gauss}
+\end{align} 
+and the important numbers are
+\begin{align}
+    M_S = 10 && M_A \simeq 5
+\end{align}
+and in homework we'll prove we can write 
+\begin{equation}
+    R_e = \frac{L}{\lambda_{mfp}}\frac{v}{c_s}
+\end{equation}
+which for a GMC we have
+\begin{align}
+    \lambda_{mfp} = \frac{1}{\sigma n} && \sigma = \qty{e-15}{\centi\meter}
+\end{align}
+therefore
+\begin{equation}
+    \lambda_{mfp} = \qty{e12}{\centi\meter}
+\end{equation}
+and that gives us
+\begin{equation}
+    R_e = \qty{3e8}{}
+\end{equation}
+In ISM, sometimes the viscosity element is negligible so the NS equation is simplified to
+\begin{equation}
+    \rho\diffp{\vec{v}}{t}+\rho\ins{\vec{v}\cdot\nabla}\vec{v} = -\nabla\ins{p+\frac{B^2}{8\pi}}+\frac{1}{4\pi}\ins{\vec{B}\cdot\nabla}\vec{B}-\rho\nabla\Phi_g
+\end{equation}
+We can also use the state equation \(P=nk_B T\). But what determined \(T\)? From conservation of energy
+\begin{align}\label{udiff}
+    \dd U = -p\dd V + \dd Q
+\end{align}
+where
+\begin{equation}\label{unkbt}
+    U = \frac{f}{2}Nk_B T
+\end{equation}
+If we look at \(\dd Q\)
+\begin{equation}\label{dq}
+    \diff{Q}{t} = V\left[\Gamma-\Lambda+\nabla\ins{\kappa\nabla T}\right]
+\end{equation}
+where \(\Gamma\) is the rate of heating per unit volume, \(\Lambda\) is the rate of cooling per unit volume, and the last element is for the diffusion of heat. Inserting \ref{unkbt} and \ref{dq} into \ref{udiff} we find
+\begin{equation}
+    \diff{T}{t} = \frac{\Gamma - \Lambda + \nabla\ins{\kappa\nabla T}+\diff*{\ins{nk_B T}}{t}}{\frac{1}{2}\ins{f+2}nk_B}
+\end{equation}
+\subsection{Simple Problems}
+\subsubsection{Free Collapsing Cloud}
+We start with a cloud of radius \(R\) with mass which has nothing opposing its collapse.  In this case we can write
+\begin{equation}
+    \diff{\vec{v}}{t} = -\nabla\Phi_g
+\end{equation}
+which can be directly solved but there's an easier way to do this, using energy
+\begin{equation}
+    E_0 = -\frac{GM}{R_0}\delta M
+\end{equation}
+and the energy at a later point is
+\begin{equation}
+    E = \frac{1}{2}\delta M v^2 - \frac{GM}{r}\delta M
+\end{equation}
+setting both to be equal we find an ODE
+\begin{equation}
+    \frac{1}{2}v^2 = GM\ins{\frac{1}{r}-\frac{1}{R_0}}
+\end{equation}
+which can be rewritten as
+\begin{equation}
+    \diff{r}{t} = \sqrt{2GM\ins{\frac{1}{r}-\frac{1}{R_0}}}
+\end{equation}
+whose solution is
+\begin{align}
+    \int\limits_0^{t_{ff}}\dd t' &= \sqrt{\frac{R_0^3}{2GM}}\int\limits_0^1\dd x\ins{\frac{1}{x}-1}^{-1/2}
+\end{align}
+where \(x=r/R_0\) which gives us
+\begin{equation}
+    t_{ff} = 1.1\cdot\sqrt{\frac{R_0^3}{GM}}\propto \frac{1}{\rho_0^{1/2}} = \sqrt{\frac{3\pi}{32G\rho_0}} = n_3^{-1/2}\qty{}{\mega\year}
+\end{equation}
+where 
+\begin{equation}
+    n_3 = \frac{n}{\qty{e3}{\per\centi\meter^3}}
+\end{equation}
