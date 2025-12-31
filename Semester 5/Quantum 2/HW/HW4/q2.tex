@@ -2,36 +2,85 @@
 \section{Quantization of the Field}
 \begin{colbox}
 	\begin{enumerate}
-		\item Express $\hat H_F$ in terms of $\hat a$ and $\hat a^\dagger$ and the number operator $\hat N = \hat a^\dagger\hat a$.
-		\item Calculate the expectation values $\langle \vec\hat E(\vec r)\rangle_n,\langle \vec\hat B(\vec r)\rangle_n, \langle\hat H_F\rangle $ in state $\ket{n}$.
+		\item Calculate the commutators \([v_x,H]\), \([v_y, H]\), \([v_z,H]\)
+		\item Use Ehrenfest's theorem to calculate \begin{align}
+			C_1(t) = \left\langle S_zv_z \right\rangle && C_2(t) = \left\langle S_xv_x+S_yv_y \right\rangle && C_3(t) = \left\langle S_xv_y - S_yv_x \right\rangle
+		\end{align}
+		\item Write the time development of \(\left\langle\vec{S}\cdot\vec{v}\right\rangle\) as a function of \(C_1(0), C_2(0), C_3(0)\)
+		\item a beam of electrons moving at velocity \(\vec{v}\) is prepared at \(t=0\). The electrons in the beam have spin such that \(C_1(0), C_2(0), C_3(0)\) are known. The electrons in the beam interact with the magnetic field \(\vec{B}\) in the time frame \([0,T]\). At time \(t=T\) a value corresponding to \(\left\langle\vec{S}\cdot\vec{v}\right\rangle\). Conclude \(a\) from the graph.
+		\item Compare the experiment result to theory.
 	\end{enumerate}
 \end{colbox}
-\subsection{Field Hamiltonian}
-From the definitions for the photon creation and annihilation operators we can find expressions for $\chi$ and $\Pi$ using the operators:
+
+\subsection{Commutators}
+We'll represent both all the operators using the \(\Pi\) operators as we did in the lecture. If we define
+\begin{equation}
+	\Pi_i = \frac{p_i-aA_i}{\sqrt{\hbar eB}}
+\end{equation}
+then
 \begin{align}
-	\hat\chi=\frac{1}{\sqrt{2}}\ins{\hat a+\hat a^\dagger} && \hat \Pi = \frac{1}{\sqrt{2}i}\ins{\hat a - \hat a^\dagger}
+	H = \frac{\hbar \omega_c}{2}\ins{\Pi_x^2+\Pi_y^2+\Pi_z^2-\sigma_z\ins{1+a}}
 \end{align}
+and
+\begin{equation}
+	\vec{v} = \frac{\sqrt{\hbar eB}}{m}\vec{\Pi}
+\end{equation}
 therefore
 \begin{align}
-	\hat H_F &= \frac{\hbar\omega}{2}\ins{\hat\chi^2+\hat\Pi^2}\\
-	&= \frac{\hbar\omega}{4}\ins{\ins{\hat a+\hat a^\dagger}^2-\ins{\hat a-\hat a^\dagger}}\\
-	&= \frac{\hbar\omega}{4}\ins{\hat a^2+\hat a\hat a^\dagger+\hat a^\dagger\hat a+\hat {a^\dagger}^2-\hat a^2+\hat a\hat a^\dagger+\hat a^\dagger\hat a-\hat {a^\dagger}^2}\\
-	&= \frac{\hbar\omega}{2}\ins{\hat a\hat a^\dagger+\hat N}\\
-	&= \frac{\hbar\omega}{2}\ins{\hat a^\dagger\hat a - \hat a^\dagger\hat a +\hat a\hat a^\dagger+\hat N}\\
-	&= \frac{\hbar\omega}{2}\ins{2\hat N+[\hat a,\hat a^\dagger]}\\
-	&= \frac{\hbar\omega}{2}\ins{2\hat N+1}\\
-	&= \hbar\omega\ins{\hat N+\frac{1}{2}}
+	[v_x,H] &= \frac{\sqrt{\hbar eB}}{m}\frac{\hbar\omega_c}{2}[\Pi_x,\Pi_y^2] = i\hbar\omega_c v_y \\
+	[v_y,H] &= \frac{\sqrt{\hbar eB}}{m}\frac{\hbar\omega_c}{2}[\Pi_y,\Pi_x^2] \\
+	[v_z,H] &= 0
 \end{align}
-\subsection{Expectation Values}
-First we notice
+\subsection{Ehrenfest}
+To prepare I'll calculate the commutators
+\begin{align}
+	[S_x,H] &= -\frac{\hbar^2\omega_c}{4}\ins{1+a}[\sigma_x,\sigma_z] = i\hbar\omega_c\ins{1+a}S_y \\
+	[S_y,H] &= -\frac{\hbar^2\omega_c}{4}\ins{1+a}[\sigma_y,\sigma_z] = -i\hbar\omega_c\ins{1+a}S_x \\
+	[S_z,H] &\propto [\sigma_z,\sigma_z] = 0
+\end{align}
+and thus
+\begin{align}
+	\diff*{C_1}{t} &= \frac{1}{i\hbar}\langle[S_z v_z, H]\rangle = 0 \\
+	\diff*{C_2}{t} &= \frac{1}{i\hbar}\langle[S_x v_x + S_y v_y, H]\rangle = 0 \\
+	&= \frac{1}{i\hbar}\langle i\hbar\omega_c\ins{1+a}S_y v_x +i\hbar\omega_c v_y S_x - i\hbar\omega_c\ins{1+a}S_x v_y - i\hbar\omega_c S_y v_x \rangle \\
+	&= \Omega \langle S_y v_x + S_x v_y \rangle\\
+	&= -\Omega C_3 \\
+	\diff*{C_3}{t} &= \frac{1}{i\hbar}\langle[S_x v_y - S_y v_x, H]\rangle \\
+	&= \frac{1}{i\hbar}\langle i\hbar\omega_c\ins{1+a}S_y v_y - i\hbar\omega_c v_x S_x + i\hbar\omega_c\ins{1+a}S_x v_x - i\hbar\omega_c S_y v_y \rangle \\
+	&= \Omega \langle S_y v_y + S_x v_x \rangle\\
+	&= \Omega C_2 \\
+\end{align}
+in total we have
+\begin{align}
+	\diff*{C_1}{t} &= 0\\
+	\diff*{C_2}{t} &= -\Omega C_3\\
+	\diff*{C_3}{t} &= \Omega C_2
+\end{align}
+differentiating the equation for \(C_3\)
 \begin{equation}
-	\langle \vec\hat E(\vec r)\rangle_n = \bra{n}\hat E\ket{n}
+	\diff*[2]{C_3}{t} = \Omega\diff*{C_2}{t} = -\Omega^2 C_3 
 \end{equation}
-which if we look at the definition of the creation and annihilation operators which define $\hat E$, the result of the above equation is always zero, therefore
+whose solutions are a linear combination of sines and cosines. therefore
+\begin{align}
+	C_1 &= A \\
+	C_2 &= D\sin\Omega t + E\cos\Omega t \\
+	C_3 &= E\sin\Omega t - D\cos\Omega t
+\end{align}
+since \(C_2, C_3\) have opposite signs in the first order and depend on each other.
+\subsection{S dot v}
+\begin{align}
+	\langle\vec{S}\cdot\vec{v}\rangle &= \langle S_x v_x + S_y v_y + S_z v_z \rangle \\
+	&= C_1(t) + C_2(t) \\
+	&= C_1(0) + C_2(0)\cos\Omega t - C_3(0)\sin\Omega t
+\end{align}
+\subsection{Experimental a}
+From the graph we can see the period is approximately \(\qty{3.5}{\micro\second}\) therefore
 \begin{equation}
-	\langle \vec\hat E(\vec r)\rangle_n = 0
+	a = \frac{2\pi}{\omega_C T} = \frac{2\pi m}{eBT} = \frac{2\pi \cdot \qty{9.11e-31}{}}{\qty{1.6e-19}{}\cdot\qty{9.4e-3}{}\cdot\qty{3.5e-6}{}} = \sim \qty{0.001}{}
 \end{equation}
-and the same holds for $\langle \vec\hat B(\vec r)\rangle_n $. For $\hat H_F$:
+\subsection{comparison}
+The theoretical value is
 \begin{equation}
-	\bra{n}\hat H_F\ket{n} = \hbar\omega\bra{n}\ins{\hat N+\frac{1}{2}}\ket{n}=\hbar\omega\ins{n+\frac{1}{2}}
+	a = 0.001195
 \end{equation}
+so the experimental value is very close.

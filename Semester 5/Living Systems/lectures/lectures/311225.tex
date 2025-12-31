@@ -1,0 +1,94 @@
+The nematic tensor is
+\begin{equation}
+    Q = \begin{pmatrix}
+        \cos(2\theta)&\sin(2\theta)\\\sin(2\theta)&-\cos(2\theta)
+    \end{pmatrix}
+\end{equation}
+a proof was given as homework. Therefore the current for the nematic tensor is
+\begin{align}
+    \vec{j^a} &= -\Lambda\ins{\partial_x Q_{xx}+\partial_y Q_{xy}, \partial_x Q_{yx}+\partial_y Q_{yy}} \\
+    &= -\Lambda \ins{-\sin(2\theta)\partial_x\theta + \cos(2\theta)\partial_y\theta, \cos(2\theta)\partial_x\theta+\sin(2\theta)\partial_y\theta}
+\end{align}
+theta's derivatives are, given that \(\theta = q\phi \)
+\begin{align}
+    \del_x\theta &= q\del_x\tan^{-1}\frac{y}{x}= q\frac{1}{1+\ins{\frac{y}{x}}^2}-\frac{y}{x^2} = -q\frac{y}{x^2+y^2} \\
+    &= -\frac{q}{r}\sin\phi
+\end{align}
+and
+\begin{align}
+    \del_y\theta = \cdots = \frac{q}{r}\cos\phi
+\end{align}
+inserting back into the current
+\begin{align}
+    \vec{j^a} &= -\Lambda\frac{q}{r}\ins{\sin(2q\phi)\sin\phi+\cos(2q\phi)\cos\phi, - \cos(2q\phi)\sin\phi+\sin(2q\phi)\cos\phi}\\
+    &= -\Lambda\frac{q}{r}\ins{\cos\ins{\ins{2q-1}\phi},\sin\ins{\ins{2q-1}\phi}}
+\end{align}
+if we insert \(q=\pm 1/2 \)
+\begin{equation}
+    \vec{j^a} = \frac{\Lambda}{2r} \begin{cases}
+        -\hat{x} & q=1/2 \\
+        \cos(2\phi)\hat{x} - \sin(2\phi)\hat{y} & q=-1/2
+    \end{cases}
+\end{equation}
+if we average over the edge of the core, \(r=a\)
+\begin{equation}
+    \frac{1}{2\pi}\int\limits_0^{2\pi}\dd\phi \vec{j^a}(r=a,\phi) = \begin{cases}
+        \frac{-\Lambda}{2a}\hat{x} & q=1/2 \\
+        0 & q=-1/2
+    \end{cases}
+\end{equation}
+where \(\hat{x}\) was chosen as the axis of symmetry (\(\theta(\phi=0)=0\)). Several conclusion:
+\begin{enumerate}
+    \item A \(-1/2\) defect doesn't move.
+    \item A \(1/2\) defect moves along the axis of symmetry. For a positive \(\Lambda \), which is called extensile matter, it moves with the direction of the head. For contractile matter for which \(\Lambda\) is negative, it moves in the direction of the tail.
+\end{enumerate}
+This expresses whether the particles create a repulsive or attractive force dipole. Later we'll show that \(-\Lambda Q_{\alpha\beta}\) is the active stress acting in the system.
+% figure
+\section{The Stress Tensor and Forces in Liquids}
+\subsection{Motivation and Definition of the Stress Tensor}
+So far we dealt with active matter on a surface, in which case momentum is exchanged between the particles and surface, like in walking. Since the surface isn't described, momentum is not conserved. Such systems are called `Dry Active Matter'. In general, in a liquid medium momentum is transferred between the active matter and the liquid, and is overall conserved. In this case the active particles are called `Swimmers' and the systems belong to `Wet Active Matter'. When momentum is conserved, it is possible to write a continuity equation:
+\begin{equation}
+    \boxed{\del_t\ins{\rho v_\alpha} = \del_\beta\sigma_{\alpha\beta}^{tot}}
+\end{equation}
+the tensor in the right-hand side is the total stress tensor. We'll look at an integral over a small volume \(V\):
+\begin{align}
+    \int\limits_V\del_t\ins{\rho v_\alpha}\dd V &= \int\limits_V \del_\beta\sigma_{\alpha\beta}^{tot}\dd V\\
+    &= \oint\limits_{\del V}\sigma_{\alpha\beta}^{tot}n_\beta\dd S
+\end{align}
+it is possible to conclude that \(\sigma_{\alpha\beta}^{tot}\) is the force in the \(\alpha \) direction per unit surface in the direction \(\beta \) which acts on the volume element. Since the stress is the negative of the momentum flux, it contains an element of the form \(-\rho v_\alpha v_\beta \). This element is called the Reynolds element. We'll break up the stress into an isotropic element and a traceless element
+\begin{equation}
+    \boxed{\sigma_{\alpha\beta}^{tot} = -P\delta_{\alpha\beta}+\tilde{\sigma}_{\alpha\beta}-\rho v_\alpha v_\beta}
+\end{equation}
+\subsection{Viscous Liquid vs Elastic Solid}
+A solid has a defined shape. It deforms in response to external force, and will return to its original form when the force is removed. A liquid has no defined shape and will change its shape without limit. We'll see what this has to do with the stress using the following experiment:
+
+% figure
+
+A material is placed between two surfaces at a distance of \(h\) between them. The bottom surface is held in place and the top is connected using a wire to a weight which applies force F at time \(0 \leq t \leq t_0\) and at time \(t_0\) the wire is cut. At time \(0 \leq t \leq t_0\) a stress \(\tilde{\sigma} = \frac{F}{S}\) acts where \(S\) is the surface of the material. This is shear stress. Due to the stress, strain is formed in the material which can be defined as \(\gamma = \frac{d}{h}\).
+
+% figure
+
+In an ideal elastic solid (Hookean, like a spring) the stress is linear in the straing: \(\tilde{\sigma} = G\gamma\), and \(G\) is called the shear modulus. In an ideal viscous liquid (also called Newtonian Liquid) the stress is connected to the rate of strain: \(\tilde{\sigma} = \eta\dot{\gamma}\) where \(\eta \) is called the viscousity. In a liquid, shearing is an irreversible process which creates heat. The branch that describes how materials flow and deform is called Rheology. Soft materials sometimes are not pure solids or pure liquids and are called `visco-elastic'.  The simplest model for viscousity is the maxwell model in which an ideal spring (\(\tilde{\sigma}=G\gamma \)) is connected in series to an ideal liquid (\(\tilde{\sigma} = \eta\dot{\gamma}\)). The strain contains a contribution from both the spring and liquid, and the stress on each element is equal.
+\begin{equation}
+    \dot{\gamma} = \dot{\gamma_1}+\dot{\gamma_2} = \frac{\dot{\sigma}}{G}+\frac{\sigma}{\eta} \implies \ins{1 + \tau\del_t}\sigma = \eta\dot{\gamma}
+\end{equation}
+where \(\tau=\frac{\eta}{G}\) is the typical decay time for stress. The solution is
+\begin{equation}
+    \sigma(t) = G \int\limits_0^t\dd t' \dot{\gamma} e^{-\frac{t-t'}{2}}
+\end{equation}
+in short time periods we get behavior similar to that of a solid in long times to that of a liquid. The difference between different materials is prominent in the case of fast strain.
+
+% figure
+
+\subsection{Rheology of Living Systems}
+The rest of the course will focus on liquid rather than solids, because cells/tissue act as a liquid over long time periods. Why? There are 2 processes which do not permit a `solid state of reference' and cause currents over time: cell division and T1 processes.
+\begin{description}
+    \item[Cell DIvision] When cells divide they push each other and cause a current. At time scales larger than a typical timeframe (24 hours), cells act as q liquid.
+    \item[T1 processes] When cells cover a surface in 2D (confluent monolayer) they take on a typical shape of a hexagon, simiilarly to foam. This can be understood from the minimization of the surface tension between the cells in a given area. Still, due to division, initial disorder, and other processes the cells are dynamic. T1 processes are processes of neighbor exchanges which allow flow and decay of elastic strains which require the deformation of cells.
+\end{description}
+\subsection{The Stress in Liquids and the Stokes Equation}
+We saw that in liquids the shear stress is \(\sigma = \eta\dot{\gamma}\). In general the stress depends on the velocity \(v_\alpha \). Since there are no relative friction forces between different parts of the liquid which flows at uniform velocty, we need derivatives of the velocity. In hydrodynamic theory we deal with large length scales, so we'll assume the stress depends only on the first derivatives of the velocity, and that it's linear in them. Additionally, since there are no relative forces in uniform rotation (\(\vec{v} = \vec{\Omega}\times\vec{r}\)) we'll find that the stress depends only on the symmetric part of \(\del_\alpha v_\beta \):
+\begin{equation}
+    v_{\alpha\beta} = \frac{1}{2} \ins{\del_\alpha v_\beta + \del_\beta v_\alpha}
+\end{equation}
+this tensor is sometimes called the strain rate.
