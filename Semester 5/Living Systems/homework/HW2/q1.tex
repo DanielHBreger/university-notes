@@ -62,75 +62,60 @@ where
 \begin{align}
 	\bm{\nabla}\cdot(v_0\ins{\rho_0+\delta\rho(\vec{r})}\vec{p}) &\simeq v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
 \end{align}
-where we ommitted the term quadratic in delta. Next I linearize the second equation
-\begin{align}
-	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} &= \diffp{\vec{p}}{t}+\lambda\ins{\ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}}\cdot\bm{\nabla}}\ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} \\
-	&= \diffp{\vec{p}}{t}+\lambda\ins{\vec{\hat{x}}\cdot\bm{\nabla}}\vec{\hat{x}}+\lambda\ins{\delta p(\vec{r})\vec{\hat{y}}\cdot\bm{\nabla}}\vec{\hat{x}} + \lambda \ins{\vec{\hat{x}}\cdot\bm{\nabla}}\delta p(\vec{r})\vec{\hat{y}}\\
-	&= \diffp{\vec{p}}{t}+\lambda\partial_x\vec{\hat{x}}+\lambda\delta p(\vec{r})\partial_y\vec{\hat{x}}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} \\
-	&= \diffp{\vec{p}}{t}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}}
-\end{align}
-and the right hand side
-\begin{align}
-	-\gamma_p\frac{\delta F}{\delta \vec{p}} &= \gamma_p \ins{h_\parallel \vec{p} + K\bm{\nabla}^2 \vec{p} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
-\end{align}
-therefore
+where we ommitted the term quadratic in delta. Therefore
 \begin{equation}
-	\diffp{\vec{p}}{t}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} = \gamma_p \ins{h_\parallel \vec{p} + K\bm{\nabla}^2 \vec{p} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+	\partial_t\delta\rho(\vec{r}) = \gamma_\rho\bm{\nabla}^2\ins{\chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})} - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
 \end{equation}
-inserting the known expressions
+\emph{At this point I realized I could have linearized things about 10 equations ago. A previous version for this question was 7 pages long\dots} Moving on, to first order this is
 \begin{equation}
-	\partial_t \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} + \lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} = \gamma_p \ins{h_\parallel \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} + K\bm{\nabla}^2 \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+	\partial_t\delta\rho(\vec{r}) = - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
 \end{equation}
-focusing on the elements in the \(\vec{\hat{y}}\) direction and omitting the element depending on \(h_\parallel\) since it only contributes to quadratic terms
+rearranging
 \begin{equation}
-	\partial_t \delta p(\vec{r}) + \lambda\partial_x\delta p(\vec{r}) = \gamma_p\ins{ K\bm{\nabla}^2 \delta p(\vec{r}) - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}_y}
+	\partial_t\delta \rho+v_0\partial_x\delta \rho+v_0\rho_0\partial_y\delta p(\vec{r})=0
 \end{equation}
-Now we focus on each case separately. In case (a), \(\delta p = \delta p(y)\) and \(\omega_1 < 0\). In that case
+The equation for polarity is
 \begin{equation}
-	\partial_t \delta p(y) = \gamma_p\ins{K\partial_y^2 \delta p(y) - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}_y}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\frac{\delta F}{\delta \vec{p}}
 \end{equation}
-and
+inserting the delta we have
 \begin{equation}
-	\diffp{\delta\rho(y)}{t} = \gamma_\rho\ins{\partial_y^2\chi\frac{\delta\rho(y)}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y^3\delta p(y)}-v_0\rho_0\partial_y\delta p(y)
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\ins{-h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
 \end{equation}
-These equations look awful to solve (and I was stuck here for a while) but since I know the solution describes a wave, I propose an ansatz of the form
+dropping the non-linear terms
+\begin{equation}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}
+\end{equation}
+rewriting with indices
+\begin{equation}
+	\partial_t \delta p_\alpha + \lambda p_\beta\partial_\beta \delta p_\alpha = -\gamma_p\frac{\omega_1}{\rho_0}\partial_\alpha\delta\rho
+\end{equation}
+but since \(\partial_x\delta\rho = 0\) and \(\delta p_x = 0\)
+\begin{equation}
+	\partial_t\delta p(y) = -\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho
+\end{equation}
+taking the derivative of the density equation
+\begin{equation}
+	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho+v_0\rho_0\partial_t\partial_y\delta p(\vec{r})=0
+\end{equation}
+we can replace the order of differentiation so we insert the expression we got from the polarization equation
+\begin{equation}
+	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho-v_0\rho_0\partial_y\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho=0
+\end{equation}
+rearranging
+\begin{equation}
+	\ins{\partial_{tt}+v_0\partial_{tx}}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
+\end{equation}
+but \(\partial_x\delta \rho = 0\)
+\begin{equation}
+	\partial_{tt}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
+\end{equation}
+which is a wave equation, thus with a standard wave ansatz we find
 \begin{align}
-	\delta\rho = \rho_A e^{i\ins{ky-\omega t}} && \delta p = P_A e^{i\ins{ky-\omega t}}
+	\omega^2 = \gamma_p v_0 \omega_1 k^2
 \end{align}
-which using fourier transform identities gives
-\begin{align}
-	\partial_t = -i\omega && \partial_y = ik && \partial_y^2 = -k^2 && \partial_y^3 = -ik^3
-\end{align}
-inserting these gives
-\begin{align}
-	-i\omega P_A e^{i\ins{ky-\omega t}} &= \gamma_p\ins{-Kk^2 P_A e^{i\ins{ky-\omega t}} - ik\omega_1 \frac{\rho_A}{\rho_0}e^{i\ins{ky-\omega t}}} \\
-	-i\omega \rho_A e^{i\ins{ky-\omega t}} &= \gamma_\rho\ins{-k^2\chi\frac{e^{i\ins{ky-\omega t}}}{\rho_0} + \frac{\omega_1}{\rho_0}ik^3P_A e^{i\ins{ky-\omega t}}}-v_0\rho_0 ikP_A e^{i\ins{ky-\omega t}}
-\end{align}
-simplifying 
-\begin{align}
-	-i\omega P_A &= \gamma_p\ins{-Kk^2 P_A  - ik\omega_1 \frac{\rho_A}{\rho_0}} \\
-	-i\omega \rho_A &= \gamma_\rho\ins{-k^2\chi\frac{\rho_A}{\rho_0} + \frac{\omega_1}{\rho_0}ik^3P_A }-v_0\rho_0 ikP_A 
-\end{align}
-in matrix representation 
+Therefore
 \begin{equation}
-	\begin{pmatrix}
-		ik\omega_1\frac{\gamma_p}{\rho_0} & Kk^2\gamma_p-i\omega \\
-		 k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega & ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}
-	\end{pmatrix}\begin{pmatrix}
-		\rho_A\\p_A
-	\end{pmatrix}=0
+	\omega = \pm k\sqrt{\gamma_p v_0 \omega_1} 
 \end{equation}
-Now we find the determinant
-\begin{align}
-	\begin{vmatrix}
-		ik\omega_1\frac{\gamma_p}{\rho_0} & Kk^2\gamma_p-i\omega \\
-		 k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega & ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}
-	\end{vmatrix} &= \ins{ik\omega_1\frac{\gamma_p}{\rho_0}}\ins{ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}} - \ins{Kk^2\gamma_p-i\omega}\ins{k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega}\\
-	&= -k^2v_0\omega_1\gamma_p+k^4\omega_1^2\frac{\gamma_p\gamma_\rho}{\rho_0}-Kk^4\chi\frac{\gamma_p\gamma_\rho}{\rho_0}+i\omega Kk^2\gamma_p+i\omega k^2\chi\frac{\gamma_\rho}{\rho_0}+\omega^2\\
-	&= \omega^2+i\omega k^2\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}}+\ins{k^4\frac{\gamma_p\gamma_\rho}{\rho_0}\ins{\omega_1^2-K\chi}-k^2v_0\omega_1\gamma_p}
-\end{align}
-so the dispersion relations are
-\begin{equation}
-	\omega_\pm(k) = i\frac{-k^2\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}} \pm k\sqrt{\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}}^2+4\ins{k^2\frac{\gamma_p\gamma_\rho}{\rho_0}\ins{\omega_1^2-K\chi}-v_0\omega_1\gamma_p}}}{2}
-\end{equation}
-next if \(\omega_1 < 0\), the expression in the square root is positive
+since \(\omega_1<0\), \(\omega\) is imaginary. If \(\Im(\omega)<0\), any created waves will decay and the system as a whole will be stable. Otherwise, waves will grow exponentially, meaning the system is unstable.
