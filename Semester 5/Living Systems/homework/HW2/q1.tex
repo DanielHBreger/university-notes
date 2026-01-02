@@ -1,0 +1,136 @@
+\clearpage
+\section{Linear Stability and Waves of Dry Active Polar Matter}
+\begin{colbox}
+	The dynamics of dry polar active matter is given by
+	\begin{align}
+		\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}} \\
+		\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} &= -\gamma_p\frac{\delta F}{\delta \vec{p}}
+	\end{align}
+	We focus on the polar phase in 2D with \(\rho = \rho_0+\delta\rho(\vec{r})\) and \(\vec{p} = \vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}\) where \(\lvert\delta\rho\rvert\ll\rho_0\) and \(\lvert\delta p\rvert\ll 1\) and consider the free energy
+	\begin{equation}
+		F = \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right]
+	\end{equation}
+	Here, we have used the summation convention. Note that \(h_\parallel\) is a Lagrange multiplier to ensure that \(p_\alpha p_\alpha = 1\). In class, we considered \(\delta p(\vec{r})=\delta p(y)\) and \(\omega_1 > 0\). Perform a linear stability analysis and find the dispersion relation for (a) \(\delta p = \delta p(y)\) and \(\omega_1 < 0\) (b) general \(\delta p(\vec{r})\) and \(\omega_1>0\). In which case is the system unstable? Explain why. When is it stable - what is the velocity of propagating waves?
+\end{colbox}
+Before starting the specific cases, I'll rewrite the free energy using the known relations for the density and polarization.
+\begin{align}
+	p_\alpha p_\alpha &= \vec{p}\cdot\vec{p} = 1+\ins{\delta p(\vec{r})}^2 \\
+	\partial_\alpha p_\beta \partial_\alpha p_\beta &= \ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 \\
+	\bm{\nabla}\cdot\vec{p} &= \partial_y \delta p(\vec{r}) \\
+	\frac{\delta\rho}{\rho_0} &= \frac{\delta\rho(\vec{r})}{\rho_0}
+\end{align}
+now I can insert this into the free energy
+\begin{align}
+	F &= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right] \\
+	&= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho(\vec{r})}{\rho_0}}^2-\frac{1}{2}h_\parallel \ins{1+\ins{\delta p(\vec{r})}^2} + \frac{K}{2}\ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 - \omega_1\frac{\delta\rho(\vec{r})}{\rho_0}\partial_y \delta p(\vec{r})\right]
+\end{align}
+next we find
+\begin{align}
+	\frac{\delta F}{\delta\rho} &= \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
+\end{align}
+to do the other variation I'll look at it term by term for \(p_\alpha \rightarrow p_\alpha + \epsilon\eta_\alpha\)
+\begin{align}
+	\delta\ins{p_\alpha p_\alpha} &= p_\alpha^2+2\epsilon p_\alpha \eta_\alpha + \epsilon^2\eta_\alpha^2 = 2p_\alpha\eta_\alpha \\
+	\delta\ins{\partial_\alpha p_\beta \partial_\alpha p_\beta} &= 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta}
+\end{align}
+which needs an integration by parts
+\begin{align}
+	\int\dd^2 r 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta} &= -\int\dd^2 r 2\partial_\alpha\partial_\alpha p_\beta \delta p_\beta = -\int\dd^2 r 2\bm{\nabla}^2 p_\beta \delta p_\beta
+\end{align}
+with the boundary terms cancelling out because it's a variation. And finally
+\begin{align}
+	\delta\ins{\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}} &= \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha
+\end{align}
+integrating by parts
+\begin{align}
+	\int\dd^2 r \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha &= -\int\dd^2 r \partial_\alpha\ins{\frac{\delta\rho}{\rho_0}}\delta p_\alpha
+\end{align}
+connecting everything back
+\begin{align}
+	\frac{\delta F}{\delta \vec{p}} = -h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}} && \frac{\delta F}{\delta\rho} = \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
+\end{align}
+Looking at the dynamic equation for density
+\begin{align}
+	\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}}\\
+	&= \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
+\end{align}
+inserting the density and assuming \(\rho_0\) is constant in time
+\begin{equation}
+	\diffp{\delta\rho(\vec{r})}{t} = \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
+\end{equation}
+where
+\begin{align}
+	\bm{\nabla}\cdot(v_0\ins{\rho_0+\delta\rho(\vec{r})}\vec{p}) &\simeq v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
+\end{align}
+where we ommitted the term quadratic in delta. Next I linearize the second equation
+\begin{align}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} &= \diffp{\vec{p}}{t}+\lambda\ins{\ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}}\cdot\bm{\nabla}}\ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} \\
+	&= \diffp{\vec{p}}{t}+\lambda\ins{\vec{\hat{x}}\cdot\bm{\nabla}}\vec{\hat{x}}+\lambda\ins{\delta p(\vec{r})\vec{\hat{y}}\cdot\bm{\nabla}}\vec{\hat{x}} + \lambda \ins{\vec{\hat{x}}\cdot\bm{\nabla}}\delta p(\vec{r})\vec{\hat{y}}\\
+	&= \diffp{\vec{p}}{t}+\lambda\partial_x\vec{\hat{x}}+\lambda\delta p(\vec{r})\partial_y\vec{\hat{x}}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} \\
+	&= \diffp{\vec{p}}{t}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}}
+\end{align}
+and the right hand side
+\begin{align}
+	-\gamma_p\frac{\delta F}{\delta \vec{p}} &= \gamma_p \ins{h_\parallel \vec{p} + K\bm{\nabla}^2 \vec{p} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+\end{align}
+therefore
+\begin{equation}
+	\diffp{\vec{p}}{t}+\lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} = \gamma_p \ins{h_\parallel \vec{p} + K\bm{\nabla}^2 \vec{p} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+\end{equation}
+inserting the known expressions
+\begin{equation}
+	\partial_t \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} + \lambda\partial_x\delta p(\vec{r})\vec{\hat{y}} = \gamma_p \ins{h_\parallel \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} + K\bm{\nabla}^2 \ins{\vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}} - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+\end{equation}
+focusing on the elements in the \(\vec{\hat{y}}\) direction and omitting the element depending on \(h_\parallel\) since it only contributes to quadratic terms
+\begin{equation}
+	\partial_t \delta p(\vec{r}) + \lambda\partial_x\delta p(\vec{r}) = \gamma_p\ins{ K\bm{\nabla}^2 \delta p(\vec{r}) - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}_y}
+\end{equation}
+Now we focus on each case separately. In case (a), \(\delta p = \delta p(y)\) and \(\omega_1 < 0\). In that case
+\begin{equation}
+	\partial_t \delta p(y) = \gamma_p\ins{K\partial_y^2 \delta p(y) - \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}_y}
+\end{equation}
+and
+\begin{equation}
+	\diffp{\delta\rho(y)}{t} = \gamma_\rho\ins{\partial_y^2\chi\frac{\delta\rho(y)}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y^3\delta p(y)}-v_0\rho_0\partial_y\delta p(y)
+\end{equation}
+These equations look awful to solve (and I was stuck here for a while) but since I know the solution describes a wave, I propose an ansatz of the form
+\begin{align}
+	\delta\rho = \rho_A e^{i\ins{ky-\omega t}} && \delta p = P_A e^{i\ins{ky-\omega t}}
+\end{align}
+which using fourier transform identities gives
+\begin{align}
+	\partial_t = -i\omega && \partial_y = ik && \partial_y^2 = -k^2 && \partial_y^3 = -ik^3
+\end{align}
+inserting these gives
+\begin{align}
+	-i\omega P_A e^{i\ins{ky-\omega t}} &= \gamma_p\ins{-Kk^2 P_A e^{i\ins{ky-\omega t}} - ik\omega_1 \frac{\rho_A}{\rho_0}e^{i\ins{ky-\omega t}}} \\
+	-i\omega \rho_A e^{i\ins{ky-\omega t}} &= \gamma_\rho\ins{-k^2\chi\frac{e^{i\ins{ky-\omega t}}}{\rho_0} + \frac{\omega_1}{\rho_0}ik^3P_A e^{i\ins{ky-\omega t}}}-v_0\rho_0 ikP_A e^{i\ins{ky-\omega t}}
+\end{align}
+simplifying 
+\begin{align}
+	-i\omega P_A &= \gamma_p\ins{-Kk^2 P_A  - ik\omega_1 \frac{\rho_A}{\rho_0}} \\
+	-i\omega \rho_A &= \gamma_\rho\ins{-k^2\chi\frac{\rho_A}{\rho_0} + \frac{\omega_1}{\rho_0}ik^3P_A }-v_0\rho_0 ikP_A 
+\end{align}
+in matrix representation 
+\begin{equation}
+	\begin{pmatrix}
+		ik\omega_1\frac{\gamma_p}{\rho_0} & Kk^2\gamma_p-i\omega \\
+		 k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega & ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}
+	\end{pmatrix}\begin{pmatrix}
+		\rho_A\\p_A
+	\end{pmatrix}=0
+\end{equation}
+Now we find the determinant
+\begin{align}
+	\begin{vmatrix}
+		ik\omega_1\frac{\gamma_p}{\rho_0} & Kk^2\gamma_p-i\omega \\
+		 k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega & ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}
+	\end{vmatrix} &= \ins{ik\omega_1\frac{\gamma_p}{\rho_0}}\ins{ikv_0\rho_0-ik^3\omega_1\frac{\gamma_\rho}{\rho_0}} - \ins{Kk^2\gamma_p-i\omega}\ins{k^2\chi\frac{\gamma_\rho}{\rho_0}-i\omega}\\
+	&= -k^2v_0\omega_1\gamma_p+k^4\omega_1^2\frac{\gamma_p\gamma_\rho}{\rho_0}-Kk^4\chi\frac{\gamma_p\gamma_\rho}{\rho_0}+i\omega Kk^2\gamma_p+i\omega k^2\chi\frac{\gamma_\rho}{\rho_0}+\omega^2\\
+	&= \omega^2+i\omega k^2\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}}+\ins{k^4\frac{\gamma_p\gamma_\rho}{\rho_0}\ins{\omega_1^2-K\chi}-k^2v_0\omega_1\gamma_p}
+\end{align}
+so the dispersion relations are
+\begin{equation}
+	\omega_\pm(k) = i\frac{-k^2\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}} \pm k\sqrt{\ins{K\gamma_p+\chi\frac{\gamma_\rho}{\rho_0}}^2+4\ins{k^2\frac{\gamma_p\gamma_\rho}{\rho_0}\ins{\omega_1^2-K\chi}-v_0\omega_1\gamma_p}}}{2}
+\end{equation}
+next if \(\omega_1 < 0\), the expression in the square root is positive
