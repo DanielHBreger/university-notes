@@ -1,0 +1,105 @@
+\subsection{Heating-Cooling}
+Most of the gas, in terms of mass, in the ISM is neutral atomic gas. The gas can be split into two categories
+\begin{description}
+    \item[CNM] Cold Neutral Medium, which has a temperature of about \(\qty{100}{\kelvin}\) and density of approximately \(\qty{30}{\per\centi\meter^3}\)
+    \item[WNM] Warm Neutral Medium, which has a temperature of about \(\qty{e4}{\kelvin}\) and density of approximately \(\qty{0.3}{\per\centi\meter^3}\)
+\end{description}
+Why those specific temperatures and densities? The main cooling processes relevant are line cooling of \(C^+\) and \(H-Ly\alpha \).
+\subsection{Cooling by Lines}
+Looking at two energy levels 1 and 0 with an energy gap of \(\Delta E\), there are three processes which can take place: excitation by collision, decay by collision, and radiative decay.
+\subsubsection{Excitation by Collision}
+the rate at which the population of 1 grows is
+\begin{align}
+    \diff{n_1}{t} = \langle\sigma_{01}v\rangle n_0 n_{col} = K_{01}n_0 n_{col}
+\end{align}
+where \(n_0\) is the density of the ground level, \(n_1\) is the density of the atoms in the 1st excited level, and \(n_{col}\) is the density of the colliding particles, and the element in angled brackets is the rate coefficient.
+\subsubsection{Decay by Collision}
+\begin{align}
+    \diff{n_1}{t} = - K_{10} n_1 n_{col}
+\end{align}
+\subsubsection{Radiative Decay}
+\begin{align}
+    \diff{n_0}{t} = A_{10} n_1
+\end{align}
+where \(A\) is the einstein coefficient for spontaneous decay. The total rate of change is therefore
+\begin{align}
+    \diff{n_0}{t} = n_1 n_{col} K_{10} + n_1 A_{10} - n_0 n_{col} K_{01}
+\end{align}
+After a certain amount of time the equation will reach a steady state determined by the coefficients. In this state the ratio between the first excited state and the ground state is
+\begin{align}\label{stuff}
+    \frac{n_1}{n_0} = \frac{n_{col} K_{01}}{n_{col}K_{10} +A_{10}}
+\end{align}
+At high densities the radiative element is negligible and we have only excitation and decay via collisions, and we have
+\begin{align}
+    \frac{n_1}{n_0} = \frac{K_{01}}{K_{10}}
+\end{align}
+and since we have two opposing processes we should be able to have a state of thermal equilibrium at which
+\begin{align}
+    \frac{n_1}{n_0} = \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}}
+\end{align}
+where \(g\) is the degeneracy of the level. We can rewrite equation \ref{stuff} as
+\begin{align}
+    \frac{n_1}{n_0} &= \frac{K_{01}}{K_{10}}\ins{\frac{1}{1+\frac{A_{10}}{n_{col}K_{10}}}}\\
+    &= \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}}\ins{\frac{1}{1+\frac{A_{10}}{n_{col}K_{10}}}}
+\end{align}
+and if we define
+\begin{equation}
+    n_{crit} = \frac{A_{10}}{K_{10}}
+\end{equation}
+then
+\begin{equation}
+    \frac{n_1}{n_0} = \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}} \ins{\frac{1}{1+\frac{n_{crit}}{n_{01}}}}
+\end{equation}
+Which tells us that cooling is effective when \(n_{col} \ll n_{crit}\). In that case the cooling rate is
+\begin{align}
+    \frac{n_1}{n_0} &\simeq \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}}\frac{n_{col}}{n_{crit}} \\
+    &= \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}}n_{col} \frac{K_{10}}{A_{10}}
+\end{align}
+On the other hand the radiative coooling rate is
+\begin{align}
+    L_{cool} &= \diff{E}{t\dd V} = n_1 A_{10}\\
+    &= \frac{n_1}{n_0} A_{10} \Delta E n_0\\
+    &= \frac{g_1}{g_0}e^{-\frac{\Delta E}{k_B T}} n_{col} K_{10} n_0 \Delta E
+\end{align}
+So the rate of cooling can be written as
+\begin{equation}
+    L_{cool} = L(T)+n^2
+\end{equation}
+\subsubsection{In The Lyman Alpha Line}
+The energy gap is
+\begin{equation}
+    \Delta E = \qty{13.6}{\electronvolt}\cdot\ins{\frac{1}{1^2}-\frac{1}{2^2}} = \qty{10.2}{\electronvolt}
+\end{equation}
+therefore
+\begin{align}
+    \frac{\Delta E}{k_B} \approx \qty{e5}{\kelvin} && A_{10} = \qty{1}{\per\second} && K_{10} = \qty{5.31e-4}{\centi\meter^3\per\second} && n_{crit} = \qty{1800}{\per\centi\meter^3}
+\end{align}
+\subsubsection{In The C2 Line}
+Looking at a carbon atom which has an outer electron with spin up. In the transition from spin up to spin down there is an energy difference of
+\begin{equation}
+    \Delta E = \qty{7.9e-3}{eV}
+\end{equation}
+therefore
+\begin{align}
+    \frac{\Delta E}{k_B} = \qty{91}{\kelvin} && K_{10} = \qty{e-9}{\centi\meter^3\per\second}
+\end{align}
+ֿ\subsection{Heating}
+The dominant heating process is called Photoelectric heating by far-UV radiation. A uv photon with energy 6 to 13.6 eV is released from an O/B star and hits a dust cloud. This ionizes an atom, releasing an electron. This electron undergoes processes and heats the cloud. The expression for this is
+\begin{align}
+    G &= \diff{E}{t\dd V} \\
+    &= A n_{dust} n_{rad}
+\end{align}
+if we assume 
+\begin{equation}
+    b_{dust} \propto n
+\end{equation}
+then
+\begin{equation}
+    G = B\cdot n_{rad} n
+\end{equation}
+\subsection{Heating-Cooling Equilibrium}
+the expression is
+\begin{align}
+    L(T) n^2 &= Cn\\
+    n &= \frac{C}{L(T)}
+\end{align}
