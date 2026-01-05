@@ -1,0 +1,121 @@
+\clearpage
+\section{Linear Stability and Waves of Dry Active Polar Matter}
+\begin{colbox}
+	The dynamics of dry polar active matter is given by
+	\begin{align}
+		\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}} \\
+		\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} &= -\gamma_p\frac{\delta F}{\delta \vec{p}}
+	\end{align}
+	We focus on the polar phase in 2D with \(\rho = \rho_0+\delta\rho(\vec{r})\) and \(\vec{p} = \vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}\) where \(\lvert\delta\rho\rvert\ll\rho_0\) and \(\lvert\delta p\rvert\ll 1\) and consider the free energy
+	\begin{equation}
+		F = \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right]
+	\end{equation}
+	Here, we have used the summation convention. Note that \(h_\parallel\) is a Lagrange multiplier to ensure that \(p_\alpha p_\alpha = 1\). In class, we considered \(\delta p(\vec{r})=\delta p(y)\) and \(\omega_1 > 0\). Perform a linear stability analysis and find the dispersion relation for (a) \(\delta p = \delta p(y)\) and \(\omega_1 < 0\) (b) general \(\delta p(\vec{r})\) and \(\omega_1>0\). In which case is the system unstable? Explain why. When is it stable - what is the velocity of propagating waves?
+\end{colbox}
+Before starting the specific cases, I'll rewrite the free energy using the known relations for the density and polarization.
+\begin{align}
+	p_\alpha p_\alpha &= \vec{p}\cdot\vec{p} = 1+\ins{\delta p(\vec{r})}^2 \\
+	\partial_\alpha p_\beta \partial_\alpha p_\beta &= \ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 \\
+	\bm{\nabla}\cdot\vec{p} &= \partial_y \delta p(\vec{r}) \\
+	\frac{\delta\rho}{\rho_0} &= \frac{\delta\rho(\vec{r})}{\rho_0}
+\end{align}
+now I can insert this into the free energy
+\begin{align}
+	F &= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right] \\
+	&= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho(\vec{r})}{\rho_0}}^2-\frac{1}{2}h_\parallel \ins{1+\ins{\delta p(\vec{r})}^2} + \frac{K}{2}\ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 - \omega_1\frac{\delta\rho(\vec{r})}{\rho_0}\partial_y \delta p(\vec{r})\right]
+\end{align}
+next we find
+\begin{align}
+	\frac{\delta F}{\delta\rho} &= \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
+\end{align}
+to do the other variation I'll look at it term by term for \(p_\alpha \rightarrow p_\alpha + \epsilon\eta_\alpha\)
+\begin{align}
+	\delta\ins{p_\alpha p_\alpha} &= p_\alpha^2+2\epsilon p_\alpha \eta_\alpha + \epsilon^2\eta_\alpha^2 = 2p_\alpha\eta_\alpha \\
+	\delta\ins{\partial_\alpha p_\beta \partial_\alpha p_\beta} &= 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta}
+\end{align}
+which needs an integration by parts
+\begin{align}
+	\int\dd^2 r 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta} &= -\int\dd^2 r 2\partial_\alpha\partial_\alpha p_\beta \delta p_\beta = -\int\dd^2 r 2\bm{\nabla}^2 p_\beta \delta p_\beta
+\end{align}
+with the boundary terms cancelling out because it's a variation. And finally
+\begin{align}
+	\delta\ins{\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}} &= \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha
+\end{align}
+integrating by parts
+\begin{align}
+	\int\dd^2 r \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha &= -\int\dd^2 r \partial_\alpha\ins{\frac{\delta\rho}{\rho_0}}\delta p_\alpha
+\end{align}
+connecting everything back
+\begin{align}
+	\frac{\delta F}{\delta \vec{p}} = -h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}} && \frac{\delta F}{\delta\rho} = \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
+\end{align}
+Looking at the dynamic equation for density
+\begin{align}
+	\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}}\\
+	&= \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
+\end{align}
+inserting the density and assuming \(\rho_0\) is constant in time
+\begin{equation}
+	\diffp{\delta\rho(\vec{r})}{t} = \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
+\end{equation}
+where
+\begin{align}
+	\bm{\nabla}\cdot(v_0\ins{\rho_0+\delta\rho(\vec{r})}\vec{p}) &\simeq v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
+\end{align}
+where we ommitted the term quadratic in delta. Therefore
+\begin{equation}
+	\partial_t\delta\rho(\vec{r}) = \gamma_\rho\bm{\nabla}^2\ins{\chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})} - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
+\end{equation}
+\emph{At this point I realized I could have linearized things about 10 equations ago. A previous version for this question was 7 pages long\dots} Moving on, to first order this is
+\begin{equation}
+	\partial_t\delta\rho(\vec{r}) = - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
+\end{equation}
+rearranging
+\begin{equation}
+	\partial_t\delta \rho+v_0\partial_x\delta \rho+v_0\rho_0\partial_y\delta p(\vec{r})=0
+\end{equation}
+The equation for polarity is
+\begin{equation}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\frac{\delta F}{\delta \vec{p}}
+\end{equation}
+inserting the delta we have
+\begin{equation}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\ins{-h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
+\end{equation}
+dropping the non-linear terms
+\begin{equation}
+	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}
+\end{equation}
+rewriting with indices
+\begin{equation}
+	\partial_t \delta p_\alpha + \lambda p_\beta\partial_\beta \delta p_\alpha = -\gamma_p\frac{\omega_1}{\rho_0}\partial_\alpha\delta\rho
+\end{equation}
+but since \(\partial_x\delta\rho = 0\) and \(\delta p_x = 0\)
+\begin{equation}
+	\partial_t\delta p(y) = -\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho
+\end{equation}
+taking the derivative of the density equation
+\begin{equation}
+	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho+v_0\rho_0\partial_t\partial_y\delta p(\vec{r})=0
+\end{equation}
+we can replace the order of differentiation so we insert the expression we got from the polarization equation
+\begin{equation}
+	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho-v_0\rho_0\partial_y\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho=0
+\end{equation}
+rearranging
+\begin{equation}
+	\ins{\partial_{tt}+v_0\partial_{tx}}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
+\end{equation}
+but \(\partial_x\delta \rho = 0\)
+\begin{equation}
+	\partial_{tt}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
+\end{equation}
+which is a wave equation, thus with a standard wave ansatz we find
+\begin{align}
+	\omega^2 = \gamma_p v_0 \omega_1 k^2
+\end{align}
+Therefore
+\begin{equation}
+	\omega = \pm k\sqrt{\gamma_p v_0 \omega_1} 
+\end{equation}
+since \(\omega_1<0\), \(\omega\) is imaginary. If \(\Im(\omega)<0\), any created waves will decay and the system as a whole will be stable. Otherwise, waves will grow exponentially, meaning the system is unstable.
