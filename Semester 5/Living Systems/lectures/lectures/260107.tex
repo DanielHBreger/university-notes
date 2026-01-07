@@ -1,0 +1,118 @@
+In isotropic liquids:
+\begin{equation}
+    \sigma_{\alpha\beta}^{tot} = -P\delta_{\alpha\beta}-\rho v_\alpha v_\beta+2\eta v_{\alpha\beta}
+\end{equation}
+where the first element is a pressure element, the second is advection, and the third is viscousity. If we insert this into the momentum conservation equation we get 
+\begin{equation}
+    \del_t \ins{\rho v_\alpha} = \del_\beta \ins{-P\delta_{\alpha\beta}-\rho v_\alpha v_\beta + 2\eta v_{\alpha\beta}}
+\end{equation}
+which is kind of like the naviet stokes equation. We'll simplify this. We'll compare the 2 last elements and assume a length scale \(L\):
+\begin{align}
+    \eta v_{\alpha\beta} &\sim \eta \frac{v}{L} \\
+    \rho v_\alpha v_\beta &\sim r v^2
+\end{align}
+the ratio between these is called the Reynolds number
+\begin{equation}
+    Re = \frac{\rho v^3}{\eta\frac{v}{L}} = \frac{vL}{\nu}
+\end{equation}
+where \(\nu = \frac{\eta}{\rho}\) is caled the kinematic viscousity. When \(Re \ll 1\), the dynamics is controlled by the viscousity rather than advection. We'll estimate Reynolds in a system of cells. We'll take density to be that of water \(\rho \approx \qty{e3}{\kilo\gram\per\meter^3}\) and \(\eta = \qty{e3}{\pascal}\), which gives us \(\nu = \qty{e19}{something}\) which gives us a very small Reynolds number. We'll thus focus on \(Re\ll 1\) and ignore \(\rho v_\alpha v_\beta\). We'll focus on stationary cases where \(\del_t\ins{\rho v_\alpha}=0\). We get an equation of forces called the Stokes equation
+\begin{equation}
+    0 = f_\alpha = \del_\beta\ins{-P\delta_{\alpha\beta}+2\eta v_{\alpha\beta}}
+\end{equation}
+Many liquids like water are incompressible. In that case (in which \(\rho\) is constant in space)
+\begin{equation}
+    0 = \del_t\rho = -\del_\alpha\ins{\rho v_\alpha} = -\rho\del_\alpha v_\alpha \implies \del_\alpha v_\alpha =0
+\end{equation}
+In this case \(P\) acts as a lagrange multiplier, guarnteeing incompressibility.
+\section{Wet Active Matter And Entropy Production}
+We'll want to write down a hydrodynamic theory for wet active matter. The first question is what the slow quantities. Our conserved quantities are:
+\begin{align}
+    \del_t\rho &= -\del_\alpha\ins{\rho v_\alpha} \\
+    \del_t\ins{\rho v_\alpha} &= \del_\beta\sigma_{\alpha\beta}^{tot}
+\end{align}
+and we are in a soft mode, so the angle of the polar/nematic order. (We'll look at ordered system with \(\vert \vec{P}\vert = 1\)).
+\subsection{Entropy Production}
+We'll look at a system in thermal contact with a large temperature reservoir \(R\) at equilibrium at temperature \(T\). The system exchanges energy with the reservoir while consering the total energy.
+\begin{equation}
+    \dd U_R + \dd U = 0
+\end{equation}
+and the change in total entropy is
+\begin{equation}
+    \dd S_T = \dd S + \dd S_R
+\end{equation}
+since the reservoir is in thermal equilibrium,
+\begin{equation}
+    \dd S_R = \frac{\dd U_R}{T} = -\frac{dU}{T}
+\end{equation}
+so the total entropy
+\begin{equation}
+    \dd S_T = \dd S - \frac{\dd U}{T} = -\frac{1}{T}\ins{T\dd S-\dd U} = -\frac{1}{T}\dd F
+\end{equation}
+so the entropy production rate is
+\begin{equation}
+    \diff*{S_T}{t} = -\frac{1}{T}\diff*{F}{t} \geq 0
+\end{equation}
+the inequality being the 2nd law of thermodynamics. How will we see the production of entropy in the systems we are interested in? We'll first assume a passive homogenous system with no average currents, of volume \(V\), density \(\rho\), and order parameter \(\vec{p}\).
+\begin{equation}
+    F = F(\rho, \vec{p}) \; ; \; \dd F = V \ins{\mu\dd \rho - \vec{h}\cdot\dd\vec{p}}
+\end{equation}
+where \(\mu = \frac{\delta F}{\delta \rho}\) is the chemical potential and \(\vec{h} = -\frac{\delta F}{\delta \vec{p}}\) is melocular/ordering field. From the chain rule, the change in time is
+\begin{equation}
+    -T\diff{S_T}{t} = \diff{F}{t} = \int\dd\vec{r} \ins{\mu\del_t\rho - h_\alpha\del_t p_\alpha}
+\end{equation}
+Now we'll take into consideration a system with a current and we'll find
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} +h_\alpha \frac{D}{D_t}p_\alpha}
+\end{equation}
+where
+\begin{gather}
+    \sigma_{\alpha\beta} = \sigma_{\alpha\beta}^{tot, sym} + \rho v_\alpha v_\beta + P\delta{\alpha\beta} \\
+    \frac{D}{Dt} P_\alpha = \ins{\del_t+v_\beta\del_\beta}P_\alpha + \omega_{\alpha\beta}P_\beta
+\end{gather}
+the first line is deviatoric stress and the 2nd line is called the co-rotational derivative. What about activity? In a biological system the main source of activity is hydrolysis of ATP. We'll denote the energy produced in the process as \(\Delta\mu \approx 20 k_BT\) and we'll denote \(r\) as the rate of ATP production per unit volume
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} +h_\alpha \frac{D}{D_t}p_\alpha} + r\Delta\mu
+\end{equation}
+in entropy production we thus have contribution from non-uniform flow, contribution from non-uniform rotation of the polartization, and contribution from the hydrolysis of ATP. The expression we found is in the form of pairs of interdependent forces and generalized currents. For example, we saw for isotropic liquid \(\sigma_{\alpha\beta} = 2\eta v_{\alpha\beta}\). Near equilibrium exist conditions on the relations between the forces and currents, which are called Onsager Relations.
+\subsection{Onsager (Reciprocal) Relations}
+We'll assume quantities \(\left\{x_i\right\}_{i=1}^N\) which describe the dynamics neat equilibrium, where in equilibirium \(x_i=0\) (for example \(\theta-\theta_0\) in ordered homogenous states in 2D). We'll denote \(h_i = -\diffp{S_T}{x_i}\) and assume that the dynamics is described by a linear system:
+\begin{equation}
+    \dot{x_i} = -\sum\limits_{k=1}^n \gamma_{ik}h_k
+\end{equation}
+where \(\left\{\gamma_{ik}\right\}_{i,k}\) is a matrix of kinetic coefficients. We'll denote using \(\sigma_i\) the sign of the change in \(x_i\) under time reversal. For example, \(\overline{x_i(-t)} = \sigma_i \overline{x_i(t)}\). Onsager showed that
+\begin{equation}
+    \gamma_{ik} = \sigma_i \sigma_k \gamma_{ki} \;\; \forall i,k
+\end{equation}
+which is called the Onsager Relations. For \(i,k\) with opposite behavior under time reversal \(\gamma_{ik} = -\gamma_{ki}\) and the coupling does not contribute to entropy production. A coupling of this kind is called reactive. \(i,k\) with the same behavior under time reverasl do have a contribution to entropy production, and this coupling is called dissipative. Since total entropy can only grow, the symmetric part of \(\gamma_{ik}\) is a nonnegative matrix. The dissipative coefficients are connected by a correlation functions, as we saw in FDT for the diagonal coefficients \(\gamma_{ii}\). Onsager Relations let us uniformly understand dynamic phenomenon which tie together different physical quantities, such as electric current from a temperature difference and currents of heat from a fall in voltage.
+\subsection{Construction of Constitutive Equations from Onsager Relations}
+We start with the entropy production rate
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} \underline{v_{\alpha\beta}} +\underline{h_\alpha} \frac{D}{D_t}p_\alpha + \underline{r\Delta\mu}}
+\end{equation}
+we'll call the underlined elements forces and describe them under time reversal and phenomenologically develop the `currents' \(r, \sigma_{\alpha\beta},\frac{D}{Dt}P_\alpha\).
+
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{ccc}
+        Force & Time Reversal effect & Associated Current \\
+        \(\Delta \mu\) & + & \(r=r^r+r^d\) \\
+        \(v_{\alpha\beta}\) & - & \(\sigma_{\alpha\beta} = \sigma_{\alpha\beta}^r+\sigma_{\alpha\beta}^d\) \\
+        \(h_\alpha\) & + & \(\frac{D}{Dt}P_\alpha = \ins{\frac{D}{Dt}P_\alpha}^r+\ins{\frac{D}{Dt}P_\alpha}^d\)
+    \end{tabular}
+\end{table}
+
+We'll need to construct linear relations between scalars, vectors, and tensors. The vectors we have are \(\vec{P}\) and \(\vec{\nabla}\). \(\vec{P}\) is more significant in the hydrodynamic limit. The tensors we have are \(Q_{\alpha\beta}\), \(\delta_{\alpha\beta}\), and \(\del_\alpha \del_\beta\) and the such but these are less significant. We'll focus on the incompressible case, where P is a lagrange multiplier and we can focus only on \(\sigma_{\alpha\beta}\) without its trace.
+\subsubsection{Dissipative Currents}
+Since the only force with negative time reversal is the velocity element, the dissipative part of its current is
+\begin{equation}
+    \tilde{\sigma_{\alpha\beta}} = 2\eta v_{\alpha\beta}
+\end{equation}
+the elements for \(h\) and \(\mu\) both have positive time reversal symmetry so the dissipative current for those is
+\begin{equation}
+    \ins{\frac{D}{Dt}P_\alpha}^d = \frac{1}{\gamma_1}h_\alpha + \lambda P_\alpha\Delta\mu
+\end{equation}
+the first coefficient is called the rotational viscousity. the other disspiative current is
+\begin{equation}
+    r^d = \Lambda \Delta\mu + \lambda P_\alpha h_\alpha
+\end{equation}
+where the first coefficient is called the hydrolysis efficiency. The equation for \(r\) will not appear in the hydrodynamic theory and we'll ignore it from now on. The final coupling \(\lambda\) is unimportant in ordered phase since \(P^2=1\) and there is a lagrange multiplier in the dynamics in the direction \(P_\alpha\).
