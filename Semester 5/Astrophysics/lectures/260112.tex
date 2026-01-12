@@ -1,0 +1,96 @@
+\emph{This lecture was given by Prof.\ Vincent Desjacques}
+
+\section{Cosmology}
+We assume that the universe is infinite in space, euclidian, and static. This is a problematic assumption but we make it. We'll look at a very basic observation which raises doubts as to at least one of these assumptions. We ask the question: why is the sky black at night(This is called the Olbers paradox)? To look further into this question, we'll assume there is a certain uniform average density of stars in the universe \(n_*\), and that each star has an average radius of \(R_*\). We'll look at a spherical shell of radius \(r\) and width \(\dl r\). We ask the question of what is the total solid angle of the stars in this shell:
+\begin{align}
+    \dl \Omega &= 4\pi r^2 \dl r \cdot n_* \cdot \frac{\pi R_*^2}{r^2} \\
+    &= 4\pi^2n_* R_*^2 \dl r
+\end{align}
+Now to find the total solid angle of all the stars in the universe, we take an integral over all radii from us of the shell
+\begin{align}
+    \Omega &= \int\limits_0^\infty \dl r \diff{\Omega}{r} \\
+    &= 4\pi^2 n_* R_* \int\limits_0^\infty \dl r
+\end{align}
+and this integral diverges. Technically this calculation is incorrect because we didn't take into consideration the possibility of stars overlapping, and if we did, then the total angle would be \(\Omega = 4\pi \) i.e the entire sky would be full of stars. If we define the angular luminosity as \(S = \frac{f}{\Omega}\) where \(f\) is the radiation flux, then we can see it does not depend on \(r\). This means the average angular brightness of the sky should be similar to that of the sun. The night should be as bright as the sun is. But it's not. This means at least one of the assumptions we made is incorrect. The incorrect assumption is that the universe is \emph{not} static.
+\subsection{Measuremnts of Distances in The Universe}
+To measure distances to relatively nearby stars, in our galaxy, up to about \(\qty{1}{\kilo\parsec}\), we can use the parallax method. Earth goes around the sun, so if we measure the direction to the star half a year apart, we'll have a different angle and using the distance of the earth to the sun and the angle we can find the distance. This is accurate up to several hundred parsecs.
+
+If we leave the galaxy and look at distances of about \(\sim\qty{10}{\mega\parsec}\), which is out local group and nearby galaxy clusters, then the method to measure distances for astronomical objects of these distances is using Cepheid stars, often called `Standard Candles'. These stars have periodically varying luminosity over time, and there is a clear correlation between the star's luminosity and its period length. There are Cepheids near earth, so we can use them to calibrate then once we find distant cepheids we can measure its luminosity over time, find the period, then find its actual luminosity, and by comparing to the measured luminosity we can know the distance.
+% figure
+
+We zoom out further, and ask how we can measure distances of about \(\sim\qty{100}{\mega\parsec}\). At these distances we can't see individual stars, only entire galaxies. There are two methods we can use. The first is called the `Tully-Fisher' method, where we have a tie between the luminosity of a galaxy and the maximum velocity of the gas moving around it:
+\begin{equation}
+    L \propto v_{\max}^\alpha
+\end{equation}
+we can measure the velocity of the gas using the difference in redshift between the side that moves towards us and the side that moves away from us.\ \(\alpha \) was measured and found empirically to be \(\alpha \simeq 4\). We can then again measure the observed luminosity and find the distance. Another kind of standard candle are type Ia supernovae. They have a very specific maximum brightness. We can measure the observed maximum brightness and compared to the known actual brightness and use that. There are many more methods to measure distances but we won't cover them.
+
+\subsection{Hubble's Law}
+Hubbles' law states that aside from a certain small number of nearby galaxies, galaxies in the universe are moving away from us. To reach this law, hubble measured the redshift of galaxies to find their velocities. The definition of redshift is 
+\begin{equation}
+    z = \frac{\lambda_{obs}-\lambda_{em}}{\lambda_{em}}
+\end{equation}
+where \(\lambda_{obs}\) is the observed wavelength and \(\lambda_{em}\) is the emitted wavelength. We can't measure the emitted wavelength directly obviously, but by assuming that physics is the same across the universe, then the spectral lines of hydrogen as we measure here must be the same as there. If this was wrong, I'd just quit my job and go do something else. If we can find the spectral lines from the observations and match them to spectral lines we know from experiments, we can find the redshift. Hubble then assumed the redshift was the result of the doppler effect:
+\begin{equation}
+    \frac{\lambda_{obs}}{\lambda_{em}} = 1+z = \sqrt{\frac{1+\beta}{1-\beta}} \simeq + \beta
+\end{equation}
+where \(\beta = \frac{v}{c}\) and the last transition being in the limit \(v/c \ll 1\). This assumption was wrong and we'll see why. He then plotted the velocity over the distance from us
+% figure
+% in caption: this is after a correction made later because there was a problem with his original analysis, this is how we would interpret his measurements now.
+From a linear fit to the measurements we have
+\begin{align}
+    v = H_0 d  && H_0 = \qty{70}{\kilo\meter\per\second\per\mega\parsec}
+\end{align}
+which is called Hubble's Law. Unless we abandon the copernican principle, our conclusion is that the universe is not static.
+\subsection{Describing A Non-Static Universe}
+We'll abandon the assumption the universe is static, but we'll make another assumption. We'll assume the universe is homogenous and isotropic, which is called the cosmological principle. We'll define a set of coordinates
+\begin{equation}
+    \vec{r}(t) \equiv a(t)\vec{x}
+\end{equation}
+where \(\vec{r}\) is the physical distance, \(a\) is the scale factor, and \(\vec{x}\) is the comoving distance. The comoving distance is a set of coordinates indicating the relative location of the object in the universe subtracting the expansion, which is facotred in with the scale factor. An observer with a constant \(\vec{x}\) is called a `comoving observer'. The velocity of an object is
+\begin{align}
+    \vec{v}(\vec{r},t) &= \diff{\vec{r}(t)}{t} = \diff*{\ins{a(t)\vec{x}}}{t} \\
+    &= \frac{1}{a}\diff{a}{t}\ins{a\vec{x}}\\
+    &= \frac{\dot a}{a}\vec{r}(t)
+\end{align}
+and the visible velocity, which is the velocity it looks like the object is moving at from the expansion of the universe, rather than it moving through space is
+\begin{align}
+    \Delta \vec{v} &= \vec{v}(\vec{r}+\Delta\vec{r},t)-\vec{v}(\vec{r},t) \\
+    &= \frac{\dot a}{a}\ins{\vec{r}+\Delta\vec{r}}-\frac{\dot a}{a}\vec{r} \\
+    &= \frac{\dot a}{a}\Delta\vec{r}
+\end{align}
+we can define \(H(t) = \frac{\dot a(t)}{a(t)}\) which is called the Hubble Rate at time \(t\), and Hubble's constant becomes \(H_0 \equiv H(t_0)\). \(H(t)\) measures the rate of expansion of the universe over time.\ \emph{This is not the doppler effect. This is true for any comoving observer.}
+\subsection{Space-Time}
+In special relativity the metric is the Minkowski metric
+\begin{equation}
+    \dl s^2 = c^2 c^2 \dl t^2 - \dl x^2 -\dl y^2 - \dl z^2 \qquad x^\mu = \ins{t,x,y,z}
+\end{equation}
+which is the metric of a static unchanging homogenous isotropic universe which is no good. The metric we'll use instead is
+\begin{equation}
+    \dl s^2 = c^2 \dl t^2 - a^2(t)\sigma_{ij}\dl x^i \dl x^j
+\end{equation}
+This metric can describes three types of spaces, and we can define a parameter \(K\) called the curvature of spacetime.
+\begin{description}
+    \item[Flat Spacetime] if \(K=0\) spacetime is flat, it could be either infinite or finite.
+    \item[Hyperspherical Spacetime] if \(K>0\) spacetime is spherical and the universe must be finite.
+    \item[Hyperbolic Spacetime] if \(K<0\) spacetime looks like a saddle, and it could be either infinite or finite.
+\end{description}
+If we choose spherical coordinates 
+\begin{equation}
+    x^\mu = \ins{t,r,\theta,\phi}
+\end{equation}
+then the metric is
+\begin{equation}
+    \dl s^2 = c^2 \dl t^2 + a^2(t)\left[\frac{\dl r^2}{1-Kr^2}+r^2\ins{\dl \theta^2+\sin^2\theta\dl \phi^2}\right]
+\end{equation}
+in terms of unit analysis, we can have two alternative options. The first is
+\begin{equation}
+    [a] = 1 \quad \& \quad [r]=L  \implies [K]=L^{-2}
+\end{equation}
+in which case you can normalize \(a\) such that \(a(t_0)=1\). The other is
+\begin{equation}
+    [a]=L \quad \& \quad [r]=1 \implies [K]=1
+\end{equation}
+in which case you can normalize \(K\) such that \(K=0,\pm 1\). We can define a typical curvature radius:
+\begin{equation}
+    R_{curv} = \frac{a(t)}{\sqrt{\lvert K \rvert}}
+\end{equation}
