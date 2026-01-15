@@ -1,0 +1,77 @@
+\subsubsection{Reactive Currents}
+our equations we care about are
+\begin{gather}
+    \sigma_{\alpha\beta}^r = -\zeta Q_{\alpha\beta} \Delta\mu  + \frac{\nu}{2}\ins{h_\alpha p_\beta+h_\beta P_\alpha -2h_\gamma P_\gamma\frac{\delta_{\alpha\beta}}{d}} \\
+    \ins{\frac{D}{Dt}P_\alpha}^r = -\nu P_\beta v_{\alpha\beta}
+\end{gather}
+The first element of the first equation is called the active stress. It is proportional to \(\Delta\mu \) which is the chemical potential difference which is what makes the system active. The right hand side of the 2nd equation is called the shear alignment. It describes how deformations in the flow rotate \(P_\alpha \). Note: in 2D, in shear flow with \(\vec{P} = \ins{\cos\theta,\sin\theta}\) we find a steady state with \(\cos2\theta = \frac{1}{\nu}\). There is a steady state like this only for \(\lvert\nu\rvert > 1\). Otherwise, the particles will rotate indefinitely under shear flow (tumbling instability).
+\subsubsection{Notes}
+\begin{itemize}
+    \item The only active element is the active stress \(\sigma_{\alpha\beta}^{ac} = -\zeta Q_{\alpha\beta}\Delta\mu \). For dry active matter we wrote \(j_\alpha^a = - \Lambda\del_\beta Q_{\alpha\beta}\). We can interpret this as a forces equation with friction on a surface: \(\Gamma_{j\alpha} = \del_\beta\sigma_{\alpha\beta}^{ac}\). We'll notice the 'mutual' element of \(\zeta \) in \(\sigma \) is not part of the theory. In practice, we don't require Onsager relations for it.
+    \item There is no guarantee that the system is near equilibirium and that Onsager relations hold. This is an uncontrolled approximation. We take consistent equations for a passive system and phenomenologically add active elements.
+\end{itemize}
+\subsection{Development Of The Expression For Entropy Production}
+For a passive system with no flow we had
+\begin{equation}
+    T\dot{S} = \diff{F}{t} = \int \dd\vec{r} \ins{\mu\del_t\rho - h_\alpha\del_t P_\alpha}
+\end{equation}
+We'll want to reach the expression
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} + h_\alpha \frac{D}{Dt}P_\alpha}
+\end{equation}
+To take into consideration the flow, we'll also look at the change in time of the kinetic energy of the subsystem using the convservation laws for mass and momentum. We have:
+\begin{align}
+    \diffp*{\ins{\frac{1}{2}\rho v^2}}{t} &= \frac{1}{2}\left[v_\alpha\del_t\ins{\rho v_\alpha}+v_\alpha\ins{\del_t\ins{\rho v_\alpha}-v_\alpha \del_t\rho}\right] \\
+    &= v_\alpha\del_t\ins{\rho v_\alpha}-\frac{1}{2}v^2\del_t\rho 
+\end{align}
+so the change in time of the free energy plus kinetic energy is
+\begin{equation}
+    \dot{F} = \int \dd\vec{r} \ins{\mu\del_t\rho - h_\alpha\frac{D}{D_t} P_\alpha + h_\alpha\ins{v_\beta\del_\beta P_\alpha+\omega_{\alpha\beta}P_\beta}-\frac{1}{2}v^2\del_t\rho + v_\alpha\del_t\ins{\rho v_\alpha}}
+\end{equation}
+Using the conservation laws we find
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \left[\underline{-\mu\del_\alpha\ins{\rho v_\alpha}}-h_\alpha\frac{D}{D_t}P_\alpha+h_\alpha\ins{v_\beta\del_\beta P_\alpha + \omega_{\alpha\beta}P_\beta}+\underline{\frac{1}{2}v^2\del_\alpha\ins{\rho v_\alpha}}+\underline{\underline{v_\alpha\del_\beta\sigma_{\alpha\beta}^{tot}}}\right] =
+\end{equation}
+where the element where mass conservation helped in is marked with an underline and the one for momentum conservation is double underlined. Using integration by parts
+\begin{equation}
+    = \int \dd\vec{r} \left[v_\alpha\ins{\rho\del_\alpha\mu + h_\beta\del_\alpha P_\beta}-h_\alpha\frac{D}{D_t}P_\alpha + \omega_{\alpha\beta} h_\alpha P_\beta - \sigma_{\alpha\beta}^T\del_\beta v_\alpha -\rho v_\alpha v_\beta \del_\alpha v_\beta\right]
+\end{equation}
+Inserting the Gibbs-Duhem relation
+\begin{equation}
+    \dd \Pi = \rho \dd \mu + h_\beta \dd P_\beta \implies \del_\alpha \Pi = \rho \del_\alpha \mu + h_\beta \del_\alpha P_\beta
+\end{equation}
+and breaking apart \(\del_\alpha v_\beta = v_{\alpha\beta} + \omega_{\alpha\beta}\) where \(v\) is the symmetric part and \(\omega\) is the antisymmetric part, we find
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \left[v_\alpha \del_\alpha \Pi - h_\alpha \frac{D}{Dt} P_\alpha + \omega_{\alpha\beta} h_\alpha P_\beta - \sigma_{\alpha\beta}^{tot} \ins{v_{\alpha\beta} - \omega_{\alpha\beta}} - \rho v_\alpha v_\beta \ins{v_{\alpha\beta} + \omega_{\alpha\beta}}\right]
+\end{equation}
+The trace of the multiplication of a symmetric and antisymmetric tensor is zero, so \(\sigma_{\alpha\beta}^{tot}\omega_{\alpha\beta} = 0\) and \( \rho v_\alpha v_\beta \omega_{\alpha\beta} = 0\). And breaking apart \(\sigma \) into a symmetric and antisymmetric part, we find
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \left[-\ins{\sigma_{\alpha\beta}^{T,S}+\rho v_\alpha v_\beta + \Pi\delta_{\alpha\beta}}v_{\alpha\beta}-h_\alpha\frac{D}{D_t}P_\alpha+\omega_{\alpha\beta}\ins{\sigma_{\alpha\beta}^{T,AS}+\ins{h_\alpha P_\beta}^{AS}}\right]
+\end{equation}
+We know that in the rotation of a solid body, \(\dot{F}=0\) so the last element should be zero. We'll conclude that there is an antisymmetric part of the stress tensor
+\begin{equation}
+    \sigma_{\alpha\beta}^{T,AS} = \frac{1}{2}\ins{P_\alpha h_\beta - P_\beta h_\alpha}
+\end{equation}
+\subsection{Conclusion}
+The final expression for entropy production is
+\begin{equation}
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} + h_\alpha \frac{D}{Dt}P_\alpha + r\Delta\mu}
+\end{equation}
+and our equations are:
+\begin{gather}
+    \del_\beta\sigma_{\alpha\beta}^{tot} = 0 \\
+    \ins{\del_t + v_\beta\del_\beta} P_\alpha = \frac{h_\alpha}{\gamma_1} - \ins{\omega_{\alpha\beta}+\nu v_{\alpha\beta}} P_\beta
+\end{gather}
+where
+\begin{equation}
+    h_\alpha = h_{\parallel}P_\alpha + K\del_{\beta\beta}P_\alpha
+\end{equation}
+and
+\begin{gather}
+    \sigma_{\alpha\beta}^{tot} = -\zeta\Delta\mu Q_{\alpha\beta} + 2\eta v_{\alpha\beta} - \Pi \delta_{\alpha\beta} - \cancel{\rho v_\alpha v_\beta} + \frac{\nu+1}{2} P_\alpha h_\beta + \frac{\nu-1}{2} h_\alpha P_\beta \\
+    \ins{\del_t+v_\beta\del_\beta}P_\alpha = \frac{h_{\parallel}}{\gamma_1}P_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}P_\alpha - \ins{\omega_{\alpha\beta}+\nu v_{\alpha\beta}}P_\beta
+\end{gather}
+The first element in the first equation is the active stress, the second is the viscous stress, the 3rd is the isotropic pressure (which is a lagrange multiplier), the 4th is the convective momentum flux which we consider negligible, and the last two are stress from rotation and alignment of the polar order parameter. In the 2nd equation, the first element is a lagrange multiplier to enforce \(\vert \vec{P}\vert = 1\), the 2nd is diffusion of the order parameter, and the last is rotation and alignment as a result of the flow.
+\subsection{Spontaneous Flow in Active Nematic Matter}
+The equations have a steady state with nematic order in an arbitrary direction \(\hat{x}\) and \(\vec{v}=0\). i.e the system doesn't flow. In certain conditions this state is unstable and Spontaneous flow appears. How does that happen? When there's a gradient in the nematic order, the active stress creates flow. This flow rotates the nematic field and allows it to remain inhomogeneous.
+% figure

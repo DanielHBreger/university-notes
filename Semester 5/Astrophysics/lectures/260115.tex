@@ -1,0 +1,78 @@
+A note on notation for the scale factor: there are several notations used. One defines the scale factor as \(a(t)\) as we have done, but another defines it as \(R(t)\). Both notations are equivalent. In the notation \(a(t)\), the scale factor is often normalized such that \(a(t_0)=1\) where \(t_0\) is the current time. In the notation \(R(t)\), the scale factor is often normalized such that \(R(t_0)=R_0\) where \(R_0\) is the current scale factor, which has units of length.
+
+Using the \(R(t)\) notation we can write the metric, known as the Friedmann-Lemaître-Robertson-Walker metric
+\begin{align}
+    \dl s^2 &= \ins{c\dl t}^2 - \dl l^2 \\
+    \dl l^2 &= R^2(t)\left[\frac{\dl r^2}{1-Kr^2}+r^2\ins{\dl \theta^2+\sin^2\theta\dl \phi^2}\right]
+\end{align}
+The physical distance to a galaxy located at \(r\) is given by
+\begin{equation}
+    l = \int \dl l = R(t)\int\limits_0^r \frac{\dl r'}{\sqrt{1-Kr'^2}} = \begin{cases}
+        R(t) \arcsin r & K=1 \\
+        R(t) r & K=0 \\
+        R(t) \arcsinh r & K=-1
+    \end{cases}
+\end{equation}
+and the velocity is
+\begin{equation}
+    v = \diff{l}{t} = \dot{R}(t) \int \frac{\dl r'}{\sqrt{1-Kr'^2}} = \frac{\dot{R}}{R} \cdot R\int \frac{\dl r'}{\sqrt{1-Kr'^2}} = H(t) l
+\end{equation}
+which is Hubble's Law again.
+\subsection{What Is The Scale Factor?}
+The Einstein equation is
+\begin{equation}
+    G_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}
+\end{equation}
+The metric is given by the FLRW metric:
+\begin{equation}
+    g_{\mu\nu} = \begin{pmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & -\frac{R^2(t)}{1-Kr^2} & 0 & 0 \\
+        0 & 0 & -R^2(t)r^2 & 0 \\
+        0 & 0 & 0 & -R^2(t)r^2\sin^2\theta
+    \end{pmatrix}
+\end{equation}
+To get to the Einstein tensor \(G_{\mu\nu}\) there is a simple formula:
+\begin{equation}
+    G_{\mu\nu} = \mathfrak{R}_{\mu\nu} - \frac{1}{2}\mathfrak{R}g_{\mu\nu}
+\end{equation} 
+where
+\begin{align}
+    \mathfrak{R} &= g^{\beta\gamma}\mathfrak{R}_{\beta\gamma} \\
+    \mathfrak{R}_{\beta\gamma} &= g_\alpha^\delta \mathfrak{R}^\alpha_{\beta\delta\gamma} \\
+    \mathfrak{R}^\alpha_{\beta\delta\gamma} &= \partial_\gamma \Gamma^\alpha_{\beta\delta} - \partial_\delta \Gamma^\alpha_{\beta\gamma} + \Gamma^\alpha_{\rho\gamma}\Gamma^\rho_{\beta\delta} - \Gamma^\alpha_{\rho\delta}\Gamma^\rho_{\beta\gamma} \\
+    \Gamma^\mu_{\sigma\nu} &= \frac{1}{2} g^{\mu\nu}\left(\partial_\nu g_{\sigma\rho} + \partial_\sigma g_{\nu\beta} - \partial_\rho g_{\sigma\nu}\right)
+\end{align}
+The first line is called the Ricci scalar, the second line is called the Ricci tensor, the third line is called the Riemann curvature tensor, and the last line is called the Christoffel symbols. Skipping lots of algebra we get
+\begin{align}
+    G_{00} = \frac{3}{c^2 R^2}\ins{\dot{R}^2+Kc^2} \\
+    G_{11} = -\frac{R\ddot{R}+\dot{R}^2+Kc^2}{c^2\ins{1-Kr^2}}
+\end{align}
+The elements off the diagonal are zero. \(G_{22}\) and \(G_{33}\) can be found from symmetry.
+\subsection{The Momentum Energy Tensor}
+The elements of the momentum energy tensor are
+\begin{align}
+    T_{00} &= \text{Energy Density} \\
+    T_{0i} &= \text{Momentum Flux} \\
+    T_{ii} &= \text{Isotropic Pressure} \\
+    T_{ij} &= \text{Non-Isotropic Pressure From Shear Stress}
+\end{align}
+In a homogenous and isotropic universe \(T_{\mu\nu}\) is diagonal and given by
+\begin{equation}
+    T_{\mu\mu} = \ins{P+\rho c^2}\frac{v_\mu v\mu}{c^2} - P g_{\mu\mu}
+\end{equation}
+and the four-velocity is
+\begin{equation}
+    v^\mu = \diff{x^\mu}{\tau} = \gamma \ins{\frac{c}{u}}
+\end{equation}
+We now have 
+\begin{align}
+    T_{00} &= \rho c^2 \\
+    T_{11} &= \frac{P R^2(t)}{1-Kr^2}
+\end{align}
+comparing with \(G_{00}\) and \(G_{11}\) we get the Friedmann equations:
+\begin{align}
+    \frac{\dot{R}^2+Kc^2}{R^2} &= \frac{8\pi}{3}G\rho \\
+    \frac{2\ddot{R}}{R} + \frac{\dot{R}^2 + KC^2}{R^2} &= -\frac{8\pi}{c^2} GP
+\end{align}
+The first equation describes how the expansion rate depends on the energy density and curvature, and the second equation describes how the acceleration of the expansion depends on the energy density and pressure.

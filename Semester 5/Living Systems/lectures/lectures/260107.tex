@@ -67,11 +67,12 @@ Now we'll take into consideration a system with a current and we'll find
 where
 \begin{gather}
     \sigma_{\alpha\beta} = \sigma_{\alpha\beta}^{tot, sym} + \rho v_\alpha v_\beta + P\delta{\alpha\beta} \\
-    \frac{D}{Dt} P_\alpha = \ins{\del_t+v_\beta\del_\beta}P_\alpha + \omega_{\alpha\beta}P_\beta
+    \frac{D}{Dt} P_\alpha = \ins{\del_t+v_\beta\del_\beta}P_\alpha + \omega_{\alpha\beta}P_\beta \\
+    h_\alpha = -\frac{\delta F}{\delta P_\alpha}
 \end{gather}
-the first line is deviatoric stress and the 2nd line is called the co-rotational derivative. What about activity? In a biological system the main source of activity is hydrolysis of ATP. We'll denote the energy produced in the process as \(\Delta\mu \approx 20 k_BT\) and we'll denote \(r\) as the rate of ATP production per unit volume
+the first line is deviatoric stress, the 2nd line is called the co-rotational derivative, and the 3rd is the molecular field. What about activity? In a biological system the main source of activity is hydrolysis of ATP. We'll denote the energy produced in the process as \(\Delta\mu \approx 20 k_BT\) and we'll denote \(r\) as the rate of ATP production per unit volume
 \begin{equation}
-    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} +h_\alpha \frac{D}{D_t}p_\alpha} + r\Delta\mu
+    T\dot{S} = \int \dd\vec{r} \ins{\sigma_{\alpha\beta} v_{\alpha\beta} +h_\alpha \frac{D}{D_t}p_\alpha + r\Delta\mu}
 \end{equation}
 in entropy production we thus have contribution from non-uniform flow, contribution from non-uniform rotation of the polartization, and contribution from the hydrolysis of ATP. The expression we found is in the form of pairs of interdependent forces and generalized currents. For example, we saw for isotropic liquid \(\sigma_{\alpha\beta} = 2\eta v_{\alpha\beta}\). Near equilibrium exist conditions on the relations between the forces and currents, which are called Onsager Relations.
 \subsection{Onsager (Reciprocal) Relations}
@@ -101,18 +102,18 @@ we'll call the underlined elements forces and describe them under time reversal 
     \end{tabular}
 \end{table}
 
-We'll need to construct linear relations between scalars, vectors, and tensors. The vectors we have are \(\vec{P}\) and \(\vec{\nabla}\). \(\vec{P}\) is more significant in the hydrodynamic limit. The tensors we have are \(Q_{\alpha\beta}\), \(\delta_{\alpha\beta}\), and \(\del_\alpha \del_\beta\) and the such but these are less significant. We'll focus on the incompressible case, where P is a lagrange multiplier and we can focus only on \(\sigma_{\alpha\beta}\) without its trace.
+Where the current elements superscipted with \(r\) are the reactive elements and those with \(d\) are the dissipative elements. We'll need to construct linear relations between scalars, vectors, and tensors. The vectors we have are \(\vec{P}\) and \(\vec{\nabla}\). \(\vec{P}\) is more significant in the hydrodynamic limit. The tensors we have are \(Q_{\alpha\beta}\), \(\delta_{\alpha\beta}\), and \(\del_\alpha \del_\beta\) and the such but these are less significant. We'll focus on the incompressible case, where P is a lagrange multiplier and we can focus only on \(\sigma_{\alpha\beta}\) without its trace.
 \subsubsection{Dissipative Currents}
 Since the only force with negative time reversal is the velocity element, the dissipative part of its current is
 \begin{equation}
     \tilde{\sigma_{\alpha\beta}} = 2\eta v_{\alpha\beta}
 \end{equation}
 the elements for \(h\) and \(\mu\) both have positive time reversal symmetry so the dissipative current for those is
-\begin{equation}
+\begin{equation}\label{lessignorable}
     \ins{\frac{D}{Dt}P_\alpha}^d = \frac{1}{\gamma_1}h_\alpha + \lambda P_\alpha\Delta\mu
 \end{equation}
 the first coefficient is called the rotational viscousity. the other disspiative current is
-\begin{equation}
+\begin{equation}\label{ignorable}
     r^d = \Lambda \Delta\mu + \lambda P_\alpha h_\alpha
 \end{equation}
-where the first coefficient is called the hydrolysis efficiency. The equation for \(r\) will not appear in the hydrodynamic theory and we'll ignore it from now on. The final coupling \(\lambda\) is unimportant in ordered phase since \(P^2=1\) and there is a lagrange multiplier in the dynamics in the direction \(P_\alpha\).
+where the first coefficient is called the hydrolysis efficiency. The equation for \(r\) will not appear in the hydrodynamic theory and we'll ignore it from now on. The final coupling \(\lambda\) is unimportant in ordered phase since \(P^2=1\) and there is a lagrange multiplier in the dynamics in the direction \(P_\alpha\). In other words, the element parallel to \(P_\alpha\) in \(D_t P_\alpha\) won't appear in the equation of motion. This all means we can ignore equation~\ref{ignorable} entirely and the 2nd element of equation~\ref{lessignorable}.
