@@ -1,0 +1,73 @@
+\section{Spontaneous Flow in Active Nematic Matter}
+The equations have a steady state with nematic order in an arbitrary direction \(\hat{x}\) and \(\vec{v}=0\). i.e the system doesn't flow. In certain conditions this state is unstable and Spontaneous flow appears. How does that happen? When there's a gradient in the nematic order, the active stress creates flow. This flow rotates the nematic field and allows it to remain inhomogeneous.
+% figure
+We have a force equation and an equation for the rate of change of the director:
+\begin{align}
+    \del_\beta\sigma_{\alpha\beta}^{tot} = 0 && \ins{\del_t + v_\beta\del_\beta} P_\alpha = \frac{h_\parallel}{\gamma_1}P_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}P_\alpha - \ins{\omega_{\alpha\beta}+\nu v_{\alpha\beta}}P_\beta
+\end{align}
+The first element guarantees \(P^2=1\) and the second is diffusion of the order parameter. The last element is rotation and alignment with the flow. We can imagine two kinds of steady states for the nematic matter.
+% figure
+In the first, due to symmetry, there is no flow. In the second, the director field is distorted causing flow. The first is called a non-flowing homogeneous state, and the second is a non-homogeneous flow. The first case is always a solution, the second isn't always a solution.
+\subsection{Linear Stability Test}
+We'll write the equations for a small perturbation \(\lvert\theta\rvert \ll 1\) such that \(\vec{P} = (\cos\theta, \sin\theta) \approx (1, \theta)\). Q is then
+\begin{equation}
+    Q = \frac{1}{2}\begin{pmatrix}
+        \cos2\theta & \sin2\theta \\
+        \sin2\theta & -\cos2\theta
+    \end{pmatrix} \approx \frac{1}{2}\begin{pmatrix}
+        1 & 2\theta \\
+        2\theta & -1
+    \end{pmatrix}
+\end{equation}
+We'll assume a system that's homogenous in the \(x\) direction and changes only with \(y\). The \(y\) component of the equation for \(P_\alpha \) is
+\begin{equation}
+    \del_t\theta = -\frac{1}{2}\ins{1+\nu}\del_y v_x + \frac{K}{\gamma_1}\del_{yy}\theta
+\end{equation}
+To perform a linear stability test we need a differential equation for \(theta\). We'll connect \(\del_y v_x\) to \(\theta\) using the force equation.
+\begin{equation}
+    0 = \del_y\sigma_{xy}
+\end{equation}
+In the steady state we assumed \(\sigma_{xy}=0\). We'll demand that it is maintained for linear order:
+\begin{equation}
+    0=-\zeta\Delta\mu \theta + \eta \del_y v_x + \frac{\nu+1}{2} K\del_{yy}\theta
+\end{equation}
+rearranging
+\begin{equation}
+    \del_y v_x = \frac{\zeta\Delta\mu}{\eta}\theta - \frac{\nu+1}{2}\frac{K}{\eta}\del_{yy}\theta
+\end{equation}
+Inserting this into the equation for \(\theta \) we find
+\begin{equation}
+    \del_t\theta = -\frac{1+\nu}{2}\frac{\zeta\Delta\mu}{\eta}\theta + K\left[\frac{1}{\gamma_1} + \ins{\frac{1+\nu}{2}}^2\frac{1}{\eta}\right]\del_{yy}\theta
+\end{equation}
+To perform the stability anaylsis we'll assume a perturbation of the form
+\begin{equation}
+    \theta = \theta_1 e^{st+iqy}
+\end{equation}
+where \(\lvert\theta_1\rvert \ll 1\) is the amplitude, \(s\) is the growth rate, and \(q\) is the wave number. The system is unstable if there is a solution such that \(Re(s)>0\). Inserting this ansatz into the equation (by using \(\del_t\theta = s\theta\) and \(\del_y\theta = -1\theta \)) for \(\theta \) we find
+\begin{equation}
+    s\theta_1 = \left(-\frac{1+\nu}{2}\frac{\zeta\Delta\mu}{\eta} + K\left[\frac{1}{\gamma_1} + \ins{\frac{1+\nu}{2}}^2\frac{1}{\eta}\right]q^2\right)\theta_1
+\end{equation}
+The element prefixed by \(K\) is always positive, but the first element can be either positive or negative. Instability appears when
+\begin{equation}
+    \ins{1+\nu}\zeta < 0
+\end{equation}
+% figure
+When the system is unstable the maximum instability is found at \(q=0\):
+\begin{equation}
+    s(q=0) = \frac{\lvert1+\nu\rvert}{2}\frac{\lvert\zeta\rvert\Delta\mu}{\eta} \equiv \frac{\lvert1+\nu\rvert}{2}\frac{1}{\tau_\alpha}
+\end{equation}
+where \(\tau_\alpha = \frac{\eta}{\lvert\zeta\rvert\Delta\mu}\) is the active time. The mechanism of the instability is a small local rotation in \(\theta \) which leads to flow due to the active stress. This flow further rotates the director field in the same direction leading to growth of the perturbation. The system stabilizes in long wave vectors thanks to angular diffusion. At the critical wave vector \(s(q_c)=0\)
+\begin{equation}
+    q_c^2 = \frac{\lvert1+\nu\rvert}{2}\frac{1}{\frac{\eta}{\gamma_1} + \ins{\frac{1+\nu}{2}}^2} \frac{\lvert\zeta\rvert\Delta\mu}{K}
+\end{equation}
+we can define a length scale
+\begin{equation}
+    l_a = \sqrt{\frac{K}{\lvert\zeta\rvert\Delta\mu}}
+\end{equation}
+called the active length. If we assume an experiment in a channel of width \(L\), the smallest wave vector is \(q_0 = \frac{\pi}{L}\). If \(q_0 > q_c\) the system is stable and no spontaneous flow appears. The more active the system, we expect to flow over shorter length scales. If we look at possible relations between \(L\) and \(l_a\):
+\begin{itemize}
+    \item If \(L \gtrsim l_a\) there is shear flow in the system.
+    \item If \(l_a \gtrsim L\) there is no shear flow in the system.
+    \item If \(L \gg l_a\) there are many vortices in the system and we reach active turbulence.
+\end{itemize}
+\emph{This concludes the material of the course, next there were presentations on papers related to the material as part of the final assignment for the course.}
