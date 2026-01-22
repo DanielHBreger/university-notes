@@ -1,0 +1,108 @@
+There are two kinds of horizons: the particle horizon and the cosmological horizon. The particle horizon is the maximum distance from which light could have reached us since the beginning of the universe. For a particle dominated universe, the particle horizon is given by
+\begin{equation}
+    x_{ph} = 3ct_0
+\end{equation}
+and for a \(\Lambda\) dominated universe
+\begin{equation}
+    x_{ph} = \frac{c}{H_0} = \frac{c}{\sqrt{1/3}} = \qty{5.5}{\giga\parsec}
+\end{equation}
+The cosmological horizon is the maximum distance light we emit now can travel to in the future. To calculate it, we look back to the FHW metric:
+\begin{equation}
+    ds^2 = c^2 dt^2 - R(t)^2 \left[\frac{\dl r^2}{1-Kr^2} + r^2 \dl\Omega^2\right]
+\end{equation}
+we'll assume we're looking at light so \(ds^2 = 0\) and only in the radial direction so \(\dl \Omega = 0\). This gives us
+\begin{equation}
+    c \dl t = R(t) \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+For convenience, we'll assume a flat universe so \(K=0\) and we have
+\begin{equation}
+    c \dl t = R(t) \dl r
+\end{equation}
+then to move to the comoving coordinates we use \(a = R/R_0\)
+\begin{equation}
+    c \dl t = R_0 a \dl r
+\end{equation}
+then we integrate
+\begin{equation}
+    x_{ch} = \int\limits_0^{x_{ch}} \dl x = \int\limits_{t_0}^\infty \frac{c \dl t}{a(t)}
+\end{equation}
+In a matter dominated universe, \(a(t) = (t/t_0)^{2/3}\) so
+\begin{equation}
+    x_{ch} = c t_0 \int\limits_1^\infty u^{-2/3} \dl u
+\end{equation}
+which diverges, so in a matter dominated universe there is no cosmological horizon. In a \(\Lambda\) dominated universe, \(a(t) = e^{H_0 t}\) so
+\begin{equation}
+    x_{ch} = c \int\limits_{t_0}^\infty e^{-H t} \dl t = \frac{c}{H} e^{-H t_0}
+\end{equation}
+translating to physical distance
+\begin{equation}
+    \dl p = \int \dl l = R \int \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+\begin{wraptable}{r}{0.6\textwidth}
+    \centering
+    \begin{tabular}{ccc}
+         & Comoving (\(x\)) & Physical (\(\dl p\))\\ \hline
+        Galaxy \(i\) & \(x_i = c_i\) constant & \(c_i e^{Ht}\) \\
+        Particle horizon & \(x_{ph} = \frac{c}{H}\) & \(\dl p_{ph} = \frac{c}{H} e^{Ht}\) \\
+        Cosmological horizon & \(x_{ch} = \frac{c}{H} e^{-Ht_0}\) & \(\dl p_{ch} = \frac{c}{H}\)
+    \end{tabular}
+    \caption{Comparison of comoving and physical distances}
+\end{wraptable}
+for \(K=0\) this is just
+\begin{equation}
+    \dl p = Rr = \frac{R}{R_0}R_0 r = a(t) x
+\end{equation}
+so the physical distance to the cosmological horizon is
+\begin{equation}
+    \left.\dl p \right\vert_{t=t_0} = \frac{c}{H} e^{-H t_0} e^{H t_0} = \frac{c}{H}
+\end{equation}
+\subsection{Observations}
+The first and most important observation is of redshifted light. We can find a connection between the redshift and the scale factor. The density of energy of radiation is given by
+\begin{equation}
+    \epsilon_{rad} \propto R^{-4}
+\end{equation}
+but on the other hand, the energy density is also given by
+\begin{equation}
+    \epsilon_{rad} = \frac{E_{rad}}{R^3} = \frac{hc}{\lambda R^3}
+\end{equation}
+but the wavelength is proportional to \(R\) so
+\begin{equation}
+    \lambda_{obs} = \frac{1}{a} \lambda_{em}
+\end{equation}
+and in terms of redshift
+\begin{equation}
+    1 + z = \frac{1}{a}
+\end{equation}
+We'll find another expression for distance to proceed. We know that
+\begin{equation}
+    \dl p = \int \dl l = R(t) \int \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+and at time \(t_0\) this is
+\begin{equation}
+    \dl p = R_0 \int \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+on the other hand, looking at a photon emitted at time \(t_{em}\) and observed at time \(t_0\), using the metric we have
+\begin{equation}
+    c \dl t = R(t) \frac{\dl r}{\sqrt{1-Kr^2}} = R_0 a(t) \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+rearranging and integrating gives
+\begin{equation}
+   \int\limits_{t_{em}}^{t_0} \frac{c \dl t}{a(t)} = R_0 \int\limits_{0}^{r} \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+so
+\begin{equation}
+    \dl p = \int\limits_{t_{em}}^{t_0} \frac{c \dl t}{a(t)}
+\end{equation}
+Now that we have this, 
+\begin{align}
+    \dl p &= \int\frac{c\dl t}{a} = \int \frac{c \diff{t}{a}\dl a}{a}\\
+    &= \int\frac{c\dl a}{\dot{a}a} = c\int\frac{\dl a}{\ins{\frac{\dot{a}}{a}}a^2} 
+\end{align}
+inserting the Friedmann equation
+\begin{equation}
+    \dl p = \frac{c}{H_0} \int \frac{\dl a}{\sqrt{\frac{\Omega_{m}}{a^3} + \frac{\Omega_{rad}}{a^4} + \Omega_\Lambda + \frac{1-\Omega}{a^2}} a^2}
+\end{equation}
+Changing variables to redshift using \(a = \frac{1}{1+z}\)
+\begin{equation}
+    \dl p = \frac{c}{H_0} \int\limits_0^{z_{em}} \frac{\dl z}{\sqrt{\Omega_m (1+z)^3 + \Omega_{rad} (1+z)^4 + \Omega_\Lambda + (1-\Omega)(1+z)^2}}
+\end{equation}
