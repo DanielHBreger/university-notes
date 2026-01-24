@@ -1,4 +1,4 @@
-\documentclass[12pt]{penrose}
+\documentclass[10pt]{penrose}
 \input{LaTexPackages}
 \input{macros}
 
@@ -18,9 +18,17 @@
 	\maketitle
 	The paper leaves several clear directions to expand the work, some mentioned directly by the authors.
     \section{Larger Systems}
-    The system the authors used was purposefuly small to study the dynamics of a single nucleation event, but another interesting thing to explore would be how systems where multiple nucleations can happen behave. Will a very large metastable system inevitably completely collapse, or could the comet structure create geometries in the system which will stabilize the system at some point?
+    The system the authors used was purposefuly small to study the dynamics of a single nucleation event, but another interesting thing to explore would be how systems where multiple nucleations can happen behave. Will a very large metastable system inevitably completely collapse, or could the comet structure create geometries in the system which will stabilize the system at some point? Or perhaps some chaotic behavior?
     \section{More Complex Behavior}
-    Each particle in the system move along a single dimension with a constant velocity (either positive or negative), plus a statistical diffusion. Will more complex behavior of the particles change the results?
+    Each particle in the system move along a single dimension with a constant velocity (either positive or negative), plus a statistical diffusion. Will more complex behavior of the particles change the results? There are multiple possibilities for this: random movement, several regions with different movement in each region, etc.
+    \section{Boundary Conditions}
+    In the simulations the boundary conditions are that each side connects back to the opposite side. This means that the nucleating droplets propagate through the entire system. What if the system was a `closed box' where particles bounce off the edges (effectively being a gas confined to a vessel), which can be achieved by setting the flux at the edges to be zero:
+    \begin{equation}
+        \vec{j}\cdot \hat{n} = 0
+    \end{equation}
     \section{Continuous Symmetries}
-    The paper looks specifically at the case of particles with \(s=\pm 1\) spin. If the particles' polar order parameter becomes continuous, such as a polarization vector with some interaction between different values, would the behavior change?
+    The paper looks specifically at the case of particles with \(s=\pm 1\) spin. If the particles' polar order parameter becomes continuous, such as a polarization vector with some interaction between different values, would the behavior change? In the case of a continuous symmetry, the Ginzburg-Landau free energy could be used to analyze the behavior of the system:
+    \begin{equation}
+        F = \int \dd \vec{r}\left(\frac{a}{2}\phi^2 + \frac{b}{4}\phi^4 + \frac{K}{2}{\left(\nabla\phi\right)}^2\right)
+    \end{equation}
 \end{document}
