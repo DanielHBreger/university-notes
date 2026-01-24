@@ -1,0 +1,101 @@
+\clearpage
+\section{Fourier-Based Signal Processing}
+\subsection*{(a) Analytical Derivation of $X(f)$}
+Consider the continuous-time signal $x(t) = e^{-a|t|} \cos(2\pi f_c t)$ with $a > 0$. To
+derive the Fourier Transform $X(f)$, we utilize the linearity and modulation properties
+of the Continuous Fourier Transform (CFT).
+\textbf{Step 1: Transform of the two-sided exponential} \\
+Let $g(t) = e^{-a|t|}$. By definition of the CFT:
+\begin{equation*}
+G(f) = \int_{-\infty}^{\infty} e^{-a|t|} e^{-j2\pi ft} dt = \int_{-\infty}^{0} e^{(a - j2\pi f)t} dt +
+\int_{0}^{\infty} e^{-(a + j2\pi f)t} dt
+\end{equation*}
+Evaluating the improper integrals:
+\begin{equation*}
+G(f) = \left[ \frac{e^{(a - j2\pi f)t}}{a - j2\pi f} \right]_{-\infty}^{0} + \left[ \frac{e^{-(a +
+j2\pi f)t}}{-(a + j2\pi f)} \right]_{0}^{\infty} = \frac{1}{a - j2\pi f} + \frac{1}{a + j2\pi f}
+\end{equation*}
+Combining the terms leads to the Lorentzian spectrum:
+\begin{equation*}
+G(f) = \frac{(a + j2\pi f) + (a - j2\pi f)}{a^2 + (2\pi f)^2} = \frac{2a}{a^2 + 4\pi^2 f^2}
+\end{equation*}
+\textbf{Step 2: Modulation Property} \\
+The signal $x(t) = g(t) \cos(2\pi f_c t)$ can be expressed using Euler's identity. The
+modulation property states that multiplying by $\cos(2\pi f_c t)$ shifts the spectrum to
+$\pm f_c$:
+\begin{equation*}
+X(f) = \frac{1}{2} [G(f - f_c) + G(f + f_c)]
+\end{equation*}
+Substituting $G(f)$:
+\begin{equation*}
+X(f) = \frac{a}{a^2 + 4\pi^2 (f - f_c)^2} + \frac{a}{a^2 + 4\pi^2 (f + f_c)^2}
+\end{equation*}
+The magnitude spectrum $|X(f)|$ consists of two symmetric Lorentzian peaks
+centered at $\pm f_c$.
+\subsection*{(b) Mechanism of Signal-Noise Separation in the Frequency Domain}
+The Fourier Transform is a fundamental tool for enhancing the Signal-to-Noise Ratio
+(SNR) by exploiting the spectral distribution differences between deterministic
+signals and stochastic noise.
+\begin{itemize}
+ \item \textbf{Spectral Energy Density}: In the time domain, a signal $x(t)$ and
+additive noise $n(t)$ are often inextricably mixed. However, the Fourier Transform
+$X(f)$ of the exponential-modulated signal derived in part (a) shows that the signal
+energy is highly concentrated in narrow Lorentzian peaks centered at $\pm f_c$. In
+contrast, common environmental noise (such as AWGN) tends to be broadband,
+spreading its power spectral density across a wide range of frequencies.
+ \item \textbf{Filtering as a Masking Operation}: By defining a Band-Pass Filter
+(BPF) with a transfer function $H(f)$, we can isolate the signal. If we set $H(f)
+\approx 1$ for $f \in [f_c - \Delta f, f_c + \Delta f]$ and $H(f) \approx 0$ elsewhere,
+the output $Y(f) = [X(f) + N(f)]H(f)$ retains the majority of the signal energy while
+discarding the noise power present in the rest of the spectrum.
+ \item \textbf{Engineering Trade-off}: The parameter $a$ in $e^{-a|t|}$ dictates the
+bandwidth of the Lorentzian peaks. A smaller $a$ (slower decay) results in a
+narrower spectral footprint, allowing for a tighter filter and superior noise rejection,
+albeit at the cost of transient response speed.
+\end{itemize}
+\subsection*{(c) Analytical Treatment of Aliasing}
+Aliasing is the phenomenon where high-frequency components are "folded" into
+lower frequencies during the sampling process, creating irreversible distortion.
+\textbf{Mathematical Derivation}:
+Sampling a continuous signal $x(t)$ at a frequency $f_s = 1/T_s$ is mathematically
+equivalent to multiplying $x(t)$ by an impulse train $\sum_{k=-\infty}^{\infty} \delta(t -
+k T_s)$. According to the multiplication property of the Fourier Transform, this
+corresponds to a convolution in the frequency domain:
+\begin{equation*}
+X_s(f) = X(f) * \mathcal{F}\left\{ \sum_{k=-\infty}^{\infty} \delta(t - k T_s) \right\} = X(f)
+* \left( f_s \sum_{k=-\infty}^{\infty} \delta(f - k f_s) \right)
+\end{equation*}
+This yields the periodic summation:
+\begin{equation*}
+X_s(f) = f_s \sum_{k=-\infty}^{\infty} X(f - k f_s)
+\end{equation*}
+\textbf{Condition for Distortion ($f_s < 2f_{max}$)}:
+The Nyquist-Shannon sampling theorem states that to recover $x(t)$, we must have
+$f_s \ge 2f_{max}$. If $f_s < 2f_{max}$, the shifted spectra $X(f - k f_s)$ overlap.
+Specifically, for our signal $x(t) = e^{-a|t|} \cos(2\pi f_c t)$, which is theoretically not
+band-limited, the tails of the Lorentzian peaks at $k=0$ and $k=1$ will overlap
+regardless of $f_s$. However, practically, if $f_s$ is low, the magnitude of $X(f - f_s)
+$ in the baseband $[ -f_s/2, f_s/2 ]$ becomes significant, making it impossible to
+reconstruct the original signal without interference from the periodic aliases.
+\subsection*{(d) Practical Consequences and Mitigation Strategies}
+\textbf{Consequences in Engineering Systems}:
+\begin{itemize}
+ \item \textbf{Robotics and Control}: In high-speed robotic joints, aliasing in
+encoder or IMU data can transform high-frequency motor vibrations into lowfrequency "phantom" oscillations. This can lead to instability in PID controllers or
+erroneous state estimation in Kalman filters.
+ \item \textbf{Image Processing}: Aliasing manifests as Moiré patterns (interference
+fringes) or "jaggies" on edges. In medical imaging or satellite surveillance, these
+artifacts can lead to critical misinterpretations of structural data.
+\end{itemize}
+\textbf{Prevention Methods}:
+\begin{enumerate}
+ \item \textbf{Analog Anti-Aliasing Filter (AAF)}: To adhere to the sampling theorem,
+a physical Low-Pass Filter (LPF) must be placed \textit{before} the Analog-to-Digital
+Converter (ADC). This filter must have a cut-off frequency $f_{cut} \le f_s/2$ to
+attenuate any frequency components that would otherwise fold back into the
+baseband.
+ \item \textbf{Oversampling and Digital Decimation}: By sampling at a much higher
+rate ($f_{s, high} \gg 2f_{max}$), we create a wide "guard band" between spectral
+copies. This relaxes the requirements on the analog AAF (allowing for a gentler rolloff) and permits the use of sharp, high-order digital filters to remove noise before
+downsampling to the target rate.
+\end{enumerate}

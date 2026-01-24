@@ -1,0 +1,90 @@
+\clearpage
+\section{Convolutional Neural Networks (CNNs)}
+\subsection*{(a) Functional Role and Architectural Justification}
+The proposed architecture follows the classic hierarchical pattern of feature
+extraction followed by global classification.
+\begin{itemize}
+ \item \textbf{Convolutional Layer ($16$ filters, $3 \times 3$)}: This layer serves as
+the primary feature extractor. By utilizing a local receptive field, the layer captures
+spatial correlations (edges, textures) that are lost in standard dense networks. The
+use of $16$ filters allows the network to learn multiple distinct feature maps in
+parallel. The "weight sharing" property is critical here, as the same $3 \times 3$
+kernel is applied across the entire image, drastically reducing the parameter count
+compared to a fully connected layer.
+ \item \textbf{ReLU Activation}: The Rectified Linear Unit, defined as $f(x) = \max(0,
+x)$, introduces the necessary non-linearity. Its primary advantage in this architecture
+is the mitigation of the vanishing gradient problem, allowing for more efficient
+backpropagation by maintaining a constant gradient for all positive activations.
+ \item \textbf{Max-Pooling ($2 \times 2$)}: This downsampling operation reduces
+the spatial resolution of the feature maps. By selecting the maximum value in each
+$2 \times 2$ window, the layer provides a degree of \textit{translation invariance},
+meaning the network can recognize a feature even if its position in the frame shifts
+slightly. It also serves to prevent overfitting by reducing the total number of
+parameters in the subsequent dense layers.
+ \item \textbf{Fully Connected (FC) Layer ($100$ neurons)}: After local features are
+extracted and downsampled, this layer performs "high-level" reasoning. It integrates
+information from all 15,376 spatial features to form a global representation of the
+input image.
+ \item \textbf{Softmax Output ($10$ classes)}: The final layer maps the hidden
+representations to a 10-dimensional vector. The Softmax function normalizes these
+scores into probabilities ($p_i \in [0, 1]$ and $\sum p_i = 1$), which is essential for
+multi-class classification.
+\end{itemize}
+\subsection*{(b) Detailed Spatial Dimension Analysis}
+To track the transformation of the data volume, we apply the general formula for
+output dimensions: $O = \frac{I - K + 2P}{S} + 1$, where $I$ is input size, $K$ is
+kernel size, $P$ is padding, and $S$ is stride.
+\begin{enumerate}
+ \item \textbf{Input Volume}: $V_0 = 64 \times 64 \times 3$ (RGB channels).
+ \item \textbf{Convolutional Layer}: Given $K=3, S=1, P=0$:
+ \begin{equation*}
+ O_{conv} = \frac{64 - 3 + 0}{1} + 1 = 62
+ \end{equation*}
+ The resulting volume is $\bm{62 \times 62 \times 16}$, where the depth reflects
+the 16 filters.
+ \item \textbf{ReLU Activation}: Point-wise operation; dimensions remain $\bm{62
+\times 62 \times 16}$.
+ \item \textbf{Max-Pooling Layer}: Given $K=2, S=2$:
+ \begin{equation*}
+ O_{pool} = \frac{62 - 2}{2} + 1 = 31
+ \end{equation*}
+ The resulting volume is $\bm{31 \times 31 \times 16}$.
+ \item \textbf{Flattening}: Before the FC layer, the 3D volume is serialized into a 1D
+vector:
+ \begin{equation*}
+ D_{flatten} = 31 \times 31 \times 16 = \bm{15,376} \text{ units.}
+ \end{equation*}
+\end{enumerate}
+\subsection*{(c) Trainable Parameter Derivation}
+The total number of parameters is the sum of weights ($\bm{W}$) and biases ($
+\bm{b}$) for each layer.
+\textbf{1. Convolutional Layer}:
+Each of the 16 filters has a volume of $3 \times 3 \times 3$ (width $\times$ height $
+\times$ input depth).
+\begin{itemize}
+ \item Weights: $(3 \times 3 \times 3) \times 16 = 432$
+ \item Biases: $16$ (one per filter)
+ \item \textbf{Layer Total}: $432 + 16 = \bm{448}$.
+\end{itemize}
+\textbf{2. First Fully Connected Layer}:
+Every neuron in the 100-unit layer is connected to every element of the 15,376-unit
+input vector.
+\begin{itemize}
+ \item Weights: $15,376 \times 100 = 1,537,600$
+ \item Biases: $100$
+ \item \textbf{Layer Total}: $1,537,600 + 100 = \bm{1,537,700}$.
+\end{itemize}
+\textbf{3. Output Softmax Layer}:
+Maps 100 hidden neurons to 10 class scores.
+\begin{itemize}
+ \item Weights: $100 \times 10 = 1,000$
+ \item Biases: $10$
+ \item \textbf{Layer Total}: $1,000 + 10 = \bm{1,010}$.
+\end{itemize}
+\textbf{Total Network Parameters}:
+\begin{equation*}
+P_{total} = 448 + 1,537,700 + 1,010 = \bm{1,539,158}
+\end{equation*}
+\textit{Note: Approximately 99.9\% of the network's parameters are contained within
+the first fully connected layer, highlighting the memory-intensive nature of
+transitioning from convolutional feature maps to dense classification layers.}

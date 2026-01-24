@@ -7,6 +7,38 @@ If we assume the signal has some median value and a certain distribution around 
 \subsubsection{Spectral Analysis}
 If we know our signal is expected to be comprised of a specific set or range of frequencies, we can perform a fourier transform on it and in the frequency domain we will have an acceptable range or set of frequencies, with any frequency outside this range or set being considered anomalous. This method is useful for signals which either are expected to be periodic, carried by specific frequencies, or are specifically characterized by their frequency. The downsides to this method is the method by which the signal is analyzed itself may introduce artifacts or lose information, non-repeating anomalies may be hard to detect, very slow changes in the signal may be hard to detect, and of course if the signal isn't strongly characterized by its frequency this method won't be effective.
 \subsubsection{Kalman Filtering Residuals}
-Kalman filtering gives an optimal linear estimator for a signal. By assuming a model for the signal, we can use a Kalman filter to predict the next value of the signal. By monitoring the difference between the predicted value and the measured value and setting a threshold on this difference, we can declare measurements which exceed this threshold (which may be dynamic or static) as anomalies. This method is useful when we have a good understanding of the system generating this data and can model it well, and the system in question behaves in a linear manner. The downsides to Kalm Filtering are that it assumes the system is linear in its evolution, and that we have a good model of the system.
+Kalman filtering gives an optimal linear estimator for a signal. By assuming a model for the signal, we can use a Kalman filter to predict the next value of the signal. By monitoring the difference between the predicted value and the measured value and setting a threshold on this difference, we can declare measurements which exceed this threshold (which may be dynamic or static) as anomalies. This method is useful when we have a good understanding of the system generating this data and can model it well, and the system in question behaves in a linear manner. The downsides to Kalm an Filtering are that it assumes the system is linear in its evolution, and that we have a good model of the system.
 \subsection{Encoder-Decoder For Anomaly Detection}
-If we treat an incoming signal as a \(d_1\) dimensional vector but we know the underlying signal is of a lower dimensionality, we can train a neutral network to compress this vector into a \(d_2 < d_1\) dimensional vector, then expand it back to a \(d_1\) dimensional vector. We can then train this network on known good data, and the NN will learn to reconstruct the signal. 
+If we treat an incoming signal as a \(d_1\) dimensional vector but we know the underlying signal is of a lower dimensionality, we can train a neutral network to compress this vector into a \(d_2 < d_1\) dimensional vector, then expand it back to a \(d_1\) dimensional vector. We can then train this network on known good data, and the NN will learn to reconstruct the signal. Anomalies in the signal are much more likely to live in the subspace orthogonal to the signal's subspace (due to the dimensionality increase). If we look at the difference between the measured signal and the reconstructed signal and call that the error, a high error implies that either there's a lot of noise (aka anomalies), or the signal we tried to compress dimensionally was actually of higher dimension than we expected. We could also use train the NN to instead forecast the next value of the signal, rather than reconstruct the last received signal, which operates similarly, the main difference being that it is more sensitive to sharp sudden anomalies which are not continuous over the signal. The downsides are that if the lower dimension of the NN is incorrectly selected, it can either fail due to it missing dimensionality in the data or in the opposite direction fail due to it encoding anomalies as signal in redundant dimensions. In addition, since it requires training a neural network, you need a large amount of data to train the model beforehand.
+\subsection{Classical vs deep learning}
+The main, obvious, difference is in the philosophy of the approach. Classical methods assume specific models for the signal and utilize statistical methods to analyze the behavior of the signal. Deep learning methods instead are based on analyzing patterns in existing data to learn the signal's behavior.
+\subsubsection{Classical Methods}
+Classical methods' strengths are:
+\begin{enumerate}
+    \item they are based on mathematical models, which make them understandable and explainable.
+    \item Do not require large datasets to perform well.
+    \item Can be designed specifically for the signal in question using knowledge about the signal.
+    \item Much lighter computationally and can be used for performance sensitive tasks.
+\end{enumerate}
+Classical methods' weaknesses are:
+\begin{enumerate}
+    \item Most classical methods assume a linear system, so any non-linear behavior is a challenge.
+    \item The effectiveness of the system is completely dependant on how well the engineer designing the system understands the signal and possible anomalies.
+\end{enumerate}
+\subsubsection{Encoder-Decoder}
+Encoder-Decoder methods' strengths are:
+\begin{enumerate}
+    \item Are able to learn more complex behavior both in terms of the signal and the anomalies, which humans may not even know exists.
+    \item Works well in systems with large amounts of data.
+    \item Requires minimal prior knowledge of the signal or anomalies.
+    \item Can model nonlinear systems.
+    \item Can be easily scaled.
+\end{enumerate}
+Encoder-Decoder methods' weaknesses are:
+\begin{enumerate}
+    \item Risk of overfitting.
+    \item Susceptible to learning incorrect behavior from the training data if not properly trained.
+    \item If data is limited, performs very poorly.
+    \item Impossible to explain how the NN works, making unexpected behavior hard to diagnose.
+    \item Training is expensive computationally.
+\end{enumerate}
