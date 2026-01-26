@@ -1,0 +1,133 @@
+\subsection{Distance Measurements}
+To measure distances in cosmology there are two main methods: standard candles and standard rulers. Standard candles are mostly type Ia supernovae, and the standard ruler is usually the cosmic microwave background (CMB). 
+\subsubsection{Standard Candles}
+To use a standard candle we use the relationship between luminosity and flux:
+\begin{equation}
+    F = \frac{L}{4\pi d^2}
+\end{equation}
+and since we know \(L\) and we can measure \(F\), we can find \(d\). The problem is that this is actually a lie because this relationship doesn't hold in an expanding universe. The actual relationship comes from
+\begin{equation}
+    E_{obs} = \frac{E_{em}}{\frac{R_0}{R}} = a E_{em} = \frac{E_{em}}{1+z}
+\end{equation}
+We also need to take into account cosmological time dilation. Using the metric
+\begin{equation}
+    \dl s^2 = c^2 \dl t^2 - R^2(t) \ins{\frac{\dl r^2}{1-Kr^2} + r^2 \dl \Omega^2}
+\end{equation}
+and for photons on the radial direction \(\dl s = 0\) and \(\dl \Omega = 0\), so
+\begin{equation}
+    \int \frac{c \dl t}{R(t)} = \int\limits_0^{r_e} \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+If we look at two photons emitted at \(t_{em}\) and \(t_{em} + \Delta t_{em}\) and observed at \(t_0\) and \(t_0 + \Delta t_0\), we have for the first photon
+\begin{equation}
+    \int\limits_{t_{em}}^{t_0} \frac{c \dl t}{R(t)} = \int\limits_0^{r_e} \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+and for the second photon
+\begin{equation}
+    \int\limits_{t_{em} + \Delta t_{em}}^{t_0 + \Delta t_0} \frac{c \dl t}{R(t)} = \int\limits_0^{r_e} \frac{\dl r}{\sqrt{1-Kr^2}}
+\end{equation}
+the right hand sides of both equations are the same which gives us
+\begin{equation}
+    c \int\limits_{t_{em}}^{t_{0}} \frac{\dl t}{R(t)} = c \int\limits_{t_{em} + \Delta t_{em}}^{t_0 + \Delta t_0} \frac{\dl t}{R(t)} 
+\end{equation}
+skipping some algebra we get
+\begin{equation}
+    \frac{\Delta t_{0}}{\Delta t_{em}} = \frac{R_0}{R_{em}} = \frac{1}{a} = 1 + z
+\end{equation}
+So the observed luminosity is
+\begin{equation}
+    L_{obs} = \left.\diff{E}{t}\right\vert_{obs} = \frac{E_{obs}}{\Delta t_{obs}} = \frac{E_{em}/(1+z)}{\Delta t_{em} (1+z)} = \frac{L_{em}}{(1+z)^2}
+\end{equation}
+So the flux is
+\begin{equation}
+    F = \frac{L_{obs}}{4\pi d^2} = \frac{L_{em}}{4\pi d^2 (1+z)^2}
+\end{equation}
+Sometimes we define the luminosity distance \(d_L\) as
+\begin{equation}
+    F = \frac{L_{em}}{4\pi d_L^2}
+\end{equation}
+We can use this for supernovae meaasurements, since they have a known luminosity, and we can measure their redshift, so we can find the luminosity distance \(d_L\). Looking at measurements of type Ia supernovae and their fits to different cosmological models, we find that the data fits a model with \(\Omega_m \approx 0.3\) and \(\Omega_\Lambda \approx 0.7\), which is evidence for dark energy. If we look at the \(\Omega_\Lambda-\Omega_m\) phase space, we're able to place constraints on the parameters, as shown in figure .
+%TODO figure
+\subsubsection{Standard Ruler}
+In a static universe if we have a ruler of length \(l\) at a distance \(d\) perpendicular to our line of sight, and it takes an angle \(\delta\theta\), we have
+\begin{equation}
+    d = \frac{l}{\delta \theta}
+\end{equation}
+for an expanding universe we can use the metric again.
+\begin{equation}
+    \dl s^2 = - c^2 \dl t^2 + R^2(t) \ins{\frac{\dl r^2}{1-Kr^2} + r^2 \dl \theta^2 + \dots}
+\end{equation}
+If we look at the two sides of the ruler as two events of photon emission, A and B, which happened at the same time, we have \(\dl t = 0\) so
+\begin{equation}
+    \dl s^2 = R^2(t) \ins{\frac{\dl r^2}{1-Kr^2} + r^2 \dl \theta^2}
+\end{equation}
+If the ruler is perpendicular to our line of sight, \(\dl r = 0\) so
+\begin{equation}
+    \dl s^2 = R^2(t) r^2 \dl \theta^2
+\end{equation}
+so the physical length of the ruler is
+\begin{equation}
+    l = R(t) r \dl \theta = Rar \dl \theta
+\end{equation}
+a result we had earlier for \(\dl p\) was
+\begin{equation}
+    \dl p = R_0\int\frac{\dl r}{\sqrt{1-Kr^2}} = R_0 r
+\end{equation}
+which is specifically for the case \(K=0\) which we'll focus on. So we can write
+\begin{equation}
+    l = a \dl p \dl \theta
+\end{equation}
+or in terms of redshift
+\begin{equation}
+    l = \frac{\dl p}{1+z} \dl \theta
+\end{equation}
+if we define angular distance \(d_A\) as
+\begin{equation}
+    d_A = \frac{\dl p_0}{1+z}
+\end{equation}
+we have
+\begin{equation}
+    l = d_A \dl \theta
+\end{equation}
+\subsection{Cosmic Microwave Background (CMB)}
+In 1949 it was predicted by Alper and Herman that if the universe started in a hot dense state, there should be a background of black body radiation left over from that time which cools with time. We know that
+\begin{equation}
+    \epsilon_{rad} \propto a^{-4}
+\end{equation}
+and the wavelength of the radiation scales as
+\begin{equation}
+    \lambda \propto 1+z
+\end{equation}
+on the other hand
+\begin{equation}
+    \epsilon_{rad} \propto T^4
+\end{equation}
+so
+\begin{equation}
+    T \propto \frac{T_0}{a} = T_0 (1 + z)
+\end{equation}
+from this analysis it was predicted that the temperature of the CMB today should be around \(\qty{5}{\kelvin}\). In 1941 McKellar measured the temperature of interstellar CN molecules and found a floor temperature of around \(\qty{2.3}{\kelvin}\). In 1965 Penzias and Wilson conducted an experiment to measure the noise in a radio antenna and found an excess noise (about 100 times more than they expected) at all times of the day coming from all directions which they couldn't explain. After trying to locate the source of the noise they ended up concluding that it was actually the CMB, and they got the Nobel prize for it in 1978. The temperature they measured was around \(\qty{3}{\kelvin}\).
+\subsubsection{Source Of The CMB}
+If we look at the early universe, there was very hot gas and radiation, it was ionized, and there were many interactions. From the process of thermalisation, the radiation became a black body spectrum. 
+\begin{gather}
+    B_\nu = \frac{2h\nu^3}{c^2} \frac{\dl \nu}{e^{\frac{h\nu}{kT}} - 1} \\
+    \epsilon_{rad} = a_{rad} T^4 \\
+    T(a) = \frac{T_0}{a} = T_0 (1+z)
+\end{gather}
+% TODO figure
+What are the recombination temperature and time? Naively we can look at the ionization energy of hydrogen which is \(\qty{13.6}{\electronvolt}\) which corresponds to a temperature of around \(\qty{1e6}{\kelvin}\). This is incorrect, and to find the correct temperature we can solve 
+\begin{equation}
+    \left\langle\sigma\nu\right\rangle n_H n_\gamma =  n_H + n_e \alpha(t)
+\end{equation}
+which is the ionization rate being equal to the recombination rate, and if we solve it we find that the recombination temperature is around \(\qty{3000}{\kelvin}\). This corresponds to a redshift of around \(z \approx 1100\). To find the time at which this happened we can use the Friedmann equation (simplified for a matter dominated flat universe)
+\begin{equation}
+    a = \ins{\frac{t}{t_0}}^{2/3}
+\end{equation}
+so
+\begin{equation}
+    t = \frac{t_0}{(1+z)^{3/2}} \approx \qty{370000}{\year}
+\end{equation}
+So the CMB was emitted around \(\qty{370000}{\year}\) after the Big Bang at a temperature of around \(\qty{3000}{\kelvin}\). The surface from which the CMB was emitted is called the last scattering surface. The distance to it is approximately the same as that of the particle horizon. The accurate calculation for it gives around \(3.4 ct_0 = \qty{46.6}{\giga\lightyear}\). The comoving coordinate of the last scattering surface is
+\begin{equation}
+    x_{lss} = \left.R_0r\right\vert_{lss} = 3.4 ct_0
+\end{equation}
+Back to measurements of the CMB, the first one used the horn antenna, but later on satellites were used, such as WMAP and Planck. These satellites measured the intensity of the CMB across difference frequiencies and found that it matches a black body spectrum with a temperature of around \(\qty{2.725}{\kelvin}\) very accurately. In fact the CMB is the most perfect black body spectrum ever measured. This average is across the entire sky but if we look at smaller scales we find anisotropies in the CMB. The strongest anisotropy is a dipole anisotropy which is due to the motion of the earth with respect to the CMB rest frame. After removing this dipole anisotropy, we find the radiation is very isotropic with fluctuations \(\frac{\delta T}{\left\langle T \right\rangle} \approx \qty{e-5}{}\).
