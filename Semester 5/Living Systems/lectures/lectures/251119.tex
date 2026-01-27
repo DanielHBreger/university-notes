@@ -9,7 +9,7 @@ since the probability of moving in either direction is equal. This results in a 
 \end{equation}
 and as a result there is no detailed balance. It is possible to connect the rate \(W_{i,i+1}\) compared to \(W_{i+1,i}\) to the difference between a step forward or backwards in time. Therefore systems with time reversal symmetry also are in detailed balance.
 \subsubsection{Time Reversal Symmetry}
-Systems in Equilibrium are symmetric to time reversal. If we watch a video of their dynamics and run it backwards, we won't feel a difference. This isn't necessarily true for active particles (like swimming fish). We'll assume a system with a hamiltonian which is a function of the momenta \(p^N\) (e.g \(H=\sum\limits_i\frac{p^2}{2m}+U(\vec r)\)) and that there is no magnetic field or global rotation which will add linear elements to the momenta. The dynamics of this system are given by Hamilton's equations:
+Systems in equilibrium are symmetric to time reversal. If we watch a video of their dynamics and run it backwards, we won't feel a difference. This isn't necessarily true for active particles (like swimming fish). We'll assume a system with a Hamiltonian which is a function of the momenta \(p^N\) (e.g \(H=\sum\limits_i\frac{p^2}{2m}+U(\vec r)\)) and that there is no magnetic field or global rotation which will add linear elements to the momenta. The dynamics of this system are given by Hamilton's equations:
 \begin{align}
 	\diff{r_k}{t} = \diffp{H}{p_k} && \diff{p_k}{t} = -\diffp{H}{r_k}
 \end{align}
@@ -26,9 +26,9 @@ where \(\theta \) is a random variable distributed between 0 and \(2\pi \). When
 \subsection{The Fluctuation Dissipation Theorem}
 In thermal equilibrium or near it there is a fundamental connection between thermal fluctuations and the reaction to external forces, and it's called the FDT (Fluctuation-Dissipation Theorem). It has many versions and many implications and it is one of the most important and useful results in statistical mechanics. The connection between spontaneous fluctuations and reactions to external disturbances was identified by Lars Onsager, and he received the 1968 Nobel prize in chemistry for it (Onsager's regression hypothesis)
 \subsubsection{Static Version (In equilibrium)}
-We'll assume a system with hamiltonian \(H_0\) and we'll apply an external force \(f\) with a tied field \(x\) such that \(H=H_0-fx\). In equilibrium:
+We'll assume a system with Hamiltonian \(H_0\) and we'll apply an external force \(f\) with a tied field \(x\) such that \(H=H_0-fx\). In equilibrium:
 \begin{equation}
-	\langle x \rangle = \frac{\sum\limits_i x_i e^{-\beta(H_0-fx_i)}}{e^{-\beta (H_0-fx_i)}}
+	\langle x \rangle = \frac{\sum\limits_i x_i e^{-\beta(H_0-fx_i)}}{\sum\limits_i e^{-\beta (H_0-fx_i)}}
 \end{equation}
 therefore
 \begin{align}
