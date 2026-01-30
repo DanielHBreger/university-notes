@@ -1,11 +1,33 @@
 \subsection{Pulsars}
-Pulsars are supernova remnants which appear to have pulsing fluxes of radaition.
-% figure
-For examples, at the center of the Crab Nebula there is a pulsar which pulses with every 33 miliseconds. The current theory is that these pulses come from neutron stars with magnetic fields which rotate very rapidly. These magnetic fields create jets that go in opposite directions.
+Pulsars are supernova remnants which appear to have pulsing fluxes of radiation.
+\begin{figure}[!htb]
+    \centering
+    \begin{tikzpicture}[>=Stealth, x=0.65cm, y=1cm]
+        % Axes
+        \draw[->, thick] (0,0) -- (8.2,0) node[below right] {$t$};
+        \draw[->, thick] (0,0) -- (0,3.2) node[left] {$F$};
+
+        % Pulse profile: baseline + two localized Lorentzians (schematic)
+        % y(t) = b + A/(1+((t-t1)/g)^2) + A/(1+((t-t2)/g)^2)
+        \def\b{0.25}
+        \def\A{2.65}
+        \def\g{0.06}
+        \def\tOne{2.05}
+        \def\tTwo{5.55}
+
+        \draw[thick, smooth, samples=250, domain=0.15:7.9]
+            plot (\x, {\b + \A/(1+((\x-\tOne)/\g)^2) + \A/(1+((\x-\tTwo)/\g)^2)});
+
+        % Period marker
+        \draw[<->, thick] (\tOne,2.0) -- (\tTwo,2.0) node[midway, above] {$\tau$};
+    \end{tikzpicture}
+    \caption{Schematic pulsar pulse profile with period $\tau$.  (Converted from a whiteboard drawing using OpenAI Prism)}
+\end{figure}
+For example, at the center of the Crab Nebula there is a pulsar which pulses every 33 milliseconds. The current theory is that these pulses come from neutron stars with magnetic fields which rotate very rapidly. These magnetic fields create jets that go in opposite directions.
 % figure
 We only observe these as pulsars if the jets point at us. 
 \subsubsection{Why do they spin so fast?}
-If we look at a typical netron star of radius 10 km, and if it spins with period of 1 ms, then the speed of its surface is as fast as \(0.2c\). Where does that speed come from? Conservation of angular momentum. Angular momentum for a sphere is
+If we look at a typical neutron star of radius 10 km, and if it spins with a period of 1 ms, then the speed of its surface is as fast as \(0.2c\). Where does that speed come from? Conservation of angular momentum. Angular momentum for a sphere is
 \begin{equation}
     J = I\omega = \frac{2}{5}MR^2\omega
 \end{equation}
@@ -71,7 +93,7 @@ equating the two we find
 \end{equation}
 after solving we find
 \begin{equation}
-    t = \frac{1}{2c}\ins{\frac{1}{\omega_o^2}-\frac{1}{\omega_i^2}}
+    t = \frac{1}{2c}\ins{\frac{1}{\omega_0^2}-\frac{1}{\omega_i^2}}
 \end{equation}
 and with a little rearranging we have
 \begin{equation}
@@ -104,7 +126,7 @@ if we equate this to the speed of light we find
 \begin{equation}
     R_s = \frac{2GM}{c^2}
 \end{equation}
-which means that if \(R,R_s\) even light cannot escape the star's surface. This is called a black hole. Some examples for Scwartzchild radii are
+which means that if \(R,R_s\) even light cannot escape the star's surface. This is called a black hole. Some examples for Schwarzschild radii are
 \begin{table}[!htb]
     \centering
     \begin{tabular}{l|c}

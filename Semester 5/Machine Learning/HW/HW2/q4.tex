@@ -1,4 +1,38 @@
 \clearpage
 \section{Visual Object Detection Using CNNs}
-The code for this question is provided in the file q4.ipynb. We chose to work with the Pascal VOC2012 dataset.
+The code for this question is provided in the file q4.ipynb. We chose to work with the Oxford Pets dataset. Originally we wanted to work with VOC2012 but found it far too challenging.
+\subsection{Data preprocessing}
+Each image is resized to \(224 \times 224\) pixels with the bounding boxes transformed accordingly, then some basic augmentation is applied (simple color jitter and horizontal flips).
 \subsection{CNN Architecture}
+To answer the question we made two CNNs. The first was defined with a set architecture which was trained and evaluated with a specific (guessed) hyperparameter set, then another CNN was defined which could be modified for the comparisons.
+\subsubsection{First CNN}
+The first CNN's architecture is based on a backbone which splits into a detection head and a classification head. The backbone is built of four blocks, each performing two 3x3 convolution layers, a batch norm, and 2x2 max pooling. The number of channels is gradually increased from 3 to 256. The classification head then consists of a linear layer, a ReLU, and another linear layer. The identification head consists of two sets of linear and relu layers, then a final linear layer to compress to 4 dimensions of prediction. \bigskip \\ After training for 10 epochs as a test to see the architecture makes any sense with a learning rate of \(1e-3\) and bias towards the bounding box loss (as we noticed that the bounding box is much slower to move) we saw it indeed improved on random guesses so we considered it good enough to move on to the hyperparameter analysis.
+\subsubsection{Flexible CNN}
+The second CNN is a version of the first architecture designed with changable hyperparameters. It maintains the same VGG-inspired dual-head design but can be changed significantly in terms of the inner architecture. The number of convolutional layers can be changed by increased or decreasing the number of predefined blocks used in the network, and the filter size of the convolutions can be changed too. The blocks composing the backbone are made of two convolution layers with a batch norm and relu after each convolution, \(2 \times 2\) and max pooling for downsampling. The classification and identification heads remain identical to the simple CNN and are applied after the backbone.
+\newpage
+\subsubsection{Results}
+The first test conducted was the learning rate comparison. In this test we defined the network with default parameters (resulting in an identical architecture to the first CNN) and ran the test for 50 epochs with learning rates ranging from \(\qty{1e-5}{}\) to \(\qty{5e-3}{}\).
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{learning_rates.png}
+\end{figure}
+It is quite easy to see that the best learning rate is \(\qty{5e-4}{}\). The accuracy achieved is \(0.4591\), with an IoU of \(0.475\) and mAP of \(0.1425\). These numbers are all of course not great, but given the custom architecture and short training we expected as much. From here all the tests were performed with a learning rate of \(\qty{5e-4}{}\) and for 50 epochs each. The next test performed was the test comparing different nuymbers of convolutional layers. In this test we varied the number of convolution blocks between 1 and 5.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{depth.png}
+\end{figure}
+As can be seen from the figure, the optimal depth for all metrics is achieved at 4 blocks, at which point the accuracy is \(0.3945\), IoU is \(0.4626\), and mAP is \(
+0.1031\). Interestingly, the increase from 4 blocks to 5 completely destroys performance making it almost as poor as a single convolutional block. This likely implies that at 5 blocks the network begins extracting noise from the images and classifying it. From here the following tests used 4 convolution blocks. The next test we performed was to vary the filter sizes of the convolutions. We varied the size to be either \(3\times 3\), \(5\times 5\), or \(7\times 7\). 
+\newpage
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{filtersize.png}
+\end{figure}
+As can be clearly seen, the \(5\times 5\) kernel size performs the best across all metrics. This indicates that the spatial features in the images in the dataset have a certain level of feature complexity which is captured best by this specific size. Too small and the convolutions become too localized, too large and fine details get drowned out. For the final comparison we therefore used \(5\times 5\) kernels. The final test we performed was to vary the batch size. We tested batch sizes of \(16,32,64, \) and \(128\).
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=1\textwidth]{batch_size.png}
+\end{figure}
+Unlike the previous tests, here we see a clear divergence in optimality between the different metrics. If optimizing for accuracy, the larger the batch size the more accurate the model becomes. This makes sense because larger batches means the model sees more elements at the same training round, meaning it is more likely to learn more general features rather than overfit in each batch. The IoU on the other hand drops the larger the batch is. We believe the reason for this is that the bounding boxes are distributed fairly uniformly within the image across the samples, and as the batch size increases, the variation in the locations becomes too great for the model to learn and instead it learns to either average it out or guess a large box that covers all the options better than failing for most of the boxes but fitting few very well. As for the mAP, the decrease in IoU is balanced out by the Accuracy, as the increase towards 128 is significant while the decrease from 64 to 128 in IoU is small (Which we believe is because it is approaching the asymptotical minimum for a random guess).
+\subsubsection{Discussion}
+As for the architecture used, we believe the double-head for detection and classification justified itself, with performance being unimpressive but effective and balanced between the two tasks. We introduced weighted loss, which let us counteract the tendency of the network to focus on optimizing the classification task at the expense of the identification task, and the VGG-inspired architecture did capture spatial features. \bigskip \\ As for the hyperparameters, we found clear optimal values for most hyperparameters with the exception of batch size, which inherently has opposite effects on the different metrics used for our goals. The architecture and training parameters could be significantly improved of course.

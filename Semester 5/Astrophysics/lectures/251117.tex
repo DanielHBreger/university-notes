@@ -27,11 +27,11 @@ where
 \end{align}
 giving us
 \begin{align}\label{rate_int}
-	r_{xi} &= n_i n_x\ins{\frac{1}{k_B T}}^{3/2}\sqrt{\frac{8}{\pi\mu}}\int e^{-\ins{E/K_B T+\sqrt{E_G/E}}} \dd E
+	r_{xi} &= n_i n_x\ins{\frac{1}{k_B T}}^{3/2}\sqrt{\frac{8}{\pi\mu}}\int e^{-\ins{E/k_B T+\sqrt{E_G/E}}} \dd E
 \end{align}
 to figure out which particles are most responsible for the fusion process, the high energy ones or the low energy ones, if we designate
 \begin{equation}
-	f(x) = e^{-\ins{E/K_B T+\sqrt{E_G/E}}} 
+	f(x) = e^{-\ins{E/k_B T+\sqrt{E_G/E}}} 
 \end{equation}
 then it looks like
 \begin{figure}[!htb]
@@ -43,7 +43,7 @@ then it looks like
 			\addplot[domain=0:2, color=black, samples=100]{1.5*e^(-5*((x-1)^2))};
 		\end{axis}
 	\end{tikzpicture}
-	\caption{The portion of mass of the universe by element in the universe's early times.}
+	\caption{Schematic of the Gamow peak (integrand contributions vs. energy).}
 \end{figure}
 and the peak is found at
 \begin{equation}
@@ -68,7 +68,7 @@ a power law approximation for this would look like
 			\addplot[domain=0:2, color=red]{x/2+0.5};
 		\end{axis}
 	\end{tikzpicture}
-	\caption{The portion of mass of the universe by element in the universe's early times.}
+	\caption{Power-law approximation on a log--log plot (schematic).}
 \end{wrapfigure}
 Why do we do this? Often in astrophysics we look at relationships between values of parameters which span very large ranges, often entire orders of magnitude.\ for this reason instead of plotting regular linear graphs, we use log-log graphs. If we take a taylor series at some point and look at the first order it's a linear function. A linear line on a log-log graph fits a function of the form \(T^\beta \). Back to the case of our Sun
 \begin{align}
@@ -104,7 +104,7 @@ which has units of energy produced per gram material per second, giving us
 \end{equation}
 and if we insert \(\beta=4\) which fits our Sun and
 \begin{align}
-	\epsilon_0 = \SI{0.1}{\erg\per\gram\per\second} && \rho_0 = \SI{}{\gram\per\centi\meter^3} && T_0 = \SI{e7}{\kelvin} && x_i=x_x=0.7
+	\epsilon_0 = \SI{0.1}{\erg\per\gram\per\second} && \rho_0 = \SI{1}{\gram\per\centi\meter^3} && T_0 = \SI{e7}{\kelvin} && x_i=x_x=0.7
 \end{align}
 then we find
 \begin{equation}
@@ -153,7 +153,7 @@ and the time it takes the photon to travel this distance is
 \end{equation}
 If want a more accurate description of the process, we can use the diffusion equation. We won't develop it from scratch but begin from Fick's Diffusion Law (A development from scratch can be found in Feynman's lectures volume 1 chapter 42):
 \begin{equation}
-	\vec J == -D \nabla n
+	\vec J = -D \nabla n
 \end{equation}
 where \(J\) is the flux of particles, \(D=\frac{\lambda v}{3}\) is the diffusion parameter. We'll use this formula for photons. The free traversal is given by \(\lambda = \frac{1}{\sigma n} = \frac{1}{\kappa\rho}\) where \(\sigma \) is the action cross section and \(\kappa = \frac{\sigma}{\overline{m}}\) is the opacity. So for photons we'll perform the substitutions
 \begin{align}

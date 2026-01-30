@@ -35,7 +35,7 @@ using a the `BAC-CAB' tensor rule
 \begin{equation}
     \delta\vec{F_B} = \frac{1}{4\pi}\left[-\frac{1}{2}\nabla\ins{B^2}+\ins{\vec{B}\cdot\nabla}\vec{B}\right]\delta V
 \end{equation}
-\subsubsection{The graitationa element \(\delta F_g\)}
+\subsubsection{The gravitational element \(\delta F_g\)}
 If we assume a potential \(\Phi(\vec{r},t)\) then
 \begin{align}
     \delta\vec{F_g} &= -\delta m \nabla\Phi \\
@@ -62,7 +62,7 @@ inserting all the elements back into \ref{alltheforces} we find
 Which is the Navier-Stokes equation for MHD. The left hand side can be expanded to partial derivatives.
 \subsection{Important Dimensionless Numbers}
 \subsubsection{Mach Number}
-The isothermic speed of sound is given by
+The isothermal speed of sound is given by
 \begin{equation}
     c_s^2 = \frac{P}{\rho}
 \end{equation}
@@ -70,7 +70,7 @@ and a number called the `mach number' as
 \begin{equation}
     M_s = \frac{v}{c_s}
 \end{equation}
-If we look at the ratio between the dynamic element of naviert stokes and the pressure element
+If we look at the ratio between the dynamic element of Navier--Stokes and the pressure element
 \begin{equation}
     \frac{\lvert\rho\ins{\vec{v}\cdot\nabla}\vec{v}\rvert}{\lvert\nabla p\rvert} \sim \frac{\rho v^2}{\rho c_s^2} = \ins{\frac{v}{c_s}}^2 = M_s^2
 \end{equation}
@@ -102,7 +102,7 @@ If we look at the ratio
 \begin{equation}
     \left\lvert\frac{\rho\ins{\vec{v}\cdot\nabla}\vec{v}}{\mu\nabla^2\vec{v}} \sim \frac{\rho v^2}{\mu\frac{1}{L}v} = \frac{\rho v^2 L}{\rho \nu v} = \frac{vL}{\nu}\right\rvert = R_e
 \end{equation}
-If \(R_e\) is small the viscosity is important. If \(R_e\) is small then viscosity is negligible.
+If \(R_e\) is small the viscosity is important. If \(R_e\) is large then viscosity is negligible.
 \subsubsection{Typical Values in ISM}
 \begin{align}
     M_S \sim 0.1 - 50 && M_A \sim 0.3 - 50 && R_e \sim 100 - \qty{e8}{}
