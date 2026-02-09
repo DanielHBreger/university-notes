@@ -1,2 +1,110 @@
 \clearpage
 \section{Spontaneous Flow Transition}
+Recalling the equations for the force and rate of change of the directional vector:
+\begin{align}
+    \del_\beta\sigma_{\alpha\beta}^{tot}=0 && \ins{\del_t+v_\beta\del_\beta}p_\alpha = \frac{h_\parallel}{\gamma_1}p_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}p_\alpha-\ins{\omega_{\alpha\beta}+\nu v_{\alpha\beta}}p_\beta
+\end{align}
+In our case \(\nu=0\) which cancels out the 2nd element inside the parentheses in the last element. The entire parentheses describes the rotation and alignment of the directional vector with the flow. Removing the element depending on \(\nu\) removes the alignment element so the directional vector now only spins as a result of the flow and doesn't seek to align with it. To begin the linear stability test we'll write the equations for a small perturbation in the angle of \(p\) for which \(\vec{p}=\ins{1,\theta}\). Inserting this into the equation for the vector gives us
+\begin{equation}
+    \ins{\del_t+v_\beta\del_\beta}p_\alpha = \frac{h_\parallel}{\gamma_1}p_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}p_\alpha-\omega_{\alpha\beta}p_\beta
+\end{equation}
+dropping elements in 2nd order for perturbation and the lagrange multiplier (since for small perturbation it's effectively unneeded) Inserting this into the equation for the vector gives us
+\begin{equation}
+    \del_t \theta = \frac{K}{\gamma_1}\del_{\beta\beta}\theta-\omega_{yx}
+\end{equation}
+where on the left hand side the time derivative of 1 is 0, and on the right hand side the angular velocity is an order of perturbation so it couples only with the constant in the vector in first order which also imposes the selection of indices. We can express the vorticity element as
+\begin{equation}
+    \omega_{yx} = \frac{\del_y v_x - \del_x v_y}{2} = \frac{1}{2}\del_{\alpha\alpha}\psi
+\end{equation}
+which gives us
+\begin{equation}
+    \del_t \theta = \frac{K}{\gamma_1}\del_{\beta\beta}\theta-\frac{1}{2}\del_{\alpha\alpha}\psi
+\end{equation}
+performing a fourier transform gives us
+\begin{equation}\label{astep}
+    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{1}{2}q^2\hat{\psi}
+\end{equation}
+Next we need to find a way to connect \(\psi\) to \(\theta\). Using the force equation
+\begin{equation}
+    \del_\beta\sigma_{\alpha\beta}^{tot}=0
+\end{equation}
+we can take the rotor of this and using the definition from the lecture we get
+\begin{equation}
+    \del_x\del_\beta\sigma_{\alpha\beta}^{tot}-\del_y\del_\beta\sigma_{\alpha\beta}^{tot} = \eta\nabla^2\omega_z
+\end{equation}
+for the viscous term, and if we fourier transform it it becomes
+\begin{equation}
+    -\eta q^2 \omega_z
+\end{equation}
+As for the active term \(\zeta\Delta\mu Q_{\alpha\beta}\) since we're in linear order only \(Q_{xy}=Q_{yx}\approx\theta\) matters so the active force is
+\begin{equation}
+    f_\alpha = -\zeta\Delta\mu\del_\beta\theta
+\end{equation}
+whose rotor is
+\begin{equation}
+    \del_x f_y - \del_y f_x = -\zeta\Delta\mu\ins{\del_x^2-\del_y^2}\theta
+\end{equation}
+and after a fourier transform it becomes
+\begin{equation}
+    \zeta\Delta\mu\ins{q_x^2-q_y^2}\hat{\theta}
+\end{equation}
+we can rewrite the qs using
+\begin{equation}
+    q_x^2-q_y^2 = q^2\ins{\cos^2\phi-\sin^2\phi} = q^2\cos\ins{2\phi}
+\end{equation}
+so the fourier transformed element becomes
+\begin{equation}
+    \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta}
+\end{equation}
+lastly the rotation and alignment terms we have
+\begin{equation}
+    \frac{1}{2}\ins{p_\alpha h_\beta - h_\alpha p_\beta}
+\end{equation}
+recalling a definition from lecture 6
+\begin{equation}
+    h_\alpha = h_\parallel p_\alpha + K\del_{\beta\beta}p_\alpha
+\end{equation}
+and using the small perturbation we find
+\begin{equation}
+    h_y \approx K\del_{\beta\beta}\theta
+\end{equation}
+and \(h_x\) is eliminated by the lagrange multiplier elements. Doing the same rotor trick we get an element proportional to the 4th derivative of \(\theta\) which in fourier space is
+\begin{equation}
+    -\frac{K}{2}q^4\hat{\theta}
+\end{equation}
+putting the pieces together we find
+\begin{equation}
+    -\eta q^2\omega_z + \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^4\hat{\theta} = 0
+\end{equation}
+inserting \(\omega_z= q^2\hat{\psi}\)
+\begin{equation}
+    -\eta q^4\hat{\psi} + \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^4\hat{\theta} = 0
+\end{equation}
+dividing by \(q^2\) (assuming the wavevector isn't zero)
+\begin{equation}
+    -\eta q^2\hat{\psi} + \zeta\Delta\mu \cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^2\hat{\theta} = 0
+\end{equation}
+rearranging
+\begin{equation}
+    \hat{\psi} = \frac{\zeta\Delta\mu}{\eta q^2} \cos\ins{2\phi}\hat{\theta} - \frac{K}{2\eta}\hat{\theta}
+\end{equation}
+inserting this into equation~\ref{astep}
+\begin{equation}
+    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{1}{2}q^2\ins{\frac{\zeta\Delta\mu}{\eta q^2} \cos\ins{2\phi}\hat{\theta} - \frac{K}{2\eta}\hat{\theta}}
+\end{equation}
+simplifying to
+\begin{equation}
+    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi}\hat{\theta} - \frac{Kq^2}{4\eta}\hat{\theta}
+\end{equation}
+which gives us the dispersion relation
+\begin{equation}
+    s = \frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi} - Kq^2\ins{\frac{1}{\gamma_1}+\frac{1}{4\eta}}
+\end{equation}
+which to be unstable must be positive for a small \(q\), so we'll take the limit \(q\rightarrow0\) which gives us the requirement
+\begin{equation}
+    \frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi} > 0
+\end{equation}
+so the critical wavevector is
+\begin{equation}
+    q_c^2 = \frac{\frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi}}{K\ins{\frac{1}{\gamma_1}+\frac{1}{4\eta}}}
+\end{equation}
