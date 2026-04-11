@@ -1,0 +1,41 @@
+\documentclass[a4paper]{report}
+
+\input{setup/preamble}
+\input{setup/macros}
+
+\course{Nonlinear Dynamics and Chaos}
+\me[danielbreger@campus.technion.ac.il]{}
+\professor[frishman@technion.ac.il]{Prof. Anna Frishman}
+\institute{Technion}
+\class{test}
+\session{test}
+\date{Based on lectures by \profloc{} in 2026
+\\ Notes created by Daniel Haim Breger
+\\~\\ Updated \today}
+
+\begin{document}
+
+\renewcommand\thepage{Title}
+\maketitle
+\renewcommand\thepage{Preface}
+
+\input{preface.tex}
+\pagenumbering{gobble}
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+%\setcounter{tocdepth}{0}
+\tableofcontents
+\newpage
+\pagestyle{head}
+\pagenumbering{arabic}
+
+\input{lectures/2026-04-12.tex}
+
+%\input{endpage.tex}
+
+% \vskip7ex
+\centering
+* * *
+%
+\end{document}%
