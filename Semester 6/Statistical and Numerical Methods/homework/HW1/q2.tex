@@ -1,0 +1,28 @@
+\clearpage
+\section{American Exam}
+\begin{colbox}
+Assume Danny solves an american exam where each question has 5 answers and only one is correct. If Danny knows the correct answer he will choose it, otherwise he guesses at random between the five options. Danny knows the answer for 7 out of 10 questions.
+\begin{enumerate}
+	\item For one question in the exam, what is the probability Danny will answer it right?
+	\item If Danny answered right, what's the probability he guessed it?
+	\item For an exam with 30 questions, what's the probability Danny will get 100?
+\end{enumerate}
+\end{colbox}
+
+\subsection{Single Question}
+\begin{align}
+	P(Correct) &= P(Correct | Knew)P(Knew) + P(Correct | Guess)P(Guess) \\
+	&= 1 \cdot \frac{7}{10} + \frac{1}{5}\cdot\frac{3}{10} = \frac{7}{10} + \frac{3}{15} = \frac{9}{10}
+\end{align}
+
+\subsection{Chance of Guess}
+
+\begin{align}
+	P(guess | correct) = \frac{P(correct | guess)P(guess)}{P(correct)} = \frac{0.2 \cdot 0.3}{0.9} = \frac{1}{15}
+\end{align}
+
+\subsection{Chance of 100}
+
+\begin{align}
+	P(100) = {P(correct)}^{30} = {0.9}^{30} \approx 0.04
+\end{align}

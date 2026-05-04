@@ -1,0 +1,40 @@
+\clearpage
+\section{Poker Game}
+\begin{colbox}
+	A pack of cards has 52 cards, 13 of each kind. At the start of the game the pack is shuffled and each players gets 5 cards. We want to know the probability of
+	\begin{enumerate}
+		\item Have a 2 of clubs in your hand
+		\item Have a single pair of some number
+		\item Have a full house
+		\item Have a flush
+	\end{enumerate}
+\end{colbox}
+
+I'm assuming there's only one player because otherwise the probabilities depend on the number of players
+
+\subsection{2 of clubs}
+There is only one 2 of clubs and you draw 5 cards so you have 5 opportunities to get the card. 
+\begin{equation}
+	P_{tot} = \binom{5}{1} \cdot P_{1} = 5 \cdot \frac{1}{52} \approx 9.62\%
+\end{equation}
+
+\subsection{Pair}
+The chance to have a pair of numbers is the number of ways we can draw a number, multiplied by the number of ways we could draw the same number, multiplied by the number of ways the rest of the cards could be drawn to be something else, multiplied by the number of ways we could draw them so it's only one of each, all divided by the total number of ways to draw cards
+
+\begin{equation}
+	P_{pair} = \frac{\binom{10}{1}\cdot\binom{4}{2}\cdot\binom{12}{3}\cdot\binom{4}{1}^3}{\binom{52}{5}} \approx 32.5\%
+\end{equation}
+
+\subsection{Full House}
+A full house is 3 cards of one rank and 2 of another. 
+
+\begin{equation}
+	P_{fh} = \frac{\binom{13}{1}\binom{4}{3}\binom{12}{1}\binom{4}{2}}{\binom{52}{5}} \approx 0.17\%
+\end{equation}
+
+\subsection{Flush}
+A flush is 5 cards of the same color. I'm assuming royal flushes and straight flushes are also considered a flush.
+
+\begin{equation}
+	P_{f} = \frac{\binom{4}{1}\binom{13}{5}}{\binom{52}{5}} \approx 0.19\%
+\end{equation}
