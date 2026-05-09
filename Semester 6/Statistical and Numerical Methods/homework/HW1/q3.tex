@@ -3,4 +3,20 @@
 \begin{colbox}
 \(k+1\) coins are arranged in a row so that the \(i\)th coin has a probability of \(\frac{i}{k}\) to fall on heads. A coin is selected from the row at random and is flipped \(n\) times. If all \(n\) flips were heads, what's the chance the \(n+1\)th flip will be heads?
 \end{colbox}
-
+The probability of getting \(n+1\) heads given that we have \(n\) heads is given by
+\begin{align}
+    P(H_{n+1}|H_{n}) &= \frac{P(H_{n+1})}{P(H_{n})}
+\end{align}
+since each flip is independent of the others. But
+\begin{align}
+    P(H_{n}) = \frac{1}{k+1}\sum_{i=0}^{k+1}\ins{\frac{i}{k}}^n && P(H_{n+1}) = \frac{1}{k+1}\sum_{i=0}^{k+1}\ins{\frac{i}{k}}^{n+1}
+\end{align}
+so
+\begin{align}
+    P(H_{n+1}|H_{n}) &= \frac{\sum_{i=0}^{k+1}\ins{\frac{i}{k}}^{n+1}}{\sum_{i=0}^{k+1}\ins{\frac{i}{k}}^n}
+\end{align}
+using the hint
+\begin{align}
+    P(H_{n+1}|H_{n}) &= \frac{\frac{k}{n+2}}{\frac{k}{n+1}} \\
+    &= \frac{n+1}{n+2}
+\end{align}

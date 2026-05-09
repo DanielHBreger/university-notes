@@ -1,0 +1,50 @@
+\clearpage
+\section{Transformation of 2D minkowski space}
+\begin{colbox}
+	The conserved length in 2D Minkowski space is
+	\begin{equation}
+		\dd l^2 = g\indices{^{ij}}\dd x_i \dd x_j
+	\end{equation}
+	for
+	\begin{equation}
+		g\indices{^{ij}} = \pmat{1&0\\0&-1}
+	\end{equation}
+	we'll look at the coordinate transformations
+	\begin{align}
+		x' = ax+by && y' = cx+dy
+	\end{align}
+	find
+	\begin{equation}
+		\Lambda = \pmat{a&b\\c&d}
+	\end{equation}
+	for which the matrix doesn't change, i.e 
+	\begin{equation}
+		g = \Lambda^T g\Lambda
+	\end{equation}
+	notice the transformation is an isometry of the metric.
+\end{colbox}
+Performing the matrix multiplication
+\begin{align}
+	\Lambda^T g\Lambda &= \pmat{a&c\\b&d}\pmat{1&0\\0&-1}\pmat{a&b\\c&d}\\
+	&= \pmat{a&c\\b&d}\pmat{a&b\\-c&-d}\\
+	&= \pmat{a^2-c^2&ab-cd\\ab-cd&b^2-d^2}
+\end{align}
+we must have
+\begin{align}
+	ab-cd = 0 && a^2-c^2 = 1 && b^2-d^2=-1
+\end{align}
+if we use the hint to define
+\begin{align}
+	a = \cosh\varphi && c=\sinh\varphi && d=\cosh\varphi && b=\sinh\varphi
+\end{align}
+then
+\begin{align}
+	a^2-c^2 &= \cosh^2\varphi-\sinh^2\varphi=1 \\
+	b^2-d^2 &= \sinh^2\varphi-\cosh^2\varphi=-1 \\
+	ab-cd &= \cosh\varphi\sinh\varphi-\sinh\varphi\cosh\varphi=0 \\
+	ac-bd &= \cdots = 0
+\end{align}
+giving us what's needed, so
+\begin{equation}
+	\Lambda = \pmat{\cosh\varphi&\sinh\varphi\\ \sinh\varphi&\cosh\varphi}
+\end{equation}

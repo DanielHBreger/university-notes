@@ -1,0 +1,38 @@
+\clearpage
+\section{Transformation of co-vectors and contra-vectors}
+\begin{colbox}
+	\begin{enumerate}
+		\item Remember that the length element is defined by \(\dd l ^2 = g\indices{_{ij}}\dd x^i \dd x^j\). Using the chain rule, find the transformation rule for \(g\indices{^{ij}}\).
+		\item A contra-variant vector \(v^\alpha\) is given. Using the transformation rule for contravariant vectors and the metric find the transformation rule for a covector given by \begin{equation}
+			v_\alpha = g\indices{_{\alpha\beta}}v^\beta
+		\end{equation}
+		\item show that if \(w_\alpha = g\indices{_{\alpha\beta}}u^\beta\) and \(v^\alpha = g\indices{^\alpha^\beta}w_\beta\) then \(u^\alpha = v^\alpha\)
+	\end{enumerate}
+\end{colbox}
+\subsection{Metric transformation}
+Directly
+\begin{align}
+	\dd l^2 &= g\indices{_{ij}}\dd x^i \dd x^j \\
+	&= g\indices{_{ij}}\frac{\dd x^i}{\dd \ins{x'}^m}\dd \ins{x'}^m \frac{\dd x^j}{\dd \ins{x'}^n}\dd \ins{x'}^n \\
+	&= \ins{\Lambda^{-1}}\indices{^i_m}g\indices{_i_j}\ins{\Lambda^{-1}}\indices{^j_n}\dd \ins{x'}^m \dd \ins{x'}^n
+\end{align}
+Therefore
+\begin{equation}
+	g\indices{_i_j} \rightarrow \ins{\Lambda^{-1}}\indices{^i_m}g\indices{_i_j}\ins{\Lambda^{-1}}\indices{^j_n}
+\end{equation}
+\subsection{contra to co vector}
+\begin{align}
+	v_\alpha \rightarrow v'_\gamma &= {g'}\indices{_\gamma_\delta}v'^\delta\\
+	&= \frac{\dd x^\alpha}{\dd x'^\gamma}\frac{\dd x^\beta}{\dd x'^\delta}g\indices{_\alpha_\beta}\frac{\dd x'^\delta}{\dd x'^\zeta}v^\zeta\\
+	&= \frac{\dd x^\alpha}{\dd x'^\gamma}g\indices{_\alpha_\beta}\delta\indices{^\beta_\zeta}v^\zeta \\
+	&= \diff{x^\alpha}{x'^\gamma}g\indices{_{\alpha\beta}}v^\beta\\
+	&= \diff{x^\alpha}{x'^\gamma} v_\alpha\\
+	&= \ins{\Lambda^{-1}}\indices{^\alpha_\gamma}v_\alpha
+\end{align}
+\subsection{show equality}
+\begin{align}
+	v^\alpha &= g\indices{^{\alpha\beta}}w_\beta \\
+	&= g\indices{^{\alpha\beta}}g\indices{_{\beta\gamma}}u^\gamma\\
+	&= g\indices{^{\alpha\beta}}u_\beta\\
+	&= u^\alpha
+\end{align}
