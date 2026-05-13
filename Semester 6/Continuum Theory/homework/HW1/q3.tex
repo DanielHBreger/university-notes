@@ -1,0 +1,41 @@
+\clearpage
+\section{Fluid with Self-Gravity}
+\begin{colbox}
+	Consider a fluid with a constant density that is in equilibrium with its own gravitational force \(\rho\vb{f}=-\rho\grad{\phi}\), where the potential \(\phi\) satisfies Poisson's equation \(\laplacian{\phi}=4\pi G \rho\) and \(G\) is Newton's gravitational constant. Assume spherical symmetry around the origin and find the pressure \(p=p(r)\) up to an additive constant.
+\end{colbox}
+Since the liquid is in hydrostatic equilibrium and \(\rho\vb{f}\) is a gradient of a scalar potential, the following is true 
+\begin{equation}\label{hydrostaticeq}
+	\rho\vb{f} = \grad{p}
+\end{equation}
+we can then insert this into the equation for the force
+\begin{equation}
+	\grad{\phi} = -\frac{\grad{p}}{\rho}
+\end{equation}
+inserting this into Poisson's equation
+\begin{equation}
+	\laplacian{p} = -4\pi G \rho^2
+\end{equation}
+To continue in spherical we use the laplacian in spherical coordinates
+\begin{equation}
+	\laplacian{f} = \frac{1}{r}\pdv[2]{}{r}\ins{rf}
+\end{equation}
+where the terms of the laplacian which are derivatives of non-r coordinates are ignored because of the spherical symmetry. Therefore the equation is
+\begin{equation}
+	\frac{1}{r^2}\pdv{}{r}\ins{r^2\pdv{p}{r}} = -4\pi G \rho^2
+\end{equation}
+Since the right hand side doesn't depend on \(r\) w can integrate once and get 
+\begin{equation}
+	r^2\pdv{p}{r} = -\frac{4}{3}\pi G \rho^2 r^3 + A
+\end{equation}
+therefore our condidate solution is
+\begin{equation}
+	p = -\frac{2}{3}\pi G \rho^2 r^2 - \frac{A}{r} + B
+\end{equation}
+and since we must satisfy equation \ref{hydrostaticeq}
+\begin{equation}
+	\grad{p} = \frac{A}{r^2}-\frac{4}{3}\pi G \rho^2 r  = \rho\vb{f}
+\end{equation}
+Since the force must remain finite even at the origin, \(A=0\). Therefore
+\begin{equation}
+	p = B -\frac{2}{3}\pi G \rho^2 r^2
+\end{equation}

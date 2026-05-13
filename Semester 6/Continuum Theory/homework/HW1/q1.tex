@@ -1,0 +1,29 @@
+\clearpage
+\section{Divergence of a Tensor in Cylindrical Coordinates}
+\begin{colbox}
+	In the tutorial we saw the definition of the divergence of a tensor:
+	\begin{equation}
+		\div{\tau} = \vb{e}_i\cdot\pdv{x_i}\ins{\tau_{kl}\vb{e}_k\vb{e}_l}
+	\end{equation}
+	prove that in cylindrical Coordinates
+	\begin{equation}
+		\div\tau = \pmqty{\pdv{\tau_{rr}}{r}+\frac{1}{r}\pdv{\tau_{\theta r}}{\theta}+\pdv{\tau_{zr}}{z}+\frac{\tau_{rr}-\tau_{\theta\theta}}{r}\\
+			\pdv{\tau_{r\theta}}{r}+\frac{1}{r}\pdv{\tau_{\theta\theta}}{\theta}+\pdv{\tau_{z\theta}}{z}+\frac{\tau_{r\theta}+\tau_{\theta r}}{r}\\ \pdv{\tau_{rz}}{r}+\frac{1}{r}\pdv{\tau_{\theta z}}{\theta}+\pdv{\tau_{zz}}{z}+\frac{\tau_{rz}}{r}}
+	\end{equation}
+\end{colbox}
+Starting from the definition and developing for cylindrical coordinates explicitly
+\begin{align}
+	\div{\tau} &= \vb{e}_i\cdot\pdv{x_i}\ins{\tau_{kl}\vb{e}_k\vb{e}_l}\\
+	&= \ins{\vu{r}\cdot\pdv{r}+\vu{\theta}\cdot\frac{1}{r}\pdv{\theta}+\vu{z}\cdot\pdv{z}}\ins{\tau_{ij}\vb{e}_i\vb{e}_j}\\
+	&= \ins{\vu{r}\cdot\pdv{r}+\vu{\theta}\cdot\frac{1}{r}\pdv{\theta}+\vu{z}\cdot\pdv{z}}\ins{\tau_{ij}} \vb{e}_i \vb{e}_j \\	
+	&+ \ins{\vu{r}\cdot\pdv{r}+\vu{\theta}\cdot\frac{1}{r}\pdv{\theta}+\vu{z}\cdot\pdv{z}}\ins{\vb{e}_i}\tau_{ij}\vb{e}_j \\ 
+	&+ \ins{\vu{r}\cdot\pdv{r}+\vu{\theta}\cdot\frac{1}{r}\pdv{\theta}+\vu{z}\cdot\pdv{z}}\ins{\vb{e}_j}\tau_{ij}\vb{e}_i \\
+	&= \ins{\pdv{\tau_{ri}}{r}+\frac{1}{r}\pdv{\tau_{\theta i}}{\theta}+\pdv{\tau_{zi}}{z}} \vb{e}_i\\
+	&+ \ins{\frac{\tau_{ri}}{r}}\vb{e}_i \\
+	&+ \ins{\frac{\tau_{\theta r}}{r}\vu{\theta}-\frac{\tau_{\theta\theta}}{r}\vu{r}}
+\end{align}
+Equation 8 follows from 5 because the operator acts on the components of the tensor itself and the unit vectors then give deltas giving the resulting form, then the remaining index is renamed to i. Equation 9 follow from 6 because in the basis vectors of cylindrical coordinates, the vectors only depend on theta so derivatives with respect to other parameters are zero. Equation 10 follows from 7 for the same reason as 9. We can now rearrange this and find
+\begin{equation}
+	\div\tau = \pmqty{\pdv{\tau_{rr}}{r}+\frac{1}{r}\pdv{\tau_{\theta r}}{\theta}+\pdv{\tau_{zr}}{z}+\frac{\tau_{rr}-\tau_{\theta\theta}}{r}\\
+			\pdv{\tau_{r\theta}}{r}+\frac{1}{r}\pdv{\tau_{\theta\theta}}{\theta}+\pdv{\tau_{z\theta}}{z}+\frac{\tau_{r\theta}+\tau_{\theta r}}{r}\\ \pdv{\tau_{rz}}{r}+\frac{1}{r}\pdv{\tau_{\theta z}}{\theta}+\pdv{\tau_{zz}}{z}+\frac{\tau_{rz}}{r}}
+\end{equation}
