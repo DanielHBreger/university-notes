@@ -1,0 +1,54 @@
+\clearpage
+\section{Random Coin}
+\begin{colbox}
+\begin{enumerate}
+    \item Assume two independent random variables \(x_1, x_2\) with variances \(\sigma_1^2, \sigma_2^2\). Calculate \begin{equation}
+        cov\ins{x_1+x_2,x_1-x_2}
+    \end{equation}
+    \item Assume a poisson random variable with \(p < \lambda < 1\). Calcualte \(E[x!]\).
+    \item Assume \(x,y\) are independent random variables with the same probability of receiving the values \(1,2,\ldots,m\) with the same probability. Show that
+    \begin{equation}
+        E[\lvert x-y\rvert]=\frac{\ins{m-1}\cdot\ins{m+1}}{3m}
+    \end{equation}
+\end{enumerate}
+\end{colbox}
+\subsection{Covariance}
+\begin{align}
+    cov\ins{x_1+x_2,x_1-x_2} &= cov\ins{x_1,x_1}-cov\ins{x_1,x_2}+cov\ins{x_2,x_1}-cov\ins{x_2,x_2} \\
+    &= \sigma_1^2-\sigma_2^2-0+0\\
+    &= \sigma_1^2-\sigma_2^2
+\end{align}
+\subsection{Expectation of Factorial}
+The expected value is defined by
+\begin{equation}
+    E[x!] = \sum_{k=0}^{\infty}k!P(x=k)
+\end{equation}
+and since x is poisson
+\begin{equation}
+    P(x=k)=\frac{\lambda^k e^{-\lambda}}{k!}
+\end{equation}
+then
+\begin{equation}
+    E[x!] = \sum_{k=0}^{\infty}k! \frac{\lambda^k e^{-\lambda}}{k!} = \sum_{k=0}^{\infty}\lambda^k e^{-\lambda} = \frac{e^{-\lambda}}{1-\lambda}
+\end{equation}
+\subsection{Expected Value of Difference}
+By definition
+\begin{equation}
+    E[|x-y|] = \frac{1}{m^2}\sum_{x=1}^{m}\sum_{y=1}^{m}|x-y|
+\end{equation}
+to advance we need to look at this from the perspective of summing over the different values \(|x-y|\) can give which we'll call \(d\), so its one sum. We notice that \(d=0\) gives no contribution and the maximum difference is \(m-1\). We also notice that for each value of \(d\), there are \(2\ins{m-d}\) pairs which give that value of \(d\) (\(m\) is intuitive since the higher the number the more pairs there are, \(-d\) is because as the gap between the numbers grows, it "takes up space", and the 2 is because the pairs are ordered). So,
+\begin{align}
+    E[|x-y|] &= \frac{1}{m^2}\sum_{d=1}^{m-1}2d\ins{m-d}\\
+    &= \frac{2}{m^2}\sum_{d=1}^{m-1}\ins{md-d^2}\\
+    &= \frac{2}{m^2}\ins{m\sum_{d=1}^{m-1}d-\sum_{d=1}^{m-1}d^2}
+\end{align}
+using the hint
+\begin{align}
+    E[|x-y|] &= \frac{2}{m^2}\ins{\frac{m^2\ins{m+1}}{2}-\frac{m\ins{m+1}\ins{2m+1}}{6}}\\
+    &= m+1-\frac{\ins{m+1}\ins{2m+1}}{3m}\\
+    &= m+1-\frac{2m^2+3m+1}{3m}\\
+    &= m-\frac{2m^2+1}{3m}\\
+    &= \frac{3m^2-2m^2-1}{3m}\\
+    &= \frac{m^2-1}{3m}\\
+    &= \frac{\ins{m-1}\ins{m+1}}{3m}
+\end{align}
