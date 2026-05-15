@@ -8,3 +8,70 @@
 	\end{enumerate}
 \end{colbox}
 \subsection{Density Profile}
+Since we assume the atmosphere is an ideal gas,
+\begin{equation}
+	pV = N k_B T \implies p = \frac{N}{V}k_B T
+\end{equation}
+but
+\begin{equation}
+	\frac{N}{V} = n = \frac{\rho}{m}
+\end{equation}
+therefore
+\begin{equation}
+	p = \frac{\rho k_B T}{m}
+\end{equation}
+inserting into the hydrostatic equation
+\begin{equation}
+	\grad{p} = \rho\vb{f}
+\end{equation}
+we get
+\begin{equation}
+	\frac{k_B T}{m}\dv{\rho}{z} = -\rho g
+\end{equation}
+which is an ODE with the solution
+\begin{equation}
+	\rho(z) = \rho(0) e^{-\frac{z}{l_a}}
+\end{equation}
+\subsection{Point Balloon}
+We require that
+\begin{equation}
+	\frac{R}{\rho(z)}\pdv{\rho}{z}\ll 1 \implies \dv{\rho}{z} \ll \frac{\rho(z)}{R}
+\end{equation}
+if we take the derivative of the density profile we found
+\begin{equation}
+	\dv{\rho}{z} = -\frac{\rho(0)}{l_a}e^{-\frac{z}{l_a}}
+\end{equation}
+and inserting the profile we find 
+\begin{equation}
+	-\frac{\rho(0)}{l_a}e^{-\frac{z}{l_a}} \ll \frac{\rho(0) e^{-\frac{z}{l_a}}}{R}
+\end{equation}
+simplifying
+\begin{equation}
+	-\frac{1}{l_a} \ll \frac{1}{R}
+\end{equation}
+therefore
+\begin{equation}
+	l_a \gg R
+\end{equation}
+in our question \(R\) is 3 orders of magnitude smaller than \(l_a\) therefore the condition is satisfied.
+\subsection{Constant Height Condition}
+The balloon is affected by the following forces: its own gravitational pull, the basket's gravitational pull, and the bouyancy force from the balloon. The balloon will reach the height at which it is at equilibrium:
+\begin{equation}
+	\rho_{hot} V g = \rho(z) V g + Mg
+\end{equation}
+rearranging
+\begin{equation}
+	\rho(z) = \frac{\rho_{hot} V g + Mg}{Vg} = \frac{\rho_{hot}V + M}{V}
+\end{equation}
+Inserting the expression for the density
+\begin{equation}
+	 e^{-\frac{z}{l_a}} = \frac{\rho_{hot}V + M}{\rho(0) V}
+\end{equation}
+therefore
+\begin{equation}
+	z = -l_a \ln{\frac{\rho_{hot}V + M}{\rho(0) V}}
+\end{equation}
+inserting the numbers we find
+\begin{equation}
+	z = \cdots = 1.595 \km
+\end{equation}
