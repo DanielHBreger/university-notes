@@ -1,0 +1,36 @@
+\clearpage
+\section{Fixed points and stability}
+\begin{colbox}
+	\begin{enumerate}
+		\item Consider the system \(\dot{x}=\tan x\) restricted to the segment \(x \in \ins{-\pi/2,\pi/2}\). Find and classify the fixed points in this segment.
+		\item Consider the system \(\dot{x} = \ins{1-e^{-x^2}}\ins{1-x}\) \begin{enumerate}
+			\item Find and classify the fixed points of the system using linear stability analysis. If linear stability analysis fails determine stability using a graphical method instead.
+			\item For an iitial condition very close to the stable fixed point, find how \(x(t)\) behaves at long times.
+		\end{enumerate}
+		\item Consider the system \(\dot{x}=-x^3\)\begin{enumerate}
+			\item Find and classify the fixed points of the system
+			\item Solve this equation exactly for a general initial condition and describe how \(x(t)\) behaves at long times. Compare with the long-time behavior you found. What is qualitatively differnent and why?
+		\end{enumerate}
+	\end{enumerate}
+\end{colbox}
+\subsection{tanx}
+The fixed points can be found by solving
+\begin{equation}
+	\tan x = 0 \implies x=k\pi \quad k\in\mathbb{Z}
+\end{equation}
+therefore the only fixed point in the segment is (0,0), and it is unstable.
+\subsection{Gaussian and linear}
+\subsubsection{Fixed Points}
+To begin the process we find points where we suspect there may be fixed points. From the form of the equation we can immediately tell that \(x=0,1\) are fixed points which we will investigate. To perform linear stability analysis we expand \(f\) in a taylor series around those points. First we derive
+\begin{wrapfigure}{r}{0.3\textwidth}
+	\begin{center}
+		\includegraphics[width=0.3\textwidth]{desmos-graph.png}
+	\end{center}
+\end{wrapfigure}
+\begin{align}
+	f'(x) = \ins{2xe^{-x^2}}\ins{1-x}-1+e^{-x^2} = \begin{cases}
+		0 & x=0\\
+		\frac{1}{e}-1 & x=1
+	\end{cases}
+\end{align}
+Therefore the point \(x=1\) is stable, and the point \(x=0\) requires a graphical analysis. Looking at the graph of the function we can see that at the point \(x=0\) going to the negative gives positive values for \(\dot{x}\), which stabilizes the point, but going to positive values also gives positive \(\dot{x}\), which pushes us away from the point, so \(x=0\) is not stable.
