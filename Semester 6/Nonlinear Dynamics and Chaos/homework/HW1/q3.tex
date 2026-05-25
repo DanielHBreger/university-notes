@@ -27,13 +27,13 @@ Simplifying the right hand side
 \end{equation}
 threfore the critical points are at 
 \begin{align}
-	x=0 && x = \sqrt{r-1}
+	x=0 && x = \pm\sqrt{r-1}
 \end{align}
-Therefore there is always a critical point at \(x=0\) but also another one which moves with \(r\) and appears when \(r\ge1\). Looking at the derivative of the right hand side at \(x=0\)
+Therefore there is always a critical point at \(x=0\) but also two more which move with \(r\) and appears when \(r\ge1\). Looking at the derivative of the right hand side at \(x=0\)
 \begin{equation}
 	f'(0) = -1 + \left.\frac{r\ins{1+x^2}-2rx^2}{\ins{1+x^2}^2}\right|_{x=0}=r-1
 \end{equation}
-Therefore the critical point at \(x=0\) changes its stability depending on the value of r, therefore this is a transcritical bifurcation. As for the other point
+Therefore this is a supercritical pitchfork. As for the other point
 \begin{equation}
 	f'(\sqrt{r-1}) = -1 + \left.\frac{r\ins{1+x^2}-2rx^2}{\ins{1+x^2}^2}\right|_{x=\sqrt{r-1}}= \frac{2r\ins{r-1}}{r^2} = 2\ins{1-\frac{1}{r}}
 \end{equation}
@@ -65,7 +65,7 @@ The root of the right hand side is, expectedly, \(x=\cosh^{-1}(r)\). The derivat
 \begin{equation}
 	f'(\cosh^{-1}(r)) = -\sinh(\cosh^{-1}(r)) \le 0 \quad \text{(thanks desmos)}
 \end{equation}
-So the critical point is always stable. This is also a transcritical bifurcation.
+So the critical point is always stable. This is a saddle node bifurcation.
 \begin{figure}[!htb]
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{bifurcation4.png}
