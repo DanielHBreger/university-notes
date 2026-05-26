@@ -1,0 +1,98 @@
+\clearpage
+\section{Yukawa Potential}
+\begin{colbox}
+	The following potential field is given
+  \begin{equation}
+    \phi(r) = \frac{1}{r}e^{-Kr}; \quad K>0
+  \end{equation}
+  \begin{enumerate}
+    \item Calcualte the gradient for \(r\neq0\)
+    \item Calcualte the laplacian for \(r\neq0\)
+    \item Use gauss' law to find an expression for the laplacian while includes the origin
+    \item Show that \begin{equation}
+      \iiint\dd^3x\laplacian{\phi}=0
+    \end{equation}
+  \end{enumerate}
+\end{colbox}
+\subsection{gradient}
+The gradient in spherical coordinates is defined as
+\begin{align*}
+    \Vec{\nabla}\phi &= \partial_r\phi\hat{r}+\frac{1}{r}\partial_\theta\phi\hat{\theta}+\frac{1}{r\sin\theta}\partial_\varphi\phi\hat{\varphi}
+\end{align*}
+therefore
+\begin{align*}
+    \Vec{\nabla}\phi &= \left(-\frac{1}{r^2}e^{-Kr}-\frac{K}{r}e^{-Kr}\right)\hat{r}\\
+    &= -\left(\frac{1}{r^2}+\frac{K}{r}\right)e^{-Kr}\hat{r}
+\end{align*}
+\subsection{laplacian}
+The laplacian in spherical coordinates is defined as
+\begin{equation*}
+    \nabla^2\phi = \frac{1}{r^2}\partial_r(r^2\partial_r\phi)+\frac{1}{r^2\sin\theta}\partial_\theta(\sin\theta\partial_\theta\phi)+\frac{1}{r^2\sin^2\theta}\partial^2_\varphi\phi
+\end{equation*}
+therefore
+\begin{align*}
+    \nabla^2\phi &= \frac{1}{r^2}\partial_r(-\left(1+Kr\right)e^{-Kr})\\
+    &= \frac{1}{r^2}(-Ke^{-Kr}+\left(1+Kr\right)Ke^{-Kr})\\
+    &= \frac{1}{r^2}(K^2re^{-Kr})\\
+    &= \frac{K^2}{r}e^{-Kr}
+\end{align*}
+\subsection{Gauss' law}
+Gauss' law for this subsection is
+\begin{equation*}
+    \iiint_V\nabla^2\phi d\boldsymbol{x} = \int_{\partial V}\boldsymbol{\nabla}\phi \cdot d\boldsymbol{a}
+\end{equation*}
+therefore, using the result from subsection 2
+\begin{align*}
+    \iiint_V\nabla^2\phi d\boldsymbol{x} &= \int_{\partial V}-\left(\frac{1}{r^2}+\frac{K}{r}\right)e^{-Kr}\hat{r} \cdot d\boldsymbol{a}
+\end{align*}
+We know that \(d\boldsymbol{a}\) points in the radial direction therefore \(\hat{r}\cdot d\boldsymbol{a} = da\) and thus
+\begin{align*}
+    \iiint_V\nabla^2\phi d\boldsymbol{x} &= \int_{\partial V}-\left(\frac{1}{r^2}+\frac{K}{r}\right)e^{-Kr} da\\
+    &= -\left(\frac{1}{R^2}+\frac{K}{R}\right)e^{-KR} \int_{\partial V}da\\
+    &= -\left(\frac{1}{R^2}+\frac{K}{R}\right)e^{-KR} \cdot 4\pi R^2\\
+    &= -4\pi \left(1+KR\right)e^{-KR}
+\end{align*}
+Comparing this to a direct calculation
+\begin{align*}
+    \iiint_V\nabla^2\phi d\boldsymbol{x} &= \iiint_V\frac{K^2}{r}e^{-Kr} d\boldsymbol{x}\\
+    &= \int_0^{2\pi}d\varphi\int_0^{\pi}\sin\theta d\theta\int_0^{R}r^2\frac{K^2}{r}e^{-Kr}dr\\
+    &= 4\pi K^2\int_0^R re^{-Kr}dr = \left[\begin{aligned}
+        U&=r && U'=1\\
+        V'&=e^{-Kr} && V=-\frac{1}{K}e^{-Kr}
+    \end{aligned}\right]\\
+    &= 4\pi K^2\left(\left.-\frac{re^{-Kr}}{K}\right|_0^R+\frac{1}{K}\int_0^R e^{-Kr}dr\right)\\
+    &= 4\pi K^2\left(\left.-\frac{re^{-Kr}}{K}\right|_0^R+\frac{1}{K}\left.\left(-\frac{1}{K}e^{-Kr}\right)\right|_0^R\right)\\
+    &= 4\pi K^2 \left(-\frac{Re^{-KR}}{K} + \frac{1}{K}\left(\frac{1}{K}-\frac{1}{K}e^{-KR}\right)\right)\\
+    &= 4\pi K^2 \left(-\frac{Re^{-KR}}{K} + \frac{1}{K^2}-\frac{1}{K^2}e^{-KR}\right)\\
+    &= 4\pi \left(-KRe^{-KR}+1-e^{-KR}\right)\\
+    &= 4\pi \left(1-(1+KR)e^{-KR}\right)
+\end{align*}
+We notice that the direct calculation gives an aswer that is \(4\pi\) off from the result of Gauss' law, which is likely a result of the fact our laplacian definition did not include the origin. Thus we'll add a correction for the origin:
+\begin{equation*}
+    \nabla^2\phi = \frac{K^2}{r}e^{-Kr}-4\pi\delta^3(\boldsymbol{r})
+\end{equation*}
+\newpage
+\subsection{integral of laplacian}
+\begin{align}
+  \iiint\dd^3x\laplacian{\phi} &= \iiint\dd^3x\ins{k^2\frac{e^{-Kr}}{r}-4\pi\delta(\vb{r})}
+\end{align}
+but
+\begin{equation}
+  \iiint\dd^3xk^2\frac{e^{-Kr}}{r} = 4\pi K^2 \int_{0}^{\infty}\dd r re^{-Kr}
+\end{equation}
+and since
+\begin{equation}
+  \int_{0}^{\infty}\dd r re^{-Kr} = \frac{1}{K^2}
+\end{equation}
+then
+\begin{equation}
+  4\pi K^2 \int_{0}^{\infty}\dd r re^{-Kr} = 4\pi
+\end{equation}
+and the second part
+\begin{equation}
+  \iiint\dd^3x 4\pi\delta(\vb{r}) = 4\pi
+\end{equation}
+adding the two parts together
+\begin{equation}
+  \iiint\dd^3xk^2\frac{e^{-Kr}}{r} = 4\pi K^2 \int_{0}^{\infty}\dd r re^{-Kr} = 4\pi-4\pi=0
+\end{equation}
