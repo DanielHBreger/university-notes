@@ -1,0 +1,40 @@
+\clearpage
+\section{Vorticity}
+\begin{colbox}
+	\begin{enumerate}
+		\item Write the definition of \(\omega_{ij}\) and multiply both sides by \(\epsilon_{ijl}\). Simplify to obtain a single summand.
+		\item Multiply the original definition by \(\epsilon_{ijl}\) and use Levi-Civita tensor identities to obtain \begin{equation}
+			\vb{\omega} = \curl{\vb{v}}
+		\end{equation}
+	\end{enumerate}
+\end{colbox}
+\subsection{part 1}
+The definition of the vorticity is 
+\begin{equation}
+	\omega_{ij} = -\frac{1}{2}\epsilon_{ijk}\omega_k
+\end{equation}
+multiplying by \(\epsilon_{ijl}\)
+\begin{align}
+	\epsilon_{ijl}\omega_{ij} &= -\frac{1}{2}\epsilon_{ijl}\epsilon_{ijk}\omega_k\\
+	\epsilon_{ijl}\omega_{ij} &= -\frac{1}{2}\ins{2\delta_{kl}\cdot\ins{-1}^{2}}\omega_k\\
+	\epsilon_{ijl}\omega_{ij} &= -\omega_l
+\end{align}
+\subsection{part 2}
+By original definition I imagine this is what's meant:
+\begin{equation}
+	\omega_{ij} = \frac{1}{2}\ins{\pdv{v_i}{x_j}-\pdv{v_j}{x_i}}
+\end{equation}
+multiplying both sides by \(\epsilon_{ijl}\)
+\begin{align}
+	\epsilon_{ijl}\omega_{ij} &= \frac{1}{2}\epsilon_{ijl}\ins{\pdv{v_i}{x_j}-\pdv{v_j}{x_i}} \\
+	&= \frac{1}{2}\ins{\epsilon_{ijl}\pdv{v_i}{x_j}-\epsilon_{ijl}\pdv{v_j}{x_i}}\\
+	&= -\epsilon_{ijl}\pdv{v_i}{x_j}
+\end{align}
+combining with the result of part 1 we get
+\begin{equation}
+	\omega_l = \epsilon_{ijl}\pdv{v_i}{x_j}
+\end{equation}
+which by definition is 
+\begin{equation}
+	\vb{\omega} = \curl{\vb{v}}
+\end{equation}
