@@ -12,3 +12,55 @@
     \end{enumerate}
 \end{colbox}
 \subsection{Equations of motion}
+Since the fluid is Newtonian, the NS equation relevant to us is
+\begin{equation}
+    \rho\ins{\del{t}+\ins{\vb{v}\cdot\nabla}}\vb{v} = -\grad{p}+\mu\laplacian{\vb{v}}+\rho\vb{f}
+\end{equation}
+inserting the definitions of the diferential operators in cylindrical
+\begin{equation}
+    \rho\ins{\del{t}+\ins{\vb{v}\cdot\ins{\pdv{r}\vu{r}+\frac{1}{r}\pdv{\theta}\vu{\theta}+\pdv{z}\vu{z}}}}\vb{v} = -\cdot\ins{\pdv{r}\vu{r}+\frac{1}{r}\pdv{\theta}\vu{\theta}+\pdv{z}\vu{z}}p+\mu\ins{\frac{1}{r}\pdv{r}\ins{r\pdv{r}}+\frac{1}{r^2}\pdv[2]{\theta}+\pdv[2]{z}}v+\rho\vb{f}
+\end{equation}
+which is awful.
+\subsection{simplification}
+Since we assume the flow is parallel to \(\vu{z}\), there is no external force, and the pressure gradient is constant, we can simplify to
+\begin{equation}
+    \rho\ins{\del{t}+v_z\del{z}}\vb{v} = -\del{z}p+\mu\laplacian{\vb{v}}
+\end{equation}
+To simplify the laplacian we can note that the velocity clearly can't have dependence on the radial direction or the z position, from symmetry, therefore
+\begin{equation}
+    \rho\ins{\del{t}}\vb{v} = -\del{z}p+\mu\ins{\frac{1}{r}\del{r}\ins{r\del{r}}}\vb{v}
+\end{equation}
+From symmetry and conservation laws, the flow must remain constant in time, therefore
+\begin{equation}
+    0 = -\del{z}p+\mu\ins{\frac{1}{r}\del{r}\ins{r\del{r}}}\vb{v}
+\end{equation}
+rearranging
+\begin{equation}
+    \del{z}p = \mu\ins{\frac{1}{r}\del{r}\ins{r\del{r}}}\vb{v}
+\end{equation}
+\subsection{Boundary Conditions}
+Since both cylinders are stationary we must demand that 
+\begin{align}
+    v(r_1)=v(r_2)=0
+\end{align}
+We'll rearrange the equation to be for the velocity
+\begin{align}
+     \ins{\frac{1}{r}\del{r}\ins{r\del{r}}}\vb{v}=\frac{\del{z}p}{\mu} \\
+     \ins{\del{r}\ins{r\del{r}}}\vb{v}=\frac{r\del{z}p}{\mu} \\
+     r\del{r}v = \frac{\del{z}p}{2\mu}r^2+B \\
+     v = \frac{\del{z}p}{4\mu}r^2+B\ln(r)+C
+\end{align}
+using the boundary conditions
+\begin{align}
+    \frac{\del{z}p}{4\mu}r_1^2+B\ln(r_1)+C &= \frac{\del{z}p}{4\mu}r_2^2+B\ln(r_2)+C = 0 \\
+    B\ln(r_1)-B\ln(r_2) &= \frac{\del{z}p}{4\mu}r_2^2-\frac{\del{z}p}{4\mu}r_1^2 \\
+    B\ln(\frac{r_1}{r_2})&=\frac{\del{z}p}{4\mu}\ins{r_2^2-r_1^2} \\
+    B &= \frac{\del{z}p\ins{r_2^2-r_1^2}}{4\mu\ln(\frac{r_1}{r_2})}
+\end{align}
+inserting back into one of the equations
+\begin{align}
+    \frac{\del{z}p}{4\mu}r_1^2+\frac{\del{z}p\ins{r_2^2-r_1^2}}{4\mu\ln(\frac{r_1}{r_2})}\ln(r_1)+C = 0 \\
+    \frac{\del{z}p}{4\mu}\ins{r_1^2+\frac{\ins{r_2^2-r_1^2}}{\ln(\frac{r_1}{r_2})}\ln(r_1)}+C = 0 \\
+    C = -\frac{\del{z}p}{4\mu}\ins{r_1^2+\frac{\ins{r_2^2-r_1^2}}{\ln(\frac{r_1}{r_2})}\ln(r_1)}
+\end{align}
+\subsection{average velocity}
