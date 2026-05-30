@@ -1,0 +1,56 @@
+\clearpage
+\section{Free Flow}
+\begin{colbox}
+    \begin{enumerate}
+        \item Find the eulerian and lagrangian velocities of a non accelerated flow \(\ins{\frac{D}{Dt}v=0}\) in one dimension, given the initial condition \begin{equation}
+            v(t=0)=-ax_0,\quad a>0
+        \end{equation}
+        What is the PDE solved by the eulerian velocity? Show that your solution satisfies it.
+        \item What happens to the velocity at time \(t=a^{-1}\)? Explain both from the eulerian and lagrangian perspectives.
+    \end{enumerate}
+\end{colbox}
+\subsection{non-accelerated flow}
+For the lagrangian perspective we'll look at the lagrangian velocity at the initial condition
+\begin{equation}
+    \dot{x}(x_0, t=0) = -ax_0 \implies x(x_0,t) = -ax_0t+C
+\end{equation}
+I'm assuming I'm to treat \(x_0\) as the initial condition for the position, therefore 
+\begin{equation}
+    x(x_0,0) = C = x_0
+\end{equation}
+so
+\begin{equation}
+    x(x_0,t) = -ax_0t+x_0 = x_0\ins{1-at}
+\end{equation}
+this lets us move to the eulerian picture by looking at the initial position in reference to the rest of the frame
+\begin{equation}
+    x_0 = \frac{x}{1-at}
+\end{equation}
+inserting this back into the lagrangian velocity
+\begin{equation}
+    v_E = \frac{-ax}{1-at}
+\end{equation}
+This solves the PDE
+\begin{equation}
+    \del{t}v+v\del{x}v=0
+\end{equation}
+we can show this by inserting the solution
+\begin{equation}
+    \del{t}\ins{\frac{-ax}{1-at}}+\ins{\frac{-ax}{1-at}}\del{x}\ins{\frac{-ax}{1-at}}=0
+\end{equation}
+simplifying
+\begin{align}
+    \frac{-a^2x}{\ins{1-at}^2}+\ins{\frac{-ax}{1-at}}\ins{\frac{-a}{1-at}}&=0\\
+    \frac{-a^2x}{\ins{1-at}^2}+\frac{a^2x}{\ins{1-at}^2}&=0\\
+    0&=0
+\end{align}
+\subsection{at that time}
+plugging in \(t=a^{-1}\) into the position of the particle we get
+\begin{equation}
+    x(x_0,a^{-1})=x_0\ins{q-a\cdot a^{-1}}=0
+\end{equation}
+so in the lagrangian perspective the particle will be at position \(x=0\). In the eulerian perspective we can plug in the time and find 
+\begin{equation}
+    v_E = \frac{-ax}{1-a\cdot a^{-1}} = \text{undefined}
+\end{equation}
+If we combine the information from both perspectives, that the flow is entirely at \(x=0\) and that the velocity is undefined, that there needs to be an infinite velocity of the fluid to compress it all into the origin.
