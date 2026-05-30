@@ -64,3 +64,33 @@ inserting back into one of the equations
     C = -\frac{\del{z}p}{4\mu}\ins{r_1^2+\frac{\ins{r_2^2-r_1^2}}{\ln(\frac{r_1}{r_2})}\ln(r_1)}
 \end{align}
 \subsection{average velocity}
+The first way to do the average that comes to mind is
+\begin{equation}
+    \overline{U} = \frac{1}{A}\int_{A}v\dd{S}
+\end{equation}
+inputting the expressions we have and integrating in polar coordinates
+\begin{align}
+    \overline{U} &= \frac{1}{\pi\ins{r_2^2-r_1^2}}\int_{A}\dd{S}\frac{\del{z}p}{4\mu}r^2+B\ln(r)+C \\
+    &= \frac{2}{\ins{r_2^2-r_1^2}}\int_{r_1}^{r_2}\dd{r}r\ins{\frac{\del{z}p}{4\mu}r^2+B\ln(r)+C} \\
+    &= \frac{2}{\ins{r_2^2-r_1^2}}\ins{\frac{\del{z}p}{16\mu}\ins{r_2^4-r_1^4}+B\ins{\frac{r_2^2\ln(r_2)-r_1^2\ln(r_1)}{2}+\frac{r_1^2-r_2^2}{4}}+\frac{C}{2}\ins{r_2^2-r_1^2}} \\
+    &= \frac{\del{z}p\ins{r_1^2+r_2^2}}{8\mu}+B\ins{\frac{r_2^2\ln(r_2)-r_1^2\ln(r_1)}{r_2^2-r_1^2}-\frac{1}{2}}+C
+\end{align}
+We can define the Reynolds number as 
+\begin{equation}
+    Re = \frac{\rho\overline{U}l}{\mu}
+\end{equation}
+where \(l\) is the characteristic length of the system, which since we only have one such quantity
+\begin{equation}
+    l = r_2-r_1
+\end{equation}
+so 
+\begin{equation}
+    Re = \frac{\rho\overline{U}\ins{r_2-r_1}}{\mu}
+\end{equation}
+and we can define the momentum flux as 
+\begin{equation}
+    \Phi = \int_{A}\dd{S}\rho\overline{U} = 2\pi\rho\int_{A}\dd{r}r\overline{U}
+\end{equation}
+which I'll leave like this
+\subsection{Friction Force}
+We can use the shear stress to find the friction
