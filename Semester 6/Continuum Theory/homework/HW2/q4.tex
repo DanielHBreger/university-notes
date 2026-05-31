@@ -94,3 +94,34 @@ and we can define the momentum flux as
 which I'll leave like this
 \subsection{Friction Force}
 We can use the shear stress to find the friction
+\begin{equation}
+    \sigma_{rz} = -\mu\pdv{v_z}{r}=-\mu \ins{\frac{\del{z}p}{2\mu}r+\frac{B}{r}} = -\frac{\mu B}{r}-\frac{\del{z}p}{2}r
+\end{equation}
+and a force element is
+\begin{equation}
+    \dd{F} = \sigma_{rz}\vu{r}\dd{A}
+\end{equation}
+so 
+\begin{equation}
+    \dv{F}{A} = -\frac{\mu B}{r}-\frac{\del{z}p}{2}r
+\end{equation}
+force over area has units of pressure. Momentum flux also has units of pressure. Therefore we can define a dimensionles form by 
+\begin{equation}
+    \tilde{F} = \frac{\dv{F}{A}}{\Phi}
+\end{equation} 
+and the total force is 
+\begin{align}
+    \tilde{F}(r_2)-\tilde{F}(r_1) &= \frac{-1}{\Phi}\ins{\frac{\mu B}{r_2}+\frac{\del{z}p}{2}r_2}+\frac{1}{\Phi}\ins{\frac{\mu B}{r_1}+\frac{\del{z}p}{2}r_1}\\
+    &= \frac{1}{\Phi}\ins{\mu B \ins{\frac{1}{r_1}-\frac{1}{r_2}}-\frac{\del{z}p}{2}\ins{r_1-r_2}} \\
+    &= \frac{1}{\Phi}\ins{\frac{\mu B}{r_1r_2}-\frac{\del{z}p}{2}}\ins{r_2-r_1} \\
+    &= \frac{\mu}{\rho\overline{U}\Phi}\ins{\frac{\mu B}{r_1r_2}-\frac{\del{z}p}{2}}Re
+\end{align}
+\subsection{Hollow Cylinder}
+Since the cylinder is hollow, we have no boundary condition from the inner cylinder so we can set \(B=0\) giving us
+\begin{equation}
+    v = \frac{\del{z}p}{4\mu}+C
+\end{equation}
+giving us the force per area 
+\begin{equation}
+    \dv{F}{A} = -\frac{\del{z}p}{2}r_2
+\end{equation}
