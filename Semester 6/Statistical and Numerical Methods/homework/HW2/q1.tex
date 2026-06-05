@@ -8,7 +8,18 @@
 	\end{enumerate}
 \end{colbox}
 \subsection{Perpendicular needle}
+In this case it's simply the length of the needle divided by the size of the gap
 \begin{equation}
-	1-\frac{l}{a}
+	P=\frac{l}{a}
 \end{equation}
 \subsection{at angle}
+In this case there actually needs to be a calculation. First we notice that given we already know the angle at which the needle dropped, the chance is simply
+\begin{equation}
+	P(hit) = \frac{l}{a}\sin\theta
+\end{equation}
+therefore
+\begin{align}
+	P(hit) &= \int_{0}^{\pi}\dd{\theta}P(hit|\Theta=\theta)P(\Theta=\theta)\\
+	&= \frac{l}{a}\int_{0}^{\pi}\dd{\theta}\sin\theta P(\Theta=\theta)\\
+	&= \frac{2l}{\pi a}
+\end{align}

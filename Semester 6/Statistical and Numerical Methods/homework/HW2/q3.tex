@@ -1,2 +1,117 @@
 \clearpage
-\section{Random Coin}
+\section{Gravity measurements}
+\begin{colbox}
+    \begin{enumerate}
+        \item How many cycles will be required to measure \(g\) within 1\%?
+        \item How many measurements wil be needed to verify the theory within \(1.65\) sigma?
+        \item Calculate the error for \(g\) and write down an estimator for its error
+        \item Estimate the average of gravity using the measurements, then estimate the variance using the measurements. Compare to the theoretical.
+        \item Calculaute \(\hat{\sigma}_\sigma\) for parts 3 and 4, what causes the difference between these values?
+    \end{enumerate}
+\end{colbox}
+\subsection{g within 1 percent}
+First we reverse the relation
+\begin{equation}
+    T = 2\pi\sqrt\frac{l}{g} \implies g = \frac{4\pi^2l}{T^2}
+\end{equation}
+therefore the error in \(g\) is
+\begin{equation}
+    \Delta g = 4\pi^2l\sqrt{\frac{4}{T^6}\Delta T^2} = \frac{8\pi^2l}{T^3}\Delta T
+\end{equation}
+The number of cycles is such that
+\begin{equation}
+    T = \frac{t}{N} \implies \Delta T = \frac{\Delta t}{N}
+\end{equation}
+returning, we want
+\begin{equation}
+    \frac{\Delta g}{g} = \frac{\frac{8\pi^2l}{T^3}\Delta T}{\frac{4\pi^2l}{T^2}} = \frac{2}{T}\Delta T \leq 0.01
+\end{equation}
+inserting the cycles
+\begin{equation}
+    \frac{2\Delta t}{t} \leq 0.01
+\end{equation}
+inserting \(\Delta t = 0.5\)
+\begin{equation}
+    \frac{\qty{1}{\second}}{t}\leq 0.01 \implies t \geq \qty{100}{\second}
+\end{equation}
+the cycle is of length
+\begin{equation}
+    T = 2\pi\sqrt{\frac{l}{g}} \approx \qty{2}{\second}
+\end{equation}
+therefore
+\begin{equation}
+    N = \frac{t}{T} \geq \frac{\qty{100}{\second}}{\qty{2}{\second}} = 50
+\end{equation}
+\subsection{1.65 sigma}
+The gravitational acceleration is
+\begin{equation}
+    g = \frac{GM}{r^2}
+\end{equation}
+so 
+\begin{align}
+    g_{sea} = \frac{GM}{r_{sea}^2} && g_{everest} = \frac{GM}{r_{everest}^2}
+\end{align}
+we can express the everest acceleration using the sea acceleration
+\begin{equation}
+    g_{everest} = g_{sea}\ins{\frac{r_{sea}}{r_{everest}}}^2
+\end{equation}
+we can insert the known numbers
+\begin{equation}
+    g_{everest} = \qty{9.8}{\meter\per\second^2}\cdot\ins{\frac{6400}{6409}}^2 = 9.7725
+\end{equation}
+we want 
+\begin{equation}
+    \frac{g_{sea}-g_{everest}}{\Delta g} = \frac{0.0275}{\Delta g} > 1.65 \implies \Delta g < \qty{0.01667}{\meter\per\second^2}
+\end{equation}
+but
+\begin{equation}
+    \Delta g = \frac{8\pi^2l}{T^3}\Delta T =  \frac{8\pi^2l}{T^3}\frac{\Delta t}{N}
+\end{equation}
+rearranging
+\begin{equation}
+    N = \frac{8\pi^2l}{T^3}\frac{\Delta t}{\Delta g}
+\end{equation}
+inserting all the numbers we find
+\begin{equation}
+    N = \frac{8\pi^2\cdot\qty{1}{m}}{\ins{\qty{2}{\second}}^3}\frac{\qty{0.5}{\second}}{\qty{0.01667}{\meter\per\second^2}} > 296
+\end{equation}
+\subsection{Student Experiment}
+This time both the time and length have errors, therefore
+\begin{equation}
+    \Delta g  =\sqrt{\ins{\pdv{g}{l}\Delta l}^2+\ins{\pdv{g}{T}\Delta T}^2}
+\end{equation}
+where
+\begin{equation}
+    g = \frac{4\pi^2l}{T^2}
+\end{equation}
+giving us 
+\begin{equation}
+    \Delta g = \sqrt{\ins{\frac{4\pi^2}{T^2}\cdot\qty{0.07}{\meter}}^2+\ins{\frac{8\pi^2l}{T^3}\cdot\qty{0.05}{\second}}^2} \approx \qty{0.85}{\meter\per\second^2}
+\end{equation}
+but since we have 50 measurements the total standard deviation is
+\begin{equation}
+    \sigma = \frac{\Delta g}{\sqrt{50}} = \qty{0.12}{\meter\per\second^2}
+\end{equation}
+we can use the formula for an estimator for a variance with a known mean:
+\begin{equation}
+    \hat{\Delta g} = \sqrt{\frac{1}{N}\sum_i\ins{g_i-\frac{4\pi^2l_i}{T_i^2}}^2}
+\end{equation}
+\subsection{With Measurements}
+A good estimate for the mean is simply the average of the measurements:
+\begin{equation}
+    \hat{g} = \overline{g} = \qty{9.792}{\meter\per\second^2}
+\end{equation}
+and the variance can be calculated using the formula for an unknown mean
+\begin{equation}
+    \hat{V} = \frac{1}{N-1}\sum_i\ins{g_i-\overline{g}}^2 = \qty{0.094}{(\meter\per\second^2)^2}
+\end{equation}
+therefore 
+\begin{equation}
+    \sigma = \qty{0.307}{\meter\per\second^2}
+\end{equation}
+\subsection{sigma sigma}
+\begin{align}
+    \hat{\sigma}_{\sigma,c} &= \frac{\sigma}{\sqrt{2N}} = \qty{0.012}{\meter\per\second^2} \\
+    \hat{\sigma}_{\sigma,d} &= \frac{\sigma}{\sqrt{2N}} = \qty{0.0307}{\meter\per\second^2}
+\end{align}
+The sigma for section 3 is smaller than that of section 4. This is because in section 3 we took the value of \(g\) as an assumption for a value we know, while in section 4 we did not. This prior knowledge changes our uncertainty.
