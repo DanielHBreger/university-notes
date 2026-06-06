@@ -1,0 +1,69 @@
+\clearpage
+\section{Capacitor}
+\begin{colbox}
+    A capacitor is made of two square sides with side length \(a\) at a distance of \(d\) apart such that \(d\ll a\). The top plate is charged with \(-Q\) and the bottom with \(+Q\). We'll define the axes such that its center coincides with the center of the capacitor, etc. Find the electric and magnetic fields between the capacitor's sides in
+    \begin{enumerate}
+        \item a reference frame moving at \(\vb{v}=u\vu{x}\)
+        \item a reference frame moving at \(\vb{v}=u\vu{z}\)
+    \end{enumerate}
+\end{colbox}
+\emph{I am working in Gaussian units, in which \(\epsilon_0 = \frac{1}{4\pi}\).}\\
+The fields inside a capacitor in its own rest frame are
+\begin{equation}
+  \tensor{F}{_\mu_\nu} = 4\pi\sigma \mqty(&&&1\\&&&\\&&&\\-1&&&)
+\end{equation}
+where
+\begin{equation}
+    \sigma = \frac{Q}{a^2}
+\end{equation}
+\subsection{x direction}
+We'll perform a boost
+\begin{align}
+	\tensor{F{'}}{_\mu_\nu} &= \tensor{(\Lambda^{-1})}{_\mu^\sigma}\tensor{F}{_\sigma_\epsilon}\tensor{\Lambda}{^\epsilon_\nu}\\
+	&= \left[{(\Lambda^{-1})}^TF(\Lambda^{-1})\right]_{\mu\nu}\\
+	&= 4\pi\sigma\mqty(\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1)\mqty(&&&1\\&&&\\&&&\\-1&&&)\mqty(\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1)\\
+  &= 4\pi\sigma \mqty(\gamma&\gamma\beta&&\\
+  \gamma\beta&\gamma&&\\
+  &&1&\\
+  &&&1)\mqty(&&&1\\&&&\\&&&\\-\gamma&-\gamma\beta&&)\\
+  &= 4\pi\gamma\sigma \mqty(&&&1\\&&&\beta\\&&&\\-1&-\beta&&)
+\end{align}
+giving us the fields
+\begin{align}
+	E'=4\pi\gamma\sigma \vu{z} && B'=4\pi\gamma\beta\sigma\vu{y}
+\end{align}
+inside the capacitor.
+\subsection{z direction}
+same as before
+\begin{align}
+	\tensor{F{'}}{_\mu_\nu} &= \tensor{(\Lambda^{-1})}{_\mu^\sigma}\tensor{F}{_\sigma_\epsilon}\tensor{\Lambda}{^\epsilon_\nu}\\
+	&= \left[{(\Lambda^{-1})}^TF(\Lambda^{-1})\right]_{\mu\nu}\\
+	&= 4\pi\sigma\mqty(\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma)\mqty(&&&1\\&&&\\&&&\\-1&&&)\mqty(\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma)\\
+  &= 4\pi\sigma \mqty(\gamma&&&\gamma\beta\\
+  &1&&\\
+  &&1&\\
+  \gamma\beta&&&\gamma)\mqty(\gamma\beta&&&\gamma\\&&&\\&&&\\-\gamma&&&-\gamma\beta)\\
+  &= 4\pi\gamma\sigma \mqty(\gamma^2\beta-\gamma^2\beta&&&\gamma^2-\gamma^2\beta^2\\&&&\\&&&\\\gamma^2\beta^2-\gamma^2&&&\gamma^2\beta-\gamma^2\beta)\\
+  &= 4\pi\gamma\sigma \mqty(&&&\gamma^2-\gamma^2\beta^2\\&&&\\&&&\\\gamma^2\beta^2-\gamma^2&&&)\\
+  &= 4\pi\gamma\sigma \mqty(&&&1\\&&&\\&&&\\-1&&&)\\
+\end{align}
+Therefore the fields are
+\begin{align}
+	E'=4\pi\gamma\sigma \vu{z} && B'=0
+\end{align}
+and this field again only exists inside the capacitor, but because of the relativistic length contraction it is reduced to 
+\begin{equation}
+    -\frac{d}{2\gamma} \leq z'+ut' \leq \frac{d}{2\gamma}
+\end{equation}

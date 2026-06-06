@@ -1,0 +1,144 @@
+\clearpage
+\section{Fields and a Particle}
+\begin{colbox}
+  The lab frame has uniform electric and magnetic fields
+  \begin{equation}
+    \vb{E}=E_0\vu{z} \quad \vb{B}=B_0\vu{x}
+  \end{equation}
+  \begin{enumerate}
+    \item Use the formula for the lorentz transformation for EM fields and the find the velocity of the coordinate system in which the electric field becomes zero. What is the magnetic field in this frame? What is the condition on \(E_0, B_0\) to move to this frame?
+    \item A point charge \(q\) with mass \(m\) is released at rest from the origin in the lab frame. Write the equations of motion in the frame with no electric field and find the momentum 4-vector
+    \item Find the trajectory as a function of the self-time and of the lab frame time
+    \item What is the time in which the particle performs a revolution in the \(yz\) plane as measured in the frame with no electric field.
+    \item Use the results and write the trajectory of the particle in the lab frame depending on the self time
+  \end{enumerate}
+\end{colbox}
+\subsection{Zero electric field}
+The fields tensor is
+\begin{equation}
+  \mqty(0&0&0&E_0\\0&0&0&0\\0&0&0&-B_0\\-E_0&0&B_0&0)
+\end{equation}
+and the lorentz boost is
+\begin{equation}
+  \mqty(\gamma&0&\beta\gamma&0\\0&1&0&0\\\beta\gamma&0&\gamma&0\\0&0&0&1)
+\end{equation}
+so the transformed tensor is
+\begin{equation}
+  \Lambda F \Lambda^T = \mqty(0&0&0&\gamma E_0-\beta\gamma B_0\\0&0&0&0\\0&0&0&\beta\gamma E_0-\gamma B_0\\-\gamma E_0+\beta\gamma B_0&0&-\beta\gamma E_0+\gamma B_0&0)
+\end{equation}
+the condition we have therefore is
+\begin{equation}
+  \gamma E_0 - \beta\gamma B_0 = 0 \implies \beta = \frac{E_0}{B_0}\implies v=\frac{E_0}{B_0}c\vu{y}
+\end{equation}
+The magnetic field is then 
+\begin{equation}
+  \vb{B} = \gamma\ins{B_0-\frac{E_0^2}{B_0}}\vu{x} = \gamma\ins{1-\beta^2}B_0\vu{x} = \frac{B_0}{\gamma}\vu{x}
+\end{equation}
+we can see that the requirement to be able to move to this frame is that the magnetic field is not zero, and that \(B_0>E_0\).
+\subsection{Charge released from rest}
+The equation of motion for a charged particle is
+\begin{equation}
+	m \diff[2] {x_\mu}\tau - \frac{q}{c} \diff {x^\nu}\tau \tensor{F}{_\mu_\nu} = 0
+\end{equation}
+which can be written as
+\begin{equation}
+	\diff {p_\mu}\tau - \frac{q}{c} u^\nu \tensor{F}{_\mu_\nu} = 0
+\end{equation}
+multiplying and dividing by the mass
+\begin{equation}
+	\diff {p_\mu}\tau -\frac{q}{mc}mu^\nu \tensor{F}{_\mu_\nu} = \diff {p_\mu}\tau -\frac{q}{mc}p^\nu \tensor{F}{_\mu_\nu}=0
+\end{equation}
+raising the index
+\begin{equation}
+	\tensor{\eta}{_\mu_\sigma}\diff {p^\sigma}\tau = \frac{q}{mc}p^\nu \tensor{F}{_\mu_\nu}
+\end{equation}
+multiplying by the dual metric
+\begin{equation}
+  \tensor{\eta}{^\mu^\rho}\tensor{\eta}{_\rho_\sigma} \diff{p^\sigma}\tau = \frac{q}{mc}\tensor{\eta}{^\mu^\rho}p^\nu\tensor{F}{_\mu_\nu}
+\end{equation}
+simplifying
+\begin{align}
+  \tensor{\delta}{^\mu_\sigma}\diff {p^\sigma}\tau &= \frac{q}{mc}\tensor{\eta}{^\mu^\rho}p^\nu\tensor{F}{_\mu_\nu}\\
+  \diff {p^\mu}\tau &= \frac{q}{mc} \tensor{\eta}{^\mu^\rho} p^\nu \tensor{F}{_\mu_\nu}
+\end{align}
+in matrix form
+\begin{equation}
+	\diff p\tau = \frac{q}{mc}\eta^{-1}Fp
+\end{equation}
+inserting the fields tensor
+\begin{equation}
+  \diff p\tau = \frac{q}{mc}\mqty(1&&&\\&-1&&\\&&-1&\\&&&-1)\mqty(&&&\\&&&\\&&&-\frac{B_0}{\gamma}\\&&\frac{B_0}{\gamma}&)p
+\end{equation}
+which simplifies to
+\begin{equation}
+  \diff p\tau = \frac{q}{mc}\frac{B_0}{\gamma}\mqty(&&&\\&&&\\&&&1\\&&-1&)p
+\end{equation}
+we find the eigenvalues
+\begin{align}
+	\lambda_0=0, v_{0,1}=\mqty(1\\0\\0\\0),\mqty(0\\1\\0\\0) && \lambda_{1,2}=\pm i,v_2=\mqty(0\\0\\1\\ i),v_3=\mqty(0\\0\\1\\-i)
+\end{align}
+which means the solutions are
+\begin{equation}
+  p=c_0v_0+c_1v_1+c_2e^{i\frac{qB_0}{mc}\tau}v_2+c_3e^{-i\frac{qB_0}{mc}\tau}v_3 = \mqty(c_0\\c_1\\c_2e^{i\frac{qB_0}{mc}\tau}+c_3e^{-i\frac{qB_0}{mc}\tau}\\\left(c_2e^{i\frac{qB_0}{mc}\tau}-c_3e^{-i\frac{qB_0}{mc}\tau}\right)i)
+\end{equation}
+but the particle started at rest
+\begin{equation}
+  p_0^\mu=\tensor{\Lambda}{^\mu_\nu}p^\nu_0=\mqty(\gamma &&-\gamma \beta&\\
+	& 1 &&\\
+	-\gamma \beta&&\gamma&\\
+	&&&1)\mqty(mc\\0\\0\\0)=\mqty(\gamma mc\\0\\-\gamma\beta mc\\0)
+\end{equation}
+therefore
+\begin{align}
+	c_0=\gamma mc && c_1 = 0 && c_2+c_3=-\gamma\beta mc && c_2-c_3=0
+\end{align}
+giving us
+\begin{align}
+	c_2 = c_3=-\frac{\gamma\beta mc}{2} = -\frac{\gamma mv}{2}
+\end{align}
+so the 4-momentum is
+\begin{equation}
+  p^\mu(\tau)=\mqty(\gamma mc\\0\\-\frac{\gamma mv}{2}\left(e^{i\frac{qB_0}{mc}\tau}+e^{-i\frac{qB_0}{mc}\tau}\right)\\-\frac{i\gamma mv}{2}\left(e^{i\frac{qB_0}{mc}\tau}-e^{-i\frac{qB_0}{mc}\tau}\right)) = \gamma m\mqty( c\\0\\- v\cos{\frac{qB_0}{mc}\tau}\\ v\sin{\frac{qB_0}{mc}\tau})
+\end{equation}
+\subsection{Self time position}
+By definition
+\begin{equation}
+  p'^\mu = m \diff {x'^\mu}\tau
+\end{equation}
+so if we combine with a result from the previous section we get
+\begin{equation}
+  m \diff {x'^\mu}\tau = \mqty(\gamma mc\\0\\-\gamma mv\cos{\frac{qB_0}{mc}\tau}\\\gamma mv\sin{\frac{qB_0}{mc}\tau})
+\end{equation}
+canceling terms and integrating over $\tau$:
+\begin{equation}
+  \int \diff {x'^\mu}{\tau} \,d\tau = \int \mqty(\gamma c\\0\\-\gamma v\cos{\frac{qB_0}{mc}\tau}\\\gamma v\sin{\frac{qB_0}{mc}\tau}) \,d\tau\\
+\end{equation}
+therefore
+\begin{equation}
+  x'^\mu = \mqty(\gamma c \tau+c_0\\c_1\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}+c_2\\-\frac{\gamma mvc}{qB_0}\cos{\frac{qB_0}{mc}\tau + c_3})
+\end{equation}
+But since the particle started in the origin (in the lab's reference frame but this lorentz transforms to the origin as well in the particle's frame)
+\begin{align}
+	c_0=0 && c_1=0 &&c_2=0 &&c_3=\frac{\gamma mvc}{qB_0}
+\end{align}
+Thus the particle's path is
+\begin{equation}
+  x'^\mu=\mqty(\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\-\frac{\gamma mvc}{qB_0}\cos{\frac{qB_0}{mc}\tau + \frac{\gamma mvc}{qB_0}}) = \mqty(\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau}))
+\end{equation}
+\subsection{revolution time}
+By definition in the rest frame 
+\begin{equation}
+  T = \frac{2\pi}{\omega} = \frac{2\pi mc}{qB_0}
+\end{equation}
+therefore in the lab frame
+\begin{equation}
+  T' = \gamma T = \frac{2\gamma\pi mc}{qB_0}
+\end{equation}
+\subsection{Path in self time}
+We'll boost back
+\begin{align}
+	x^\mu(\tau) &= \tensor{(\Lambda^{-1})}{^\mu_\nu}x'^\nu(\tau)\\
+	&= \mqty(\gamma&&\gamma\beta&\\&1&&\\\gamma\beta&&\gamma&\\
+	&&&1)\mqty(\gamma ct\\0\\-\frac{\gamma mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau}))\\
+	&= \mqty(\gamma^2ct-\frac{\gamma^2 \beta mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\0\\\gamma^2\beta ct-\frac{\gamma^2 mvc}{qB_0}\sin{\frac{qB_0}{mc}\tau}\\\frac{\gamma mvc}{qB_0}(1-\cos{\frac{qB_0}{mc}\tau}))
+\end{align}

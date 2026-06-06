@@ -1,0 +1,42 @@
+\clearpage
+\section{Moving Point Charge}
+\begin{colbox}
+    A point charge \(q\) is moving at a constant velocity \(\vb{v}=v\vu{z}\) and is at the origin at \(t=0\), in the lab frame \(S\). In the charge's rest frame, \(S'\), the electric and magnetic fields are given by
+    \begin{equation}
+        \vb{E'}=\frac{q\vu{r'}}{r'^2},\quad \vb{B'}=0
+    \end{equation}
+    using the field transformation rule, find the electric and magnetic field in the lab frame \(S\)
+\end{colbox}
+In cartesian coordinates the fields are
+\begin{align}
+	E'=q\frac{\hat x'+\hat y'+ \hat z'}{x'^2+y'^2+z'^2} = q\frac{x'+y'+z'}{(x'^2+y'^2+z'^2)^{3/2}} && B'=0
+\end{align}
+giving us the fields tensor
+\begin{equation}
+  F'_{\mu\nu} = \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&)
+\end{equation}
+and using the lorentz boost matrix
+\begin{align}
+  \Lambda^\mu_\nu = \mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma) && (\Lambda^{-1})^\mu_\nu = \mqty(\gamma&&&\gamma\beta\\&1&&\\&&1&\\\gamma\beta&&&\gamma)
+\end{align}
+we get
+\begin{align}
+	F_{\mu\nu} &= \Lambda_\mu^\sigma F'_{\sigma\epsilon}\Lambda^\epsilon_\nu\\
+	&= \left[\Lambda^TF\Lambda\right]_{\mu\nu}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&)\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(-\gamma\beta z'&x'&y'&\gamma z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\-\gamma z'&&&\gamma\beta z')\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(-\gamma^2\beta z' + \gamma^2\beta z'&\gamma x'&\gamma y'&\gamma^2 z' - \gamma^2\beta^2z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\\gamma^2\beta^2 z' - \gamma^2z'&-\gamma\beta x'&-\gamma\beta y'&-\gamma^2\beta z'+\gamma^2\beta z')\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(&\gamma x'&\gamma y'&z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\z'&-\gamma\beta x'&-\gamma\beta y'&)
+\end{align}
+converting the coordinates themselves
+\begin{equation}
+  x'^\mu = \tensor{\Lambda}{^\mu_\nu}x'^\nu = \mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(ct\\x\\y\\z)=\mqty(\gamma ct-\gamma\beta z\\x\\y\\\gamma z-\gamma\beta ct) = \mqty(\gamma (ct- \beta z)\\x\\y\\\gamma (z-vt))
+\end{equation}
+so the fields tensor in the lab frame is
+\begin{equation}
+  \tensor{F}{_\mu_\nu}=\frac{q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(&\gamma x&\gamma y&\gamma(z-vt)\\-\gamma x&&&\gamma\beta x\\-\gamma y&&&\gamma\beta y\\\gamma(z-vt)&-\gamma\beta x&-\gamma\beta y&)
+\end{equation}
+giving us the fields
+\begin{align}
+	E=\frac{\gamma q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(x\\y\\z-vt) && B=\frac{\gamma\beta q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(-y\\x\\0)
+\end{align}
