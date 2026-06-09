@@ -1,0 +1,37 @@
+\clearpage
+\section{Scalar Field}
+\begin{colbox}
+A scalar field \(\phi(x)\) is given, therefore under lorentz transformations it is invariant. We'll develop the equations of motion of a free real field given by the following Lagrangian density
+\begin{equation}
+  \lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi
+\end{equation}
+\begin{enumerate}
+  \item Derive the equations of motion. What equation is this?
+  \item We'll add another element to the Lagrangian
+  \begin{equation}
+    \lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi-\frac{1}{2}m^2\phi^2-\frac{\lambda}{4}\phi^4
+  \end{equation}
+  find the new equations of motion.
+\end{enumerate}
+\end{colbox}
+\subsection{Equations of Motion}
+Using the EL equations
+\begin{align}
+  \pdv{\lagr}{\phi}&=0\\
+  \pdv{\lagr}{\partial_\nu\phi} &= \frac{1}{2}\ins{\pdv{\partial^\mu\phi}{\partial_\nu\phi}\partial_\mu\phi+\pdv{\partial_\mu\phi}{\partial_\nu\phi}\partial^\mu\phi}\\
+  &= \frac{1}{2}\ins{\tensor{g}{^\mu^\sigma}\tensor{\delta}{_\sigma^\nu}\partial_\mu\phi + \tensor{\delta}{^\nu_\mu}\partial^\mu\phi}\\
+  &= \partial^\nu\phi
+\end{align}
+therefore the equations of motion are
+\begin{equation}
+  \dalembertian \phi=0
+\end{equation}
+\subsection{Another Element}
+The only change to the EL equations is to the element depending on the field itself
+\begin{equation}
+  \pdv{\lagr}{\phi} = -m^2\phi-\lambda\phi^3
+\end{equation}
+giving us 
+\begin{equation}
+  \dalembertian \phi + m^2\phi+\lambda\phi^3 =0
+\end{equation}
