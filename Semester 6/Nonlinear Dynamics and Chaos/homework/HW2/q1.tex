@@ -1,22 +1,3 @@
-\newcommand{\cobweb}[5]{% #1=c #2=x0 #3=Niter #4=xmin #5=xmax
-\begin{tikzpicture}
-\begin{axis}[width=7.2cm,height=7.2cm,
-    xmin=#4,xmax=#5,ymin=#4,ymax=#5,
-    xlabel={$x_n$},ylabel={$x_{n+1}$},
-    grid=both,grid style={gray!20},
-    samples=200,domain=#4:#5,clip=true,
-    legend pos=north west,legend style={font=\scriptsize,fill=white}]
-\addplot[blue,thick]{x^2+(#1)};  \addlegendentry{$y=x^2+c$}
-\addplot[black,dashed]{x};        \addlegendentry{$y=x$}
-\pgfmathsetmacro{\xn}{#2}
-\foreach \i in {1,...,#3}{%
-  \pgfmathsetmacro{\yn}{\xn*\xn+(#1)}%
-  \edef\temp{\noexpand\draw[red,thin]
-     (axis cs:\xn,\xn) -- (axis cs:\xn,\yn) -- (axis cs:\yn,\yn);}\temp
-  \xdef\xn{\yn}}
-\end{axis}
-\end{tikzpicture}}
-
 \clearpage
 \section{Quadratic Map}
 \begin{colbox}
@@ -35,10 +16,16 @@
 \end{colbox}
 \subsection{cobwebs}
 The function we'll use to draw is \(f(x) = x^2+c\).
-\begin{figure}[h]\centering
-\cobweb{0.4}{0.2}{7}{-1}{2}\hfill
-\cobweb{0}{0.85}{16}{-1.3}{1.6}
-\caption{Cobweb diagrams ($c=0.4$ left, $c=0$ right).}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{image copy.png}
+		\caption{Cobweb diagram for \(c=0.4\)}
+	\end{subfigure}
+	\begin{subfigure}{0.48\textwidth}
+		\includegraphics[width=\textwidth]{image copy 2.png}
+		\caption{Cobweb diagram for \(c=0\)}
+	\end{subfigure}
 \end{figure}
 On the left cobweb, we can see that the behavior is unbound and will tend to infinity. On the right cobweb, \(x=1\) is a source and \(x=0\) is a stable sink. points beyond \(x=1\) will go to infinity. points before \(x=0\) will converge to \(x=0\).
 \subsection{Fixed points and Stability}
