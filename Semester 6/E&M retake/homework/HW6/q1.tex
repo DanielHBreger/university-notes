@@ -1,0 +1,36 @@
+\clearpage
+\section{Planes at an angle}
+\subsection{Exactly in the middle}
+To solve this using the images method I'll add images charges using the following logic: for any charge that's "up" relative to each of the planes, regardless of whether it's real or an image, I'll add an image charge of it "below" the plane. In total there'll be 5 image charges. The first image charge is at a mirrored y position relative to the original charge. The 2nd charge is mirrored with regard to the plane $y=\sqrt{3}x$ which can be viewed as a straight line going out at the angle $\frac{\pi}{3}$ relative to the x axis. Therefore the 2nd image charge will have an angle of $\frac{\pi}{2}$, or in other words, along the y axis. the distance from the origin must remain the same as the original charge. We then just mirror the 3 charges we have at this point relative to the plane perpendicular to $y=x/\sqrt{3}$ with opposite charge sign and get the rest of the charges. Since the charge is along that line, and $\sqrt{x^2+y^2}=d$ we also find that for the original charge $x=\frac{\sqrt{3}}{2}d$ and $y=\frac{1}{2}d$
+\begin{align}
+	e_0=e && r_0=\mqty(\frac{\sqrt{3}}{2}d\\\frac{1}{2}d\\0)\\
+	e_1=-e && r_1=\mqty(\frac{\sqrt{3}}{2}d\\-\frac{1}{2}d\\0)\\
+	e_2=-e && r_2=\mqty(0\\d\\0)\\
+	e_3=-e && e_3=\mqty(-\frac{\sqrt{3}}{2}d\\-\frac{1}{2}d\\0)\\
+	e_4=e && r_4=\mqty(-\frac{\sqrt{3}}{2}d\\\frac{1}{2}d\\0)\\
+	e_5=e && r_5=\mqty(0\\-d\\0)
+\end{align}
+and the potential is just the sum over those:
+\begin{equation}
+  \phi = \sum\limits_{n=0}^5\frac{e_n}{\sqrt{(x-x_n)^2+(y-y_n)^2+z^2}}
+\end{equation}
+\subsection{And it moved!}
+The generalization is fairly simple: instead of assuming the angles add up to halves of the angle between the plate, we add an offset. We'll define $\theta=\sin^{-1}\left(\frac{y_0}{d}\right)$ thus:
+\begin{align}
+	e_0=e && r_0=\mqty(\cos\theta\\\sin\theta\\0)d\\
+	e_1=-e && r_1=\mqty(\cos\theta\\-\sin\theta\\0)d\\
+	e_2=-e && r_2=\mqty(\cos\left(\frac{2\pi}{3}-\theta\right)\\\sin\left(\frac{2\pi}{3}-\theta\right)\\0)d\\
+	e_3=-e && e_3=\mqty(\cos\left(\frac{4\pi}{3}-\theta\right)\\\sin\left(\frac{4\pi}{3}-\theta\right)\\0)d\\
+	e_4=e && r_4=\mqty(\cos\left(\frac{2\pi}{3}+\theta\right)\\\sin\left(\frac{2\pi}{3}+\theta\right)\\0)d\\
+	e_5=e && r_5=\mqty(\cos\left(\frac{4\pi}{3}+\theta\right)\\\sin\left(\frac{4\pi}{3}+\theta\right)\\0)d\\
+\end{align}
+And the potential is:
+\begin{equation}
+  \phi=\sum\limits_{n=0}^5\frac{e_n}{\sqrt{(x-x_n)^2+(y-y_n)^2+z^2}}
+\end{equation}
+\subsection{Green's Function}
+The Green's function can be found by just taking the potential in part 2 and removing the charge itself.
+\begin{equation}
+	G = \sum\limits_{n=0}^5\frac{e_n/e}{\sqrt{(x-x_n)^2+(y-y_n)^2+z^2}}
+\end{equation}
+where \(e_n,x_n,y_n\) are defined as in part 2 of this question.
