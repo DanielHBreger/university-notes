@@ -1,0 +1,64 @@
+\clearpage 
+\section{A simple model of an epidemic}
+\subsection{fixed points}
+for the fixed points 
+\begin{align}
+    xky=0 && y\ins{kx-l}=0
+\end{align}
+so all \(\ins{x,0}\) is a line of fixed points, representing the case where there is no epidemic anymore.
+\subsection{trajectories}
+\begin{equation}
+    \dv{y}{x} = \frac{\dot{y}}{\dot{x}}=\frac{kxy-ly}{-kxy}=-1+\frac{l}{kx}
+\end{equation}
+integrating 
+\begin{equation}
+    y=-x+\frac{l}{k}\ln x +C
+\end{equation}
+so the conserved quantity is 
+\begin{equation}
+    H = x+y-\frac{l}{k}\ln x
+\end{equation}
+so we can say 
+\begin{equation}
+    x+y-\frac{l}{k}\ln x = x_0+y_0-\frac{l}{k}\ln x_0
+\end{equation}
+therefore 
+\begin{equation}
+    y = y_0+x_0-x+\frac{l}{k}\ln\ins{\frac{x}{x_0}}
+\end{equation}
+\subsection{sketch}
+\subsubsection{nullclines}
+the nullclines for the xdot expression are 
+\begin{equation}
+    x=0,\quad y=0
+\end{equation}
+and for ydot
+\begin{equation}
+    x=\frac{l}{k},\quad y=0
+\end{equation}
+and for every point \(x,y>0\) we have \(\dot{x}=-kxy<0\), so all the trajectories move left, and it's pretty simple to see that \(\dot{y}>0\) when \(x>l/k\) and vice versa. So the trajectories point left and up to the right of \(x=l/k\) and down to the left of it.
+\subsubsection{maximized y}
+a maxima happens when \(\dot{y}=0\) so in our case 
+\begin{equation}
+    x=l/k
+\end{equation}
+inserting into our expression for \(y\), when \(x_0>l/k\)
+\begin{equation}
+    y_{max} = y_0+x_0-\frac{l}{k}+\frac{l}{k}\ln\ins{\frac{l/k}{x_0}}
+\end{equation}
+and when \(x_0<l/k\) \(y\) immediately decreases making \(y_0\) the maximum.
+\emph{insert sketch here}
+\subsection{Epidemic threshold}
+at \(t=0\)
+\begin{equation}
+    \dot{y}(0)=y_0\ins{kx_0-l}
+\end{equation}
+and since \(y_0>0\)
+\begin{equation}
+    \dot{y}(0)>0 \implies kx_0-l>0 \implies x_0 > \frac{l}{k}
+\end{equation}
+using \(R_0 = kx_0/l\) then the condition is 
+\begin{equation}
+    R_0 > 1
+\end{equation}
+lowering the susceptible pool can prevent an outbreak by lowering the ratio \(l/k\), thus lowering \(R_0\) below 1 further.

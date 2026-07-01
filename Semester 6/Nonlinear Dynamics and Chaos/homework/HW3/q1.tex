@@ -1,0 +1,55 @@
+\clearpage
+\section{Coexistence in the two-species competition model}
+\subsection{fixed points}
+at the fixed point 
+\begin{align}
+	x\ins{1-x-ay}=0 && y\ins{1-y-ax}=0
+\end{align}
+which gives the fixed points, by guessing smartly
+\begin{equation}
+	\ins{0,0}\quad\ins{1,0}\quad\ins{0,1}
+\end{equation}
+but all three of those represent extinction of one or both species. We're interested in coexistence, i.e when \(x,y\neq0\) so
+\begin{align}
+	x+ay=1 && ax+y=1
+\end{align}
+subtracting the two equations gives \(x=y\) so the fixed point is 
+\begin{equation}
+	\ins{x,y} = \ins{\frac{1}{1+a},\frac{1}{1+a}}
+\end{equation}
+\subsection{condition on a}
+The jacobina is 
+\begin{equation}
+	J = \mqty(1-2x-ay&-ax\\-ay&1-2y-ax)
+\end{equation}
+and at each fixed point 
+\begin{align}
+	J(0,0) &= \mqty(1&0\\0&1)\\
+	J(0,1) &= \mqty(1-a&0\\-a&-1)\\
+	J(1,0) &= \mqty(-1&-a\\0&1-a)
+\end{align}
+The eigenvalues for \(0,0\) are both 1 so it is an unstable node for all \(a>0\). for the other points, the eigenvalues are \(-1\) and \(1-a\), so they are stable nodes for \(0<a<1\) and a saddle for \(a>1\). For the coexistence fixed point the jacobian is 
+\begin{equation}
+	J = \mqty(1-\frac{2}{1+a}-\frac{a}{1+a}&-\frac{a}{1+a}\\\frac{-a}{1+a}&1-\frac{2}{1+a}-\frac{a}{1+a})=\frac{-1}{1+a}\mqty(1&a\\a&1)
+\end{equation}
+we can easily see the eigenvectors are \(\ins{1,1}\) and \(\ins{1,-1}\) so the eigenvalues are 
+\begin{align}
+	\lambda_1 &= \frac{-1}{1+a}\ins{1+a}=-1\\
+	\lambda_2 &= \frac{-1}{1+a}\ins{1-a}=\frac{a-1}{a+1}
+\end{align}
+so  the coexistence is a stable node for \(0<a<1\) and a saddle for \(a>1\).
+\subsection{phase space portrait}
+\emph{insert drawing here}
+The x-nullclines are 
+\begin{equation}
+	x=0, \quad 1-x-ay=0 \implies y=\frac{1-x}{a}
+\end{equation}
+and the y-nullclines 
+\begin{equation}
+	y=0, \quad 1-y-ax=0 \implies y=1-ax
+\end{equation}
+their intersection point is 
+\begin{equation}
+	\ins{\frac{1}{1+a},\frac{1}{1+a}}
+\end{equation}
+looking at the other fixed points, \(\ins{0,0}\) is a source, and both \(\ins{0,1}\) and \(\ins{1,0}\) are saddles, meaning that if we start at \(x>0, y>0\) we eventually must end up at \(\ins{\frac{1}{1+a},\frac{1}{1+a}}\).
