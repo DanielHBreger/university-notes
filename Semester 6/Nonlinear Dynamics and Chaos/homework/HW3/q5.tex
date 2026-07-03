@@ -1,2 +1,40 @@
 \clearpage
 \section{Secular terms in weakly non-linear oscillators}
+the equation is 
+\begin{equation}
+    \ddot{x}+x = -\epsilon\ins{a_2 x^2+a_3x^3},\quad 0<\epsilon\ll1
+\end{equation}
+\subsection{two time expansion}
+we define 
+\begin{equation}
+    \tau = t \quad T=\epsilon t
+\end{equation}
+so that 
+\begin{equation}
+    \del{t}=\del{\tau}+\epsilon\del{T}
+\end{equation}
+and 
+\begin{equation}
+    \del{t}^2=\del{\tau}^2+2\epsilon\del{\tau}\del{T}+O\ins{\epsilon^2}
+\end{equation}
+we expand 
+\begin{equation}
+    x = x_0(\tau,T)+\epsilon x_1(\tau, T)+O(\epsilon^2)
+\end{equation}
+substituting into the equation
+\begin{equation}
+    \ins{\del{\tau}^2+2\epsilon\del{\tau}\del{T}}\ins{x_0+\epsilon x_1}+x_0+\epsilon x_1 = -\epsilon\ins{a_2x_0^2+a_3x_0^3}+O(\epsilon^2)
+\end{equation}
+and at \(O(1)\)
+\begin{equation}
+    \del{\tau}^2 x_0+x_0=0
+\end{equation}
+whose solution can be written as 
+\begin{equation}
+    x_0\ins{\tau,T}=r(T)\cos\psi,\quad \psi=\tau+\phi(T)
+\end{equation}
+where \(r\) is the amplitude and \(\phi\) is the phase. At order \(O(\epsilon)\)
+\begin{equation}
+    \del{\tau}^2x_1+x_1 = -2\del{\tau}\del{T}x_0-a_2x_0^2-a_3x_0^3
+\end{equation}
+\subsection{higher harmonics}
