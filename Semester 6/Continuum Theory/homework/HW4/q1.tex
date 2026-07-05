@@ -1,0 +1,61 @@
+\clearpage
+\section{Jet Incident onto a Plane}
+\subsection{force on surface}
+The incident velocity is, expressed as a vector 
+\begin{equation}
+	\vb{v}_{in} = U\ins{-\cos\theta,-\sin\theta}
+\end{equation}
+and the outgoing velocities are 
+\begin{equation}
+	\vb{U}_1=\ins{-U_1,0},\qquad\vb{U}_2=\ins{U_2,0}
+\end{equation}
+from conservation of mass 
+\begin{equation}
+	Uh = U_1 h_1 + U_2 h_2
+\end{equation}
+so 
+\begin{equation}
+	h=h_1+h_2
+\end{equation}
+using Bernoulli's theorem since the flow is steady and ideal,
+\begin{equation}
+	p_0+\frac{1}{2}\rho U^2 = p_0+\frac{1}{2}\rho U_1^2 = p_0+\frac{1}{2}\rho U_2^2
+\end{equation}
+so 
+\begin{equation}
+	U=U_1=U_2
+\end{equation}
+the momentum flux going into the system is 
+\begin{equation}
+	\vb{\dot{P}}_{in}=\rho h U^2\ins{-\cos\theta,-\sin\theta}
+\end{equation}
+and the momentum flux leaving the system is 
+\begin{equation}
+	\vb{\dot{P}}_{out}=\rho U^2\ins{h_2-h_1,0}
+\end{equation}
+so the force the plate applies on the liquid is 
+\begin{equation}
+	\vb{F} = \vb{\dot{P}}_{out}-\vb{\dot{P}}_{in} = \rho U^2 \ins{h_2-h_1+h\cos\theta,h\sin\theta}
+\end{equation}
+so 
+\begin{equation}
+	\vb{f} = \rho U^2 \ins{\ins{h_1-h_2-h\cos\theta}\vu{x}-h\sin\theta\vu{y}}
+\end{equation}
+Since the jet is of an ideal fluid, the only stress it can transmit to the plate is from pressure, which always acts along the normal. so,
+\begin{equation}
+	\vb{f} = -\rho U^2-h\sin\theta\vu{y}
+\end{equation}
+\subsection{thickness as a function}
+we already know 
+\begin{equation}
+	h=h_1+h_2
+\end{equation}
+and we can add 
+\begin{equation}
+	h_1-h_2=h\cos\theta
+\end{equation}
+from the parallel part of the force being zero. We can now insert the above relations into each other and get 
+\begin{align}
+	h-h_2-h_2=h\cos\theta \implies h_2=\frac{h}{2}\ins{1-\cos\theta}\\
+	h_1-h+h_1=h\cos\theta \implies h_1=\frac{h}{2}\ins{1+\cos\theta}
+\end{align}
