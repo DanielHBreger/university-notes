@@ -1,0 +1,90 @@
+\clearpage
+\section{Elastic Modulus Tensor in a Two-Dimensional Crystal}
+\subsection{Symmetries in square lattice}
+In the training we saw that the tensor has the symmetires 
+\begin{equation}
+    C_{ijkl}=C_{jikl}=C_{ijlk}=C_{klij}
+\end{equation}
+Which leads to there already being only 6 independent constants. As for the symmetries of the square lattice, it has symmetries for mirrorings in the \(x\) and \(y\) directions, as well as rotations of multiples of \(\pi/2\). The mirroring symmetry implies the remaining independent elements are
+\begin{equation}
+C_{xxxx},\quad C_{yyyy},\quad C_{xxyy},\quad C_{xyzy}    
+\end{equation}
+because under mirroring \(\epsilon_{xy}\to-\epsilon_{xy}\) but \(\epsilon_{xx/yy}\to\epsilon_{xx/yy}\) so mixed terms of \(\epsilon_{xx/yy}\epsilon_{xy}\) have to vanish. If we rotate the lattice by \(\pi/2\) it's effectively the same as renaming \(x\) to \(y\) and vice versa, meaning 
+\begin{equation}
+    C_{xxxx}=C_{yyyy}
+\end{equation}
+and we're left with three elements
+\begin{equation}
+C_{xxxx},\quad C_{xxyy},\quad C_{xyzy}    
+\end{equation}
+\subsection{Triangular Lattice}
+The triangular lattice also has symmetry for mirroring in \(x\) and \(y\), but the rotational symmetry is for rotations of \(\pi/3\). We can start from the 4 independent elements
+\begin{equation}
+C_{xxxx},\quad C_{yyyy},\quad C_{xxyy},\quad C_{xyzy}    
+\end{equation}
+and require the symmetry for \(\pi/3\). The strain tensor transforms like a second rank tensor, so 
+\begin{align}
+    \epsilon'_{xx}&=\epsilon_{xx}\cos^2\alpha+\epsilon_{yy}\sin^2\alpha+2\epsilon_{xy}\sin\alpha\cos\alpha\\
+    \epsilon'_{yy}&=\epsilon_{xx}\sin^2\alpha+\epsilon_{yy}\cos^2\alpha-2\epsilon_{xy}\sin\alpha\cos\alpha\\
+    \epsilon'_{xy}&=\ins{\epsilon_{yy}-\epsilon_{xx}}\sin\alpha\cos\alpha+\epsilon_{xy}\ins{\cos^2\alpha-\sin^2\alpha}
+\end{align}
+denoting for convenience
+\begin{equation}
+    A=C_{xxxx},\quad B=C_{yyyy},\quad C=C_{xyxy},\quad D=C_{xxyy}
+\end{equation}
+and using the free energy 
+\begin{equation}
+    F = \frac{1}{2}A\epsilon_{xx}^2+B\epsilon_{xx}\epsilon_{yy}+2C\epsilon_{xy}^2+\frac{1}{2}D\epsilon_{yy}^2
+\end{equation}
+and 
+\begin{equation}
+    \cos\pi/3=1/2,\qquad \sin\pi/3=\frac{\sqrt{3}}{2}
+\end{equation}
+so 
+\begin{align}
+    \epsilon'_{xx}&=\frac{1}{4}\epsilon_{xx}+\frac{3}{4}\epsilon_{yy}+\frac{\sqrt{3}}{2}\epsilon_{xy}\\
+    \epsilon'_{yy}&=\frac{3}{4}\epsilon_{xx}+\frac{1}{4}\epsilon_{yy}-\frac{\sqrt{3}}{2}\epsilon_{xy}\\
+    \epsilon'_{xy}&=\frac{\sqrt{3}}{4}\ins{\epsilon_{yy}-\epsilon_{xx}}-\frac{1}{2}\epsilon_{xy}
+\end{align}
+inserting into the free energy 
+\begin{align}
+    F &= \frac{1}{2}A\ins{\frac{1}{4}\epsilon_{xx}+\frac{3}{4}\epsilon_{yy}+\frac{\sqrt{3}}{2}\epsilon_{xy}}^2+B\ins{\frac{1}{4}\epsilon_{xx}+\frac{3}{4}\epsilon_{yy}+\frac{\sqrt{3}}{2}\epsilon_{xy}}\ins{\frac{3}{4}\epsilon_{xx}+\frac{1}{4}\epsilon_{yy}-\frac{\sqrt{3}}{2}\epsilon_{xy}}\\&+2C\ins{\frac{\sqrt{3}}{4}\ins{\epsilon_{yy}-\epsilon_{xx}}-\frac{1}{2}\epsilon_{xy}}^2+\frac{1}{2}D\ins{\frac{3}{4}\epsilon_{xx}+\frac{1}{4}\epsilon_{yy}-\frac{\sqrt{3}}{2}\epsilon_{xy}}^2
+\end{align}
+and we demand it is equal to the original free energy. rearranging 
+\begin{align}
+    F' &= \ins{\frac{A}{32}+\frac{3B}{16}+\frac{3C}{8}+\frac{9D}{32}}\epsilon_{xx}^2\\
+    &+\ins{\frac{3A}{16}+\frac{5B}{8}-\frac{3C}{4}+\frac{3D}{16}}\epsilon_{xx}\epsilon_{yy}\\
+    &+\ins{\frac{\sqrt{3}A}{8}+\frac{\sqrt{3}B}{4}+\frac{\sqrt{3}C}{2}-\frac{3\sqrt{3}D}{8}}\epsilon_{xx}\epsilon_{xy}\\
+    &+\ins{\frac{9A}{32}+\frac{3B}{16}+\frac{3C}{8}+\frac{D}{32}}\epsilon_{yy}^2\\
+    &+\ins{\frac{3\sqrt{3}A}{8}-\frac{\sqrt{3}B}{4}-\frac{\sqrt{3}C}{2}-\frac{\sqrt{3}D}{8}}\epsilon_{yy}\epsilon_{xy}\\
+    &+\ins{\frac{3A}{8}-\frac{3B}{4}+\frac{C}{2}+\frac{3D}{8}}\epsilon_{xy}^2
+\end{align}
+we get the equations 
+\begin{align}
+    \frac{A}{32}+\frac{3B}{16}+\frac{3C}{8}+\frac{9D}{32} &= \frac{A}{2}\\
+    \frac{3A}{16}+\frac{5B}{8}-\frac{3C}{4}+\frac{3D}{16} &= B\\
+    \frac{\sqrt{3}A}{8}+\frac{\sqrt{3}B}{4}+\frac{\sqrt{3}C}{2}-\frac{3\sqrt{3}D}{8} &= 0\\
+    \frac{9A}{32}+\frac{3B}{16}+\frac{3C}{8}+\frac{D}{32} &= \frac{D}{2}\\
+    \frac{3\sqrt{3}A}{8}-\frac{\sqrt{3}B}{4}-\frac{\sqrt{3}C}{2}-\frac{\sqrt{3}D}{8} &= 0\\
+    \frac{3A}{8}-\frac{3B}{4}+\frac{C}{2}+\frac{3D}{8} &= 2C
+\end{align}
+focusing on two equations 
+\begin{align}
+    A+2B+4C-3D &= 0\\
+    3A-2B-4C-D &= 0
+\end{align}
+adding them together gives 
+\begin{equation}
+    A=D
+\end{equation}
+inserting this back 
+\begin{align}
+    -2A+2B+4C &= 0
+\end{align}
+rearranging 
+\begin{equation}
+    C = \frac{A-B}{2}
+\end{equation}
+so we're left with two independent components.
+\subsection{isotropic material}
+in an isotropic material we have symmetries for rotation for every rotation. I stop here because I'm short on time, unfortunately.

@@ -1,0 +1,125 @@
+\clearpage 
+\section{Stress Tensor under Rotations}
+we can say 
+\begin{equation}
+    R_{\alpha_p} = \mqty(\cos{\alpha_p}&-\sin{\alpha_p}\\\sin{\alpha_p}&\cos{\alpha_p})
+\end{equation}
+so 
+\begin{align}
+    \sigma'_{ij} &= \mqty(\cos{\alpha_p}&-\sin{\alpha_p}\\\sin{\alpha_p}&\cos{\alpha_p})\mqty(\sigma_{xx}&\sigma_{xy}\\\sigma_{xy}&\sigma_{yy})\mqty(\cos{\alpha_p}&-\sin{\alpha_p}\\\sin{\alpha_p}&\cos{\alpha_p})\\
+    &= \mqty(\cos{\alpha_p}&-\sin{\alpha_p}\\\sin{\alpha_p}&\cos{\alpha_p})
+    \mqty(\cos{\alpha_p}\sigma_{xx}+\sin{\alpha_p}\sigma_{xy}&\cos{\alpha_p}\sigma_{xy}-\sin{\alpha_p}\sigma_{xx}\\\cos{\alpha_p}\sigma_{xy}+\sin{\alpha_p}\sigma_{yy}&\cos{\alpha_p}\sigma_{yy}-\sin{\alpha_p}\sigma_{xy})\\
+    &= \mqty(\sigma_{xx}\cos^2{\alpha_p}+\sigma_{yy}\sin^2{\alpha_p}+2\sigma_{xy}\sin{\alpha_p}\cos{\alpha_p}&\ins{\sigma_{yy}-\sigma_{xx}}\sin{\alpha_p}\cos{\alpha_p}+\sigma_{xy}\ins{\cos^2{\alpha_p}-\sin^2{\alpha_p}}\\\ins{\sigma_{yy}-\sigma_{xx}}\sin{\alpha_p}\cos{\alpha_p}+\sigma_{xy}\ins{\cos^2{\alpha_p}-\sin^2{\alpha_p}}&\sigma_{xx}\sin^2{\alpha_p}+\sigma_{yy}\cos^2{\alpha_p}-2\sigma_{xy}\sin{\alpha_p}\cos{\alpha_p})
+\end{align}
+we can use the identities
+\begin{equation}
+    \sin2\alpha=2\sin\alpha\cos\alpha,\qquad \cos2\alpha=\cos^2\alpha-\sin^2\alpha
+\end{equation}
+we can have 
+\begin{equation}
+    \sigma_{12}=-\frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha+\sigma_{xy}\cos2\alpha
+\end{equation}
+\subsection{principal axes}
+we require 
+\begin{equation}
+    \sigma_{12}=-\frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha+\sigma_{xy}\cos2\alpha=0
+\end{equation}
+so 
+\begin{equation}
+    \sigma_{xy}\cos2\alpha=\frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha
+\end{equation}
+diving by \(\cos2\alpha_p\)
+\begin{equation}
+    \sigma_{xy}=\frac{\sigma_{xx}-\sigma_{yy}}{2}\tan2\alpha
+\end{equation}
+rearranging 
+\begin{equation}
+    \tan2\alpha = \frac{2\sigma_{xy}}{\sigma_{xx}-\sigma_{yy}}
+\end{equation}
+\subsection{principal stress}
+we'll find the eigenvalues of the stress tensor 
+\begin{equation}
+    \det\mqty(\sigma_{xx}-\lambda & \sigma_{xy}\\\sigma_{xy}&\sigma_{yy}-\lambda)=0
+\end{equation}
+or 
+\begin{equation}
+    \ins{\sigma_{xx}-\lambda}\ins{\sigma_{yy}-\lambda}-\sigma_{xy}^2=0
+\end{equation}
+expanding 
+\begin{equation}
+    \lambda^2-\ins{\sigma_{xx}+\sigma_{yy}}\lambda+\sigma_{xx}\sigma_{yy}-\sigma_{xy}^2=0
+\end{equation}
+solving
+\begin{equation}
+    \lambda_{1,2}=\frac{\sigma_{xx}+\sigma_{yy}}{2}\pm\frac{1}{2}\sqrt{\ins{\sigma_{xx}+\sigma_{yy}}^2-4\ins{\sigma_{xx}\sigma_{yy}-\sigma_{xy}^2}}
+\end{equation}
+simplifying inside the root 
+\begin{equation}
+    \ins{\sigma_{xx}+\sigma_{yy}}^2-4\ins{\sigma_{xx}\sigma_{yy}-\sigma_{xy}^2} = \ins{\sigma_{xx}-\sigma_{yy}}^2+4\sigma_{xy}^2
+\end{equation}
+so 
+\begin{equation}
+    \sigma_{1,2}=\frac{\sigma_{xx}+\sigma_{yy}}{2}\pm\sqrt{\ins{\frac{\sigma_{xx}-\sigma_{yy}}{2}}^2+\sigma_{xy}^2}
+\end{equation}
+\subsection{angle of max shear stress}
+we know 
+\begin{equation}
+    \sigma_{12}=-\frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha+\sigma_{xy}\cos2\alpha
+\end{equation}
+taking the derivative
+\begin{equation}
+    \sigma'_{12}=-\ins{\sigma_{xx}-\sigma_{yy}}\cos2\alpha-2\sigma_{xy}\sin2\alpha
+\end{equation}
+extrema when 
+\begin{equation}
+    2\sigma_{xy}\sin2\alpha=-\ins{\sigma_{xx}-\sigma_{yy}}\cos2\alpha
+\end{equation}
+rearranging 
+\begin{equation}
+    \tan2\alpha = -\frac{\sigma_{xx}-\sigma_{yy}}{2\sigma_{xy}}
+\end{equation}
+we notice that this angle is very similar to the principal axis angle, so we compare 
+\begin{equation}
+    \tan2\alpha_s = -\ins{\tan2\alpha_p}^{-1}
+\end{equation}
+which implies the angles are perpendicular, so 
+\begin{equation}
+    \alpha_s = \alpha_p+\frac{\pi}{2}
+\end{equation}
+the maximum magnitude for the shear stressis 
+\begin{equation}
+    \abs{\sigma'_{12}}=\sqrt{\ins{\frac{\sigma_{xx}-\sigma_{yy}}{2}}^2+\sigma_{xy}^2}
+\end{equation}
+but from the expression for the principal stresses 
+\begin{equation}
+    \sigma_1-\sigma_2=2\sqrt{\ins{\frac{\sigma_{xx}-\sigma_{yy}}{2}}^2+\sigma_{xy}^2}
+\end{equation}
+so 
+\begin{equation}
+    \abs{\sigma'_{12}}=\frac{1}{2}\ins{\sigma_1-\sigma_2}
+\end{equation}
+\subsection{if shear always zero}
+since 
+\begin{equation}
+    \sigma'_{12}=-\frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha+\sigma_{xy}\cos2\alpha
+\end{equation}
+this means 
+\begin{equation}
+    \frac{\sigma_{xx}-\sigma_{yy}}{2}\sin2\alpha=\sigma_{xy}\cos2\alpha
+\end{equation}
+but since this is true for all \(\alpha\) then 
+\begin{equation}
+    \frac{\sigma_{xx}-\sigma_{yy}}{2}=0,\qquad \sigma_{xy}=0
+\end{equation}
+therefore
+\begin{equation}
+    \sigma_{xx}=\sigma_{yy},\qquad \sigma_{xy}=0
+\end{equation}
+so the stress tensor is of the form 
+\begin{equation}
+    \sigma_{ij} = \sigma_{xx}\delta_{ij}
+\end{equation}
+and with a simple change of notation
+\begin{equation}
+    \sigma_{ij} = -p\delta_{ij}
+\end{equation}

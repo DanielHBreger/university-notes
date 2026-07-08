@@ -29,4 +29,18 @@ but
 \begin{equation}
 	U(x)\delta(x)=\frac{m}{x}x\sqrt{\frac{\nu}{\abs{m}}}=\sqrt{\nu \abs{m}}
 \end{equation}
-which is constant, meaning \(\Psi\) is a function of \(\eta\) alone.
+which is constant, meaning \(\Psi\) is a function of \(\eta\) alone. translating the boundary conditions to conditions on \(f\) we get 
+\begin{equation}
+	f(0)=0,\quad f'(0)=0,\quad f'(\infty)=1
+\end{equation}
+substititung this into the first Prandtl equation 
+\begin{equation}
+	f'''-\ins{f'}^2=-1
+\end{equation}
+\subsection{numerical}
+the plot is 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Figure_1.png}
+\end{figure}
+The velocity rises to be basically the same as the otside velocity at approximately \(\eta=3.5\). Since \(\eta = \frac{y}{\delta(x)}\) it means we need to move away only a little more than \(\delta\) and the width of the boundary layer in the \(y\) direction is proportional to \(\delta\).
