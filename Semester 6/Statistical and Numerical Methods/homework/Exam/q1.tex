@@ -1,0 +1,59 @@
+\clearpage
+\section{Lift Waiting Location}
+The code solving this, with in depth documentation, is attached as q1.py, the result it produces is floor 4.
+\subsection{Bonus Calculation}
+To find the optimal resting floor we'll start by analyzing the paths it takes, focusing on a single person. Through all the assumptions we can simplify the model to:
+\begin{enumerate}
+	\item Person enters on floor 0.
+	\item Person go to floor X.
+	\item Person then goes to 3 random floors.
+	\item From the final floor he reaches, the person goes down to 0 and leaves.
+\end{enumerate}
+in each movement step the elevator performs 
+\begin{enumerate}
+	\item Elevator goes to origin floor from its resting point.
+	\item Elevator goes to destination floor from the origin floor.
+	\item Elevator goes to the resting point from the destination floor.
+\end{enumerate}
+Each ride's cost calculation is 
+\begin{equation}
+	C=\abs{rest-origin}+\abs{dest-origin}+\abs{rest-dest}
+\end{equation}
+we can notice that the middle element doesn't depend on the rest point so we can simply ignore it. Therefore the goal we want to minimize is 
+\begin{equation}
+	C=E\ins{\abs{rest-origin}}+E\ins{\abs{rest-dest}}
+\end{equation}
+but from the symmetry of a sufficiently large random selection of people and trips we can simplify this to 
+\begin{equation}
+	C=2E\ins{\abs{rest-X}}
+\end{equation}
+where X is a floor. To this we add the trips as the mapping 
+\begin{equation}
+	\{0,f_1,f_2,f_3,f_4\} \to \{f_1,f_2,f_3,f_4,0\}
+\end{equation}
+we notice that the floor \(0\) appears twice and because the person travels from/to there in two separate trips, so when working with the floor numbers, we'll need to weight trips to/from the floor \(0\) at double the weight of the others. We can now calculate
+\begin{equation}
+	E\ins{\abs{rest-X}}=\frac{rest}{5}+\frac{4}{5}\cdot\frac{1}{10}\sum_{X=1}^{10}\abs{rest-X}
+\end{equation}
+we take the derivative to find the optimum
+\begin{equation}
+	\dv{E}{rest}=\frac{1}{5}+\frac{4}{50}\sum_{X=1}^{10}\text{sgn}\ins{rest-X}
+\end{equation}
+and 
+\begin{equation}
+	\frac{4}{50}\sum_{X=1}^{10}\text{sgn}\ins{rest-X} + \frac{1}{5}=0
+\end{equation}
+Which is a pain to solve so we turn to tricks. If we assume there are \(k\) floors below the resting point, this means the expression inside the sum will be \(+1\) \(k\) times, and \(-1\) \(10-k-1\) times. Therefore 
+\begin{equation}
+	D=\frac{4}{50}\sum_{X=1}^{10}\text{sgn}\ins{rest-X} + \frac{1}{5} = \frac{1}{5}+\frac{4}{50}\ins{k+k-9}=\frac{10-36+8k}{50}=\frac{8k-26}{50}
+\end{equation}
+plugging in the different possible values for k
+\begin{align}
+	D(0)=-\frac{26}{50}&&D(1)=-\frac{18}{50}&&D(2)=-\frac{10}{50}&&D(3)=-\frac{2}{50} && D(4)=\frac{6}{50}
+\end{align}
+so our two suspect floors are \(3\) and \(4\). We look at the values at the floors:
+\begin{align}
+	E\ins{\abs{3-X}}&=\frac{3}{5}+\frac{4}{50}\sum_{X=1}^{10}\abs{3-X}=\text{calculator}=\frac{77}{25}\\
+	E\ins{\abs{4-X}}&=\frac{4}{5}+\frac{4}{50}\sum_{X=1}^{10}\abs{4-X}=\text{calculator}=\frac{74}{25}
+\end{align}
+so floor 4 gives a lower expected value, meaning it is our optimal floor.
