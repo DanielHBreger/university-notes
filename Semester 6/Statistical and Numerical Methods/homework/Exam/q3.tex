@@ -1,0 +1,45 @@
+\clearpage
+\section{Resistors}
+Since the resistors are connected in parallel, we'll find the equivalent total resistance using 
+\begin{equation}
+    \frac{1}{R_{tot}}=\sum\frac{1}{R} \implies R_{tot}=\frac{R_1R_2R_3}{R_1R_2+R_1R_3+R_2R_3}
+\end{equation}
+giving us 
+\begin{equation}
+    R_{tot}=3.3\unit{\kilo\ohm}
+\end{equation}
+\subsection{Total error}
+The error on the total resistance will have to be calculated using error propagation
+\begin{align}
+    \sigma^2&=\ins{\pdv{R_{tot}}{R_1}}^2\sigma_{R1}^2+\ins{\pdv{R_{tot}}{R_2}}^2\sigma_{R2}^2+\ins{\pdv{R_{tot}}{R_3}}^2\sigma_{R3}^2\\
+    &= 3\ins{\frac{R_2R_3(R_1R_2+R_1R_3+R_2R_3) - R_1R_2R_3(R_2+R_3)}{\ins{R_1R_2+R_1R_3+R_2R_3}^2}}^2\sigma_{R1}^2\\
+    &= 3\ins{\frac{R_1R_2^2R_3+R_1R_2R_3^2+R_2^2R_3^2-R_1R_2^2R_3-R_1R_2R_3^2}{\ins{R_1R_2+R_1R_3+R_2R_3}^2}}^2\sigma_{R1}^2\\
+    &= 3\ins{\frac{R^4}{9R^4}}^2\sigma_{R}^2=\frac{1}{27}\sigma_{R}^2\\
+    &= \frac{1}{27}\ins{0.05\cdot10\unit{\kilo\ohm}}^2\\
+    &= 9259\unit{\ohm^2}
+\end{align}
+so 
+\begin{equation}
+    \sigma=96\unit{\ohm}
+\end{equation}
+where we used the fact the resistors are idential several times.
+\subsection{A single resistor}
+This time we only have a single source of error.
+\begin{equation}
+    \sigma=0.05\cdot3.3\unit{\kilo\ohm}=165\unit{\ohm}
+\end{equation}
+\subsection{in series instead}
+To get the same voltage we need the same resistance. The total resistance we found was \(3.3\unit{\kilo\ohm}\) so we need three resistors each \(1.1\unit{\kilo\ohm}\). The equation for total resistance is 
+\begin{equation}
+    R_{tot}=R_1+R_2+R_3
+\end{equation}
+so 
+\begin{equation}
+    \sigma^2=3\ins{\pdv{R_{tot}}{R}}^2\sigma_R^2=3\sigma_R^2=3\cdot\ins{0.05\cdot1.1\unit{\kilo\ohm}}^2=9075\unit{\ohm^2}
+\end{equation}
+so
+\begin{equation}
+    \sigma=95\unit{\ohm}
+\end{equation}
+\subsection{Different resistances vs the same}
+Yes there is a difference. Since they are independent elements, we sum the squares of the standard deviations then take the square root. If we look at the limit where one resistor has all the resistance and the others have resistance 0, the error is the same as the error on the individual resistor. Moving resistance to another resistor takes the value out from the square in the error calculation and moves it to a multiplication inside the root, which reduces it.

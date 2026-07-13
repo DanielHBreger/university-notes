@@ -3,16 +3,25 @@ import random
 import matplotlib.pyplot as plt
 
 class Building:
+    """
+    Defines the building with the parameters relevant to it
+    """
     def __init__(self, floors, elevator_rest_place=None):
         self.floors = floors
         self.cost_per_floor = 1
         self.elevator_rest_place = elevator_rest_place
     
+    """
+    get the cost for a single instance of a travel including the costs to go from and back to the rest point
+    """
     def get_travel_cost(self, start_floor, end_floor):
         if start_floor < 0 or start_floor > self.floors or end_floor < 0 or end_floor > self.floors:
             raise ValueError("Invalid floor number")
         return (abs(self.elevator_rest_place - start_floor) + abs(end_floor - start_floor) + abs(self.elevator_rest_place - end_floor)) * self.cost_per_floor
 
+"""
+Simulate a single day for a single person, given the building and the floors they'll visit. Assumes a person enters the building, goes to 4 random floors, and then returns to the ground floor. Returns the total cost for that person for the day.
+"""
 def simulate_day_one_person(building, travel_floors=None):
     if travel_floors is None:
         raise ValueError("travel_floors must be provided for the person")
@@ -24,6 +33,9 @@ def simulate_day_one_person(building, travel_floors=None):
         current_floor = destination
     return total_cost
 
+"""
+Simulates a single day for the building. Returns the total cost for the day.
+"""
 def simulate_day(building, simulation_people=5000):
     # simulate 5000 people
     total_cost = 0
@@ -46,6 +58,7 @@ def main():
     simulation_runs = 100
     simulation_people = 5000
     elevator_rest_places_candidates = np.linspace(0, floors, num=11)
+    # dictionary of the costs per rest place option
     rest_costs = {place: 0 for place in elevator_rest_places_candidates}
     for _ in range(simulation_runs):
         for elevator_rest_place in elevator_rest_places_candidates:
@@ -55,9 +68,10 @@ def main():
     average_costs = {place: cost / simulation_runs / simulation_people for place, cost in rest_costs.items()}
     optimal_rest_place = min(average_costs.items(), key=lambda kv: kv[1])[0]
     print(f"Optimal elevator rest place: {optimal_rest_place}, Minimum cost: {average_costs[optimal_rest_place]}")
+    # Show the results
     plt.plot(list(average_costs.keys()), list(average_costs.values()))
     plt.xlabel("Elevator Rest Place")
-    plt.ylabel("Total Cost")
+    plt.ylabel("Average Cost per Person")
     plt.title("Cost vs Elevator Rest Place")
     plt.show()
 
