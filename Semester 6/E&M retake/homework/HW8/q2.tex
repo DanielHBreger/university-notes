@@ -1,0 +1,88 @@
+\clearpage
+\section{Three Configurations}
+Before starting I notice that the azimuthal angle, which is usually called \(\varphi\), is \(\theta\) here. I am unhappy about this, but it's merely a name change. First we'll find the volumetric charge distribution. All the charges are the same distance from the origin and on the same plane and alternate in sign, and are equally spaced along the \(\varphi\) axis. Therefore
+\begin{equation}\label{density2}
+	\rho(r,\theta,\varphi)=\frac{\delta(r-R)\delta(\theta-\frac{\pi}{2})}{R^2\sin\varphi}\sum\limits_{n=0}^{N-1}{(-1)}^n\delta\left(\varphi-\frac{2\pi n}{N}\right)
+\end{equation}
+As we know we can develop the potential using spherical harmonics:
+\begin{equation}
+  \phi(\vb{x})=\sum_{l=0}^\infty\sum_{m=-l}^l\frac{4\pi q_{l,m}}{(2l+1)r^{l+1}}Y_{l,m}(\theta,\varphi)
+\end{equation}
+where
+\begin{equation}
+  q_{l,m}=\iiint_{V}\dd{\vb{x}}Y^*_{l,m}(\vb{x})\abs{\vb{x}}^l\rho(\vb{x})
+\end{equation}
+we'll solve this in spherical coordinates and using the density from equation~\ref{density2}:
+\begin{align}
+	q_{l,m}&=\int\limits_0^{2\pi}\dd\theta\int\limits_0^\pi\dd\varphi\sin\varphi\int\limits_0^\infty\dd r r^2Y^*_{l,m}(\theta,\varphi)r^l\rho(r,\theta,\varphi)\\
+	&= \int\limits_0^{2\pi}\dd\theta\int\limits_0^\pi\dd\varphi\sin\varphi\int\limits_0^\infty\dd r r^{l+2}Y^*_{l,m}(\theta,\varphi)\left(\frac{\delta(r-R)\delta(\theta-\frac{\pi}{2})}{R^2\sin\varphi}\sum\limits_{n=0}^{N-1}{(-1)}^n\delta\left(\varphi-\frac{2\pi n}{N}\right)\right)\\
+	&= \frac{1}{R^2}\sum\limits_{n=0}^{N-1}{(-1)}^n\int\limits_0^{2\pi}\dd\theta\delta(\theta-\frac{\pi}{2})\int\limits_0^\pi\dd\varphi\delta(\varphi-\frac{2\pi n}{N})Y^*_{l,m}(\theta,\varphi)\int\limits_0^\infty\dd rr^{l+2}\delta(r-R)\\
+	&= R^l\sum\limits_{n=0}^{N-1}{(-1)}^n Y^*_{l,m}(\varphi=\frac{\pi}{2},\theta=\frac{2\pi n}{N})
+\end{align}
+Finally before moving to each case we notice that the total charge in all cases is 0, therefore \(Y_{0,0}=const\) in all of these cases so we ignore it.
+\subsection{2 charges}
+In this case we have \(N=2\) therefore
+\begin{equation}
+  q_{l,m}=R^l\sum\limits_{n=0}^{1}{(-1)}^n Y^*_{l,m}(\varphi=\frac{\pi}{2},\theta=\pi n)
+\end{equation}
+and
+\begin{align}
+	Y_{1,-1}=\frac{1}{2}\sqrt{\frac{3}{2\pi}} \sin\varphi e^{-i\theta} && Y_{1,0}=0 && Y_{1,1}=-\frac{1}{2}\sqrt{\frac{3}{2\pi}} \sin\varphi e^{i\theta}
+\end{align}
+therefore
+\begin{equation}
+  q_{1,\pm1}=2R\cdot\mp\frac{1}{2}\sqrt{\frac{3}{2\pi}}e^{\pm i\theta}=\mp R\sqrt{\frac{3}{2\pi}}
+\end{equation}
+and thus the potential is
+\begin{align}
+	\phi(r,\theta,\varphi) &= \sum\limits_{m=-1}^1\frac{4\pi q_{1,m}}{3r^2}Y_{1,m}\\
+	&= \frac{4\pi R}{3r^2}\sqrt{\frac{3}{2\pi}}\cdot\frac{1}{2}\sqrt{\frac{3}{2\pi}}\sin\varphi\left(e^{i\theta}+e^{-i\theta}\right)\\
+	&= \frac{2R}{r^2}\sin\varphi\cos\theta
+\end{align}
+\subsection{4 charges}
+In this case we have \(N=4\) therefore
+\begin{equation}
+  q_{l,m}=R^l\sum\limits_{n=0}^{3}{(-1)}^n Y^*_{l,m}(\varphi=\frac{\pi}{2},\theta=\frac{\pi n}{2})
+\end{equation}
+From the symmetry of the problem, specifically that the charges are distributed like a plus shape, and general familiarity with the spherical harmonics, we can tell that \(q_{1,l}=0\) because they are anti-symmetric when observing their behavior in rotations of \(\frac{\pi}{2}\). This can be easily seen in any of the online animations of spherical harmonics. When 1 quarter becomes positive, the adjacent ones are negative. In conclusion, we begin our search at \(l=2\):
+\begin{align}
+	Y_{2,-2}= \frac{1}{4}\sqrt{\frac{15}{2\pi}}\sin^2\varphi e^{-2i\theta}&& && Y_{2,-1}=\frac{1}{2}\sqrt{\frac{15}{2\pi}}\sin\varphi\cos\varphi e^{-i\theta} \\ 
+	&&Y_{2,0}=\frac{1}{4}\sqrt{\frac{5}{\pi}}(3\cos^2\varphi-1)\\
+	Y_{2,1} = -\frac{1}{2}\sqrt{\frac{15}{2\pi}}\sin\varphi\cos\varphi e^{i\theta} && && Y_{2,2} = \frac{1}{4}\sqrt{\frac{15}{2\pi}}\sin^2\varphi e^{2i\theta}
+\end{align}
+therefore
+\begin{align}
+	q_{2,0} &= R^2\sum\limits_{n=0}^{3}{(-1)}^n Y^*_{2,0}(\varphi=\frac{\pi}{2},\theta=\frac{\pi n}{2})\\
+	&= R^2\left[Y^*_{2,0}(\pi/2,0)-Y^*_{2,0}(\pi/2,\pi/2)+Y^*_{2,0}(\pi/2,\pi)-Y^*_{2,0}(\pi/2,3\pi/2)\right]
+\end{align}
+but we notice that \(Y_{2,0}(\theta,\varphi+\pi)=-Y_{2,0}(\theta,\varphi)\) therefore
+\begin{equation}
+  q_{2,0} = 0
+\end{equation}
+next, for \(q_{2,\pm 1}\), we notice the exact same, therefore 
+\begin{equation}
+  q_{2,\pm 1}=0
+\end{equation}
+Finally
+\begin{align}
+	q_{2,2} &= R^2\sum\limits_{n=0}^{3}{(-1)}^n Y^*_{2,2}(\varphi=\frac{\pi}{2},\theta=\frac{\pi n}{2})\\
+	&= R^2\left[Y^*_{2,2}(\frac{\pi}{2},0)-Y^*_{2,2}(\frac{\pi}{2},\frac{\pi}{2})+Y^*_{2,2}(\frac{\pi}{2},\pi)-Y^*_{2,2}(\frac{\pi}{2},\frac{3\pi}{2})\right]\\
+	&= R^2\frac{1}{4}\sqrt{\frac{15}{2\pi}}\left[\sin^2\frac{\pi}{2}-\sin^2\frac{\pi}{2} e^{-i\pi}+\sin^2\frac{\pi}{2} e^{-2i\pi}-\sin^2\frac{\pi}{2} e^{-3i\pi}\right]\\
+	&= \frac{R^2}{4}\sqrt{\frac{15}{2\pi}}\left[1+1+1+1\right]\\
+	&= R^2\sqrt{\frac{15}{2\pi}}
+\end{align}
+and from the rules of the multipoles we know that \(q_{2,-2}=-R^2\sqrt{\frac{15}{2\pi}}\) thus
+\begin{equation}
+  \phi(x)=\frac{4\pi}{5r^3}R^2\sqrt{\frac{15}{2\pi}}(Y_{2,2}+Y_{2,-2})=\frac{3R^2}{5r^3}\sin^2\varphi\cos(2\theta)
+\end{equation}
+\subsection{6 charges}
+Using the same logic as N=4, we find that all moments with \(l=0,1,2\) are all zero, as well as \(q_{3,m}\) for all \(m\in\{0,1,-1,2,-2\}\). Therefore
+\begin{equation}
+  q_{3,3}=6R^3\left(\frac{1}{8}\sqrt{\frac{35}{\pi}}\right)=\frac{3R^3}{4}\sqrt{\frac{35}{\pi}}
+\end{equation}
+Therefore
+\begin{align}
+  \phi(x)&=\frac{4\pi}{7r^4}\frac{3R^3}{4}\sqrt{\frac{35}{\pi}}(-Y_{3,3}+Y_{3,-3})\\
+  &= \frac{3\pi R^3}{7r^4}\sqrt{\frac{35}{\pi}}\cdot\frac{1}{8}\sqrt{\frac{35}{\pi}}\sin^3\varphi\cos(3\theta)\\
+  &= \frac{15R^3}{4r^4}\sin^3\varphi\cos(3\theta)
+\end{align}

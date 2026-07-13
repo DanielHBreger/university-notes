@@ -1,0 +1,34 @@
+\clearpage
+\section{Six Charges}
+\subsection{zero monopole dipole quadropole}
+We'll show this from symmetry considerations.
+\subsubsection{Monopole}
+The total charge is 0 therefore the monopole is zero. 
+\subsubsection{Dipole}
+If we look at rotations of \(60\) degrees, the rotated charge distribution is exactly the negative of the original. On the other hand, the dipole is a vector. This means we have
+\begin{equation}
+    \vb{p}\to-\vb{p}
+\end{equation}
+after a rotation of 60 degrees. This is only possible if \(\vb{p}=0\).
+\subsubsection{Quadropole}
+the quadropole moments are 
+\begin{equation}
+    q_{2j}=\int\dd{\vb{r}}Y^*_{2j}\ins{\vb{r}}r^2\rho(\vb{r})
+\end{equation}
+but 
+\begin{equation}
+    Y^*_{2j}\to\ins{-1}^2Y^*_{2j}\ins{-r}=Y^*_{2j}\ins{-r}
+\end{equation}
+so the quadropole should remain idential after a mirroring, but we immediately see the charge distribution would become its own negative, so the quadropole moment must also be zero.
+\subsection{3rd multipole}
+\begin{align}
+    q_{33}&=\sum_{\alpha}q_\alpha r_\alpha^3 Y^*_{33}\ins{\theta_\alpha,\varphi_\alpha}\\
+    &=\sum_{\alpha}q_\alpha r_\alpha^3 \ins{-\frac{1}{4}\sqrt{\frac{35}{\pi}}\sin^3\theta e^{3i\varphi}}
+\end{align}
+but \(r_\alpha=a\) and \(\theta_\alpha=\pi/2\) and \(q_\alpha=\ins{-1}^{\alpha+1}q\) and \(\varphi_\alpha=\frac{\pi}{6}\ins{2\alpha+1}\) so 
+\begin{align}
+    q_{33}&=-\sqrt{\frac{35}{16\pi}}a^3q\sum_\alpha\ins{-1}^{\alpha+1}e^{-\frac{i\pi}{2}\ins{2\alpha+1}}\\
+    &=-6\sqrt{\frac{35}{16\pi}}a^3 q
+\end{align}
+\subsection{power of N}
+since the potential depends on the radius \(\phi\propto r^{-\ins{l+1}}\) but we saw that the first non-zero multiple is for \(l=3\) it means that \(N=4\).
