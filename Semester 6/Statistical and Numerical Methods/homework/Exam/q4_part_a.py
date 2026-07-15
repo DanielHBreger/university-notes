@@ -15,8 +15,6 @@ def part_a(file_path):
         fitted_params, chi_squared, sigma_eff = fit_with_t_errors(model, t, y, sigma_t, sigma_y)
         red, p = check_fit_quality(chi_squared, len(t), len(fitted_params))
         results[name] = (fitted_params, chi_squared, red, p)
-        # plot_fit(model, t, y, sigma_y, sigma_t, fitted_params, f"Fit for {name}")
-        # plot_chi2_landscape(model, t, y, sigma_y, name)
     table = prettytable.PrettyTable()
     table.field_names = ["Model", "A", "B", "C", "D", "Chi2", "Reduced Chi2", "p-value"]
     for name, (params, chi_squared, red, p) in results.items():
