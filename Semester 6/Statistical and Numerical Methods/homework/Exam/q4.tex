@@ -72,7 +72,7 @@ which indicates that this time the noise is actually somewhat well described as 
     \includegraphics[width=0.75\textwidth]{noise_in_signal.png}
     \caption{Histogram of the values of the residual noise with a fitted gaussian.}
 \end{figure}
-next to characterize the signal I split the signal into bins of \(0.5\unit{\nano\second}\), and for each of those I calculated the mean, which is the total count \(N\), then from it subtracted the baseline noise's mean which acts as \(B\), giving me \(S=N-B\). I then calculated the error from its own standard deviation divided by the number of counts in the bin combined with the errro on \(B\).
+next to characterize the signal I split the signal into bins of \(0.5\unit{\nano\second}\), and for each of those I calculated the mean, which is the total count \(N\), then from it subtracted the baseline noise's mean which acts as \(B\), giving me \(S=N-B\). I then calculated the error from its own standard deviation divided by the root of the number of counts in the bin combined with the errro on \(B\).
 \begin{equation}
     S_{\min}=-295\pm7\quad\text{at } t=2.11\unit{ns},\qquad S_{\max}=154\pm4\quad\text{at } t=10.11\unit{ns}
 \end{equation}

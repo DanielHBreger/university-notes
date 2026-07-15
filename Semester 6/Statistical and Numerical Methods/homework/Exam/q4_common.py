@@ -67,7 +67,7 @@ def nonlinear_ranges(model, t):
     span = t.max() - t.min()
     freq = (2 * np.pi / (10 * span), 2 * np.pi / (span / 10))
     if model is y2:
-        return [(span / 100000, 100000 * span), freq]  # (decay, frequency)
+        return [(span / 1000, 1000 * span), freq]  # (decay, frequency)
     return [freq]
 
 def profile_params(model, nonlinear, t, y, sigma):
