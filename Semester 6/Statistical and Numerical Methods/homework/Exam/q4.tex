@@ -1,6 +1,6 @@
 \clearpage
 \section{nonlinear system}
-The python code solving this with documentation is attached as several python files, which will be explained fully in appendix~\ref{q4code}. For all the tests I used the reduced chi-square test.
+The python code solving this with documentation is attached as several python files, which will be explained fully in appendix~\ref{q4code}. For all the tests I used the reduced chi-square test, which is just the chi-squared divided by the degrees of freedom, for convenience.
 \subsection{Representative measurements}
 The results from running the code for the representative measurements are 
 \begin{table}[H]
@@ -43,8 +43,7 @@ and it appears that the noise in both regions is different. The signal measureme
 \begin{equation}
     \chi^2/\text{dof}=2.15, \qquad \text{p value}=0.018
 \end{equation}
-
-which is not a great result, but given I have no other information to work off of I'll accept an assumption the noise is gaussian in the background measurement with the following parameters. A further analysis that could be made is whether the noise is somehow self-correlated, i.e that not all measurements in the noise really are random, which if removed could be characterized better by a gaussian, but this is out of scope.
+which is not a great result, but given I have no other information to work off of I'll accept an assumption the noise is gaussian in the background measurement with the following parameters.
 \begin{align}
     \mu=-2.688\pm0.132,\qquad \sigma=3.68
 \end{align}
@@ -53,7 +52,7 @@ which is not a great result, but given I have no other information to work off o
     \includegraphics[width=0.75\textwidth]{noise_before_signal.png}
     \caption{Histogram of the values recorded in the section before the signal begins. A gaussian curve fit is presented on top.}
 \end{figure}
-To analyze the noise in the signal region, I have to first isolate the signal. Since I don't know which of the hypothesis are correct and I don't want to rush to the next part, I isolated it by performing a rolling average of the values, with a window of 20 measurements. This window was significantly smaller than the oscillations in the signal so it did not skew the signal too much. 
+A further analysis that could be made is whether the noise is somehow self-correlated, i.e that not all measurements in the noise really are random, which if removed could be characterized better by a gaussian, but this is out of scope. To analyze the noise in the signal region, I have to first isolate the signal. Since I don't know which of the hypothesis are correct and I don't want to rush to the next part, I isolated it by performing a rolling average of the values, with a window of 20 measurements. This window was significantly smaller than the oscillations in the signal so it did not skew the signal too much. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{signal_and_smoothed.png}
@@ -61,7 +60,7 @@ To analyze the noise in the signal region, I have to first isolate the signal. S
 \end{figure}
 I then subtracted the cleaned signal from the raw data and found the noise in the signal region. After plotting a histogram of it, it also appeared quite gaussian, so I ran another chi-square test:
 \begin{equation}
-    \chi^2/dof=0.81, \qquad p-value=0.615
+    \chi^2/dof=0.81, \qquad p=0.615
 \end{equation}
 which indicates that this time the noise is actually somewhat well described as gaussian:
 \begin{equation}
@@ -83,11 +82,11 @@ with significance
 meaning the signal is highly significant in comparison to the noise.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{extracted_signal.png}
+    \includegraphics[width=1\textwidth]{extracted_signal.png}
     \caption{The raw data in blue with the extracted signal, with errorbars, on top in red.}
 \end{figure}
 \subsection{Simulation}
-In this part all that's needed is to load and properly process the data of the simulation then run the same tests as I did for the other three hypothesis. A note on the data processing, the simulation's times are different from the others, so the times needed to be shifted. Instead of trying to manually find the right shift, I found the correct shift with the same optimization technique used for the other parameters in the question, with minimizing the chi-square between the simulation and the measured data. I decided to re-fit the hypothesis \(Y_i\) to the real measurement data from part b, to give each hypothesis its best shot. This resulted in the follwoing
+In this part all that's needed is to load and properly process the data of the simulation then run the same tests as I did for the other three hypothesis. A note on the data processing, the simulation's times appeared different from the others, so I believed the times needed to be shifted. Instead of trying to manually find the right shift, I found the correct shift with the same optimization technique used for the other parameters in the question, with minimizing the chi-square between the simulation and the measured data. I decided to re-fit the hypothesis \(Y_i\) to the real measurement data from part b, to give each hypothesis its best shot. This resulted in the follwoing
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c}

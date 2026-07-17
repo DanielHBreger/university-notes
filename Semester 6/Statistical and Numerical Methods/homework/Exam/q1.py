@@ -27,7 +27,6 @@ def simulate_day_one_person(building, travel_floors=None):
         raise ValueError("travel_floors must be provided for the person")
     total_cost = 0
     current_floor = 0
-    # travel to all the floors
     for destination in travel_floors:
         total_cost += building.get_travel_cost(current_floor, destination)
         current_floor = destination
@@ -37,15 +36,13 @@ def simulate_day_one_person(building, travel_floors=None):
 Simulates a single day for the building. Returns the total cost for the day.
 """
 def simulate_day(building, simulation_people=5000):
-    # simulate 5000 people
     total_cost = 0
     for _ in range(simulation_people):
         travel_floors = []
         current = 0
         while len(travel_floors) < 4:
             next_floor = random.randint(1, building.floors)
-            # only ensure the next floor is not the current (last) floor
-            if next_floor != current:
+            if next_floor != current: # ensure the next floor is not the current floor
                 travel_floors.append(next_floor)
                 current = next_floor
         travel_floors.append(0)  # ensure the last floor is ground floor
@@ -68,7 +65,6 @@ def main():
     average_costs = {place: cost / simulation_runs / simulation_people for place, cost in rest_costs.items()}
     optimal_rest_place = min(average_costs.items(), key=lambda kv: kv[1])[0]
     print(f"Optimal elevator rest place: {optimal_rest_place}, Minimum cost: {average_costs[optimal_rest_place]}")
-    # Show the results
     plt.plot(list(average_costs.keys()), list(average_costs.values()))
     plt.xlabel("Elevator Rest Place")
     plt.ylabel("Average Cost per Person")
