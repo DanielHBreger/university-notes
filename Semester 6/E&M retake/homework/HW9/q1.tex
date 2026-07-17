@@ -1,0 +1,101 @@
+\clearpage
+\section{Spinning Sphere}
+\subsection{Surface Current density}
+velocity on a rotating sphere is 
+\begin{equation}
+  \vb{v} = \vb{\omega}\times\vb{r}
+\end{equation}
+but in spherical
+\begin{equation}
+  \vb{\omega}\times\vb{r}=\omega R \sin\theta\vu{\varphi}
+\end{equation}
+so 
+\begin{equation}
+  \vb{K} = \sigma\omega R \sin\theta\vu{\varphi}
+\end{equation}
+and the volumetric density is 
+\begin{equation}
+  \vb{j} = \sigma\omega R \sin\theta\delta\ins{r-R}\vu{\varphi}
+\end{equation}
+\subsection{magnetic dipole}
+we know that 
+\begin{equation}
+  \vb{m} = \frac{1}{2c}\int \dd{x}^3 \vb{r}\times j 
+\end{equation}
+since the volumetric integral will become a surface integral using the delta, we can say 
+\begin{equation}
+  \vb{m} = \frac{1}{2c}\oint \vb{r}\times \vb{K}\dd{A}
+\end{equation}
+but 
+\begin{equation}
+  \vb{r}\times\vb{K}=\sigma\omega R^2\sin\theta \ins{\vu{r}\times\vu{\varphi}}=-\sigma\omega R^2\sin\theta\vu{\theta}
+\end{equation}
+but we know the moment must point in the \(\vu{z}\) direction here, so 
+\begin{equation}
+  \ins{\vb{r}\times\vb{K}}\cdot\vu{z}=\sigma\omega R^2\sin^2\theta
+\end{equation}
+thus 
+\begin{align}
+  m&=\frac{\sigma\omega R^2}{2c}\oint\sin^2\theta\dd{A}\\
+  &= \frac{\sigma\omega \pi R^4}{c}\int_{0}^{\pi}\sin^3\theta\dd{\theta}\\
+  &= \frac{\sigma\omega \pi R^4}{c}\cdot\frac{4}{3}\\
+  &= \frac{4\sigma\omega \pi R^4}{3c}
+\end{align}
+so 
+\begin{equation}
+  \vb{m} = \frac{4\pi\sigma\omega R^4}{3c}\vu{z}
+\end{equation}
+\subsection{fields inside and outside}
+in TA 10 we saw that 
+\begin{equation}
+  \vb{A}\ins{\vb{r}}=\frac{4\pi\sigma\omega R^3}{3c}\frac{r_<}{r_>^2}\sin\theta\vu{\varphi}
+\end{equation}
+which we can rewrite using the magnetic dipole 
+\begin{equation}
+  \vb{A}\ins{\vb{r}} = \begin{cases}
+    \frac{4\pi\sigma\omega R}{3c}r\sin\theta\vu{\varphi} & r<R\\
+    \frac{4\pi\sigma\omega R^4}{3cr^2}\sin\theta\vu{\varphi} & r>R
+  \end{cases}
+\end{equation}
+or
+\begin{equation}
+  \vb{A}\ins{\vb{r}} = \begin{cases}
+    \frac{mr}{R^3}\sin\theta\vu{\varphi} & r<R\\
+    \frac{m}{r^2}\sin\theta\vu{\varphi} & r>R
+  \end{cases}
+\end{equation}
+The magnetic field is the rotor of the vector potential, so we know that, using the spherical rotor
+\begin{equation}
+  B_r = \frac{1}{r\sin\theta}\partial_\theta\ins{\sin\theta A_\varphi},\qquad B_\theta = -\frac{1}{r}\partial_r\ins{r A_\varphi},\qquad B_\varphi=0
+\end{equation}
+Looking inside the sphere, 
+\begin{equation}
+  B_r = \frac{1}{r\sin\theta}\partial_\theta\ins{m\frac{r}{R^3}\sin^2\theta}=\frac{2m}{R^3}\cos\theta
+\end{equation}
+and 
+\begin{equation}
+  B_\theta = -\frac{1}{r}\partial_r\ins{\frac{mr^2}{R^3}\sin\theta\vu{\varphi}}=-\frac{2m}{R^3}\sin\theta
+\end{equation}
+so 
+\begin{equation}
+  \vb{B}=\frac{2m}{R^3}\ins{\cos\theta\vu{r}-\sin\theta\vu{\theta}}
+\end{equation}
+but using the identity
+\begin{equation}
+  \cos\theta\vu{r}-\sin\theta\vu{\theta}=\vu{z}
+\end{equation}
+\begin{equation}
+  \vb{B}=\frac{8\pi\sigma\omega R}{3c}\vu{z}
+\end{equation}
+and outside the sphere 
+\begin{equation}
+  B_r = \frac{1}{r\sin\theta}\partial_\theta\ins{\frac{m}{r^2}\sin^2\theta}=2\frac{m}{r^3}\cos\theta
+\end{equation}
+and 
+\begin{equation}
+  B_\theta = -\frac{1}{r}\partial_r\ins{\frac{m}{r}\sin\theta}=\frac{m}{r^3}\sin\theta
+\end{equation}
+so 
+\begin{equation}
+  \vb{B}=\frac{m}{r^3}\ins{2\cos\theta\vu{r}+\sin\theta\vu{\theta}}
+\end{equation}

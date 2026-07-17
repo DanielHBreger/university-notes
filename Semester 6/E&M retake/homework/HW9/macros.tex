@@ -1,0 +1,51 @@
+\newcommand{\tsr}[2]{\tensor{#1}{#2}}
+
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+\newcommand{\blankpage}{\newpage \thispagestyle{empty} \mbox{} \newpage}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+\renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
+
+\newcommand{\umat}{\pmat{1&0\\0&1}}
+\newcommand{\sigx}{\pmat{0&1\\1&0}}
+\newcommand{\sigy}{\pmat{0&-i\\i&0}}
+\newcommand{\sigz}{\pmat{1&0\\0&-1}}
+
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\reals}{\mathbb{R}}
+\let\uglyepsilon\epsilon
+\let\epsilon\varepsilon
+\DeclareSIUnit \year {\text{yr}}
+
+\makeatletter
+\newcommand{\dalembertian}{\mathop{\mathpalette\dalembertian@\relax}}
+\newcommand{\dalembertian@}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\square$}%
+  \dimen0=\fontdimen8
+    \ifx#1\displaystyle\textfont\else
+    \ifx#1\textstyle\textfont\else
+    \ifx#1\scriptstyle\scriptfont\else
+    \scriptscriptfont\fi\fi\fi3
+  \makebox[\wd\z@]{%
+    \hbox to \ht\z@{%
+      \vrule width \dimen0
+      \kern-\dimen0
+      \vbox to \ht\z@{
+        \hrule height \dimen0 width \ht\z@
+        \vss
+        \hrule height 2\dimen0
+      }%
+      \kern-2.5\dimen0
+      \vrule width 2.5\dimen0
+    }%
+  }%
+  \endgroup
+}
+\makeatother
