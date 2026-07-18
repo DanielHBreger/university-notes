@@ -1,0 +1,85 @@
+\clearpage
+\section{Flamant Solution for a Point Tangential Stress}
+\subsection{radial only}
+The stress \(Q\) is applied purely in the radial direction so none of it is applied in the angular direction, so \(\sigma_{\theta r}=\sigma_{\theta\theta}=0\).
+\subsection{Airy stress}
+Since the solutions we need are equilibrium solutions, we have \(\div{\vb{\sigma}}=0\). Therefore integrating over half a sphere like in the TA session
+\begin{align}
+	0&=\int_A\dd{A}\div{\vb{\sigma}}=\int_{0}^{R}\dd{r}\int_{-\pi/2}^{\pi/2}\dd{\theta}r\div{\vb{\sigma}}\\
+	&=\int_{-\pi/2}^{\pi/2}\dd{\theta}R\vu{r}\cdot\vb{\sigma}+\int_{-R}^{R}\ins{-\vu{x}}\cdot\vb{\sigma}\dd{y}\\
+	&= \int_{-\pi/2}^{\pi/2}\dd{\theta}R\sigma_{rr}\vu{r}-\int_{-R}^{R}\sigma_{xy}\vu{y}\dd{y}\\
+	&= \int_{-\pi/2}^{\pi/2}\dd{\theta}R\sigma_{rr}\vu{r}+Q\int_{-R}^{R}\delta\ins{r}\vu{y}\dd{y}
+\end{align}
+so 
+\begin{align}
+	Q\int_{-R}^{R}\delta\ins{r}\vu{y}\dd{y} &= -\int_{-\pi/2}^{\pi/2}\dd{\theta}R\sigma_{rr}\vu{r}\\
+	&= -R\ins{\int_{-\pi/2}^{\pi/2}\dd{\theta}\sigma_{rr}\cos\theta\vu{x}+\int_{-\pi/2}^{\pi/2}\dd{\theta}\sigma_{rr}\sin\theta\vu{y}}
+\end{align}
+which we can now split into two equations by unit vector
+\begin{align}
+	Q &= -R\int_{-\pi/2}^{\pi/2}\dd{\theta}\sigma_{rr}\sin\theta\\
+	0 &= R\int_{-\pi/2}^{\pi/2}\sigma_{rr}\cos\theta
+\end{align}
+Since \(Q\) is a constant the integral must resolve to a quantity that includes \(1/r\) in it somewhere, meaning
+\begin{equation}
+	\sigma_{rr}\propto \frac{F(\theta)}{r}
+\end{equation}
+where \(F\) is some function. Using the expression from the training
+\begin{equation}
+	\sigma_{rr}=\frac{1}{r}\pdv{\chi}{r}+\frac{1}{r^2}\pdv[2]{\chi}{\theta}\propto\frac{1}{r}\implies F(\theta)=\pdv{\chi}{r}+\frac{1}{r}\pdv[2]{\chi}{\theta}
+\end{equation}
+and continuting with the training we find that we must have 
+\begin{equation}
+	\chi = \ins{A\cos\theta+B\sin\theta}r\theta
+\end{equation}
+and now derivatives 
+\begin{align}
+	\sigma_{rr} &= \frac{1}{r}\pdv{\chi}{r}+\frac{1}{r^2}\pdv[2]{\chi}{\theta}\\
+	&= \cdots = \frac{-2A\sin\theta+2B\cos\theta}{r}
+\end{align}
+again from the training. Throwing this into the expressions we found
+\begin{align}
+	0&=R\int_{-\pi/2}^{\pi/2}\frac{-2A\sin\theta+2B\cos\theta}{R}\cos\theta\\
+	&= \int_{-\pi/2}^{\pi/2}\ins{-2A\sin\theta+2B\cos\theta}\cos\theta\\
+	&= \int_{-\pi/2}^{\pi/2}2B\cos^2\theta \implies B=0
+\end{align}
+and 
+\begin{align}
+	Q &= 2A\int_{-\pi/2}^{\pi/2}\dd{\theta}\sin^2\theta\\
+	&= 2A\cdot\pi/2=\pi A\implies A=\frac{Q}{\pi}
+\end{align}
+so in total
+\begin{equation}
+	\chi = \frac{Q}{\pi}\cos\theta r\theta, \qquad \sigma_{rr}=-\frac{2Q}{\pi}\frac{\sin\theta}{r}
+\end{equation}
+\subsection{equal-stress contours}
+for constant stress 
+\begin{equation}
+	\frac{2Q}{\pi}\frac{\sin\theta}{r}
+\end{equation}
+so as in the training we define 
+\begin{equation}
+	D=\frac{Q}{\pi C}
+\end{equation}
+and 
+\begin{equation}
+	\frac{1}{D}=\frac{2\sin\theta} \implies r^2=2Dr\sin\theta
+\end{equation}
+converting to cartesian for humans 
+\begin{equation}
+	x^2+y^2-2Dy=0 \implies x^2+y^2-2Dy+D^2=D^2 \implies x^2+\ins{y-D}^2=D^2
+\end{equation}
+giving a circle around \(y=D\). For the other circle, we notice that setting \(D\to-D\) changes nothing, so \(y=-D\) is also a circle center.
+\subsection{general tangential stress}
+in cartesian from radial 
+\begin{align}
+	\sigma_{xx}&=\sigma_{rr}\cos^2\theta=\frac{2Q}{\pi}\frac{x^2y}{\ins{x^2+y^2}^2}\\
+	\sigma_{yy}&=\sigma_{rr}\sin^2\theta=\frac{2Q}{\pi}\frac{y^3}{\ins{x^2+y^2}^2}\\
+	\sigma_{xy}&=\sigma_{rr}\sin\theta\cos\theta=\frac{2Q}{\pi}\frac{xy^2}{\ins{x^2+y^2}^2}
+\end{align}
+but since we want a general stress distribution, instead of \(Q\) we have \(q(s)\) so
+\begin{align}
+	\sigma_{xx}&=\frac{2x^2}{\pi}\int_{-\infty}^{\infty}\frac{\ins{y-s}q(s)}{\ins{x^2+\ins{y-s}^2}^2}\\
+	\sigma_{yy}&=\frac{2}{\pi}\int_{-\infty}^{\infty}\frac{\ins{y-s}^3q(s)}{\ins{x^2+\ins{y-s}^2}^2}\\
+	\sigma_{xy}&=\frac{2x}{\pi}\int_{-\infty}^{\infty}\frac{\ins{y-s}^2q(s)}{\ins{x^2+\ins{y-s}^2}^2}
+\end{align}
