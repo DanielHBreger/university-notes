@@ -1,0 +1,72 @@
+\clearpage
+\section{Infinite-period bifurcations}
+\subsection{saddle node on a cycle}
+\subsubsection{local normal form}
+Just after the saddle node, the two fixed point disappear. After rescaling \(u\), time, and \(\mu\) the normal form is 
+\begin{equation}
+    \dot{u}=\mu+u^2
+\end{equation}
+\subsubsection{time in the bottleneck}
+The time to move from \(-h\) to \(h\) is
+\begin{equation}
+    T = \int_{-h}^{h}\frac{\dd{u}}{\mu+u^2}
+\end{equation}
+using the known (to google and now to me) rule for the antiderivative of something of this form 
+\begin{equation}
+    T = \left.\ins{\frac{1}{\sqrt{\mu}}\arctan\ins{\frac{u}{\sqrt{\mu}}}}\right|_{-h}^h=\frac{2}{\sqrt{\mu}}\arctan\ins{\frac{h}{\sqrt{\mu}}}
+\end{equation}
+so in the limit \(\mu\to0^+\)
+\begin{equation}
+    T \sim \frac{\pi}{\sqrt{\mu}}
+\end{equation}
+\subsection{Homoclinic saddle-loop}
+\subsubsection{entry point consistent}
+at the bifurcation 
+\begin{equation}
+    \mu=\mu_c \implies \epsilon=0
+\end{equation}
+the trajectory enters exactly on the stable manifold \(u=0\), and approaches the saddle asymptotically, leaving along the unstable manifold. 
+\subsubsection{escape time}
+The unstable coordinate evolves
+\begin{equation}
+    u(t)=\epsilon e^{\lambda_u t}
+\end{equation}
+and the trajectory leaves when \(u(t)=h\) i.e 
+\begin{equation}
+    h=\epsilon e^{\lambda_u T}
+\end{equation}
+so 
+\begin{equation}
+    T = \frac{1}{\lambda_u}\ln\ins{\frac{h}{\epsilon}}
+\end{equation}
+inserting \(\epsilon=u_0\abs{\mu-\mu_c}\)
+\begin{equation}
+    T = \frac{1}{\lambda_u}\ins{\ln\ins{\frac{h}{u_0}}+\ln\ins{\frac{1}{\abs{\mu-\mu_c}}}}
+\end{equation}
+the first term is a constant so 
+\begin{equation}
+    T \sim \frac{1}{\lambda_u}\ln\ins{\frac{1}{\abs{\mu-\mu_c}}}
+\end{equation}
+so 
+\begin{equation}
+    C = \frac{1}{\lambda_u}
+\end{equation}
+\subsubsection{smallest distance}
+the stable coordinate is 
+\begin{equation}
+    w(t)=he^{\lambda_s t}
+\end{equation}
+since \(\lambda_s<0\), \(w\) decreases while the orbit remains in the beighborhood. The smallest value occurs at the escape time 
+\begin{equation}
+    w_{\min}=he^{\lambda_s T}
+\end{equation}
+inserting the time we found 
+\begin{equation}
+    w_{\min}=h\ins{\frac{h}{\epsilon}}^{\lambda_s/\lambda_u}
+\end{equation}
+so 
+\begin{equation}
+    w_{\min} = h\ins{\frac{h}{u_0\abs{\mu-\mu_c}}}^{\lambda_s/\lambda_u}
+\end{equation}
+\subsection{origin of the diverging periods}
+In the SNIC, the local velocity vanishes quadratically at the saddle node. In the homoclinic bifurcation, the orbit enters exponentially close to the stable manifold, therefore spending a very long time near the saddle.
