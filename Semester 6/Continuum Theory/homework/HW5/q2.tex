@@ -1,0 +1,97 @@
+\clearpage
+\section{Model with Cylindrical Hole Under Uniaxial Tension}
+\subsection{superposition}
+We can write 
+\begin{equation}
+    \sigma_{yy}=a\sigma_1+b\sigma_2\overset{!}{=}\sigma_\infty,\qquad\sigma_{xx}=a\sigma_1-b\sigma_2 \overset{!}{=} 0
+\end{equation}
+because of the directions of the tension, and this requires
+\begin{equation}
+    a=b=\frac{1}{2}
+\end{equation}
+\subsection{validity}
+Since we're working with \(L\gg R\), the domain's exact shape is effectively irrelevant, since the boundary conditions we produce from it are treated to be at infinity. Looking at the boundary conditions at infinity as defined in cartesian or cylindrical coordinates produces the same boundary conditions.
+\subsection{symmetric tension solution}
+we know
+\begin{equation}
+    \sigma_{xx}=\pdv[2]{\chi}{x},\qquad \sigma_{yy}=\pdv[2]{\chi}{y},\qquad\sigma_{xy}=-\pdv{\chi}{x}{y}
+\end{equation}
+and our boundary conditions are 
+\begin{align}
+    \sigma_{xx}(r\gg R)=-\sigma_2\\
+    \sigma_{yy}(r\gg R)=\sigma_2\\
+    \sigma_{xy}(r\gg R)=0
+\end{align}
+thus
+\begin{align}
+    \pdv[2]{\chi(r\gg R)}{x}=-\sigma_2 &\implies \chi(r\gg R) = \frac{\sigma_2}{2}x^2+A(y)x+B(y)\\
+    \pdv[2]{\chi}{y}=\sigma_2 &\implies \chi(r\gg R)=-\frac{\sigma_2}{2}y^2+C(x)y+D(x)
+\end{align}
+combining both we get 
+\begin{equation}
+    \chi = \frac{\sigma_2}{2}\ins{x^2-y^2}+Axy
+\end{equation}
+using the condition for \(xy\) we get \(A=0\) so 
+\begin{equation}
+    \chi = \frac{\sigma_2}{2}\ins{x^2-y^2} = \frac{\sigma_2}{2}r^2\ins{\cos^2\theta-\sin^2\theta}= \frac{\sigma_2}{2}r^2\cos2\theta
+\end{equation}
+using the Michell solution
+\begin{equation}
+    \chi = \ins{Ar^2+Br^{-2}+Cr^4+D}\cos2\theta
+\end{equation}
+we can immediately say that \(C=0\) and \(A=\frac{\sigma_2}{2}\). To finish we need to consider the boundary conditions at the edge nof the hole
+\begin{equation}
+    \sigma_{rr}(r=R)=\sigma_{r\theta}(r=R)=0
+\end{equation}
+and we find them from the airy stress 
+\begin{align}
+    \sigma_{rr}&=\frac{1}{r}\pdv{\chi}{r}+\frac{1}{r^2}\pdv[2]{\chi}{\theta}=\ins{\sigma_2-2Dr^{-4}}\cos2\theta-4\ins{\frac{\sigma_2}{2}+Cr^{-2}+Dr^{-4}}\cos2\theta\\
+    \sigma_{r\theta}&=-\pdv{r}\ins{\frac{1}{r}\pdv{\chi}{\theta}}=\pdv{r}\ins{\sigma_2 r+2Cr^{-1}+2Dr^{-3}}\sin2\theta=\ins{\sigma_2-2Cr^{-2}+Dr^{-4}}\sin2\theta
+\end{align}
+now using the boundary conditions 
+\begin{align}
+    \sigma_2-2CR^{-2}-6DR^{-4}&=0\\
+    \sigma_2+6DR^{-4}+4CR^{-2}&=0
+\end{align}
+which gives 
+\begin{equation}
+    C = -\sigma_2 R^2, \qquad D=\frac{\sigma_2}{2}R^4
+\end{equation}
+so 
+\begin{equation}
+    \chi = \frac{\sigma_2}{2}R^2\ins{w\frac{r^2}{R^2}+\frac{R^2}{r^2}-2}\cos2\theta
+\end{equation}
+\subsection{general solution}
+We'll combine the solutions of the two acses we know. For subfigure b 
+\begin{equation}
+    \sigma_{rr}=\sigma_1\ins{1-\frac{R^2}{r^2}},\qquad \sigma_{\theta\theta}=\sigma_1\ins{1+\frac{R^2}{r^2}},\qquad \sigma_{r\theta}=0
+\end{equation}
+and for subfigure c 
+\begin{equation}
+    \sigma_{rr}=-\sigma_2\ins{1-4\frac{R^2}{r^2}+3\frac{R^4}{r^4}}\cos2\theta,\qquad\sigma_{\theta\theta}=\sigma_2\ins{1+3\frac{R^4}{r^4}}\cos2\theta,\qquad\sigma_{r\theta}=\sigma_2\ins{1+2\frac{R^2}{r^2}-3\frac{R^4}{r^4}}\sin2\theta
+\end{equation}
+inserting \(\sigma_1=\sigma_2=\frac{1}{2}\sigma_\infty\)
+\begin{align}
+    \sigma_{rr}&=\frac{\sigma_\infty}{2}\ins{\ins{1-\cos2\theta}+\ins{4\cos2\theta-1}\frac{R^2}{r^2}-3\frac{R^4}{r^4}\cos2\theta}\\
+    \sigma_{r\theta}&=\frac{\sigma_\infty}{2}\ins{1+\frac{R^2}{r^2}-3\frac{R^4}{r^4}}\sin2\theta\\
+    \sigma_{\theta\theta}&=\frac{\sigma_\infty}{2}\ins{\ins{1+2\cos2\theta}+\frac{R^2}{r^2}+3\frac{R^4}{r^4}\cos2\theta}
+\end{align}
+\subsection{stress at edge of hole}
+plugging in \(r=R\)
+\begin{align}
+    \sigma_{rr}&=\frac{\sigma_\infty}{2}\ins{\ins{1-\cos2\theta}+\ins{r\cos2\theta-1}-3\cos2\theta}=0\\
+    \sigma_{r\theta}&=\frac{\sigma_\infty}{2}\ins{1+2-3}\sin2\theta=0\\
+    \sigma_{\theta\theta}&=\frac{\sigma_\infty}{2}\ins{1+2\cos2\theta+1+3\cos2\theta}=\frac{\sigma_\infty}{2}\ins{2+5\cos2\theta}
+\end{align}
+for the maximum and minimum
+\begin{equation}
+    \dv{\sigma_{\theta\theta}}{\theta}=-5\sigma_\infty\sin2\theta=0\implies\theta=\frac{\pi k}{2}
+\end{equation}
+so 
+\begin{equation}
+    \sigma_{\theta\theta\max}=\frac{7}{2}\sigma_\infty,\qquad\sigma_{\theta\theta\min}=-\frac{3}{2}\sigma_\infty
+\end{equation}
+the maximum stress experienced is simply 
+\begin{equation}
+    \sigma_{\max}=\frac{7}{2}\sigma_c
+\end{equation}
