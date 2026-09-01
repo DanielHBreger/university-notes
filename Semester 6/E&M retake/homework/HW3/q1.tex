@@ -1,96 +1,42 @@
 \clearpage
-\section{Hydrodynamics}
+\section{Moving Point Charge}
 \begin{colbox}
-	\begin{enumerate}
-		\item The Maxwell model for viscoelastic fluids corresponds to a spring and dashpot in series. Its rhelogy is given by \begin{equation}
-			\ins{1+\tau\del_t}\tilde{\sigma}=\eta\dot{\gamma}
-		\end{equation}
-		where \(\tau = \eta / G\) is the relaxation time, \(\tilde{\sigma}\) is the shear stress, \(\eta\) is the ciscosity and \(\dot{\gamma}\) is the shear strain rate. Show explicitly that the equation is solved by \begin{equation}
-			\tilde{\sigma} = G\int\limits_0^t \dl t' \dot{\gamma}(t') e^{-\ins{t-t'}/\tau}
-		\end{equation}
-		demonstrate the solid/fuid behaviors for \(t\ll\tau\) and \(t\gg\tau\).
-		\item The Kelvin-Voigt model corresponds to a spring and dashpot in parallel. What is the rheology of this model \(\ins{\sigma(\gamma,\dot{\gamma})}\)? How does this material behave at long times?
-		\item Consider a rigid body rotation, whose velocity field is described by \(\vec{v} = \vec{\Omega}\times\vec{r}\) with \(\vec{\Omega}\) the angular velocity. Show that the tensor \(\del_\alpha v_\beta\) is antisymmetric in this case.
-	\end{enumerate}
+    A point charge \(q\) is moving at a constant velocity \(\vb{v}=v\vu{z}\) and is at the origin at \(t=0\), in the lab frame \(S\). In the charge's rest frame, \(S'\), the electric and magnetic fields are given by
+    \begin{equation}
+        \vb{E'}=\frac{q\vu{r'}}{r'^2},\quad \vb{B'}=0
+    \end{equation}
+    using the field transformation rule, find the electric and magnetic field in the lab frame \(S\)
 \end{colbox}
-\subsection{Maxwell model for viscoelastic fluids}
-inserting \(\eta = \tau G\) and the given integral expression
-\begin{align}\label{eq1}
-	\ins{1+\tau\del_t}\int\limits_0^t \dl t' \dot{\gamma}(t') e^{-\ins{t-t'}/\tau} = \tau\dot{\gamma}
-\end{align}
-pulling a constant w.r.t the integral out
-\begin{equation}
-	\ins{1+\tau\del_t}e^{-t/\tau}\int\limits_0^t \dl t' \dot{\gamma}(t') e^{t'/\tau} = \tau\dot{\gamma}
-\end{equation}
-If we designate \(A(t) = e^{-t/\tau}\) and \(B(t) = \int\limits_0^t \dl t' \dot{\gamma}(t') e^{t'/\tau}\) then the equation becomes
-\begin{equation}
-	\ins{1+\tau\del_t}A(t)B(t) = A(t)B(t) + \tau\ins{\diff{A(t)}{t}B(t)+A(t)\diff{B(t)}{t}}
-\end{equation}
-and since
-\begin{equation}
-	\diff{A}{t} = -\frac{1}{\tau}e^{-t/\tau} = -\frac{1}{\tau}A(t)
-\end{equation}
-we can rewrite
+In cartesian coordinates the fields are
 \begin{align}
-	\ins{1+\tau\del_t}A(t)B(t) &= A(t)B(t) + \tau\ins{-\frac{1}{\tau}A(t)B(t)+A(t)\diff{B(t)}{t}} \\
-	&= A(t)\ins{B(t) + \tau\ins{-\frac{1}{\tau}B(t)+\diff{B(t)}{t}}} \\
-	&= \tau A(t)\diff{B(t)}{t}
+	E'=q\frac{\hat x'+\hat y'+ \hat z'}{x'^2+y'^2+z'^2} = q\frac{x'+y'+z'}{(x'^2+y'^2+z'^2)^{3/2}} && B'=0
 \end{align}
-inserting into equation~\ref{eq1}
+giving us the fields tensor
 \begin{equation}
-	e^{-t/\tau}\del_t\int\limits_0^t \dl t' \dot{\gamma}(t') e^{t'/\tau} = \dot{\gamma}
+  F'_{\mu\nu} = \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&)
 \end{equation}
-but
-\begin{equation}
-	\del_t\int\limits_0^t \dl t' \dot{\gamma}(t') e^{t'/\tau} = \dot{\gamma}(t)e^{t/\tau}
-\end{equation}
-so eventually
-\begin{equation}
-	\dot{\gamma} = \dot{\gamma}
-\end{equation}
-so the expression for \(\tilde{\sigma}\) solves the equation.
-\subsubsection{\(t\ll\tau\)}
-In this limit
-\begin{equation}
-	\tilde{\sigma} = G\int\limits_0^t \dl t' \dot{\gamma}(t') e^{-\ins{t-t'}/\tau} \simeq  G\int\limits_0^t \dl t' \dot{\gamma}(t') = G\ins{\gamma(t)-\gamma(0)}
-\end{equation}
-and since the stress is linear in strain, as we know from the lectures, the system behaves as an ideal elastic solid.
-\subsubsection{\(t\gg\tau\)}
-In this limit the exponential term in the integral expression for \(\tilde{\sigma}\) decays quickly and earlier values of \(\dot{\gamma}\) are cancelled out by the exponential approaching zero. This means we can assume the main contribution comes from very late times so we can treat \(\dot{\gamma}\) as a constant:
+and using the lorentz boost matrix
 \begin{align}
-	\tilde{\sigma} &= G\int\limits_0^t \dl t' \dot{\gamma}(t') e^{-\ins{t-t'}/\tau} \simeq G\dot{\gamma}(t)\int\limits_0^t \dl t' e^{-\ins{t-t'}/\tau} \\
-	&= \tau G \dot{\gamma}(t) \\
-	&= \eta \dot{\gamma}
+  \Lambda^\mu_\nu = \mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma) && (\Lambda^{-1})^\mu_\nu = \mqty(\gamma&&&\gamma\beta\\&1&&\\&&1&\\\gamma\beta&&&\gamma)
 \end{align}
-which is the equation for an ideal viscous liquid as we know from the lectures.
-\subsection{Kelvin-Voigt model}
-Since the spring and dashpot are connected in parallel, the strain on both of the elements will be the same, the strain comes from two separate contributions:
+we get
 \begin{align}
-	\gamma = \gamma_{spring} = \gamma_{dashpot} && \sigma = \sigma_{spring} + \sigma_{dashpot}
+	F_{\mu\nu} &= \Lambda_\mu^\sigma F'_{\sigma\epsilon}\Lambda^\epsilon_\nu\\
+	&= \left[\Lambda^TF\Lambda\right]_{\mu\nu}\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(&x'&y'&z'\\-x'&&&\\-y'&&&\\-z'&&&)\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(-\gamma\beta z'&x'&y'&\gamma z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\-\gamma z'&&&\gamma\beta z')\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(-\gamma^2\beta z' + \gamma^2\beta z'&\gamma x'&\gamma y'&\gamma^2 z' - \gamma^2\beta^2z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\\gamma^2\beta^2 z' - \gamma^2z'&-\gamma\beta x'&-\gamma\beta y'&-\gamma^2\beta z'+\gamma^2\beta z')\\
+	&= \frac{q}{(x'^2+y'^2+z'^2)^{3/2}}\mqty(&\gamma x'&\gamma y'&z'\\-\gamma x'&&&\gamma\beta x'\\-\gamma y'&&&\gamma\beta y'\\z'&-\gamma\beta x'&-\gamma\beta y'&)
 \end{align}
-as we know from the lectures
+converting the coordinates themselves
+\begin{equation}
+  x'^\mu = \tensor{\Lambda}{^\mu_\nu}x'^\nu = \mqty(\gamma&&&-\gamma\beta\\&1&&\\&&1&\\-\gamma\beta&&&\gamma)\mqty(ct\\x\\y\\z)=\mqty(\gamma ct-\gamma\beta z\\x\\y\\\gamma z-\gamma\beta ct) = \mqty(\gamma (ct- \beta z)\\x\\y\\\gamma (z-vt))
+\end{equation}
+so the fields tensor in the lab frame is
+\begin{equation}
+  \tensor{F}{_\mu_\nu}=\frac{q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(&\gamma x&\gamma y&\gamma(z-vt)\\-\gamma x&&&\gamma\beta x\\-\gamma y&&&\gamma\beta y\\\gamma(z-vt)&-\gamma\beta x&-\gamma\beta y&)
+\end{equation}
+giving us the fields
 \begin{align}
-	\sigma_{spring} = G\gamma && \sigma_{dashpot} = \eta\dot{\gamma}
+	E=\frac{\gamma q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(x\\y\\z-vt) && B=\frac{\gamma\beta q}{(x^2+y^2+(\gamma(z-vt))^2)^{3/2}}\mqty(-y\\x\\0)
 \end{align}
-which gives us
-\begin{equation}
-	\sigma = G\gamma + \eta\dot{\gamma}
-\end{equation}
-which is the Kelvin-Voigt rheology. We can treat this as a separable differential equation in \(\gamma\) whose solution is
-\begin{equation}
-	\gamma = \frac{\sigma_0}{G} + ce^{-Gt/\eta}
-\end{equation}
-where \(\sigma_0\) is some stress value. For very large times
-\begin{equation}
-	\gamma = \frac{\sigma_0}{G}
-\end{equation}
-\subsection{Antisymmetric tensor}
-I'll rewrite the velocity using levi-civita symbols
-\begin{equation}
-	v_i = \epsilon_{ijk}\Omega_j r_k
-\end{equation}
-applying the derivative
-\begin{equation}
-	\del_\alpha v_\beta =  \epsilon_{\beta jk}\Omega_j\ins{\del_\alpha r_k} = \epsilon_{\beta jk} \Omega_j \delta_{\alpha k} = \epsilon_{\beta j \alpha}\Omega_j = -\epsilon_{\alpha j \beta}\Omega_j = -\del_\beta v_\alpha
-\end{equation}
-therefore it's antisymmetric.

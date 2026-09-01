@@ -1,0 +1,143 @@
+\clearpage
+\section{charged disk}
+\subsection{potential on symmetry axis}
+Since we're on the symmetry axis, the potential is 
+\begin{equation}
+	\phi = \int_A \dd{S}\frac{\sigma}{d}
+\end{equation}
+where 
+\begin{equation}
+	d = \sqrt{r^2+z^2}
+\end{equation}
+and a surface element is 
+\begin{equation}
+	\dd{S} = 2\pi r \dd{r}
+\end{equation}
+inserting we get 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\int_{0}^{R}\frac{r\dd{r}}{\sqrt{r^2+z^2}\sqrt{R^2-r^2}}
+\end{equation}
+defining \(x=r/R\) and \(a=\frac{\abs{z}}{R}\)
+\begin{equation}
+	\phi = \frac{2V}{\pi}\int_{0}^{1}\frac{x\dd{x}}{\sqrt{x^2+a^2}\sqrt{1-x^2}}
+\end{equation}
+so using the hint 
+\begin{equation}
+	\phi = \left.\frac{2V}{\pi}\ins{C-\arctan\ins{\frac{\sqrt{1-x^2}}{\sqrt{x^2+a^2}}}}\right|_0^1=\frac{2V}{\pi}\arctan\ins{\frac{1}{a}}
+\end{equation}
+returning to the original variables
+\begin{equation}
+	\phi = \frac{2V}{\pi}\arctan\ins{\frac{R}{\abs{z}}}
+\end{equation}
+\subsection{spherical}
+Since there's azymouthal symmetry we can use the most general solution
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}\ins{A_l r^l + B_l r^{-\ins{l+1}}}P_l(\cos\theta)
+\end{equation}
+\subsubsection{r>R}
+here the potential must not diverge at infinity so 
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}\ins{B_l r^{-\ins{l+1}}}P_l(\cos\theta)
+\end{equation}
+\subsubsection{r<R, z>0}
+here it shouldn't diverge when nearing the origin so 
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}A_l r^l P_l(\cos\theta)
+\end{equation}
+\subsubsection{r<R, z<0}
+it is the same from symmetry 
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}A_l r^l P_l(\cos\theta)
+\end{equation}
+\subsection{Power Series}
+the potential is 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\arctan\ins{\frac{R}{\abs{z}}}
+\end{equation}
+using the hint 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{R}{\abs{z}}}^{2l+1}
+\end{equation}
+and since we're on the axis of symmetry we can replace z with r 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{R}{r}}^{2l+1}
+\end{equation}
+but from the last part we know the solution is of the form 
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}\ins{B_l r^{-\ins{l+1}}}P_l(\cos\theta)
+\end{equation}
+and since \(\theta=0\) on the symmetry axis above the plate
+\begin{equation}
+	\sum_{m=0}^{\infty}\ins{B_m r^{-\ins{m+1}}}=\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{R}{r}}^{2l+1}
+\end{equation}
+simplifying
+\begin{equation}
+	\sum_{m=0}^{\infty}B_m=\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}{R}^{2l+1}
+\end{equation}
+so 
+\begin{equation}
+	B_m = \begin{cases}
+		0 & m\text{ odd}\\
+		\frac{2V}{\pi}\frac{\ins{-1}^m}{2m+1}R^{2l+1} & m\text{ even}
+	\end{cases}
+\end{equation}
+so 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{R}{t}}^{2l+1}P_{2l}\ins{\cos\theta}
+\end{equation}
+\subsection{closer to the plate}
+same as before,
+\begin{equation}
+	\phi = \frac{2V}{\pi}\arctan\ins{\frac{R}{r}}
+\end{equation}
+using the second hint 
+\begin{equation}
+	\phi = \frac{2V}{\pi}\ins{\frac{\pi}{2}-\arctan\ins{\frac{r}{R}}}
+\end{equation}
+then
+\begin{equation}
+	\phi = \frac{2V}{\pi}\ins{\frac{\pi}{2}-\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{r}{R}}^{2l+1}}=V-\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{r}{R}}^{2l+1}
+\end{equation}
+but from the last part we know the solution is of the form 
+\begin{equation}
+	\phi(r,\theta) = \sum_{l=0}^{\infty}A_l r^l P_l(\cos\theta)
+\end{equation}
+looking at the region above the plate \(P_l(1)=1\) so 
+\begin{equation}
+	\sum_{m=0}^{\infty}A_m r^m = V-\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{r}{R}}^{2l+1}
+\end{equation}
+which gives 
+\begin{equation}
+	A_0=V
+\end{equation}
+and
+\begin{equation}
+	A_{2m}=0,\qquad A_{2m+1}=-\frac{2V}{\pi}\frac{\ins{-1}^m}{2m+1}R^{-\ins{2m+1}}
+\end{equation}
+so 
+\begin{equation}
+	\phi = V-\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{r}{R}}^{2l+1}P_{2l+1}\ins{\cos\theta}
+\end{equation}
+and in the region under the plate, the only difference is we do due to symmetry to reflection
+\begin{equation}
+	\theta\rightarrow\pi-\theta
+\end{equation}
+but 
+\begin{equation}
+	P_l(-x)=\ins{-1}^l P_l(x)
+\end{equation}
+so
+\begin{equation}
+	\phi = V+\frac{2V}{\pi}\sum_{l=0}^{\infty}\frac{\ins{-1}^l}{2l+1}\ins{\frac{r}{R}}^{2l+1}P_{2l+1}\ins{\cos\theta}
+\end{equation}
+under the plate.
+\subsection{potential on disk}
+Looking at both potentials above and below we see they both depend on odd legendre polynomials. To parametrize the disk, we have \(\theta=\pi/2\). But 
+\begin{equation}
+	P_{2l+1}\ins{0}=0
+\end{equation}
+so 
+\begin{equation}
+	\phi = V
+\end{equation}
+and since the potential is constant on the entire disk, the derivative of the potential in the direction parallel to the disk's surface is 0, in other words there is no electric field element parallel to the disk's surface, only one perpendicular to it. This is the behavior of the electric field near a conductor.

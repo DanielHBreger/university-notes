@@ -1,124 +1,89 @@
 \clearpage
-\section{Linear Stability and Waves of Dry Active Polar Matter}
+\section{Delta function identities}
 \begin{colbox}
-	The dynamics of dry polar active matter is given by
-	\begin{align}
-		\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}} \\
-		\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} &= -\gamma_p\frac{\delta F}{\delta \vec{p}}
-	\end{align}
-	We focus on the polar phase in 2D with \(\rho = \rho_0+\delta\rho(\vec{r})\) and \(\vec{p} = \vec{\hat{x}}+\delta p(\vec{r})\vec{\hat{y}}\) where \(\lvert\delta\rho\rvert\ll\rho_0\) and \(\lvert\delta p\rvert\ll 1\) and consider the free energy
-	\begin{equation}
-		F = \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right]
-	\end{equation}
-	Here, we have used the summation convention. Note that \(h_\parallel\) is a Lagrange multiplier to ensure that \(p_\alpha p_\alpha = 1\). In class, we considered \(\delta p(\vec{r})=\delta p(y)\) and \(\omega_1 > 0\). Perform a linear stability analysis and find the dispersion relation for (a) \(\delta p = \delta p(y)\) and \(\omega_1 < 0\) (b) general \(\delta p(\vec{r})\) and \(\omega_1>0\). In which case is the system unstable? Explain why. When is it stable - what is the velocity of propagating waves?
+	\begin{enumerate}
+		\item show the delta function is symmetric
+		\item Show \begin{equation}
+			\delta\ins{\alpha x} = \frac{\delta\ins{x}}{\abs{\alpha}};\quad \alpha\neq0
+		\end{equation}
+		\item show \begin{equation}
+			\delta\ins{g(x)} = \sum_{i=1}^{N}\frac{\delta\ins{x-x_i}}{\abs{g'(x_i)}}
+		\end{equation}
+		\item find \begin{equation}
+			\int\dd x f(x)\delta'(x)
+		\end{equation}
+		\item show that \begin{equation}
+			\delta(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}\dd ke^{-ikx}
+		\end{equation}
+	\end{enumerate}
 \end{colbox}
-Before starting the specific cases, I'll rewrite the free energy using the known relations for the density and polarization.
-\begin{align}
-	p_\alpha p_\alpha &= \vec{p}\cdot\vec{p} = 1+\ins{\delta p(\vec{r})}^2 \\
-	\partial_\alpha p_\beta \partial_\alpha p_\beta &= \ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 \\
-	\bm{\nabla}\cdot\vec{p} &= \partial_y \delta p(\vec{r}) \\
-	\frac{\delta\rho}{\rho_0} &= \frac{\delta\rho(\vec{r})}{\rho_0}
-\end{align}
-now I can insert this into the free energy
-\begin{align}
-	F &= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho}{\rho_0}}^2-\frac{1}{2}h_\parallel p_\alpha p_\alpha + \frac{K}{2}\partial_\alpha p_\beta \partial_\alpha p_\beta - \omega_1\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}\right] \\
-	&= \int \dd^2 r \left[\frac{\chi}{2}\ins{\frac{\delta\rho(\vec{r})}{\rho_0}}^2-\frac{1}{2}h_\parallel \ins{1+\ins{\delta p(\vec{r})}^2} + \frac{K}{2}\ins{\partial_x \delta p(\vec{r})}^2 + \ins{\partial_y \delta p(\vec{r})}^2 - \omega_1\frac{\delta\rho(\vec{r})}{\rho_0}\partial_y \delta p(\vec{r})\right]
-\end{align}
-next we find
-\begin{align}
-	\frac{\delta F}{\delta\rho} &= \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
-\end{align}
-to do the other variation I'll look at it term by term for \(p_\alpha \rightarrow p_\alpha + \epsilon\eta_\alpha\)
-\begin{align}
-	\delta\ins{p_\alpha p_\alpha} &= p_\alpha^2+2\epsilon p_\alpha \eta_\alpha + \epsilon^2\eta_\alpha^2 = 2p_\alpha\eta_\alpha \\
-	\delta\ins{\partial_\alpha p_\beta \partial_\alpha p_\beta} &= 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta}
-\end{align}
-which needs an integration by parts
-\begin{align}
-	\int\dd^2 r 2\partial_\alpha p_\beta \partial_\alpha \ins{\delta p_\beta} &= -\int\dd^2 r 2\partial_\alpha\partial_\alpha p_\beta \delta p_\beta = -\int\dd^2 r 2\bm{\nabla}^2 p_\beta \delta p_\beta
-\end{align}
-with the boundary terms cancelling out because it's a variation. And finally
-\begin{align}
-	\delta\ins{\frac{\delta\rho}{\rho_0}\bm{\nabla}\cdot\vec{p}} &= \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha
-\end{align}
-integrating by parts
-\begin{align}
-	\int\dd^2 r \frac{\delta\rho}{\rho_0}\partial_\alpha\delta p_\alpha &= -\int\dd^2 r \partial_\alpha\ins{\frac{\delta\rho}{\rho_0}}\delta p_\alpha
-\end{align}
-connecting everything back
-\begin{align}
-	\frac{\delta F}{\delta \vec{p}} = -h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}} && \frac{\delta F}{\delta\rho} = \chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})
-\end{align}
-Looking at the dynamic equation for density
-\begin{align}
-	\diffp{\rho}{t} &= - \bm{\nabla} \cdot\ins{-\gamma_\rho \bm{\nabla} \frac{\delta F}{\delta\rho}+v_0\rho\vec{p}}\\
-	&= \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
-\end{align}
-inserting the density and assuming \(\rho_0\) is constant in time
-\begin{equation}
-	\diffp{\delta\rho(\vec{r})}{t} = \gamma_\rho\bm{\nabla}^2\ins{\frac{\delta F}{\delta\rho}}-\bm{\nabla}\cdot(v_0\rho\vec{p})
-\end{equation}
-where
-\begin{align}
-	\bm{\nabla}\cdot(v_0\ins{\rho_0+\delta\rho(\vec{r})}\vec{p}) &\simeq v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
-\end{align}
-where we ommitted the term quadratic in delta. Therefore
-\begin{equation}
-	\partial_t\delta\rho(\vec{r}) = \gamma_\rho\bm{\nabla}^2\ins{\chi\frac{\delta\rho(\vec{r})}{\rho_0^2} - \frac{\omega_1}{\rho_0}\partial_y\delta p(\vec{r})} - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
-\end{equation}
-\emph{At this point I realized I could have linearized things about 10 equations ago. A previous version for this question was 7 pages long\dots} Moving on, to first order this is
-\begin{equation}
-	\partial_t\delta\rho(\vec{r}) = - v_0\ins{\partial_x\delta\rho(\vec{r})+\rho_0\partial_y\delta p(\vec{r})}
-\end{equation}
-rearranging
-\begin{equation}
-	\partial_t\delta \rho+v_0\partial_x\delta \rho+v_0\rho_0\partial_y\delta p(\vec{r})=0
-\end{equation}
-The equation for polarity is
-\begin{equation}
-	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\frac{\delta F}{\delta \vec{p}}
-\end{equation}
-inserting the delta we have
-\begin{equation}
-	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\ins{-h_\parallel \vec{p} - K\bm{\nabla}^2 \vec{p} + \omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}}
-\end{equation}
-dropping the non-linear terms
-\begin{equation}
-	\diffp{\vec{p}}{t}+\lambda\ins{\vec{p}\cdot\bm{\nabla}}\vec{p} = -\gamma_p\omega_1\bm{\nabla}\ins{\frac{\delta\rho}{\rho_0}}
-\end{equation}
-rewriting with indices
-\begin{equation}
-	\partial_t \delta p_\alpha + \lambda p_\beta\partial_\beta \delta p_\alpha = -\gamma_p\frac{\omega_1}{\rho_0}\partial_\alpha\delta\rho
-\end{equation}
-but since \(\partial_x\delta\rho = 0\) and \(\delta p_x = 0\)
-\begin{equation}
-	\partial_t\delta p(y) = -\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho
-\end{equation}
-taking the derivative of the density equation
-\begin{equation}
-	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho+v_0\rho_0\partial_t\partial_y\delta p(\vec{r})=0
-\end{equation}
-we can replace the order of differentiation so we insert the expression we got from the polarization equation
-\begin{equation}
-	\partial_t\partial_t\delta \rho+v_0\partial_t\partial_x\delta \rho-v_0\rho_0\partial_y\gamma_p\frac{\omega_1}{\rho_0}\partial_y\delta\rho=0
-\end{equation}
-rearranging
-\begin{equation}
-	\ins{\partial_{tt}+v_0\partial_{tx}}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
-\end{equation}
-but \(\partial_x\delta \rho = 0\)
-\begin{equation}
-	\partial_{tt}\delta\rho = \gamma_p v_0\omega_1\partial_{yy}\delta\rho
-\end{equation}
-which is a wave equation, thus with a standard wave ansatz we find
-\begin{align}
-	\omega^2 = \gamma_p v_0 \omega_1 k^2
-\end{align}
+\subsection{symmetry}
+Let \(f(x)\) be an arbitrary function. Therefore,
+
+\begin{align*}
+    \int\limits_{-\infty}^\infty f(x)\delta(-x)dx &= \left[\begin{aligned}
+        u&=-x\\du&=-dx
+    \end{aligned}\right]=\int\limits_{\infty}^{-\infty} -f(-u)\delta(u)du\\
+    &= \int\limits_{-\infty}^\infty f(-u)\delta(u)du\\
+    &= f(-0) = f(0) = \int\limits_{-\infty}^\infty f(x)\delta(x)dx
+\end{align*}
+Therefore the delta function is symmetric.
+\subsection{multiplication}
+\begin{align*}
+    \int\limits_{-\infty}^\infty f(x)\delta(\alpha x)dx &= \left[\begin{aligned}
+        u&=\alpha x\\du&=\alpha dx
+    \end{aligned}\right] = \int\limits_{-sgn(\alpha)\cdot\infty}^{sgn(\alpha)\cdot\infty} \frac{1}{\alpha}f\left(\frac{u}{\alpha}\right)\delta(u) du\\
+    &= \frac{sgn(\alpha)}{\alpha}f\left(\frac{0}{\alpha}\right)\\
+    &= \frac{1}{|\alpha|}f(0)
+\end{align*}
 Therefore
+\begin{equation*}
+    \delta(\alpha x)=\frac{\delta(x)}{|\alpha|}
+\end{equation*}
+\subsection{delta of function}
+We'll develop \(g(x)\) into a taylor series around \(x_i\):
+\begin{equation*}
+    g(x) \approx g(x_i)+g'(x_i)\cdot(x-x_i) = g'(x_i)\cdot(x-x_i)
+\end{equation*}
+ignoring elements beyond first order. Next we'll look at the following integral:
+\begin{equation*}
+    \int\limits_{-\infty}^\infty\delta(g(x))f(x)dx
+\end{equation*}
+where \(f(x)\) is an arbitrary function. It's clear from the definition of \(g(x)\) and the delta function that the integrand is non-zero only at the points \(x_i\), therefore we can integrate only around those points. We'll choose a small enough neighborhood for each point so they are isolated:
+\begin{equation*}
+    \int\limits_{-\infty}^\infty\delta(g(x))f(x)dx =  \sum\limits_{i=1}^N\int\limits_{x_i-\epsilon_i}^{x_i+\epsilon_i}\delta(g(x))f(x)dx
+\end{equation*}
+Using the delta function definition and the previous subsection we can find:
+\begin{align*}
+    \sum\limits_{i=1}^N\int\limits_{x_i-\epsilon_i}^{x_i+\epsilon_i}\delta(g(x))f(x)dx &= \sum\limits_{i=1}^N\int\limits_{x_i-\epsilon_i}^{x_i+\epsilon_i}\delta(g'(x_i)\cdot(x-x_i))f(x)dx\\
+    &= \left[\begin{aligned}
+        u &= g'(x_i)\cdot(x-x_i)\\
+        du &= g'(x_i)dx
+    \end{aligned}\right]\\ &= \sum\limits_{i=1}^N\int\limits_{sgn(g'(x_i))\cdot g(x_i-\epsilon_i)}^{sgn(g'(x_i))\cdot g(x_i+\epsilon_i)}\frac{1}{g'(x_i)}\delta(u)f\left(x_i+\frac{u}{g'(x_i)}\right)du\\
+    &= \sum\limits_{i=1}^N\frac{1}{|g'(x_i)|}\int\limits_{g(x_i-\epsilon_i)}^{g(x_i+\epsilon_i)}\delta(u)f\left(x_i+\frac{u}{g'(x_i)}\right)du\\
+    &= \sum\limits_{i=1}^N\frac{f(x_i)}{|g'(x_i)|}\\
+    &= \sum\limits_{i=1}^N\int\limits_{-\infty}^\infty f(x)\frac{\delta(x-x_i)}{|g'(x_i)|}
+\end{align*}
+Therefore
+\begin{equation*}
+    \delta(g(x)) = \sum\limits_{i=1}^N\frac{\delta(x-x_i)}{|g'(x_i)|}
+\end{equation*}
+\subsection{derivative of delta}
+Integrating by parts we get
+\begin{align*}
+    \int\limits_{-\infty}^\infty f(x)\delta'(x)dx &= \cancelto{0}{\left.f(x)\delta(x)\right|_{-\infty}^\infty}-\int\limits_{-\infty}^\infty f'(x)\delta(x)\\
+    &= -f'(0)
+\end{align*}
+\subsection{fourier transform}
+If we perform a fourier transform on the delta function we get
+\begin{align}
+	\mathcal{F}\delta(x) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\delta(x)e^{iky}\dd y = \left.\frac{1}{\sqrt{2\pi}}e^{iky}\right\vert_{y=0}=\frac{1}{\sqrt{2\pi}}
+\end{align}
+therefore if we apply the inverse fourier transform
+\begin{align}
+	\delta(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\mathcal{F}\delta(y)e^{iky} \dd y = \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{iky} \dd y
+\end{align}
+and if we rename the parameters
 \begin{equation}
-	\omega = \pm k\sqrt{\gamma_p v_0 \omega_1} 
-\end{equation}
-since \(\omega_1<0\), \(\omega\) is imaginary. If \(\Im(\omega)<0\), any created waves will decay and the system as a whole will be stable. Otherwise, waves will grow exponentially, meaning the system is unstable. Since the dispersion relation is linear in \(k\), the phase velocity and group velocity are the same and are
-\begin{equation}
-	c = \sqrt{\gamma_p v_0 \omega_1}
+	\delta(x)= \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ikx} \dd k
 \end{equation}

@@ -1,110 +1,161 @@
 \clearpage
-\section{Spontaneous Flow Transition}
-Recalling the equations for the force and rate of change of the directional vector:
+\section{Long Lagrangian}
+\begin{colbox}
+    The following Lagrangian is given 
+    \begin{equation}
+        \lagr = \lagr_{EM}+\lagr_k+\lagr_{int} = -\frac{1}{16\pi c}\tensor{F}{_\mu_\nu}\tensor{F}{^\mu^\nu}+\frac{k^2}{8\pi c}A_\mu A^\mu - \frac{1}{c^2}J_\mu A^\mu
+    \end{equation}
+    \begin{enumerate}
+        \item What are the units of \(k\) and \(ck\)?
+        \item Is the new action A lorentz scalar?
+        \item Is it invariant for gauge transformations?
+        \item Find the equations of motion
+        \item Apply divergence to both sides and show the continuity equation does not hold unless \(\partial_\mu A^\mu=0\)
+        \item Using the last part show that the equations of motion can be written as
+        \begin{equation}
+            \ins{\dalembertian+k^2}A^\mu = \frac{4\pi}{c}J^\mu
+        \end{equation}
+        \item Show that in the static limit for a point charge \(q\) at the origin the solution is
+        \begin{equation}
+            \phi(r) = \frac{q}{r}e^{-kr}
+        \end{equation}
+    \end{enumerate}
+\end{colbox}
+\subsection{Units}
+Since all elements must have the same units we can demand that
+\begin{equation}
+    \left[-\frac{1}{16\pi c}\tensor{F}{_\mu_\nu}\tensor{F}{^\mu^\nu}\right] = \left[\frac{k^2}{8\pi c}A_\mu A^\mu\right]
+\end{equation}
+we know that 
+\begin{equation}
+    \left[\tensor{F}{_\mu_\nu}\right] = \left[\partial_\mu A_\nu\right] = \frac{\left[A\right]}{L}
+\end{equation}
+so 
+\begin{equation}
+    \frac{\left[A\right]^2}{L^2}=\left[k\right]^2\left[A\right]^2 \implies \left[k\right] = \frac{1}{L},\quad\left[ck\right]=\frac{1}{T}
+\end{equation}
+\subsection{Lorentz Scalar}
+\(\tensor{F}{_\mu_\nu}\tensor{F}{^\mu^\nu}\) is known to be a lorentz scalar so we continue to the other elements.
 \begin{align}
-    \del_\beta\sigma_{\alpha\beta}^{tot}=0 && \ins{\del_t+v_\beta\del_\beta}p_\alpha = \frac{h_\parallel}{\gamma_1}p_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}p_\alpha-\ins{\omega_{\alpha\beta}+\nu v_{\alpha\beta}}p_\beta
+    A_\mu A^\mu \rightarrow \ins{\tensor{\Lambda}{_\mu^\nu}A_\nu}\ins{\tensor{\Lambda}{^\mu_\sigma}A^\sigma} = \tensor{\Lambda}{_\mu^\nu}\tensor{\Lambda}{^\mu_\sigma}A_\nu A^\sigma = \delta^\nu_\sigma A_\nu A^\sigma = A^\nu A_\nu
 \end{align}
-In our case \(\nu=0\) which cancels out the 2nd element inside the parentheses in the last element. The entire parentheses describes the rotation and alignment of the directional vector with the flow. Removing the element depending on \(\nu\) removes the alignment element so the directional vector now only spins as a result of the flow and doesn't seek to align with it. To begin the linear stability test we'll write the equations for a small perturbation in the angle of \(p\) for which \(\vec{p}=\ins{1,\theta}\). Inserting this into the equation for the vector gives us
+therefore this element is a lorentz scalar. As for the last element the process is identical to this entirely just with the name J instead of one of the As so I won't rewrite it. In total, the action is a lorentz scalar.
+\subsection{Gauge Invariance}
+A gauge transofmation is 
 \begin{equation}
-    \ins{\del_t+v_\beta\del_\beta}p_\alpha = \frac{h_\parallel}{\gamma_1}p_\alpha + \frac{K}{\gamma_1}\del_{\beta\beta}p_\alpha-\omega_{\alpha\beta}p_\beta
+    A_\mu \rightarrow A_\mu+\partial_\mu\Lambda
 \end{equation}
-dropping elements in 2nd order for perturbation and the lagrange multiplier (since for small perturbation it's effectively unneeded) Inserting this into the equation for the vector gives us
+where \(\Lambda\) is a function of the coordinates. Looking at the kinetic element
+\begin{align}
+    A_\mu A^\mu &\rightarrow \ins{A_\mu+\partial_\mu\Lambda}\ins{A^\mu+\partial^\mu\Lambda}\\
+    &= A_\mu A^\mu + A_\mu\partial^\mu\Lambda + A^\mu\partial_\mu\Lambda + \partial_\mu\Lambda \partial^\mu\Lambda
+\end{align}
+which does not automatically always equal \(A_\mu A^\mu\), nor is it a total derivative, so this is not gauge invariant, making the entire Lagrangian not gauge invariant.
+\subsection{Equations of Motion}
+Looking at a subset of the lagrangian, \(\lagr_{int}+\lagr_{EM}\) we have a known problem we solved in the lecture whose equation of motion are 
 \begin{equation}
-    \del_t \theta = \frac{K}{\gamma_1}\del_{\beta\beta}\theta-\omega_{yx}
+    \partial^\nu \tensor{F}{_\nu_\mu} = \frac{4\pi}{c}J_\mu
 \end{equation}
-where on the left hand side the time derivative of 1 is 0, and on the right hand side the angular velocity is an order of perturbation so it couples only with the constant in the vector in first order which also imposes the selection of indices. We can express the vorticity element as
+therefore we only need to solve for the kinetic element
+\begin{align}
+    \pdv{\lagr_k}{A^\nu} &= \frac{k^2}{8\pi c}\ins{\pdv{A_\mu}{A^\nu}A^\mu + \pdv{A^\mu}{A^\nu}A_\mu}\\
+    &= \frac{k^2}{8\pi c}\ins{\pdv{A^\sigma}{A^\nu}g_{\mu\sigma} A^\mu+A_\mu\delta^\mu_\nu}\\
+    &= \frac{k^2}{8\pi c}\ins{\delta^\sigma_\nu g_{\mu\sigma} A^\mu+A_\mu\delta^\mu_\nu}\\
+    &= \frac{k^2}{4\pi c}A_\nu
+\end{align}
+and 
 \begin{equation}
-    \omega_{yx} = \frac{\del_y v_x - \del_x v_y}{2} = \frac{1}{2}\del_{\alpha\alpha}\psi
+    \pdv{\lagr_k}{\partial_nu A_\mu}=0
 \end{equation}
-which gives us
+so the equations of motion are 
 \begin{equation}
-    \del_t \theta = \frac{K}{\gamma_1}\del_{\beta\beta}\theta-\frac{1}{2}\del_{\alpha\alpha}\psi
+    \partial^\nu \tensor{F}{_\nu_\mu} + k^2 A_\mu = \frac{4\pi}{c}J_\mu
 \end{equation}
-performing a fourier transform gives us
-\begin{equation}\label{astep}
-    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{1}{2}q^2\hat{\psi}
-\end{equation}
-Next we need to find a way to connect \(\psi\) to \(\theta\). Using the force equation
+\subsection{Divergence}
+directly
+\begin{align}
+    \partial^\mu\partial^\nu \tensor{F}{_\nu_\mu} + \partial^\mu k^2 A_\mu = \partial^\mu\frac{4\pi}{c}J_\mu
+\end{align}
+but since \(\partial^\mu\partial^\nu\) is symmetric and \(\tensor{F}{_\mu_\nu}\) is antisymmetric this element is zero.
+\begin{align}
+    \partial^\mu k^2 A_\mu = \partial^\mu\frac{4\pi}{c}J_\mu
+\end{align}
+and we can directly see that for the continuity equation to hold, we must have \(\partial^\mu A_\mu=0\).
+\subsection{Box}
+returning to the equation of motion and opening terms in it 
+\begin{align}
+    \partial^\nu \tensor{F}{_\nu_\mu} + k^2 A_\mu &= \frac{4\pi}{c}J_\mu\\
+    \partial^\nu \ins{\partial_\nu A_\mu - \partial_\mu A_\nu} + k^2 A_\mu &= \frac{4\pi}{c}J_\mu\\
+    \ins{\partial_\nu\partial^\nu A_\mu - \partial_\mu\partial^\nu A_\nu} + k^2 A_\mu &= \frac{4\pi}{c}J_\mu\\
+    \ins{\dalembertian A_\mu - 0} + k^2 A_\mu &= \frac{4\pi}{c}J_\mu\\
+    \ins{\dalembertian+k^2} A_\mu &= \frac{4\pi}{c}J_\mu
+\end{align}
+\subsection{Static limit}
+Since we are in the static limit, the 4-current is of the form 
 \begin{equation}
-    \del_\beta\sigma_{\alpha\beta}^{tot}=0
+    j^\mu = \ins{c\rho,\vb{0}}
 \end{equation}
-we can take the rotor of this and using the definition from the lecture we get
+where 
 \begin{equation}
-    \del_x\del_\beta\sigma_{\alpha\beta}^{tot}-\del_y\del_\beta\sigma_{\alpha\beta}^{tot} = \eta\nabla^2\omega_z
+    \rho = q\delta^3(r)
 \end{equation}
-for the viscous term, and if we fourier transform it it becomes
+inserting into the last part and looking at the time component 
+\begin{align}
+    \ins{-\laplacian+k^2} \phi &= 4\pi q\delta^3(r)
+\end{align}
+remembering we are in spherical coordinates so the laplacian operator is 
 \begin{equation}
-    -\eta q^2 \omega_z
+    \laplacian{\phi} = \frac{1}{r^2}\dv{r}\ins{r^2\dv{\phi}{r}}
 \end{equation}
-As for the active term \(\zeta\Delta\mu Q_{\alpha\beta}\) since we're in linear order only \(Q_{xy}=Q_{yx}\approx\theta\) matters so the active force is
+finding the derivatives
+\begin{align}
+    \dv{r}\ins{\frac{q}{r}e^{-kr}} &= q\ins{-\frac{1}{r^2}e^{-kr}-\frac{k}{r}e^{-kr}} = -qe^{-kr}\ins{\frac{1}{r^2}+\frac{k}{r}}\\
+    \dv{r}\ins{-qe^{-kr}\ins{1+kr}} &= -q\ins{-ke^{-kr}\ins{1+kr}+ke^{-kr}} = qk^2 re^{-kr}
+\end{align}
+therefore
 \begin{equation}
-    f_\alpha = -\zeta\Delta\mu\del_\beta\theta
+    \laplacian{\phi} = \frac{qk^2}{r} e^{-kr} = k^2\phi
 \end{equation}
-whose rotor is
+and when \(r\neq0\) we get
 \begin{equation}
-    \del_x f_y - \del_y f_x = -\zeta\Delta\mu\ins{\del_x^2-\del_y^2}\theta
+    0 = \ins{k^2-k^2}\phi = 4\pi q\delta^3(r) = 0
 \end{equation}
-and after a fourier transform it becomes
-\begin{equation}
-    \zeta\Delta\mu\ins{q_x^2-q_y^2}\hat{\theta}
-\end{equation}
-we can rewrite the qs using
-\begin{equation}
-    q_x^2-q_y^2 = q^2\ins{\cos^2\phi-\sin^2\phi} = q^2\cos\ins{2\phi}
-\end{equation}
-so the fourier transformed element becomes
-\begin{equation}
-    \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta}
-\end{equation}
-lastly the rotation and alignment terms we have
-\begin{equation}
-    \frac{1}{2}\ins{p_\alpha h_\beta - h_\alpha p_\beta}
-\end{equation}
-recalling a definition from lecture 6
-\begin{equation}
-    h_\alpha = h_\parallel p_\alpha + K\del_{\beta\beta}p_\alpha
-\end{equation}
-and using the small perturbation we find
-\begin{equation}
-    h_y \approx K\del_{\beta\beta}\theta
-\end{equation}
-and \(h_x\) is eliminated by the lagrange multiplier elements. Doing the same rotor trick we get an element proportional to the 4th derivative of \(\theta\) which in fourier space is
-\begin{equation}
-    -\frac{K}{2}q^4\hat{\theta}
-\end{equation}
-putting the pieces together we find
-\begin{equation}
-    -\eta q^2\omega_z + \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^4\hat{\theta} = 0
-\end{equation}
-inserting \(\omega_z= q^2\hat{\psi}\)
-\begin{equation}
-    -\eta q^4\hat{\psi} + \zeta\Delta\mu q^2\cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^4\hat{\theta} = 0
-\end{equation}
-dividing by \(q^2\) (assuming the wavevector isn't zero)
-\begin{equation}
-    -\eta q^2\hat{\psi} + \zeta\Delta\mu \cos\ins{2\phi}\hat{\theta} - \frac{K}{2}q^2\hat{\theta} = 0
-\end{equation}
-rearranging
-\begin{equation}
-    \hat{\psi} = \frac{\zeta\Delta\mu}{\eta q^2} \cos\ins{2\phi}\hat{\theta} - \frac{K}{2\eta}\hat{\theta}
-\end{equation}
-inserting this into equation~\ref{astep}
-\begin{equation}
-    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{1}{2}q^2\ins{\frac{\zeta\Delta\mu}{\eta q^2} \cos\ins{2\phi}\hat{\theta} - \frac{K}{2\eta}\hat{\theta}}
-\end{equation}
-simplifying to
-\begin{equation}
-    s\hat{\theta} = -\frac{K}{\gamma_1}q^2\hat{\theta}+\frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi}\hat{\theta} - \frac{Kq^2}{4\eta}\hat{\theta}
-\end{equation}
-which gives us the dispersion relation
-\begin{equation}
-    s = \frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi} - Kq^2\ins{\frac{1}{\gamma_1}+\frac{1}{4\eta}}
-\end{equation}
-which to be unstable must be positive for a small \(q\), so we'll take the limit \(q\rightarrow0\) which gives us the requirement
-\begin{equation}
-    \frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi} > 0
-\end{equation}
-so the critical wavevector is
-\begin{equation}
-    q_c^2 = \frac{\frac{\zeta\Delta\mu}{2\eta} \cos\ins{2\phi}}{K\ins{\frac{1}{\gamma_1}+\frac{1}{4\eta}}}
-\end{equation}
+The only point left to check is the origin. Since near the origin \(e^{-kr}\rightarrow 1\), the potential behaves like
+\[
+\phi \sim \frac{q}{r}.
+\]
+To see the coefficient of the source, we integrate over a small sphere of radius \(\epsilon\) around the origin:
+\[
+\int_{V}(-\nabla^2+k^2)\phi\,d^3x.
+\]
+The \(k^2\phi\) term goes to zero when \(\epsilon\rightarrow0\), because \(\phi\sim q/r\) (so after it's multiplied by the jacobian it goes like \(r\) making the integral of that element tend to 0). Therefore only the Laplacian term contributes:
+\[
+\int_{V}(-\laplacian\phi)d^3x
+=
+-\oint_{\partial V}\grad\phi\cdot d\vec S.
+\]
+Near the origin
+\[
+\frac{d\phi}{dr}\sim-\frac{q}{r^2},
+\]
+so
+\[
+-\oint_{\partial V}\nabla\phi\cdot d\vec S
+=
+-\left(-\frac{q}{\epsilon^2}\right)4\pi\epsilon^2
+=
+4\pi q.
+\]
+So the expression is zero everywhere except the origin, and gives total weight \(4\pi q\) at the origin. Therefore
+\[
+(-\nabla^2+k^2)\phi=4\pi q\delta^3(r).
+\]
+Since for a static point charge
+\[
+J^0=cq\delta^3(r),
+\]
+we get
+\[
+\frac{4\pi}{c}J^0=4\pi q\delta^3(r),
+\]
+so the solution is correct at the origin too.

@@ -1,0 +1,126 @@
+\clearpage
+\section{A 4 potential}
+\subsection{finding the fields}\label{q2s1}
+We'll find the fields tensor instead and derive the fields from it. as we know, the fields tensor is:
+\begin{equation}
+  \tensor{F}{^\mu^\nu} = \partial^\mu A^\nu-\partial^\nu A^\mu
+\end{equation}
+so
+\begin{align}
+  E_i &= \tensor{F}{_0_i}=\partial_0A_i-\partial_iA_0\\
+  &= \partial_0\tensor{\eta}{_i_\alpha}A^\alpha-\partial_i\tensor{\eta}{_0_\beta}A^\beta\\
+  &= -\partial_0A^i-\partial_iA^0\\
+  &= -\diffp*{\ins{x^i e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}}{x^0}-\diffp*{\ins{x^0 e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}}{x^i}\\
+  &= 2\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+2\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &= 4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+and
+\begin{align}
+	B_1 &= \tensor{F}{_3_2} = \partial_3A_2-\partial_2A_3\\
+	&= \partial_3\tensor{\eta}{_2_2}A^2-\partial_2\tensor{\eta}{_3_3}A^3\\
+	&= \partial_2A^3-\partial_3A^2\\
+	&= \partial_2\ins{x^3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}-\partial_3\ins{x^2e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -2\alpha x^3x^2e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+2\alpha x^2x^3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= 0
+\end{align}
+from symmetry to choice of index,
+\begin{align}
+	B_2=B_3=0
+\end{align}
+so
+\begin{align}
+	\bold E=4\alpha x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\bold x && \bold B=0
+\end{align}
+\subsection{4-current}
+Ee saw a relation between the 4-current and the fields tensor
+\begin{equation}
+  \frac{4\pi}{c}\bold J^\nu = \partial_\mu\tensor{F}{^\mu^\nu}
+\end{equation}
+so
+\begin{align}
+	J^0&=\frac{c}{4\pi}\partial_\mu\tensor{F}{^\mu^0}\\
+	&= \frac{c}{4\pi}\partial_i\tensor{F}{^i^0}\\
+	&= \frac{c}{4\pi}\partial_i\ins{4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= \frac{c}{\pi}\alpha x^0\ins{3e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}-2\alpha x^ix_ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= \frac{\alpha c}{\pi}x^0\ins{3-2\alpha x^ix_i}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+and
+\begin{align}
+	J^i&= \frac{c}{4\pi}\partial_\mu\tensor{F}{^\mu^i}\\
+	&= \frac{c}{4\pi}\partial_0\tensor{F}{^0^i}\\
+	&= -\frac{c}{4\pi}\partial_0\ins{4\alpha x^0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -\frac{\alpha c}{\pi}\ins{x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}-2\alpha x^0x_0x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}}\\
+	&= -\frac{\alpha c}{\pi}x^i\ins{1-2\alpha x^0x_0}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+therefore
+\begin{equation}
+  \bold J^\mu = \frac{\alpha c}{\pi}\mqty(3-2\alpha x^ix_i\\2\alpha x^0x_0-1\\2\alpha x^0x_0-1\\2\alpha x^0x_0-1)\bold xe^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+We will show conservation of charge exists by showing the continuity equation works. explicitly the 4-current is
+\begin{equation}
+  \bold J^\mu = \frac{\alpha c}{\pi}\mqty(3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3)\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+so
+\begin{align}
+	\partial_\mu\bold J^\mu &= \frac{\alpha c}{\pi}\diffp*{}{x^\mu}\mqty(3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3)\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= \frac{\alpha c}{\pi}\mqty(\partial_0&\partial_1&\partial_2&\partial_3)\mqty(3x^0-2\alpha x^0x^ix_i\\2\alpha x^0x_0x^1-x^1\\2\alpha x^0x_0x^2-x^2\\2\alpha x^0x_0x^3-x^3)\bold x e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= \frac{\alpha c}{\pi}\ins{3-2\alpha x^ix_i}\ins{1-2\alpha \ins{x^0}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^1}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^2}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{1-2\alpha \ins{x^3}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &= \frac{\alpha c}{\pi}\ins{2\alpha x^ix_i}\ins{1-2\alpha \ins{x^0}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^1}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^2}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&+\frac{\alpha c}{\pi}\ins{2\alpha x^0x_0-1}\ins{-2\alpha \ins{x^3}^2}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+	&= 0
+\end{align}
+\subsection{Temporal Gauge}
+We want to find a gauge transformation $\Lambda$ such that $A^0+\partial^0\Lambda=0$. Explicitly,
+\begin{align}
+	x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+\diffp{\Lambda}{x^0} = 0
+\end{align}
+therefore
+\begin{equation}
+  \Lambda = -\int \dd x^0 x^0e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}=\frac{1}{2\alpha}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}+C
+\end{equation}
+$\Lambda$ has gauge freedom for constant values so we'll choose $C=0$ and get
+\begin{equation}
+  \Lambda = \frac{1}{2\alpha}e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+Next we'll find all the derivatives of $\Lambda$:
+\begin{equation}
+  \partial_\mu\Lambda = -x_\mu e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+raising the index
+\begin{equation}
+  \partial^\mu \Lambda = \mqty(-x^0\\x^1\\x^2\\x^3)e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{equation}
+so the potential is
+\begin{align}
+  A'^\mu=A^\mu+\partial^\mu\Lambda&=x^\mu e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &+\mqty(-x^0\\x^1\\x^2\\x^3)e^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}\\
+  &=2x^ie^{-\alpha((x^0)^2+(x^1)^2+(x^2)^2+(x^3)^2)}
+\end{align}
+\subsection{Switching potential}
+noticing that the new potential can be written as
+\begin{equation}
+  A^\mu=x^\mu e^{-\alpha\tensor{\eta}{_\alpha_\beta}x^\alpha x^\beta}
+\end{equation}
+and that this looks similar to the form of the gauge transformation we used in the previous subsection. We'll try to fit a gauge transformation of a similar form and see what we get. We'll try
+\begin{equation}
+  \Lambda = -\frac{1}{2\alpha}e^{-\alpha\tensor{\eta}{_\alpha_\beta}x^\alpha x^\beta}
+\end{equation}
+This gives us the following derivatives:
+\begin{align}
+	\partial_\mu\Lambda&= -\frac{1}{2\alpha}\tensor{\eta}{_\mu_\gamma}\partial^\gamma\Lambda\\
+	&= \tensor{\eta}{_\mu_\gamma}x^\gamma e^{-\alpha\tensor{\eta}{_\alpha_\beta}x^\alpha x^\beta}\\
+	&= x_\gamma e^{-\alpha\tensor{\eta}{_\alpha_\beta}x^\alpha x^\beta}=A_\gamma
+\end{align}
+We found that we can define a gauge transformation that will just cancel out the potential giving us
+\begin{equation}
+  A'_\mu=A_\mu+\partial_\mu\Lambda=0
+\end{equation}
+And since the potential is zero, the fields tensor will also be 0, and since it's invariant for gauge transformations, we find that
+\begin{align}
+	\bold E=0 && \bold B=0
+\end{align}

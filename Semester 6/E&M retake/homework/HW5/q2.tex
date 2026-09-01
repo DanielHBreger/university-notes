@@ -1,0 +1,60 @@
+\clearpage
+\section{Show Things}
+\subsection{Deriving that equation}
+
+\begin{align}
+	\partial_\mu\tensor{T}{^\mu_\nu} &= \partial_\mu\ins{-\frac{1}{4\pi c}\tensor{F}{^\mu^\rho}\tensor{F}{_\nu_\rho}+\frac{1}{16\pi c}\tensor{\delta}{^\mu_\nu}\tensor{F}{^\rho^\sigma}\tensor{F}{_\rho_\sigma}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{4}\partial_\mu(\tensor{\delta}{^\mu_\nu}\tensor{F}{^\rho^\sigma}\tensor{F}{_\rho_\sigma})-\partial_\mu(\tensor{F}{^\mu^\rho}\tensor{F}{_\nu_\rho})}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{4}\ins{\partial_\nu\tensor{F}{^\rho^\sigma}\tensor{F}{_\rho_\sigma}+\tensor{F}{^\rho^\sigma}\partial_\nu\tensor{F}{_\rho_\sigma}}-\ins{\partial_\mu\tensor{F}{^\mu^\rho}\tensor{F}{_\nu_\rho}+\tensor{F}{^\mu^\rho}\partial_\mu\tensor{F}{_\nu_\rho}}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{2}\tensor{F}{^\rho^\sigma}\partial_\nu\tensor{F}{_\rho_\sigma}+\partial_\mu\tensor{F}{^\rho^\mu}\tensor{F}{_\nu_\rho}+\tensor{F}{^\rho^\mu}\partial_\mu\tensor{F}{_\nu_\rho}}\\
+	&= \frac{1}{4\pi c}\ins{\frac{1}{2}\tensor{F}{^\rho^\sigma}\partial_\nu\tensor{F}{_\rho_\sigma}-\frac{4\pi}{c}J^\rho\tensor{F}{_\nu_\rho}+\tensor{F}{^\rho^\mu}\partial_\mu\tensor{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tensor{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\tensor{F}{^\rho^\sigma}\partial_\nu\tensor{F}{_\rho_\sigma}+\frac{1}{4\pi c}\tensor{F}{^\rho^\mu}\partial_\mu\tensor{F}{_\nu_\rho}\\
+	&= -\frac{1}{c^2}\tensor{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\ins{\tensor{F}{^\rho^\sigma}\partial_\nu\tensor{F}{_\rho_\sigma}+\tensor{F}{^\rho^\mu}\partial_\mu\tensor{F}{_\nu_\rho}+\tensor{F}{^\rho^\mu}\partial_\mu\tensor{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tensor{F}{_\nu_\rho}J^\rho+\frac{1}{8\pi c}\tensor{F}{^\rho^\mu}\ins{\partial_\nu\tensor{F}{_\rho_\mu}+\partial_\mu\tensor{F}{_\nu_\rho}+\partial_\mu\tensor{F}{_\nu_\rho}}\\
+	&= -\frac{1}{c^2}\tensor{F}{_\nu_\rho}J^\rho
+\end{align}
+\subsection{conservation rules}
+\subsubsection{for $\nu = 0$}
+The equation we start with is
+\begin{equation}
+  \partial_\mu\tensor{T}{^\mu_0} = \frac{1}{c^2}\tensor{F}{_0_\mu}J^\mu
+\end{equation}
+Expanding we see
+\begin{align}
+	\partial_\mu\tensor{T}{^\mu_0}&=\partial_0\tensor{T}{^0_0}+\partial_i\tensor{T}{^i_0}\\
+	&= -\frac{1}{c^2}\tensor{F}{_0_0}J^0+\partial_i\tensor{T}{^i_0}\\
+	&= \partial_i\tensor{T}{^i_0}=-\frac{1}{c^2}\tensor{F}{_0_i}J^i\\
+\end{align}
+therefore
+\begin{equation}
+  \diffp{E}{t}+\partial_i\tensor{T}{^i_0}=-\frac{1}{c^2}\tensor{F}{_0_i}J^i
+\end{equation}
+recalling the definition of the 4-current, fields tensor, and momentum-energy tensor we can rewrite that as
+\begin{equation}
+  \diffp{E}{t}+\div{\vb{S}}=-\vb{E}\cdot \vb{j}
+\end{equation}
+as required.
+\subsubsection{for $\nu=i$}
+The equation we start with is 
+\begin{equation}
+  \partial_\mu\tensor{T}{^\mu_i} = \frac{1}{c^2}\tensor{F}{_i_\mu}J^\mu
+\end{equation}
+expanding we get
+\begin{align}
+	\partial_\mu\tensor{T}{^\mu_i} &= \partial_0\tensor{T}{^0_i}+\partial_j\tensor{T}{^j_i}\\
+	&= \frac{1}{c}\diffp{\bold S}{t} + \div{\overleftrightarrow\sigma}\\
+	&= \partial_t\bold p_{em}+ \div{\overleftrightarrow\sigma}
+\end{align}
+and on the other hand:
+\begin{align}
+	\frac{1}{c^2}\tensor{F}{_i_\mu}J^\mu &= \frac{1}{c^2}\tensor{F}{_i_0}J^0+\frac{1}{c^2}\tensor{F}{_i_j}J^j\\
+	&= -\frac{1}{c^2}E_ic\rho+\frac{1}{c^2}\tensor{\epsilon}{^k_j_i}B_kJ^j\\
+	&= -\frac{1}{c^2}E_ic\rho+\bold (B\times\bold J)_i\\
+	&= -\frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B}
+\end{align}
+combining
+\begin{align}
+	\partial_t\bold p_{em}+ \div{\overleftrightarrow\sigma} &= -\frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B}\\
+	\partial_t\bold p_{em} + \frac{1}{c}\ins{E_i\rho+\frac{1}{c}\bold J\times\bold B} &= \div{\overleftrightarrow\sigma}\\
+	\partial_t\bold p_{em} + \partial_t\bold p_{mech} &= \div{\overleftrightarrow\sigma}
+\end{align}

@@ -1,0 +1,61 @@
+\clearpage
+\section{Shell with Alternating Potential}
+\subsection{Potential in the shell}
+The solution for the laplace equation in spherical coordinates is
+\begin{equation}
+  \phi(r,\theta,\varphi)=\sum_{l=0}^{\infty}\sum_{m=-l}^l\ins{A_{l,m}\ins{\frac{r}{a}}^l+B_{l,m}\ins{\frac{a}{r}}^{-(l+1)}}Y_{l,m}(\theta,\varphi)
+\end{equation}
+But since we know the potential is not infinite at the origin, \(B_{l,m}=0\). Therefore
+\begin{equation}
+  \phi(r,\theta,\varphi)=\sum_{l=0}^{\infty}\sum_{m=-l}^l A_{l,m}\ins{\frac{r}{a}}^lY_{l,m}(\theta,\varphi)
+\end{equation}
+For convenience we'll define
+\begin{equation}
+  \Phi = \begin{cases}
+  	V & \frac{2\pi k}{n} < \varphi < \frac{(2k+1)\pi}{n}\\
+  	-V & \frac{(2k+1)\pi}{n} < \varphi < \frac{2(k+1)\pi}{n}\\
+  \end{cases}
+\end{equation}
+Next, we know the potential at $r=a$:
+\begin{equation}
+  \phi(a,\theta,\varphi)=\sum\limits_{l=0}^\infty\sum\limits_{m=-l}^lA_{l,m}Y_{l,m}(\theta,\varphi)= \Phi
+\end{equation}
+And since the spherical harmonics are a complete orthonormal set, the coefficients thus must be
+\begin{equation}
+  A_{l,m}=\int\limits_0^{2\pi}\dd \varphi\int\limits_0^\pi \dd\theta\sin\theta Y^*_{l,m}(\theta,\varphi)\Phi
+\end{equation}
+\subsection{Zero Coefficients}
+We know that the following relation holds for Legendre polynomials:
+\begin{equation}
+  P_{l,m}(-x)={(-1)}^{l+m}P_{l,m}(x)
+\end{equation}
+and we know that
+\begin{equation}
+  Y_{l,m} \propto P_{l,m}
+\end{equation}
+Finally we know that the problem is symmetric for rotations of \(\pi\) radians in the \(\theta\) direction. This is important because $-\cos\theta=\cos(\pi-\theta)$
+Therefore we find that
+\begin{equation}
+  Y_{l,m}(\theta,\varphi)={(-1)}^{l+m}Y_{l,m}(\pi-\theta,\varphi)
+\end{equation}
+Which means that we must have \(l+m\) to be even.
+\subsection{Symmetry}
+From the question's conditions we find that
+\begin{equation}
+  V(\varphi+\Delta\varphi)=-V(\varphi)
+\end{equation}
+We also note that the laplacian operator is invariant for rotational translations, therefore we must find that
+\begin{equation}
+  \phi(\varphi+\Delta\varphi)=-\phi(\varphi)
+\end{equation}
+i.e we find that \(A=-1\).
+\subsection{When it is zero}
+Since we found the symmetry for the problem, the solution we found earlier must also satisfy it, therefore the coefficients for each \(Y_{l,m}\) must satisfy it.
+\begin{equation}
+  e^{im\varphi}=-e^{im(\varphi+\frac{\pi}{n})}
+\end{equation}
+therefore
+\begin{equation}
+  m=(2k+1)n
+\end{equation}
+so we only have the odd coefficients surviving. Combining this with the requirements that \(m\leq l\) and \(m+l\) is even, setting the minimal \(k=0\) we find that we must have \(l=n\).

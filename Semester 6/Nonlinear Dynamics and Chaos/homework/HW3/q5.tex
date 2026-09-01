@@ -1,0 +1,157 @@
+\clearpage
+\section{Secular terms in weakly non-linear oscillators}
+the equation is 
+\begin{equation}
+    \ddot{x}+x = -\epsilon\ins{a_2 x^2+a_3x^3},\quad 0<\epsilon\ll1
+\end{equation}
+\subsection{two time expansion}
+we define 
+\begin{equation}
+    \tau = t \quad T=\epsilon t
+\end{equation}
+so that 
+\begin{equation}
+    \del{t}=\del{\tau}+\epsilon\del{T}
+\end{equation}
+and 
+\begin{equation}
+    \del{t}^2=\del{\tau}^2+2\epsilon\del{\tau}\del{T}+O\ins{\epsilon^2}
+\end{equation}
+we expand 
+\begin{equation}
+    x = x_0(\tau,T)+\epsilon x_1(\tau, T)+O(\epsilon^2)
+\end{equation}
+substituting into the equation
+\begin{equation}
+    \ins{\del{\tau}^2+2\epsilon\del{\tau}\del{T}}\ins{x_0+\epsilon x_1}+x_0+\epsilon x_1 = -\epsilon\ins{a_2x_0^2+a_3x_0^3}+O(\epsilon^2)
+\end{equation}
+and at \(O(1)\)
+\begin{equation}
+    \del{\tau}^2 x_0+x_0=0
+\end{equation}
+whose solution can be written as 
+\begin{equation}
+    x_0\ins{\tau,T}=r(T)\cos\psi,\quad \psi=\tau+\phi(T)
+\end{equation}
+where \(r\) is the amplitude and \(\phi\) is the phase. At order \(O(\epsilon)\)
+\begin{equation}
+    \del{\tau}^2x_1+x_1 = -2\del{\tau}\del{T}x_0-a_2x_0^2-a_3x_0^3
+\end{equation}
+\subsection{higher harmonics}
+Starting from 
+\begin{equation}
+    x_0 = r\cos\psi
+\end{equation}
+then 
+\begin{equation}
+    \del{T}x_0 = \del{T}r\cos\psi-r\del{T}\phi\sin\psi
+\end{equation}
+then 
+\begin{equation}
+    \del{\tau}\del{T}x_0 = -\del{T}r\sin\psi-r\del{T}\phi\cos\psi
+\end{equation}
+so 
+\begin{equation}
+    -2\del{\tau}\del{T}x_0 = \del{T}r\sin\psi+r\del{T}\phi\cos\psi
+\end{equation}
+and using the identities
+\begin{align}
+    \cos^2\psi=\frac{1}{2}\ins{1+\cos2\psi} && \cos^3\psi=\frac{1}{4}\ins{3\cos\psi+\cos3\psi}
+\end{align}
+we get 
+\begin{equation}
+    -a_2x_0^2=-\frac{a_2r^2}{2}-\frac{a_2r^2}{2}\cos2\psi
+\end{equation}
+and 
+\begin{equation}
+    -a_3x_0^3=-\frac{3a_3r^3}{4}\cos\psi-\frac{a_3r^3}{4}\cos3\psi
+\end{equation}
+combining everything
+\begin{equation}
+    \del{\tau}^2x_1+x_1 = \del{T}r\sin\psi+\ins{2r\del{T}\phi-\frac{3a_3r^3}{4}}\cos\psi-\frac{a_2r^2}{2}\ins{1+\cos2\psi}-\frac{a_3r^3}{4}\cos3\psi
+\end{equation}
+\subsection{resonant terms}
+The resonant terms are \(2\del{T}r\sin\psi\) and \(\ins{2r\del{T}\phi-\frac{3a_3e^3}{4}}\cos\psi\). To eliminate secular growth their coefficients must vanish so 
+\begin{equation}
+    \del{T}r=0 \implies r(T)=r_0
+\end{equation}
+and
+\begin{equation}
+    \del{T}\phi=\frac{3a_3r^2}{8} \implies \phi(T)=\phi_0+\frac{3}{8}a_3r_0^2T
+\end{equation}
+inserting \(T=\epsilon t\)
+\begin{equation}
+    x(t) \simeq r_0\cos\ins{\ins{1+\frac{3}{8}\epsilon a_3 r_0^2}t+\phi_0}
+\end{equation}
+\subsection{duffing oscillator}
+in the duffing oscillator
+\begin{equation}
+    a_2=0,\quad a_3=1
+\end{equation}
+giving
+\begin{equation}
+    \del{T}r=0,\quad \del{T}\phi=\frac{3}{8}r^2
+\end{equation}
+A nonzero quadratic nonlinearity \(a_2\) doesn't change the leading order slow equations because 
+\begin{equation}
+    x_0^2=\frac{r^2}{2}\ins{1+\cos2\psi}
+\end{equation}
+only has a constant term and a second harmonic, and since it doesn't have the natural frequency of the oscillator, it's not resonant.
+\subsection{averaged equations}
+The averaged equations from the notes are 
+\begin{equation}
+    \dot{A}=\epsilon\left<h\sin\theta\right>,\quad A\dot{\phi}=\epsilon\left<h\cos\theta\right>, \quad \left<\cdot\right>=\frac{1}{2\pi}\int_{-\pi}^{\pi}\ins{\cdot}\dd\theta
+\end{equation}
+inserting 
+\begin{equation}
+    x=A\cos\theta,\quad\dot{x}=-A\sin\theta
+\end{equation}
+where \(\theta=t+\phi(t)\) into \(h\)
+\begin{equation}
+    h = A^3\cos\theta\sin^2\theta
+\end{equation}
+making the amplitude equation
+\begin{equation}
+    \dot{A}=\epsilon A^3 \left<\cos\theta\sin^3\theta\right>
+\end{equation}
+but the average over a period of the trig function zeroes
+\begin{equation}
+    \dot{A}=0
+\end{equation}
+and for the phase 
+\begin{align}
+    A\dot{\phi}&=\epsilon A^3\left<\cos^2\theta\sin^2\theta\right>\\
+    &= \epsilon A^3\left<\frac{1}{4}\sin^2 2\theta\right>\\
+    &= \frac{\epsilon A^3}{4}\cdot\frac{1}{2}\\
+    &= \frac{\epsilon A^3}{8}
+\end{align}
+therefore 
+\begin{equation}
+    \dot{\phi} = \frac{\epsilon A^2}{8}
+\end{equation}
+\subsection{solution}
+For the amplitude, 
+\begin{equation}
+    A = A_0
+\end{equation}
+to be determined by the initial condition. For the phase,
+\begin{equation}
+    \phi=\phi_0+\frac{\epsilon A^2}{8}t
+\end{equation}
+so the averaged solution is 
+\begin{equation}
+    x(t)\simeq A_0\cos\ins{\ins{1+\frac{\epsilon A^2}{8}}t+\phi_0}
+\end{equation}
+in leading order, and the inital conditions have 
+\begin{equation}
+    x(0) = A_0\cos\phi_0,\quad\dot{x}(0)=-A_0\sin\phi_0
+\end{equation}
+which we can combine and rearrange to
+\begin{equation}
+    A_0 \simeq \sqrt{x(0)^2+\dot{x}(0)^2}
+\end{equation}
+So the slow flow predicts that the amplitude remains constant at its initial value. There is no attracting value of \(A\) meaning the system also doesn't have a limit cycle. Looking at the frequency 
+\begin{equation}
+    \omega = 1+\frac{\epsilon A_0^2}{8}
+\end{equation}
+we see it only depends on the initial amplitude, so once that is set, the frequency is also constant.

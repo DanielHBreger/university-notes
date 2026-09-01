@@ -1,13 +1,14 @@
 \newcommand{\tsr}[2]{\tensor{#1}{#2}}
-\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
 \newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
-\newcommand\dd{\mathop{}\!\mathrm{d}}
+\newcommand{\mtr}[1]{\begin{pmatrix}#1\end{pmatrix}}
+
 \newcommand{\lagr}{\mathcal{L}}
 \newcommand{\ins}[1]{\left(#1\right)}
 \newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
 \newcommand{\blankpage}{\newpage \thispagestyle{empty} \mbox{} \newpage}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
-\DeclarePairedDelimiter{\abs}{\left\lvert}{\right\rvert}
+
 
 \renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
 
@@ -18,11 +19,33 @@
 
 \newcommand{\complex}{\mathbb{C}}
 \newcommand{\reals}{\mathbb{R}}
-\DeclareMathOperator{\Tr}{Tr}
 \let\uglyepsilon\epsilon
 \let\epsilon\varepsilon
-\newcommand{\ketbra}[2]{\left\lvert#1\right\rangle\left\langle#2\right\rvert}
-\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
-\newcommand{\comm}[1]{\left[#1\right]}
 \DeclareSIUnit \year {\text{yr}}
-\newcommand{\sech}{\text{sech}}
+
+\makeatletter
+\newcommand{\dalembertian}{\mathop{\mathpalette\dalembertian@\relax}}
+\newcommand{\dalembertian@}[2]{%
+  \begingroup
+  \sbox\z@{$\m@th#1\square$}%
+  \dimen0=\fontdimen8
+    \ifx#1\displaystyle\textfont\else
+    \ifx#1\textstyle\textfont\else
+    \ifx#1\scriptstyle\scriptfont\else
+    \scriptscriptfont\fi\fi\fi3
+  \makebox[\wd\z@]{%
+    \hbox to \ht\z@{%
+      \vrule width \dimen0
+      \kern-\dimen0
+      \vbox to \ht\z@{
+        \hrule height \dimen0 width \ht\z@
+        \vss
+        \hrule height 2\dimen0
+      }%
+      \kern-2.5\dimen0
+      \vrule width 2.5\dimen0
+    }%
+  }%
+  \endgroup
+}
+\makeatother

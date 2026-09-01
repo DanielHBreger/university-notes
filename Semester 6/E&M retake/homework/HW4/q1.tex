@@ -1,99 +1,37 @@
 \clearpage
-\section{Onsager Relations}
-\subsection{Thermodynamic equations}
-From the table in the wikipedia page, I chose the Peltier and Seebeck effects. If we look at materials with energy density \(u\), a (to be seen) associated energy current \(j^u\), density \(n\) and particle current \(j^n\), Starting from the Gibbs relation 
+\section{Scalar Field}
+\begin{colbox}
+A scalar field \(\phi(x)\) is given, therefore under lorentz transformations it is invariant. We'll develop the equations of motion of a free real field given by the following Lagrangian density
 \begin{equation}
-	\dd s = \frac{1}{T}\dd u - \frac{\mu}{T} \dd n
+  \lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi
 \end{equation}
-where \(\mu\) is the electrochemical potential, and with the conservation equations
+\begin{enumerate}
+  \item Derive the equations of motion. What equation is this?
+  \item We'll add another element to the Lagrangian
+  \begin{equation}
+    \lagr = \frac{1}{2}\partial^\mu\phi\partial_\mu\phi-\frac{1}{2}m^2\phi^2-\frac{\lambda}{4}\phi^4
+  \end{equation}
+  find the new equations of motion.
+\end{enumerate}
+\end{colbox}
+\subsection{Equations of Motion}
+Using the EL equations
 \begin{align}
-	\del_t u + \del_\alpha j^u_\alpha = 0 && \del_t n + \del_\alpha j^n_\alpha = 0
+  \pdv{\lagr}{\phi}&=0\\
+  \pdv{\lagr}{\partial_\nu\phi} &= \frac{1}{2}\ins{\pdv{\partial^\mu\phi}{\partial_\nu\phi}\partial_\mu\phi+\pdv{\partial_\mu\phi}{\partial_\nu\phi}\partial^\mu\phi}\\
+  &= \frac{1}{2}\ins{\tensor{g}{^\mu^\sigma}\tensor{\delta}{_\sigma^\nu}\partial_\mu\phi + \tensor{\delta}{^\nu_\mu}\partial^\mu\phi}\\
+  &= \partial^\nu\phi
 \end{align}
-differentiating the gibbs relation with respect to time
+therefore the equations of motion are
 \begin{equation}
-	\del_t s = \frac{1}{T}\del_t u - \frac{\mu}{T}\del_t n
+  \dalembertian \phi=0
 \end{equation}
-inserting the conservation equations
+\subsection{Another Element}
+The only change to the EL equations is to the element depending on the field itself
 \begin{equation}
-	\dot{S} = \frac{\mu}{T}\ins{\del_\alpha j^n_\alpha} - \frac{1}{T}\ins{\del_\alpha j^u_\alpha} = \del_\alpha\ins{\frac{\mu}{T}j_\alpha^n - \frac{1}{T}j_\alpha^u}+j_\alpha^u\del_\alpha\ins{\frac{1}{T}}-j_\alpha^n\del_\alpha\ins{\frac{\mu}{T}}
+  \pdv{\lagr}{\phi} = -m^2\phi-\lambda\phi^3
 \end{equation}
-if we define a heat current
+giving us 
 \begin{equation}
-	j^q = j^u - \mu j^n
+  \dalembertian \phi + m^2\phi+\lambda\phi^3 =0
 \end{equation}
-then the equation becomes
-\begin{equation}
-	\dot{S} + \del_\alpha \ins{\frac{j^q_\alpha}{T}} = j_\alpha^q\del_\alpha\ins{\frac{1}{T}}-\frac{1}{T}j_\alpha^n\del_\alpha\mu
-\end{equation}
-we can identify force current pairs like we did in the lecture. The heat current is associated with a force which depends on the temperature gradient, and the particle current is associated with a force which depends on both on temperature gradient and the electrochemical potential gradient. If we assume the dynamics are linear we get
-\begin{equation}
-	\pmat{j_\alpha^n \\ j_\alpha ^q} = \pmat{\gamma_{11} & \gamma_{12} \\ \gamma_{21} & \gamma_{22}}\pmat{\del_\alpha\ins{\mu/T} \\ \del_\alpha\ins{1/T}}
-\end{equation}
-Since both the currents are odd under time reversal and the forces are even, we know the coupling is dissipative, therefore \(\gamma_{12} = \gamma_{21}\). Looking at the cross terms
-\begin{gather}
-	j_\alpha^n = \cdots + \gamma_{12}\del_\alpha\ins{1/T} \\
-	j_\alpha^q = \cdots + \gamma_{12}\del_\alpha\ins{\mu/T}
-\end{gather}
-The first equation tells us that a gradient in temperature will create a current of charge carriers. If the system isn't connected in a loop, this will generate an electromotive force which we can then use to write
-\begin{equation}
-	\epsilon = S\nabla T
-\end{equation}
-which is the more commonly known form of the Seebeck effect. The second equation tells us there's a connection between the concentration of charge carriers and the heat of the system. A more common form for the Peltier effect is
-\begin{equation}
-	j^q_\alpha = \Pi j_\alpha - \kappa\nabla T
-\end{equation}
-where \(\Pi\) are Peltier coefficients and \(j_\alpha=qj^n_\alpha\) is the electric current. This equation states the same as we did in the 2nd equation, just in a clearer form.
-\subsection{Entropy Production Rate}
-Since the system has two components and is isotropic and passive, we have the conservation equation
-\begin{equation}
-	\del_t \rho_i + \del_\alpha\ins{\rho_i v_\alpha^i} = 0 \qquad ; \qquad i=1,2
-\end{equation}
-To move to the center of mass frame we'll define the total density as \(\rho = \rho_1 + \rho_2\) and the center of mass velocity 
-\begin{equation}
-	v_\alpha = \frac{\rho_1v_\alpha^1 + \rho_2 v_\alpha^2}{\rho}
-\end{equation}
-then
-\begin{align}
-	\rho_1 v_\alpha^1 = \rho_1 v_\alpha + j_\alpha && \rho_2 v_\alpha^2 = \rho_2 v_\alpha - j_\alpha
-\end{align}
-We'll define the chemical potential as expected
-\begin{equation}
-	\mu_i \equiv \frac{\delta F}{\delta \rho_i}
-\end{equation}
-where F is the free energy. We'll assume the system is coupled to a heat reservoir as we did in the lecture, therefore
-\begin{equation}
-	\dot{S} = -\frac{1}{T}\diff{F}{t}
-\end{equation}
-calculating the derivative as we did in the lecture
-\begin{equation}
-	\diff{F}{t} = \int \dd \vec{r} \ins{\mu_1\del_t\rho_1 + \mu_2\del_t\rho_2}
-\end{equation}
-inserting the continuity equation
-\begin{equation}
-	\diff{F}{t} = -\int \dd \vec{r} \ins{\mu_1\del_\alpha\ins{\rho_1 v_\alpha^1} + \mu_2\del_\alpha\ins{\rho_2 v_\alpha^2}}
-\end{equation}
-performing integration by parts
-\begin{equation}
-	\diff{F}{t} = \int \dd \vec{r}\ins{\rho_1 v_\alpha^1\del_\alpha\mu_1 + \rho_2 v_\alpha^2\del_\alpha\mu_2}
-\end{equation}
-inserting the center of mass definitions
-\begin{equation}
-	\diff{F}{t} = \int \dd \vec{r}\ins{\ins{\rho_1v_\alpha+j_\alpha}\del_\alpha\mu_1 + \ins{\rho_2v_\alpha-j_\alpha}\del_\alpha\mu_2}
-\end{equation}
-rearranging
-\begin{equation}
-	\diff{F}{t} = \int \dd\vec{r} \left[v_\alpha\ins{\rho_1\del_\alpha\mu_1+\rho_2\del_\alpha\mu_2} +j_\alpha\del_\alpha\ins{\mu_1-\mu_2}\right]
-\end{equation}
-noticing the first term is very similar to the form we saw in the lecture we can write
-\begin{equation}
-	T\dot{S} = \int \dd\vec{r} \left[\sigma_{\alpha\beta}v_{\alpha\beta} +j_\alpha\ins{-\del_\alpha\ins{\mu_1-\mu_2}}\right]
-\end{equation}
-The 2nd element is therefore the one we're interested in. The new current \(j_\alpha\) is the relative movement of the materials with respect to their shared center of mass, and the new force is the gradient of the difference in chemical potential between the materials. Doing a similar process to the lecture we find 
-\begin{equation}
-	j_\alpha = -\gamma\del_\alpha\ins{\mu_1-\mu_2}
-\end{equation}
-plugging it back into the entropy Production
-\begin{equation}
-	T\dot{S} = \int \dd\vec{r} \left[\sigma_{\alpha\beta}v_{\alpha\beta} +\gamma\left\vert\del_\alpha\ins{\mu_1-\mu_2}\right\vert^2\right]
-\end{equation}
-Qualitatively, the second element being the square of the difference between chemical potentials means the two material will diffuse into each other to lower the free energy, with the diffusion happening into one material or the other not being preferred.
