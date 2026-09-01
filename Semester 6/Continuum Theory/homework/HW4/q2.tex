@@ -1,0 +1,46 @@
+\clearpage
+\section{Boundary Layer on a Surface Attached to a Sink}
+\subsection{Boundary conditions}
+The boundary conditions are non-penetration, no slip, and the condition to match the outer flow:
+\begin{align}
+	v_y(x>0,y=0)=0\\
+	v_x(x>0,y=0)=0\\
+	v_x(x,y) \to U(x)=\frac{m}{x} \text{ as } y/\delta(x)\to\infty
+\end{align}
+\subsection{thickness}
+The second principle is that inside the layer the inertial term and the viscous terms are of the same order. We now look at the approximations 
+\begin{equation}
+	v_x \sim U,\quad \del{x}\sim1/x,\quad \del{y}\sim1/\delta
+\end{equation}
+which give
+\begin{equation}
+	v_x\pdv{v_x}{x}\sim\frac{U^2}{x},\qquad \nu\pdv[2]{v_x}{y}\sim\frac{\nu U}{\delta^2}
+\end{equation}
+balancing them 
+\begin{equation}
+	\frac{U^2}{x}\sim\frac{\nu U}{\delta^2} \implies \delta\sim\sqrt{\frac{\nu x}{\abs{U(x)}}}=\sqrt{\frac{\nu x}{\abs{m}/x}}\implies \delta(x)=x\sqrt{\frac{\nu}{\abs{m}}}\propto x
+\end{equation}
+\subsection{showing equation}
+The stream function from class is 
+\begin{equation}
+	\Psi(x,y) = -U(x)\delta(x)f(\eta)
+\end{equation}
+but 
+\begin{equation}
+	U(x)\delta(x)=\frac{m}{x}x\sqrt{\frac{\nu}{\abs{m}}}=\sqrt{\nu \abs{m}}
+\end{equation}
+which is constant, meaning \(\Psi\) is a function of \(\eta\) alone. translating the boundary conditions to conditions on \(f\) we get 
+\begin{equation}
+	f(0)=0,\quad f'(0)=0,\quad f'(\infty)=1
+\end{equation}
+substititung this into the first Prandtl equation 
+\begin{equation}
+	f'''-\ins{f'}^2=-1
+\end{equation}
+\subsection{numerical}
+the plot is 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Figure_1.png}
+\end{figure}
+The velocity rises to be basically the same as the otside velocity at approximately \(\eta=3.5\). Since \(\eta = \frac{y}{\delta(x)}\) it means we need to move away only a little more than \(\delta\) and the width of the boundary layer in the \(y\) direction is proportional to \(\delta\).

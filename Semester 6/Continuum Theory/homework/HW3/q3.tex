@@ -1,0 +1,54 @@
+\clearpage
+\section{Flow around a sphere in small reynolds}
+for \(r\gg R\)
+\begin{align}
+    p = c_1 F \frac{\cos\theta}{r^2} && v_r = c_2\frac{F}{\mu}\frac{\cos\theta}{r} && v_\theta = c_3 \frac{F}{\mu}\frac{\sin\theta}{r}
+\end{align}
+momentum conservation
+\begin{equation}
+    \del{t}\ins{\rho v_i}+\del{x_k}\ins{\rho v_i v_k -\sigma_{ik}}=0
+\end{equation}
+incompressibility applied to the velocity gives 
+\begin{equation}
+    \div{v}=\frac{1}{r^2}\del{r}\ins{r^2 v_r}+\frac{1}{r\sin\theta}\del{\theta}\ins{\sin\theta v_\theta} = c_2\frac{F}{\mu}\frac{\cos\theta}{r^2}+c_3\frac{F}{\mu}\frac{2\cos\theta}{r^2}=0\implies c_2 = -2c_3
+\end{equation}
+and assuming the solution is steady over time we get
+\begin{equation}
+    \del{x_k}\ins{\rho v_i v_k -\sigma_{ik}}=0
+\end{equation}
+looking at the element in the direction of \(\theta\)
+\begin{equation}
+    \del{x_k}\ins{\rho v_\theta v_k -\sigma_{\theta k}}=\frac{1}{r^2}\del{r}\ins{r^2\ins{\rho v_\theta v_r}-\sigma_{\theta r}}+\frac{1}{r\sin\theta}\del{\theta}\ins{\sin\theta\ins{\rho v_\theta^2-\sigma_{\theta\theta}}}=0
+\end{equation}
+but
+\begin{equation}
+    \sigma_{\theta\theta} = -p + 2\mu\ins{\frac{1}{r}\del{\theta}v_\theta + \frac{1}{r}v_r}
+\end{equation}
+so
+\begin{equation}
+    \frac{1}{r\sin\theta}\del{\theta}\ins{\sin\theta\ins{\rho \ins{c_3 \frac{F}{\mu}\frac{\sin\theta}{r}}^2+c_1 F \frac{\cos\theta}{r^2} - 2\mu\ins{\frac{1}{r}\del{\theta}\ins{c_3 \frac{F}{\mu}\frac{\sin\theta}{r}} + \frac{1}{r}\ins{c_2\frac{F}{\mu}\frac{\cos\theta}{r}}}}}=0
+\end{equation}
+we can see every element has 2 sin or cos functions multiplied, together with the fact this can't depend on \(\theta\) (and because I want to at least try to finish this homework set which is extremely long) I'll treat them all as just 1.
+\begin{equation}
+    \rho \ins{c_3 \frac{F}{\mu}\frac{1}{r}}^2+c_1 F \frac{1}{r^2} - 2\mu\ins{\frac{1}{r}c_3 \frac{F}{\mu}\frac{1}{r} + \frac{1}{r}\ins{c_2\frac{F}{\mu}\frac{1}{r}}}=0
+\end{equation}
+simplifying
+\begin{equation}
+    \rho c_3^2\frac{F^2}{\mu^2}\frac{1}{r^2}+c_1 F \frac{1}{r^2}-2c_3 F\frac{1}{r^2}-2c_2 F \frac{1}{r^2}=0
+\end{equation}
+then 
+\begin{equation}
+    \rho c_3^2\frac{F}{\mu^2}\frac{1}{r^2}+c_1 \frac{1}{r^2}-2c_3 \frac{1}{r^2}-2c_2  \frac{1}{r^2}=0
+\end{equation}
+the first element depends on sine squared so for some values of theta, incl. 0, it vanishes, so we can solve for 
+\begin{equation}
+    c_1 -2c_3 -2c_2=0
+\end{equation}
+giving us 
+\begin{equation}
+    c_1 = 2c_2+2c_3 = 2c_3 -4c_3=-2c_3
+\end{equation}
+so the relation is 
+\begin{equation}
+    c_1 = c_2 = -2c_3
+\end{equation}

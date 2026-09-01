@@ -1,0 +1,133 @@
+\clearpage
+\section{Starting Planar Poiseuille Flow}
+\subsection{NS equation}
+In general the NS equation for an incompressible fluid is 
+\begin{equation}
+	\pdv{\vb{v}}{t}+\ins{\vb{v}\cdot\grad}\vb{v}=-\frac{1}{\rho}\grad{p}+\nu\laplacian{\vb{v}}
+\end{equation}
+but the symmetries of the problem dictate that the velocity must be in the \(x\) direction and only depend on \(y\) and the time, and the given pressure gradient give 
+\begin{equation}
+	\pdv{v_x(y,t)}{t}=\frac{\Delta P}{L\rho}+\nu\pdv[2]{v_x(y,t)}{y}
+\end{equation}
+The boundary conditions are
+\begin{align}
+	v_x(y=0,t) = v_x(y=h,t)=0
+\end{align}
+and the initial conditions are 
+\begin{equation}
+	v_x(y,t=0)=0
+\end{equation}
+\subsection{Steady State Solution}
+The steady state solution does not depend on time therefore we find it from
+\begin{equation}
+	\frac{\Delta P}{L\rho}+\nu\pdv[2]{v_x(y,t)}{y}=0 \implies v_x(y,t) = -\frac{\Delta P}{2L\rho\nu}y^2+Ay+B
+\end{equation}
+\emph{I noticed I missed the factor of 2 here then I added it back manually to a bunch of places I think it should have been. If there are mistakes of a missing or superfluous 2 it's because of that I'm sorry :(} \\Using the boundary conditions we have 
+\begin{equation}
+	B=0,\quad A=\frac{h\Delta P}{2L\rho\nu}
+\end{equation}
+so 
+\begin{equation}
+	v_x^0 = -\frac{\Delta P}{2L\rho\nu}y^2+\frac{2h\Delta P}{L\rho\nu}y = \frac{\Delta P}{2L\rho\nu}\ins{hy-y^2}
+\end{equation}
+\subsection{New Variable}
+noticing that 
+\begin{equation}
+	\pdv{v_x(y,t)}{t}=\frac{\Delta P}{L\rho}+\nu\pdv[2]{v_x(y,t)}{y} 
+\end{equation}
+and 
+\begin{equation}
+	\pdv{v_x^0(y)}{t}=\frac{\Delta P}{L\rho}+\nu\pdv[2]{v_x^0(y)}{y}
+\end{equation}
+can be rearranged to 
+\begin{align}
+	\ins{\pdv{t}-\nu\pdv[2]{y}}v_x = \frac{\Delta P}{L\rho} && \ins{\pdv{t}-\nu\pdv[2]{y}}v_x^0 = \frac{\Delta P}{L\rho}
+\end{align}
+and if we subtract the equations we get 
+\begin{equation}
+	\ins{\pdv{t}-\nu\pdv[2]{y}}v_x'=0
+\end{equation}
+which can be rearranged to 
+\begin{equation}
+	\pdv{v_x'}{t}=\nu\pdv[2]{v_x'}{y}
+\end{equation}
+which is the diffusion equation. The initial conditions are 
+\begin{equation}
+	v_x'(t=0,y) = -v_x^0
+\end{equation}
+\subsection{Separation of Variables}
+by replacing 
+\begin{equation}
+	v_x' = \Theta(t)Y(y)
+\end{equation}
+we have 
+\begin{equation}
+	\Theta' Y=\nu\Theta Y'' \implies \frac{\Theta'}{\Theta} = \nu\frac{Y''}{Y}
+\end{equation}
+meaning both sides are constants, so 
+\begin{equation}
+	\frac{Y''}{Y}=-\lambda^2 \implies Y = Ae^{i\lambda y}+Be^{-i\lambda y}
+\end{equation}
+using the boundary conditions we have immediately
+\begin{equation}
+	A=-B 
+\end{equation}
+thus 
+\begin{equation}
+	2A\sinh(\lambda h)=0 \implies \lambda = \frac{\pi n}{h}
+\end{equation}
+giving us 
+\begin{equation}
+	Y = A\sin\ins{\frac{\pi n y}{h}}
+\end{equation}
+and we get the value of A from normalization of the function set 
+\begin{equation}
+	\norm{Y} = \int_{0}^{h}A^2\sin^2\ins{\frac{\pi n y}{h}}\dd{y} = \frac{A^2h}{2} =1\implies A = \sqrt{\frac{2}{h}}
+\end{equation}
+so 
+\begin{equation}
+	Y = \sqrt{\frac{2}{h}}\sin\ins{\frac{\pi n y}{h}} \implies Y''=-\sqrt{\frac{2}{h}}\frac{\pi^2 n^2}{h^2}\sin\ins{\frac{\pi n y}{h}}
+\end{equation}
+we can now plug this back into the equation
+\begin{equation}
+	\Theta' = -\nu\frac{\pi^2 n^2}{h^2}\Theta
+\end{equation}
+so
+\begin{equation}
+\Theta = Ce^{-\nu\ins{\frac{\pi n}{h}}^2 t}
+\end{equation}
+plugging this back into the initial conditions
+\begin{equation}
+	\sum_{n=1}^{\infty}\sqrt{\frac{2}{h}}C_n \sin\ins{\frac{\pi n y}{h}}e^{-\nu\ins{\frac{\pi n}{h}}^2 t} = \frac{\Delta P}{2L\rho\nu}\ins{y-h}y
+\end{equation}
+but since it's the initial condition then \(t=0\) so
+\begin{equation}
+	\sum_{n=1}^{\infty}C_n \sin\ins{\frac{\pi n y}{h}} = \sqrt{\frac{h}{2}}\frac{\Delta P}{2L\rho\nu}\ins{y-h}y
+\end{equation}
+We find \(C_n\) by 
+\begin{align}
+	C_n &= \sqrt{\frac{2}{h}}\int_{0}^{h}\dd{y}\sin\ins{\frac{\pi n y}{h}}\frac{\Delta P}{L\rho\nu}\ins{y-h}y \\
+	&= \sqrt{\frac{2}{h}}\frac{\Delta P}{L\rho\nu}\int_{0}^{h}\dd{y}\sin\ins{\frac{\pi n y}{h}}\ins{y-h}y
+\end{align}
+throwing this into an inegral solver we get 
+\begin{equation}
+	C_n = \begin{cases}
+		0 & n \text{ even} \\
+		\sqrt{\frac{2}{h}}\frac{4h^2\Delta P}{\rho\nu L \pi^3 n^3} & n \text{ odd}
+	\end{cases}
+\end{equation}
+so 
+\begin{equation}
+	v_x'(y,t) = \sum_{n=0}^{\infty}\sqrt{\frac{2}{h}}\frac{4h^2\Delta P}{2\rho\nu L \pi^3 \ins{2n+1}^3}\sin\ins{\frac{\pi \ins{2n+1} y}{h}}e^{-\nu\ins{\frac{\pi \ins{2n+1}}{h}}^2 t}
+\end{equation}
+\newpage
+\subsection{Time Scale and Plot}
+Looking at the exponent of the solution we can see the timescale is 
+\begin{equation}
+	\tau = \frac{1}{\nu}\ins{\frac{h}{\pi \ins{2n+1}}}^2
+\end{equation}
+Which in a plot looks like
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{Figure_1.png}
+\end{figure}
