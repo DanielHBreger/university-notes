@@ -1,0 +1,68 @@
+filename,rpot_ohm,residual_pct,status
+trace1.csv,2.38,0.357,ok
+trace2.csv,26.5,0.353,ok
+trace3.csv,47.46,0.352,ok
+trace4.csv,87.62,0.347,ok
+trace5.csv,132.04,0.343,ok
+trace6.csv,175.61,0.347,ok
+trace7.csv,221.28,0.347,ok
+trace8.csv,266.94,0.346,ok
+trace9.csv,310.2,0.347,ok
+trace10.csv,331.85,0.345,ok
+trace11.csv,352.51,0.349,ok
+trace12.csv,376.59,0.351,ok
+trace13.csv,411.68,0.352,ok
+trace14.csv,447.78,0.356,ok
+trace15.csv,465.01,0.358,ok
+trace16.csv,486.82,0.358,ok
+trace17.csv,507.85,0.363,ok
+trace18.csv,530.03,0.371,ok
+trace19.csv,553.32,0.374,ok
+trace20.csv,578.17,0.379,ok
+trace21.csv,597.37,0.386,ok
+trace22.csv,611.83,0.391,ok
+trace23.csv,627.21,0.398,ok
+trace24.csv,647.07,0.403,ok
+trace25.csv,668.32,0.418,ok
+trace26.csv,679.89,0.43,ok
+trace27.csv,672.27,1.76,ok
+trace28.csv,678.23,1.694,ok
+trace29.csv,685.66,1.693,ok
+trace30.csv,693.17,1.69,ok
+trace31.csv,702.08,1.63,ok
+trace32.csv,711.83,1.683,ok
+trace33.csv,715.36,1.676,ok
+trace34.csv,718.08,1.687,ok
+trace35.csv,722.02,1.69,ok
+trace36.csv,724.83,1.694,ok
+trace37.csv,729.78,1.691,ok
+trace38.csv,734.88,1.688,ok
+trace39.csv,739.53,1.677,ok
+trace40.csv,742.49,1.633,ok
+trace41.csv,743.93,1.635,ok
+trace42.csv,751.65,1.633,ok
+trace43.csv,757.12,1.567,ok
+trace44.csv,765.0,1.616,ok
+trace45.csv,771.11,1.63,ok
+trace46.csv,775.87,1.637,ok
+trace47.csv,779.41,1.698,ok
+trace48.csv,783.98,1.67,ok
+trace49.csv,787.84,1.683,ok
+trace50.csv,791.0,1.638,ok
+trace51.csv,796.6,1.601,ok
+trace52.csv,802.9,1.61,ok
+trace53.csv,808.2,1.584,ok
+trace54.csv,821.17,1.55,ok
+trace55.csv,829.83,1.526,ok
+trace56.csv,844.34,1.523,ok
+trace57.csv,856.23,2.433,ok
+trace58.csv,857.57,3.236,ok
+trace59.csv,844.97,4.814,ok
+trace60.csv,824.03,6.037,CHECK: not a clean divider
+trace61.csv,689.78,9.513,CHECK: not a clean divider
+trace62.csv,482.25,11.597,CHECK: not a clean divider
+trace63.csv,935.6,14.282,CHECK: not a clean divider
+trace64.csv,8107.58,15.222,CHECK: not a clean divider
+trace65.csv,1227.49,17.478,CHECK: not a clean divider
+trace66.csv,-186.06,20.052,CHECK: not a clean divider
+trace67.csv,1275.68,15.994,CHECK: not a clean divider

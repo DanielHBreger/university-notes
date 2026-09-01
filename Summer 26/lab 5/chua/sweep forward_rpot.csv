@@ -1,0 +1,122 @@
+filename,rpot_ohm,residual_pct,status
+trace1.csv,2999.48,16.713,CHECK: not a clean divider
+trace2.csv,3941.72,12.199,CHECK: not a clean divider
+trace3.csv,2187.75,10.934,CHECK: not a clean divider
+trace4.csv,4431.96,16.437,CHECK: not a clean divider
+trace5.csv,5826.38,16.657,CHECK: not a clean divider
+trace6.csv,2569.28,16.697,CHECK: not a clean divider
+trace7.csv,490.03,15.162,CHECK: not a clean divider
+trace8.csv,553.96,10.063,CHECK: not a clean divider
+trace9.csv,683.2,10.259,CHECK: not a clean divider
+trace10.csv,791.85,8.385,CHECK: not a clean divider
+trace11.csv,803.17,6.192,CHECK: not a clean divider
+trace12.csv,838.57,6.346,CHECK: not a clean divider
+trace13.csv,859.5,5.703,CHECK: not a clean divider
+trace14.csv,855.04,5.603,CHECK: not a clean divider
+trace15.csv,859.77,4.574,ok
+trace16.csv,862.65,4.238,ok
+trace17.csv,862.81,3.663,ok
+trace18.csv,871.28,3.171,ok
+trace19.csv,877.72,2.798,ok
+trace20.csv,876.02,2.551,ok
+trace21.csv,870.98,2.306,ok
+trace22.csv,871.35,2.142,ok
+trace23.csv,870.41,1.88,ok
+trace24.csv,866.26,1.718,ok
+trace25.csv,864.31,1.524,ok
+trace26.csv,860.61,1.433,ok
+trace27.csv,857.99,1.198,ok
+trace28.csv,853.69,1.092,ok
+trace29.csv,851.67,0.975,ok
+trace30.csv,850.01,0.892,ok
+trace31.csv,847.65,0.835,ok
+trace32.csv,843.54,0.826,ok
+trace33.csv,839.68,0.82,ok
+trace34.csv,834.13,0.836,ok
+trace35.csv,830.09,0.831,ok
+trace36.csv,822.51,0.862,ok
+trace37.csv,814.47,0.867,ok
+trace38.csv,805.71,0.877,ok
+trace39.csv,798.65,0.891,ok
+trace40.csv,789.12,0.904,ok
+trace41.csv,778.62,0.92,ok
+trace42.csv,775.2,0.931,ok
+trace43.csv,773.06,0.905,ok
+trace44.csv,771.89,0.907,ok
+trace45.csv,770.76,0.911,ok
+trace46.csv,769.51,0.912,ok
+trace47.csv,768.08,0.908,ok
+trace48.csv,766.14,0.907,ok
+trace49.csv,764.69,0.911,ok
+trace50.csv,762.85,0.9,ok
+trace51.csv,760.49,0.898,ok
+trace52.csv,757.9,0.911,ok
+trace53.csv,752.4,0.913,ok
+trace54.csv,750.6,0.915,ok
+trace55.csv,747.74,0.914,ok
+trace56.csv,746.25,0.916,ok
+trace57.csv,744.48,0.916,ok
+trace58.csv,743.58,0.915,ok
+trace59.csv,742.32,0.915,ok
+trace60.csv,741.57,0.912,ok
+trace61.csv,740.35,0.91,ok
+trace62.csv,739.29,0.926,ok
+trace63.csv,738.35,0.912,ok
+trace64.csv,736.79,0.911,ok
+trace65.csv,735.17,0.91,ok
+trace66.csv,733.7,0.912,ok
+trace67.csv,731.84,0.911,ok
+trace68.csv,728.95,0.929,ok
+trace69.csv,724.02,0.912,ok
+trace70.csv,716.97,0.929,ok
+trace71.csv,715.35,0.927,ok
+trace72.csv,714.88,0.925,ok
+trace73.csv,711.67,0.924,ok
+trace74.csv,709.85,0.929,ok
+trace75.csv,707.78,0.928,ok
+trace76.csv,705.94,0.944,ok
+trace77.csv,702.37,0.928,ok
+trace78.csv,697.38,0.929,ok
+trace79.csv,691.42,0.945,ok
+trace80.csv,681.61,0.945,ok
+trace81.csv,675.66,0.928,ok
+trace82.csv,672.39,0.946,ok
+trace83.csv,670.09,0.923,ok
+trace84.csv,669.52,0.926,ok
+trace85.csv,668.4,0.927,ok
+trace86.csv,665.88,0.927,ok
+trace87.csv,665.63,0.927,ok
+trace88.csv,661.81,0.582,ok
+trace89.csv,661.89,0.576,ok
+trace90.csv,661.28,0.575,ok
+trace91.csv,659.89,0.583,ok
+trace92.csv,657.92,0.576,ok
+trace93.csv,655.09,0.59,ok
+trace94.csv,651.9,0.598,ok
+trace95.csv,643.84,0.597,ok
+trace96.csv,633.56,0.609,ok
+trace97.csv,617.73,0.627,ok
+trace98.csv,602.09,0.65,ok
+trace99.csv,585.38,0.677,ok
+trace100.csv,569.19,0.694,ok
+trace101.csv,547.6,0.725,ok
+trace102.csv,524.47,0.756,ok
+trace103.csv,501.04,0.794,ok
+trace104.csv,471.76,0.85,ok
+trace105.csv,442.93,0.914,ok
+trace106.csv,426.56,0.928,ok
+trace107.csv,414.43,0.965,ok
+trace108.csv,393.22,1.005,ok
+trace109.csv,371.93,1.066,ok
+trace110.csv,354.15,1.115,ok
+trace111.csv,333.17,1.228,ok
+trace112.csv,309.95,1.847,ok
+trace113.csv,304.33,1.746,ok
+trace114.csv,310.55,3.786,ok
+trace115.csv,251.8,3.915,ok
+trace116.csv,213.89,4.01,ok
+trace117.csv,174.73,4.112,ok
+trace118.csv,145.68,4.196,ok
+trace119.csv,110.88,4.303,ok
+trace120.csv,72.05,4.434,ok
+trace121.csv,64.18,4.46,ok

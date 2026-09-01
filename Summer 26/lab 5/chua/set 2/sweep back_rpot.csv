@@ -1,0 +1,77 @@
+filename,rpot_ohm,residual_pct,status
+trace1.csv,2.57,0.298,ok
+trace2.csv,29.67,0.297,ok
+trace3.csv,58.28,0.297,ok
+trace4.csv,91.1,0.296,ok
+trace5.csv,129.67,0.295,ok
+trace6.csv,166.12,0.294,ok
+trace7.csv,203.15,0.294,ok
+trace8.csv,240.09,0.295,ok
+trace9.csv,280.53,0.296,ok
+trace10.csv,318.48,0.299,ok
+trace11.csv,353.25,0.299,ok
+trace12.csv,386.53,0.3,ok
+trace13.csv,417.46,0.305,ok
+trace14.csv,450.78,0.309,ok
+trace15.csv,482.28,0.314,ok
+trace16.csv,515.58,0.318,ok
+trace17.csv,539.73,0.319,ok
+trace18.csv,555.9,0.323,ok
+trace19.csv,571.45,0.326,ok
+trace20.csv,590.18,0.331,ok
+trace21.csv,608.83,0.337,ok
+trace22.csv,628.84,0.343,ok
+trace23.csv,640.74,0.347,ok
+trace24.csv,652.94,0.352,ok
+trace25.csv,666.35,0.363,ok
+trace26.csv,680.34,0.367,ok
+trace27.csv,691.14,0.377,ok
+trace28.csv,694.82,0.48,ok
+trace29.csv,710.52,0.476,ok
+trace30.csv,722.1,0.477,ok
+trace31.csv,733.08,0.481,ok
+trace32.csv,735.65,0.469,ok
+trace33.csv,735.65,0.469,ok
+trace34.csv,736.28,0.474,ok
+trace35.csv,744.42,0.471,ok
+trace36.csv,750.41,0.468,ok
+trace37.csv,753.23,0.466,ok
+trace38.csv,755.67,0.469,ok
+trace39.csv,757.88,0.467,ok
+trace40.csv,759.29,0.468,ok
+trace41.csv,756.2,0.478,ok
+trace42.csv,757.03,0.473,ok
+trace43.csv,758.63,0.47,ok
+trace44.csv,760.61,0.472,ok
+trace45.csv,762.1,0.473,ok
+trace46.csv,763.99,0.469,ok
+trace47.csv,766.12,0.469,ok
+trace48.csv,770.17,0.469,ok
+trace49.csv,772.38,0.464,ok
+trace50.csv,774.37,0.465,ok
+trace51.csv,776.58,0.47,ok
+trace52.csv,781.11,0.473,ok
+trace53.csv,781.12,0.476,ok
+trace54.csv,782.48,0.482,ok
+trace55.csv,792.86,0.465,ok
+trace56.csv,798.38,0.464,ok
+trace57.csv,803.83,0.459,ok
+trace58.csv,815.28,0.455,ok
+trace59.csv,831.06,0.445,ok
+trace60.csv,845.66,0.438,ok
+trace61.csv,851.55,0.478,ok
+trace62.csv,854.12,0.514,ok
+trace63.csv,857.61,0.47,ok
+trace64.csv,870.0,0.616,ok
+trace65.csv,872.93,0.724,ok
+trace66.csv,887.71,0.949,ok
+trace67.csv,894.4,1.312,ok
+trace68.csv,907.45,2.054,ok
+trace69.csv,916.79,2.624,ok
+trace70.csv,914.47,4.404,ok
+trace71.csv,2579.83,10.553,CHECK: not a clean divider
+trace72.csv,-3338.48,12.327,CHECK: not a clean divider
+trace73.csv,-2596.23,12.341,CHECK: not a clean divider
+trace74.csv,-3106.88,12.604,CHECK: not a clean divider
+trace75.csv,-2366.4,12.306,CHECK: not a clean divider
+trace76.csv,-2594.39,10.739,CHECK: not a clean divider
