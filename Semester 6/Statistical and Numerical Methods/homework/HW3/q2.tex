@@ -1,0 +1,79 @@
+\clearpage
+\section{Moments of a distribution}
+\subsection{Moments}
+Throwing the distribution into python and using sympy gives the moments:
+\begin{align}
+    \left<X\right> &= \begin{cases} \frac{a b \Gamma\left(1 - \frac{1}{a}\right) \Gamma\left(p + 1 + \frac{1}{a}\right)}{\left(a p + 1\right) \Gamma\left(p\right)} & \text{for}\: \frac{1}{a} < 1 \\a b^{a} p \int\limits_{0}^{\infty} x^{a p} \left(b^{a} + x^{a}\right)^{- p - 1}\, dx & \text{otherwise} \end{cases}\\
+    \left<X^2\right> &= \begin{cases} \frac{a b^{2} \Gamma\left(1 - \frac{2}{a}\right) \Gamma\left(p + 1 + \frac{2}{a}\right)}{\left(a p + 2\right) \Gamma\left(p\right)} & \text{for}\: \frac{1}{a} < \frac{1}{2} \\a b^{a} p \int\limits_{0}^{\infty} x^{a p + 1} \left(b^{a} + x^{a}\right)^{- p - 1}\, dx & \text{otherwise} \end{cases}\\
+    \left<X^3\right> &= \begin{cases} \frac{a b^{3} \Gamma\left(1 - \frac{3}{a}\right) \Gamma\left(p + 1 + \frac{3}{a}\right)}{\left(a p + 3\right) \Gamma\left(p\right)} & \text{for}\: \frac{1}{a} < \frac{1}{3} \\a b^{a} p \int\limits_{0}^{\infty} x^{a p + 2} \left(b^{a} + x^{a}\right)^{- p - 1}\, dx & \text{otherwise} \end{cases}\\
+    \left<X^4\right> &= \begin{cases} \frac{a b^{4} \Gamma\left(1 - \frac{4}{a}\right) \Gamma\left(p + 1 + \frac{4}{a}\right)}{\left(a p + 4\right) \Gamma\left(p\right)} & \text{for}\: \frac{1}{a} < \frac{1}{4} \\a b^{a} p \int\limits_{0}^{\infty} x^{a p + 3} \left(b^{a} + x^{a}\right)^{- p - 1}\, dx & \text{otherwise} \end{cases}
+\end{align}
+\subsection{Set of values}
+The PDF is 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figure_1.png}
+\end{figure}
+and the moments are 
+\begin{table}[H]
+    \centering 
+    \begin{tabular}{c|ccccc}
+        Moment & a=0.5 & a=1 & a=2 & a=3 & a=4\\
+        \hline 
+        1 & - & - & \(\frac{3\pi}{4}\) & 1.61 & 1.39\\
+        2 & - & - & - & 4.03 & \(\frac{3\pi}{4}\)\\
+        3 & - & - & - & - & 5.83
+    \end{tabular}
+\end{table}
+\subsection{other values}
+The PDF is 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figure_2.png}
+\end{figure}
+and the moments are 
+\begin{table}[H]
+    \centering 
+    \begin{tabular}{c|ccccc}
+        Moment & b=0.5 & b=1 & b=2 & b=3 & b=4\\
+        \hline 
+        1 & 0.694 & 1.39 & 2.78 & 4.17 & 5.55 \\
+        2 & \(\frac{3\pi}{16}\) & \(\frac{3\pi}{4}\) & \(3\pi\) & \(\frac{27\pi}{4}\) & \(12\pi\) \\
+        3 & 0.729 & 5.83 & 46.6 & 157 & 373 \\
+    \end{tabular}
+\end{table}
+\subsection{yet more values}
+The PDF is 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figure_3.png}
+\end{figure}
+and the moments are 
+\begin{table}[H]
+    \centering 
+    \begin{tabular}{c|ccccc}
+        Moment & p=0.5 & p=1 & p=2 & p=3 & p=4\\
+        \hline 
+        1 & 0.847 & 1.11 & 1.39 & 1.56 & 1.69 \\
+        2 & 1 & \(\pi/2\) & \(\frac{3\pi}{4}\) & \(\frac{15\pi}{16}\) & \(\frac{35\pi}{32}\) \\
+        3 & 1.85 & 3.33 & 5.83 & 8.02 & 10
+    \end{tabular}
+\end{table}
+\subsection{fourth moment}
+By definition the fourth moment is 
+\begin{equation}
+    \left<X^4\right> = \int_{0}^{\infty}x^4f(x)
+\end{equation}
+which for the dagum distribution is always positive, so no it's not possible to get negative fourth moments. To get a small fourth moment we want a distribution that decays to 0 very fast. Some trial and error gave me 
+\begin{align}
+    a = 10 && b=0.01 && p=1
+\end{align}
+visually
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figure_4.png}
+\end{figure}
+for which 
+\begin{equation}
+    \left<X^4\right> \approx \num{7e-0}\Gamma(3/5)\Gamma(12/5) \approx \num{1.3e-8}
+\end{equation}
