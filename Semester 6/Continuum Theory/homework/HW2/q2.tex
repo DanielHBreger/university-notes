@@ -1,0 +1,30 @@
+\clearpage
+\section{Streamlines and pathlines}
+\begin{colbox}
+	Consider the following 2D flow \begin{equation}
+		\vb{v}\ins{x,y} = \mqty(\alpha yt \\ \beta)
+	\end{equation}
+	\begin{enumerate}
+		\item Find the streamlines \(\vb{x}\ins{x,t}\) and the pathlines \(\vb{x}\ins{t,\vb{x}_0}\) of the flow.
+		\item Create an animation of the motion of a particle starting at position \((0,0)\) at \(t=0\) and \(\alpha=\beta=1\). In the animation plot you should display the streamlines at different times, as well as the full trajector of the particle. Discuss the relation between the streamlines and the trajectory of the particle.
+	\end{enumerate}
+\end{colbox}
+\subsection{Streamlines and Pathlines}
+As we know the streamlines satisfy
+\begin{equation}
+	\frac{dx_s}{\alpha yt} = \frac{dy_s}{\beta}
+\end{equation}
+therefore
+\begin{equation}
+	\dv{x_s}{y_s} = \frac{\alpha yt}{\beta}
+\end{equation}
+integrating w.r.t y
+\begin{equation}
+	x_s = \frac{\alpha t}{2\beta}y^2+C
+\end{equation}
+so the streamlines are
+\begin{equation}
+	x_s - \frac{\alpha t}{2\beta}y^2=C
+\end{equation}
+\subsection{Animation}
+Animation is attached in "trajectory\_animation.mp4". The trajectory the particle took is such that it moved along the streamline at each point in time as it was then. i.e the streamline at each moment in time determined the direction the particle followed for that step.

@@ -1,0 +1,27 @@
+\clearpage
+\section{Finite Cylinder}
+\subsection{stress tensor}
+Since \(\chi=C\theta\) and by definition
+\begin{equation}
+    \sigma_{rr}=0,\qquad\sigma_{\theta\theta}=0,\qquad\sigma_{r\theta}=-\pdv{r}\ins{\frac{1}{r}\pdv{\chi}{\theta}}=\frac{C}{r^2}
+\end{equation}
+\subsubsection{boundary conditions}
+Unless I'm missing something, we just plug in \(r=R_{1/2}\)
+\begin{equation}
+    \sigma_{rr}=0,\qquad \sigma_{\theta\theta}=0
+\end{equation}
+and 
+\begin{equation}
+    \sigma_{r\theta}(R_1,\theta)=\frac{C}{R_1^2},\qquad\sigma_{r\theta}(R_2,\theta)=\frac{C}{R_2^2}
+\end{equation}
+\subsection{meaning}
+using the hint 
+\begin{equation}
+    \vb{T}=\int_{\partial V}\dd{S}\vb{r}\times\sigma
+\end{equation}
+plugging in the tensor we have 
+\begin{align}
+    \vb{T}&=\int_{\partial V}\dd{S}r\sigma_{r\theta}\vu{z}\\
+    &= \int_{0}^{2\pi}\int_{0}^{L}\dd{z}\dd{\theta}R^2\frac{C}{R^2}\vu{z}=2\pi L C \vu{z}
+\end{align}
+The torque is constant regardless of the radius at which it's calculated, but we can tell it'll have opposite signs because the direction of the normal would change, so the total torque applied to the cylinder will be 0.

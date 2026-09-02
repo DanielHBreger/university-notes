@@ -1,0 +1,63 @@
+\clearpage
+\section{Strain Tensor}
+\subsection{small deformation}
+The deformation is 
+\begin{equation}
+    \vb{u}=\ins{x',y',z'}-\ins{x,y,z}=\ins{x\ins{e^{-y/D}-1},y\ins{e^{-x/D}-1},0}
+\end{equation}
+for the deformation to be small, we want 
+\begin{equation}
+    \pdv{u_i}{x_j} \ll 1
+\end{equation}
+and since the coordinates are of order of magnitude of \(L\) we want 
+\begin{equation}
+    \frac{L}{D}\ll 1
+\end{equation}
+or 
+\begin{equation}
+    L \ll D
+\end{equation}
+\subsection{nonlinear components}
+in the small deformation case we found that 
+\begin{equation}
+    L/D \ll 1
+\end{equation}
+and the nonlinear term goes like 
+\begin{equation}
+    \pdv{u_k}{x_i'}\pdv{u_k}{x_j'} \sim \ins{L/D}^2 \ll L/D
+\end{equation}
+so it's very negligible.
+\subsection{Linear Strain Tensor}
+
+\begin{equation}
+    \epsilon_{ij} = \frac{1}{2}\ins{\pdv{u_i}{x_j}+\pdv{u_j}{x_i}}
+\end{equation}
+where 
+\begin{equation}
+    \pdv{u_x}{x}\simeq -y/D \qquad \pdv{u_x}{y}\simeq -x/D \qquad \pdv{u_y}{x}\simeq-y/D \qquad \pdv{u_y}{y}\simeq-x/D
+\end{equation}
+so 
+\begin{equation}
+    \epsilon_{ij} = \mqty(-y/D&-\frac{x+y}{2D}&0\\-\frac{x+y}{2D}&-x/D&0\\0&0&0)
+\end{equation}
+\subsection{volume change}
+we saw in the lecture that the change in volume of an element is 
+\begin{equation}
+    \frac{dV}{V}=\epsilon_{ii}
+\end{equation}
+and here 
+\begin{equation}
+    \epsilon_{ii}=-y/D-x/D=-\frac{x+y}{D}
+\end{equation}
+so the total change is 
+\begin{equation}
+    \Delta V = \int_{o}^{L}\int_{o}^{L}\int_{o}^{L}\ins{-\frac{x+y}{D}}\dd{x}\dd{y}\dd{z}
+\end{equation}
+which from symmetry (in the mathematical sense) we can rewrite as 
+\begin{equation}
+    \Delta V = \frac{-2}{D}\int_{o}^{L}\int_{o}^{L}\int_{o}^{L}x\dd{x}\dd{y}\dd{z}=-\frac{L^4}{D}
+\end{equation}
+so the total volume is 
+\begin{equation}
+    V' = L^3-\frac{L^4}{D}
+\end{equation}

@@ -1,0 +1,66 @@
+\clearpage 
+\section{Signal and Noise}
+The error on the parameters means 
+\begin{equation}
+    b=8\pm0.56,\quad\phi=0.5\pm0.035,\quad\omega=\frac{1}{18}\pm0.004
+\end{equation}
+\subsection{signal and noise}
+we can find the amount of noise by integrating over the interesting regions 
+\begin{equation}
+    \int\dd{x}B=b\ins{x-\frac{\cos\ins{\omega x+\phi}}{\omega}}+C
+\end{equation}
+so
+\begin{align}
+    B_1&=\int_{-14}^{-5}B\dd{x}=b\ins{9-\frac{\cos\ins{-5\omega+\phi}}{\omega}+\frac{\cos\ins{-14\omega+\phi}}{\omega}}=70.02\\
+    B_2&=\int_{5}^{14}B\dd{x}=b\ins{9+\frac{\cos\ins{5\omega+\phi}}{\omega}-\frac{\cos\ins{14\omega+\phi}}{\omega}}=133
+\end{align}
+and the errors
+\begin{align}
+    \sigma_{B_1}^2&=\ins{\pdv{B1}{b}}^2\sigma_b^2+\ins{\pdv{B1}{\omega}}^2\sigma_\omega^2+\ins{\pdv{B1}{\phi}}^2\sigma_\phi^2\\
+    &= \ins{8.72\sigma_b}^2+\ins{-676\sigma_\omega}^2+\ins{71\sigma_\phi}^2=37.55
+\end{align}
+and 
+\begin{align}
+    \sigma_{B_1}^2&=\ins{\pdv{B1}{b}}^2\sigma_b^2+\ins{\pdv{B1}{\omega}}^2\sigma_\omega^2+\ins{\pdv{B1}{\phi}}^2\sigma_\phi^2\\
+    &= \ins{16.63\sigma_b}^2+\ins{327\sigma_\omega}^2+\ins{37\sigma_\phi}^2=90.05
+\end{align}
+so 
+\begin{equation}
+    B_1 = 70.02\pm6.13,\qquad B_2=133\pm9.49
+\end{equation}
+so the signal is 
+\begin{equation}
+    S_1 = N_1-B_1=84-70.02=13.98\pm6.13\pm\sqrt{13.98},\qquad S_2=147-133=14\pm9.49\pm\sqrt{14}
+\end{equation}
+and 
+\begin{equation}
+    seg_1=\frac{S_1}{\sqrt{B_1}}=1.67,\qquad seg_2=\frac{S_2}{\sqrt{B_2}}=1.21
+\end{equation}
+\subsection{Joint significance}
+the total noise under both signals is 
+\begin{equation}
+    B = B_1+B_2=203.02
+\end{equation}
+so the total signal is 
+\begin{equation}
+    S=N_1+N_2-B=84+147-203.02=27.98
+\end{equation}
+so the joint significance is 
+\begin{equation}
+    seg=\frac{S}{\sqrt{B}}=1.96
+\end{equation}
+\subsection{change in significance}
+we can see that by looking at both signals together, the significance increases.
+\subsection{recommendation}
+There are three main improvements that could be made:
+\begin{description}
+    \item[Longer Measurement] By measuring for a longer time we capture more background allowing us to model it better and improve our method to remove it
+    \item[More Measurements] By repeating the measurements we increase the significance of the signal 
+    \item[More Accurate Measurements] Since we know the position of the signal we can focus the accuracy on those regions
+\end{description}
+\subsection{24 hours}
+\begin{description}
+    \item[Background] The background will of course increase proportionally to the increase in time, so 24 times.
+    \item[Signal] We capture the signal 24 times so it also increases by 24 times.
+    \item[Significance] As we saw in a previous part, more measurements of the signal increase its significance, and that is what will happen here too.
+\end{description}

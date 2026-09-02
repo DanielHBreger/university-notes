@@ -1,0 +1,25 @@
+\clearpage
+\section{Area probability with an angle}
+\begin{colbox}
+	A needle of length \(l\) is dropped on a grid of parallel lines with distance \(a\) between them, such that \(l<a\).
+	\begin{enumerate}
+		\item What is the chance the needle hits the net if it is dropped such that it must be perpendicular to the net?
+		\item What is the chance it hits the net if it fells at a random angle?
+	\end{enumerate}
+\end{colbox}
+\subsection{Perpendicular needle}
+In this case it's simply the length of the needle divided by the size of the gap
+\begin{equation}
+	P=\frac{l}{a}
+\end{equation}
+\subsection{at angle}
+In this case there actually needs to be a calculation. First we notice that given we already know the angle at which the needle dropped, the chance is simply
+\begin{equation}
+	P(hit) = \frac{l}{a}\sin\theta
+\end{equation}
+therefore
+\begin{align}
+	P(hit) &= \int_{0}^{\pi}\dd{\theta}P(hit|\Theta=\theta)P(\Theta=\theta)\\
+	&= \frac{l}{a}\int_{0}^{\pi}\dd{\theta}\sin\theta P(\Theta=\theta)\\
+	&= \frac{2l}{\pi a}
+\end{align}

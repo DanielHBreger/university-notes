@@ -1,96 +1,26 @@
 \clearpage
-\section{Nematic Order}
+\section{Charge Distributions}
 \begin{colbox}
+	Write an expression for the volumetric charge distributions for the following distributions in spherical coordinates:
     \begin{enumerate}
-        \item The nematic tensor in the fully ordered state is given by \(Q_{\alpha\beta} = n_\alpha n_\beta-\delta_{\alpha\beta}/d\) where \(n_\alpha\) is the director field and \(d\) is the dimension. Show that in 2D \begin{equation}
-            \vec{Q} = \frac{1}{2}\begin{pmatrix}
-                \cos 2\theta & \sin 2\theta \\
-                \sin 2\theta & -\cos 2\theta
-            \end{pmatrix}
-        \end{equation}
-        where \(\vec{n} = \ins{\cos\theta,\sin\theta}\).
-        \item Consider the Frank free energy
-        \begin{equation}
-            F = \int\dd \vec{r}\left[\frac{1}{2}K_1\ins{\nabla\cdot\vec{n}}^2+\frac{1}{2}K_2{\left[\vec{n}\cdot\ins{\nabla\times\vec{n}}\right]}^2+\frac{1}{2}K_3{\left[\vec{n}\times\ins{\nabla\times\vec{n}}\right]}^2\right]
-        \end{equation} 
-        Show that within the one-constant approximation \((K_i=K)\), the free energy reduces to
-        \begin{equation}
-            F = \int \dd \vec{r} \frac{1}{2}K\del_\alpha n_\beta\del_\alpha n_\beta + F_b
-        \end{equation}
-        where \(F_b\) is a boundary term, called saddle-splay. In 2D, show that this free energy can also be written as \(F = \int\dd \vec{r}\frac{1}{2}K\ins{\nabla\theta}^2\).
+        \item A ball of radius \(R\) whose center is at the origin and is uniformly charged
+        \item A spherical shell of radius \(R\) placed at the origin, its northern half charged with surface charge \(\sigma_N\) and the southern half charged with \(\sigma_S\)
+        \item An infinite wire passing through the origin coinciding with \(z=y=0\) and uniformly charged with linear charge density \(\lambda\)
     \end{enumerate}
 \end{colbox}
-\subsection{Nematic Tensor}
-By a direction calculation, in 2D
+\subsection{ball}
+The volume of a sphere is \(V=\frac{4\pi R^3}{3}\) therefore \(\rho=\frac{3Q}{4\pi R^3}\) when inside the ball. This means the charge distribution is
+\begin{equation}
+  \rho=\frac{3Q}{4\pi R^3}\Theta(R-r)
+\end{equation}
+\subsection{shell}
+A direction calculation
+\begin{equation}
+  \rho = \delta(R-r)\left[\Theta\left(\frac{\pi}{2}-\theta\right)\sigma_N+\Theta\left(\theta-\frac{\pi}{2}\right)\sigma_S\right]
+\end{equation}
+\subsection{infinite wire}
+Another direction calculation
 \begin{align}
-    Q_{\alpha\beta} &= n_\alpha n_\beta-\delta_{\alpha\beta}/2 \\
-    &= \begin{pmatrix}
-        \cos^2\theta-\frac{1}{2} & \cos\theta\sin\theta \\
-        \sin\theta\cos\theta & \sin^2\theta-\frac{1}{2}
-    \end{pmatrix}\\
-    &= \frac{1}{2}\begin{pmatrix}
-        2\cos^2\theta-1 & 2\cos\theta\sin\theta \\
-        2\sin\theta\cos\theta & 2\sin^2\theta - 1
-    \end{pmatrix} \\
-    &= \frac{1}{2}\begin{pmatrix}
-        2\cos^2\theta-\sin^2\theta-\cos^2\theta & 2\cos\theta\sin\theta \\
-        2\sin\theta\cos\theta & 2\sin^2\theta - \sin^2\theta-\cos^2\theta
-    \end{pmatrix}\\
-    &= \frac{1}{2}\begin{pmatrix}
-        \cos^2\theta-\sin^2\theta & 2\cos\theta\sin\theta \\
-        2\sin\theta\cos\theta & \sin^2\theta -\cos^2\theta
-    \end{pmatrix} \\
-    &= \frac{1}{2}\begin{pmatrix}
-        \cos 2\theta & \sin 2\theta \\
-        \sin 2 \theta & -\cos 2\theta
-    \end{pmatrix}
+  \rho &= \delta\left(\theta-\frac{\pi}{2}\right)\left[\delta(\phi)+\delta(\phi-\pi)\right]\lambda(r)\\
+  &= \delta\left(\theta-\frac{\pi}{2}\right)\left[\delta(\phi)+\delta(\phi-\pi)\right]\frac{\lambda}{r^2}
 \end{align}
-where the last transition used the trig identities
-\begin{align}
-    \sin 2\theta = 2\sin\theta\cos\theta && \cos 2\theta = \cos^2\theta - \sin^2\theta
-\end{align}
-\subsection{Frank Free Energy}
-Since we are working within the one-constant approximation, we can immediately simplify the free energy to
-\begin{equation}
-    F = \int\dd \vec{r}\frac{K}{2}\left[\ins{\nabla\cdot\vec{n}}^2+{\left[\vec{n}\cdot\ins{\nabla\times\vec{n}}\right]}^2+{\left[\vec{n}\times\ins{\nabla\times\vec{n}}\right]}^2\right]
-\end{equation}
-if we define for simplicity \(\vec{a} = \nabla\times\vec{n}\) then
-\begin{equation}
-    F = \int\dd \vec{r}\frac{K}{2}\left[\ins{\nabla\cdot\vec{n}}^2+{\left[\vec{n}\cdot\vec{a}\right]}^2+{\left[\vec{n}\times\vec{a}\right]}^2\right]
-\end{equation}
-but
-\begin{align}
-    \ins{\vec{n}\times\vec{a}}^2 &= \ins{\epsilon_{ijk}n_j a_k}\ins{\epsilon_{lmn}n_m a_n} = \epsilon_{ijk}\epsilon_{lmn}n_j a_k n_m a_n \\
-    &= \ins{\delta_{jm}\delta_{kn}-\delta_{jn}\delta_{mk}}n_j n_m a_k a_n \\
-    &= n_j n_j a_k a_k - n_j n_k a_j a_k \\
-    &= n^2 a^2 - \ins{\vec{n}\cdot\vec{a}}^2
-\end{align}
-therefore
-\begin{equation}
-    F = \int\dd \vec{r}\frac{K}{2}\left[\ins{\nabla\cdot\vec{n}}^2 + n^2 a^2\right]
-\end{equation}
-but since \vec{n} is a unit vector
-\begin{equation}
-    F = \int\dd \vec{r}\frac{K}{2}\left[\ins{\nabla\cdot\vec{n}}^2 + \ins{\nabla\times\vec{n}}^2 \right]
-\end{equation}
-converting to index notation
-\begin{align}
-    F &= \int\dd \vec{r}\frac{K}{2}\left[\del_i n_i \del_j n_j + \del_j n_k \del_j n_k - \del_j n_k \del_k n_j \right] \\
-    &= \int\dd \vec{r}\frac{K}{2}\left[\del_i n_j \del_i n_j - \del_i\ins{n_j \del_j n_i - n_i \del_j n_j}  \right]
-\end{align}
-if we identify \(F_b = - \del_i\ins{n_j \del_j n_i - n_i \del_j n_j}\) we found what's needed. If we now assume we are in 2D then
-\begin{equation}
-    \vec{n} = \ins{\cos\theta, \sin\theta}
-\end{equation}
-therefore
-\begin{equation}
-    \del_\alpha \vec{n} = \del_\theta \vec{n} \del_\alpha \theta = \ins{-\sin\theta,\cos\theta} \del_\alpha \theta
-\end{equation}
-and thus
-\begin{equation}
-    \ins{\del_\alpha \vec{n}}^2 = \ins{\sin^2\theta + \cos^2\theta}\ins{\del_\alpha \theta}^2 = \ins{\del_\alpha \theta}^2 = \ins{\nabla\theta}^2
-\end{equation}
-which gives us
-\begin{equation}
-    \int\dd \vec{r}\frac{K}{2}\ins{\nabla\theta}^2
-\end{equation}

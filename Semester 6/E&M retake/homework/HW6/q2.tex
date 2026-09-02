@@ -1,0 +1,108 @@
+\clearpage
+\section{Plane with bump}
+\subsection{Green's Function}
+using the hint we construct image charges for the problem. Since for the construction of the Green's function it doesn't matter if the plane is held at an arbitrary potential or zero, it'll be easier to construct it with zero. As for the plane we can place two charges, one above it and one below it, with opposite signs. We'll place them so they're above and below and sphere as well. We then place image charges to fix the spheres using the image charge rules for spheres. This will create 2 more charges, inside the sphere. In total this gives the charges 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|cc}
+		Image & position & charge\\
+		\hline
+		above plane & \(\vb{r'}\) & 1\\
+		below plane & \(\vb{\tilde{r'}}\) & -1\\
+		sphere above plane & \(\frac{a^2}{r'^2}\vb{r'}\) & \(-\frac{a}{r'}\)\\
+		sphere below plane & \(\frac{a^2}{r'^2}\vb{\tilde{r'}}\) & \(\frac{a}{r'}\)
+	\end{tabular}
+\end{table}
+which gives the green's function
+\begin{equation}
+	G = \frac{1}{\abs{\vb{r}-\vb{r'}}}-\frac{1}{\abs{\vb{r}-\vb{\tilde{r'}}}}+\frac{a}{r'}\frac{1}{\abs{\vb{r}-\frac{a^2}{r'^2}\vb{\tilde{r'}}}}-\frac{a}{r'}\frac{1}{\abs{\vb{r}-\frac{a^2}{r'^2}\vb{r'}}}
+\end{equation}
+expressing this explicitly in spherical coordinates
+\begin{equation}
+	G = \frac{1}{\sqrt{r'^2+r^2-2rr'\cos\gamma}}-\frac{1}{\sqrt{\ins{\frac{rr'}{a}}^2+a^2-2rr'\cos\gamma}}-\frac{1}{\sqrt{r^2+r'^2+2rr'\cos\gamma}}+\frac{1}{\sqrt{\ins{\frac{rr'}{a}}^2+a^2+2rr'\cos\gamma}}
+\end{equation}
+\subsection{Derivative}
+\subsubsection{On the sphere}
+\begin{align}
+	\pdv{G}{n'} &= \frac{1}{2}\ins{\frac{2r'-2r\cos\gamma}{\ins{r'^2+r^2-2rr'\cos\gamma}^{3/2}}-\frac{2\ins{\frac{r}{a}}^2r'-2r\cos\gamma}{\ins{\ins{\frac{rr'}{a}}^2+a^2-2rr'\cos\gamma}^{3/2}}}\\
+	&+\frac{1}{2}\ins{\frac{2\ins{\frac{r}{a}}^2r'+2r\cos\gamma}{\ins{\ins{\frac{rr'}{a}}^2+a^2+2rr'\cos\gamma}^{3/2}}-\frac{2r'+2r\cos\gamma}{\ins{f'^2+r^2+2rr'\cos\gamma}^{3/2}}}
+\end{align}
+\subsubsection{on the plane}
+here the derivative we're looking for is 
+\begin{equation}
+	-\pdv{G}{z'}
+\end{equation}
+and expressing this in nspherical coordinates, where \(z' = r'\cos\theta'\)
+\begin{equation}
+	\pdv{z'} = \cos\theta'\pdv{r'}-\frac{\sin\theta'}{r'}\pdv{\theta'}
+\end{equation}
+but since were taking the derivative always at \(z'=0\) then \(\theta=\pi/2\) so
+\begin{equation}
+	\left.\pdv{z'}\right|_{z'=0} = \left.-\frac{1}{r'}\pdv{\theta'}\right|_{\theta'=\pi/2}
+\end{equation}
+expanding 
+\begin{equation}
+	\cos\gamma = \cos\theta\cos\theta'+\sin\theta\sin\theta'\cos\ins{\varphi-\varphi'}
+\end{equation}
+inserting the known theta 
+\begin{equation}
+	\cos\gamma = \sin\theta\cos\ins{\varphi-\varphi'}
+\end{equation}
+for convenience we'll define 
+\begin{equation}
+	\Delta\varphi = \varphi-\varphi'
+\end{equation}
+so 
+\begin{equation}
+	\cos\gamma = \sin\theta\cos\Delta\varphi
+\end{equation}
+taking the derivative 
+\begin{align}
+	-\left.\pdv{G}{z'}\right|_{z'=0} &= -\frac{2r\cos\theta}{\ins{r^2+r'^2-2rr'\sin\theta\cos\Delta\varphi}^{3/2}}+\frac{2a^3r\cos\theta}{r'^3}\frac{1}{\ins{r^2+\frac{a^4}{r'^2}+2r\frac{a^2}{r'}\sin\theta\cos\Delta\varphi}^{3/2}}
+\end{align}
+\subsection{held at potential}
+We can use the green's function and its derivatives we found to find the potential, by plugging it into the full potential using green expression. Since there are no charges, the integral over the green function itself is zero, and since the potential on the plane is zero, we're only left with the element for the potential on the sphere.
+\begin{equation}
+	\Phi(r) = -\frac{1}{4\pi} \iint_{\partial V}\Phi(r')\pdv{G(r,r')}{n'}\dd{S}
+\end{equation}
+since we're looking at the potential at \(x=y=0, z>a\),
+\begin{align}
+	\vb{r}=\ins{0,0,z} && z>a
+\end{align}
+translated to spherical coordiantes 
+\begin{equation}
+	r=z \quad \theta=0
+\end{equation}
+and 
+\begin{equation}
+	r'=a \quad 0\leq\theta'\leq\pi/2
+\end{equation}
+and if we define 
+\begin{align}
+	A_- = \sqrt{z^2+a^2-2az\cos\theta'} && A_+ = \sqrt{z^2+a^2+2az\cos\theta'}
+\end{align}
+and notice that 
+\begin{equation}
+	\cos\gamma = \cos\theta\cos\theta'+\sin\theta\sin\theta'\cos\Delta\varphi = \cos\theta'
+\end{equation}
+then we have 
+\begin{align}
+	\pdv{G}{n'} &= \frac{1}{2}\ins{\frac{2a-2z\cos\gamma}{\ins{a^2+z^2-2az\cos\gamma}^{3/2}}-\frac{2\ins{\frac{z}{a}}^2a-2z\cos\gamma}{\ins{\ins{\frac{az}{a}}^2+a^2-2az\cos\gamma}^{3/2}}}\\
+	&+\frac{1}{2}\ins{\frac{2\ins{\frac{z}{a}}^2a+2z\cos\gamma}{\ins{\ins{\frac{az}{a}}^2+a^2+2az\cos\gamma}^{3/2}}-\frac{2a+2z\cos\gamma}{\ins{a^2+z^2+2az\cos\gamma}^{3/2}}}\\
+	&= \frac{a-z\cos\theta'}{\ins{a^2+z^2-2az\cos\theta'}^{3/2}}-\frac{\frac{z^2}{a}-z\cos\theta'}{\ins{z^2+a^2-2az\cos\theta'}^{3/2}}\\
+	&+\frac{\frac{z^2}{a}+z\cos\theta'}{\ins{z^2+a^2+2az\cos\theta'}^{3/2}}-\frac{a+z\cos\theta'}{\ins{a^2+z^2+2az\cos\theta'}^{3/2}}\\
+	&= \frac{a-z\cos\theta'}{{A_-}^3}-\frac{\frac{z^2}{a}-z\cos\theta'}{{A_-}^3}+\frac{\frac{z^2}{a}+z\cos\theta'}{{A_+}^3}-\frac{a+z\cos\theta'}{{A_+}^3}\\
+	&= \frac{a-\frac{z^2}{a}}{{A_-}^3}+\frac{\frac{z^2}{a}-a}{{A_+}^3}\\
+	&= \frac{z^2-a^2}{a}\ins{\frac{1}{{A_+}^3}-\frac{1}{{A_-}^3}}
+\end{align}
+Therefore
+\begin{align}
+	\Phi(z) &= -\frac{V_0}{4\pi}\int_{0}^{2\pi}\dd{\varphi'}\int_{0}^{\pi/2}\dd{\theta'}a^2\sin\theta'\frac{z^2-a^2}{a}\ins{\frac{1}{{A_+}^3}-\frac{1}{{A_-}^3}}\\
+	&= \frac{V_0 a \ins{z^2-a^2}}{2}\int_{0}^{\pi/2}\dd{\theta'}\sin\theta'\ins{\frac{1}{{A_-}^3}-\frac{1}{{A_+}^3}}\\
+	&= \frac{V_0 a \ins{z^2-a^2}}{2}\int_{0}^{\pi/2}\dd{\theta'}\sin\theta'\ins{\frac{1}{{\sqrt{z^2+a^2-2az\cos\theta'}}^3}-\frac{1}{{\sqrt{z^2+a^2+2az\cos\theta'}}^3}}\\
+	\left[u=\cos\theta',\dd{u}=-\sin\theta'\dd\theta'\right] &= \frac{V_0 a \ins{z^2-a^2}}{2}\int_{0}^{1}\dd{u}\ins{\frac{1}{{\sqrt{z^2+a^2-2azu}}^3}-\frac{1}{{\sqrt{z^2+a^2+2azu}}^3}}\\
+	&= \frac{V_0 a \ins{z^2-a^2}}{2}\ins{\frac{1}{az}\ins{\frac{1}{z-a}-\frac{1}{\sqrt{z^2+a^2}}}-\frac{1}{az}\ins{\frac{1}{\sqrt{z^2+a^2}}-\frac{1}{z+a}}}\\
+	&= \frac{V_0 \ins{z^2-a^2}}{2z}\ins{\frac{1}{z-a}+\frac{1}{z+a}-\frac{2}{\sqrt{z^2+a^2}}}\\
+	&= V_0\ins{1-\frac{z^2-a^2}{z\sqrt{z^2+a^2}}}
+\end{align}

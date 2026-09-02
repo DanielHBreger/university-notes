@@ -1,0 +1,79 @@
+\clearpage
+\section{split plane}
+\subsection{Symmetry under inflation}
+First we show the boundary conditions do not change. The boundary conditions are:
+\begin{align}
+  \phi(x>0,y=0,z)=0 && \phi(x<0,y=0,z)=V
+\end{align}
+We'll perform the transformaition \((x,y,z) \rightarrow \alpha(x,y,z)\) where \(\alpha >0\). Since alpha is positive, it does not change the sign of x. 0 remains 0, and z is arbitrary, therefore the boundary conditions do not change under the transformation. Next we look at the laplace equation under the same transformation
+\begin{align}
+	\laplacian{\phi(\alpha x,\alpha y, \alpha z)}=\alpha^2\laplacian{\phi(x,y,z)}=0
+\end{align}
+Next we look at the problem in cylindrical coordinates and inflate them in the same manner. We know the result must remain the same therefore
+\begin{equation}
+  \phi(\alpha r,\theta,\alpha z) = \phi(r,\theta,z)
+\end{equation}
+This means the solution cannot depend on $\alpha$, which also means we only care about the relative ratio between r and z, rather than each one's value, so
+\begin{equation}
+  \phi(r,\theta,z)=\phi\left(\theta, \frac{z}{r}\right)
+\end{equation}
+\subsection{translation in z}
+The value of \(z\) does not matter for the problem because regardless of what it is, everything appears exactly identical. The value given to \(z\) is simply a label. The boundary condition does not depend on z so any translation along it changes nothing either. Finally, adding a constant to z does not change \(\nabla\) so the laplace equation remains true. This also means the potential cannot depend on z, which also means it cannot depend on the ratio between z and r, thus
+\begin{equation}
+  \phi(r,\theta,z)=\phi(\theta)
+\end{equation}
+\subsection{Green's function}
+Green's function in cartesian coordiantes is given by
+\begin{equation}
+  G=\frac{1}{\sqrt{(x-x')^2+(y-y')^2+(z-z')^2}}+\frac{1}{\sqrt{(x-x')^2+(y+y')^2+(z-z')^2}}
+\end{equation}
+We'll move to cylindrical coordinates using
+\begin{align}
+	x=r\cos\theta && y=r\sin\theta\\
+	x'=r'\cos\theta' && y'=r'\sin\theta'
+\end{align}
+and find (omitting the full development for brevity)
+\begin{equation}
+  G=\frac{1}{\sqrt{r^2+r'^2-2rr'\cos(\theta-\theta')+(z-z')^2}}-\frac{1}{\sqrt{r^2+r'^2-2rr'cos(\theta+\theta')+(z-z')^2}}
+\end{equation}
+\subsection{Top half}
+The potential is given by
+\begin{align}
+  \phi(\bold x) &= -\frac{1}{4\pi}\int\limits_{y'=0,x<0}\dd l\phi(\bold x')\diffp{G(\bold x,\bold x')}{n'}\\
+  &= -\frac{1}{4\pi}\int\limits_{\theta'=\pi}\dd l\phi(\bold x)\diffp{G(\bold x,\bold x')}{n'}\\
+  &= \frac{1}{4\pi}\int\limits_{\theta'=\pi}\dd l\phi(\bold x)\diffp{G(\bold x,\bold x')}{y'}\\
+  &= \frac{V}{2\pi}\int\limits_{-\infty}^0\dd x'\int\limits_{-\infty}^\infty\dd z'\frac{y}{\left[(x-x')^2+y^2+(z-z')^2\right]^{3/2}}\\
+  &= \frac{V}{2\pi}\int\limits_{-\infty}^0\dd x' \frac{y}{(x-x')^2+y^2}\cdot \left.\frac{z'-z}{\sqrt{(x-x')^2+y^2+(z-z')^2}}\right|_{z=-\infty}^{\infty}\\
+  &= \frac{V}{\pi}\int\limits_{-\infty}^0\dd x' \frac{y}{(x-x')^2+y^2}\\
+  &= \frac{V}{\pi}\left.\arctan\left(\frac{x-x'}{y}\right)\right|_{-\infty}^0\\
+  &= V\left(\frac{1}{2}-\frac{1}{\pi}\arctan\left(\frac{x}{y}\right)\right)
+\end{align}
+\subsection{surface charge}
+Since there is an infinite charged plane, we know the surface charge is given by
+\begin{equation}
+  \sigma(x) = \frac{1}{4\pi}[E_y(x,y=0^+)-E_y(x, y=0^-)]
+\end{equation}
+The field above the plate at 0 is
+\begin{equation}
+  E_y(x,y=0^+)=-\frac{V}{\pi x}
+\end{equation}
+Next we notice that if we reflect the y axis, everything remains the same, thus we have symmetry for flips along that axis, so
+\begin{equation}
+  E(x,y=0^-)=\frac{V}{\pi x}
+\end{equation}
+thus the charge density is
+\begin{equation}
+  \sigma(x) = -\frac{V}{2\pi^2 x}
+\end{equation}
+\subsection{A ring of charge}
+\begin{equation}
+  \rho(r,z)=\frac{Q}{2\pi R}\delta(r-R)\delta(z)
+\end{equation}
+\subsection{Another potential}
+The total potential is the sum of the potential as a result of the plate and the potential as a result of the charge present, i.e
+\begin{align}
+  \phi(x,y,z>0)&=\frac{V\theta}{\pi}+\iiint\limits_V\dd^3x\rho(\bold x)G(\bold x,\bold x')\\
+  &= \frac{V\theta}{\pi}+\int\limits_0^\infty r\dd r\int\limits_0^\pi\dd \theta \int\limits_{-\infty}^\infty\dd z\frac{Q}{2\pi R}\delta(r-R)\delta(z)G(x,x')\\
+  &= \frac{V\theta}{\pi}+\frac{Q}{2\pi}\int\limits_0^\pi\dd\theta\frac{1}{\sqrt{r^2+R^2+z^2-2rR\cos(\theta-\theta')}}-\frac{1}{\sqrt{r^2+R^2+z^2-2rR\cos(\theta+\theta')}}
+\end{align}
+and as requested I'm not solving this fully.

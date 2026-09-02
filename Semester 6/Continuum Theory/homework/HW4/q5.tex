@@ -1,0 +1,27 @@
+\clearpage
+\section{Hooke’s Law from Free Energy}
+\subsection{deriving Hookes law}
+The differential of F is 
+\begin{align}
+    \dd{F}&=\dd{\ins{\frac{\lambda}{2}\epsilon_{ii}^2+\mu\epsilon_{ij}^2}}\\
+    &= \lambda\epsilon_{kk}\dd{\epsilon_{ll}}+2\mu\epsilon_{ij}\dd{\epsilon_{ij}}\\
+    &= \lambda\epsilon_{kk}\delta_{ij}\dd{\epsilon_{ij}}+2\mu\epsilon_{ij}\dd{\epsilon_{ij}}\\
+    &= \ins{\lambda\epsilon_{kk}\delta_{ij}+2\mu\epsilon_{ij}}\dd{\epsilon_{ij}}
+\end{align}
+but by definition
+\begin{equation}
+    \dd{F}=\sigma_{ij}\dd{\epsilon_{ij}}
+\end{equation}
+so 
+\begin{equation}
+    \sigma_{ij}=\lambda\epsilon_{kk}\delta_{ij}+2\mu\epsilon_{ij}
+\end{equation}
+\subsection{comparison}
+in class we saw 
+\begin{equation}
+    \sigma_{ij}=\frac{E}{1+\nu}\epsilon_{ij}+\frac{E\nu}{\ins{1+\nu}\ins{1-2\nu}}\epsilon_{kk}\delta_{ij}
+\end{equation}
+so we see the coefficients are 
+\begin{equation}
+    \mu = \frac{E}{2\ins{1+\nu}},\qquad \lambda=\frac{E\nu}{\ins{1+\nu}\ins{1-2\nu}}
+\end{equation}

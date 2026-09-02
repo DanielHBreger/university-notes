@@ -1,0 +1,46 @@
+\clearpage
+\section{wire instead of plane}
+\subsection{surface charge}
+\begin{equation}
+	\sigma = \lambda\delta\ins{y-a}
+\end{equation}
+\subsection{potential}
+In training 8 question 2 we found that the general solution for this geometry is 
+\begin{equation}
+	\phi(x,y)=\sum_{n=1}^{\infty}K_n\sin\ins{\frac{\pi ny}{d}}\exp\ins{-\frac{\pi n\abs{x}}{d}}
+\end{equation}
+using the jump condition at \(x=0\)
+\begin{equation}
+	\sum_{n=1}^{\infty}\frac{2\pi n}{d}K_n\sin\ins{\frac{\pi ny}{d}}=4\pi\sigma
+\end{equation}
+integrating both sides and multiplying by a sine 
+\begin{equation}
+	\int_{0}^{d}\dd{y}\sin\ins{\frac{\pi my}{d}}\sum_{n=1}^{\infty}\frac{2\pi n}{d}K_n\sin\ins{\frac{\pi ny}{d}}=\int_{0}^{d}\dd{y}\sin\ins{\frac{\pi my}{d}}4\pi\sigma
+\end{equation}
+rearranging 
+\begin{equation}
+	\int_{0}^{d}\dd{y}\sum_{n=1}^{\infty}\frac{n}{d}K_n\sin\ins{\frac{\pi ny}{d}}\sin\ins{\frac{\pi my}{d}}=2\int_{0}^{d}\dd{y}\sin\ins{\frac{\pi my}{d}}\sigma
+\end{equation}
+using orthogonality
+\begin{equation}
+	mK_m=4\int_{0}^{d}\dd{y}\sin\ins{\frac{\pi my}{d}}\sigma
+\end{equation}
+inserting sigma 
+\begin{equation}
+	mK_m=4\lambda\sin\ins{\frac{\pi ma}{d}} \implies K_m=\frac{4\lambda}{m}\sin\ins{\frac{\pi ma}{d}}
+\end{equation}
+so the potential is 
+\begin{equation}
+	\phi(x,y)=\sum_{n=1}^{\infty}\frac{4\lambda}{n}\sin\ins{\frac{\pi na}{d}}\sin\ins{\frac{\pi ny}{d}}\exp\ins{-\frac{\pi n\abs{x}}{d}}
+\end{equation}
+\subsection{Surface charge on planes}
+as we did in training 8 
+\begin{equation}
+	\pdv{\phi}{y} = \sum_{n=1}^{\infty}\frac{4\pi\lambda}{d}\sin\ins{\frac{\pi na}{d}}\cos\ins{\frac{\pi ny}{d}}\exp\ins{-\frac{\pi n\abs{x}}{d}}
+\end{equation}
+\begin{equation}
+	\sigma_\uparrow = \frac{1}{4\pi}\partial_y\phi(y=d) = \frac{\lambda}{d}\sum_{n=1}^{\infty}\ins{-1}^n\sin\ins{\frac{\pi na}{d}}\exp\ins{-\frac{\pi n\abs{x}}{d}}
+\end{equation}
+\begin{equation}
+	\sigma_\downarrow = -\frac{1}{4\pi}\partial_y\phi(y=0) = -\frac{\lambda}{d}\sum_{n=1}^{\infty}\sin\ins{\frac{\pi na}{d}}\exp\ins{-\frac{\pi n\abs{x}}{d}}
+\end{equation}

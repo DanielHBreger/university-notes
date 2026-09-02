@@ -1,0 +1,46 @@
+\clearpage
+\section{Estimators}
+We know 
+\begin{equation}
+	\mu=5,\qquad \sigma^2=0.05
+\end{equation}
+\subsection{length estimator}
+The estimator is just
+\begin{equation}
+	\hat{\mu}=\overline{x} = 5.512
+\end{equation}
+\subsection{variance estimator}
+using the formula for an estimator with an unknown \(\mu\)
+\begin{equation}
+	\sigma^2=\frac{1}{N-1}\sum_i\ins{x_i-\overline{x}}^2=0.052
+\end{equation}
+\subsection{CL95}
+We'll assume the distribution of lengths is a normal distribution, so the standard deviation is 
+\begin{equation}
+	\sigma' = \frac{\sigma}{\sqrt{N}}=\frac{\sqrt{0.052}}{\sqrt{10}}=0.072
+\end{equation}
+so 
+\begin{equation}
+	\mu_+=1.96\sigma'+\mu=5.653,\quad \mu_-=5.371
+\end{equation}
+\subsection{Brown screws}
+directly the expected \(p\) is 
+\begin{equation}
+	p = \frac{b}{N}=0.6
+\end{equation}
+and for the variance, marking the number of brown screws as \(b\),
+\begin{equation}
+	\sigma_p^2=\ins{\pdv{p}{b}}^2\sigma_b^2=\frac{\sigma_b^2}{N^2}
+\end{equation}
+the number of brown screws pulled is binomial so 
+\begin{equation}
+	\sigma_p^2 = \frac{Np\ins{1-p}}{N^2}=\frac{p\ins{1-p}}{N}=\frac{0.6\cdot0.4}{100}=0.0024
+\end{equation}
+so 
+\begin{equation}
+	\sigma_p = 0.049
+\end{equation}
+so the CL95 range is 
+\begin{equation}
+	\mu_-=p-1.96\sigma_p=0.504,\quad\mu_+=0.696
+\end{equation}

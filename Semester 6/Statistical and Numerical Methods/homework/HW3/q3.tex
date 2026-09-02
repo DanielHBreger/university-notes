@@ -1,0 +1,47 @@
+\clearpage
+\section{Radioactive Decay}
+It's known radioactive decay follows an exponential decay of the form 
+\begin{equation}
+    N(t) = N_0 e^{-\lambda t}
+\end{equation}
+since we were asked to find the chi-squared, we look at the definition 
+\begin{equation}
+    \chi^2 = \sum_{i=1}^{N}\ins{\frac{y_i-f(x_i,a)}{\sigma_i}}^2 = \sum_{i=1}^{N}\ins{\frac{N_i-N_0 e^{-\lambda t}}{\sigma_i}}^2
+\end{equation}
+but \(\sigma_i\) is a constant and the same for all measurements so
+\begin{equation}
+    \chi^2 = \frac{1}{\sigma^2}\sum_{i=1}^{N}\ins{N_i-N_0 e^{-\lambda t}}^2
+\end{equation}
+We want to find the halflife for which chi-square is minimal so
+\begin{equation}
+    \pdv{\chi^2}{\lambda} = \frac{2}{\sigma^2}\sum_{i=1}^{N}\ins{N_i-N_0e^{-\lambda t}}N_0te^{-\lambda t} = \frac{2 N_0}{\sigma^2}\sum_{i=1}^{N}t\ins{N_i-N_0e^{-\lambda t}}e^{-\lambda t}=0
+\end{equation}
+plugging this into python we get 
+\begin{equation}
+    \lambda \approx 0.66
+\end{equation}
+so the halflife time is 
+\begin{equation}
+    \frac{1}{2}=e^{-\frac{2t}{3}} \implies t = -\frac{3}{2}\ln(0.5) \approx 1.04 \unit{\hour}
+\end{equation}
+Now to calculate the error on this we notice that for each measurement the halflife time as calculated depends on the counts in the specific measurement, the counts in the first measurement, and the time measurement
+\begin{equation}
+    T = \frac{\ln(2)}{\ln(N_0)-\ln(N_i)}t_i
+\end{equation}
+so 
+\begin{align}
+    \delta T &= \sqrt{\ins{\pdv{T}{N_i}\delta N_i}^2+\ins{\pdv{T}{N_0}\delta N_0}^2+\ins{\pdv{T}{t_i}\delta t_i}^2}
+\end{align}
+throwing this into python again gives 
+\begin{equation}
+    \left<\sigma\right> = 0.01
+\end{equation}
+i.e 
+\begin{equation}
+    T = 1.04\pm0.01\unit{\hour}
+\end{equation}
+and the chi-square is 
+\begin{equation}
+    \chi^2 = 145
+\end{equation}
+which is very high, meaning something is not right.

@@ -1,0 +1,53 @@
+\clearpage
+\section{Measurements with multiple categories}
+\subsection{Estimators}
+First the linear fit is 
+\begin{equation}
+    x=x_0+vt
+\end{equation}
+using the formulas from training 6 
+\begin{align}
+    \hat{v} = \frac{\overline{tx}-\overline{t}\overline{x}}{\overline{t^2}-\overline{t}^2} && \hat{x_0} = \overline{x}-\hat{v}\overline{t}
+\end{align}
+and
+\begin{align}
+    \sigma_{\hat{v}}^2=\frac{\sigma^2}{N\ins{\overline{t^2}-\overline{t}^2}} && \sigma_{\hat{x_0}}^2 = \frac{\sigma^2 \overline{t^2}}{N\ins{\overline{t^2}-\overline{t}^2}}
+\end{align}
+calculating using python
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|cc}
+        Cart & velocity estimate (cm/s) & estimate error\\
+        \hline
+        1 & 0.280 & 0.095\\
+        2 & 0.280 & 0.095\\
+        3 & 0.280 & 0.095\\
+        4 & 0.253 & 0.095
+    \end{tabular}
+\end{table}
+\subsection{chi square}
+by definition
+\begin{equation}
+    \chi^2 = \frac{1}{\sigma^2}\sum_{i=1}^{N}\ins{x_i - x_0 - vt_i}^2
+\end{equation}
+plugging the numbers in using python 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|cc}
+        Cart & chi-square\\
+        \hline
+        1 & 13.75 \\
+        2 & 13.75 \\
+        3 & 13.75 \\
+        4 & 14.77
+    \end{tabular}
+\end{table}
+the chi-square is higher than the degrees of freedom (9, from 11 measurements minus 2 parameters) for all the carts, so none of the measurements appear to be indicative of a constant velocity.
+\newpage
+\subsection{Plot}
+the graph is 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figure_5.png}
+\end{figure}
+and indeed none of them seem to be moving at a constant velocity (or anywhere near constant)

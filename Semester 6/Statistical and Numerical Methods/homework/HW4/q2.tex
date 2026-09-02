@@ -1,0 +1,34 @@
+\clearpage
+\section{Radioactive Decay}
+\subsection{5 minutes}
+The decay rate is known so the different minutes are independent meaning
+\begin{equation}
+    N_5=5N_1
+\end{equation}
+but since \(N_1\) is distribution poisson,
+\begin{equation}
+    N_1=\lambda\pm\sqrt{\lambda}
+\end{equation}
+so 
+\begin{equation}
+    N_5 = 5\lambda\pm\sqrt{5\lambda}=500\pm10\sqrt{5}
+\end{equation}
+\subsection{Unknown material}
+Since we assume the decay is poisson this tells us that 
+\begin{equation}
+    \lambda=100
+\end{equation}
+which implies 
+\begin{equation}
+    \sigma = \sqrt{\lambda}=10
+\end{equation}
+which is a variance whose source is the measurement. We add this to the variance from the last part which is inherent to the decay and get 
+\begin{equation}
+    N = 500\pm10\sqrt{5}\pm50
+\end{equation}
+\subsection{composite material}
+Since we measured the number of decays of both materials together and they are independent we measured 
+\begin{equation}
+    N_i\sim Pois\ins{\lambda_1+\lambda_2}
+\end{equation}
+so this is not enough to measure each separately. Any attempt to create an equation that separates them will fail, and we'll always have dependence on \(\lambda_1+\lambda_2\).

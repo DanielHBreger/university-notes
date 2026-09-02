@@ -1,0 +1,176 @@
+\clearpage
+\section{Magnetic Energy}
+\subsection{two ways to write}
+we can rewrite 
+\begin{equation}
+	\iiint\dd{V}B^2=\iiint\dd{V}\vb{B}\cdot\vb{B}=\iiint\dd{V}\ins{\curl{A}}\cdot\ins{\curl{A}}
+\end{equation}
+and using the identity 
+\begin{equation}
+	\iiint\dd{V}B^2=\iiint\dd{V}\div{\ins{\vb{A}\times\ins{\curl{\vb{A}}}}}+\iiint\dd{V}\vb{A}\cdot\ins{\curl{\ins{\curl{\vb{A}}}}}
+\end{equation}
+focusing on the first integral, we can use gauss to turn the volumetric integral on all space into a surface integral on a surface at infinity
+\begin{equation}
+	\iiint\dd{V}\div{\ins{\vb{A}\times\ins{\curl{\vb{A}}}}} = \oint_\infty\ins{\vb{A}\times\ins{\curl{\vb{A}}}}= \oint_\infty\ins{\vb{A}\times \vb{B}}
+\end{equation}
+and since the currents are concentrated within a finite volume, at infinity this integral tends to zero, so we can ignore it. This leaves 
+\begin{equation}
+	\iiint\dd{V}B^2=\iiint\dd{V}\vb{A}\cdot\ins{\curl{\vb{B}}}
+\end{equation}
+but we can use Ampere's law which says 
+\begin{equation}
+	\curl{\vb{B}} = \frac{4\pi}{c}\vb{j}
+\end{equation}
+so 
+\begin{equation}
+	\frac{1}{8\pi}\iiint\dd{V}B^2=\frac{1}{2c}\iiint\dd{V}\vb{A}\cdot\vb{j}
+\end{equation}
+as required. Next, using the coulomb gauge potential 
+\begin{equation}
+	\vb{A}=\frac{1}{c}\iiint\frac{\vb{j}\ins{\vb{x'}}}{\abs{\vb{x}-\vb{x'}}}\dd{V'}
+\end{equation}
+inserting this 
+\begin{align}
+	\frac{1}{2c}\iiint\dd{V}\vb{A}\cdot\vb{j} &= \frac{1}{2c}\iiint\dd{V}\frac{1}{c}\iiint\frac{\vb{j}\ins{\vb{x'}}}{\abs{\vb{x}-\vb{x'}}}\dd{V'}\cdot\vb{j}\\
+	&=\frac{1}{2c^2}\iiint\dd{V}\iiint\frac{\vb{j}\ins{\vb{x'}}\cdot\vb{j}\ins{\vb{x}}}{\abs{\vb{x}-\vb{x'}}}\dd{V'}
+\end{align}
+as required.
+\subsection{two currents}
+The energy is
+\begin{equation}
+	U=\frac{1}{2c}\iiint\dd{V}\vb{A}\cdot\vb{j}
+\end{equation}
+inserting the split currents and fields
+\begin{align}
+	U&=\frac{1}{2c}\iiint\dd{V}\ins{\vb{A_1}+\vb{A_2}}\cdot\ins{\vb{j_1}\cdot\vb{j_2}}\\
+	&= \frac{1}{2c}\iiint\dd{V}\ins{\vb{j_1}\cdot\vb{A_1}+\vb{j_1}\cdot\vb{A_2}+\vb{j_2}\cdot\vb{A_1}+\vb{j_2}\cdot\vb{A_2}}
+\end{align}
+But the interaction energy from TA9 is 
+\begin{equation}
+	\epsilon = \frac{1}{2c}\iiint \dd{x}^3\rho\ins{\vb{x}}\phi_{\text{ext}}\ins{\vb{x}}
+\end{equation}
+in other words, we only care about the energy coming from the interaction of currents with external fields to itself, so elements of the form \(\vb{j_i}\cdot\vb{A_i}\) can be ignored
+\begin{equation}
+	\epsilon = \frac{1}{2c}\iiint\dd{V}\ins{\vb{j_1}\cdot\vb{A_2}+\vb{j_2}\cdot\vb{A_1}}
+\end{equation}
+but 
+\begin{equation}
+	\iiint\dd{V}\vb{j_1}\cdot\vb{A_2}=\frac{1}{c}\iiint\dd{V}\iiint\frac{\vb{j_1}\ins{\vb{x'}}\cdot\vb{j_2}\ins{\vb{x}}}{\abs{\vb{x}-\vb{x'}}}\dd{V'}
+\end{equation}
+but we can see that replacing \(\vb{x}\leftrightarrow\vb{x'}\) gives us the same expression with the currents replaced, so 
+\begin{equation}
+	\iiint\dd{V}\vb{j_1}\cdot\vb{A_2} = \iiint\dd{V}\vb{j_2}\cdot\vb{A_1}
+\end{equation}
+so 
+\begin{equation}
+	\epsilon=\frac{1}{c}\iiint\dd{V}\vb{j_1}\cdot\vb{A_2}=\frac{1}{c}\iiint\dd{V}\vb{j_2}\cdot\vb{A_1}
+\end{equation}
+as required.
+\subsection{magnetic dipole interaction energy}
+The potential from a dipole is 
+\begin{equation}
+	\vb{A}=\frac{\vb{m}\times\vb{r}}{r^3}
+\end{equation}
+so 
+\begin{equation}
+	\epsilon = \frac{1}{c}\iiint\dd{V}\vb{j}_{ext}\cdot\vb{A}=\frac{1}{c}\iiint\dd{V}\frac{1}{r^3}\vb{j}_{ext}\cdot\ins{\vb{m}\times\vb{r}}
+\end{equation}
+using the identity \(A\cdot\ins{B\times C}=B\cdot\ins{C\times A}\)
+\begin{equation}
+	\epsilon=\frac{1}{c}\iiint\dd{V}\frac{1}{r^3}\vb{m}\cdot\ins{\vb{r}\times\vb{j}_{ext}}=\vb{m}\cdot\ins{\frac{1}{c}\iiint\dd{V}\frac{\vb{r}\times\vb{j}_{ext}}{r^3}}
+\end{equation}
+recalling from ancient history (physics 2p) the bio-savart law 
+\begin{equation}
+	\vb{B}\ins{0}=\frac{1}{c}\iiint\dd{V}\frac{\vb{j}_{ext}\times\ins{-\vb{x}}}{r^3}
+\end{equation}
+and using another vector identity \(\vb{A}\times\ins{-\vb{B}}=\vb{B}\times\vb{A}\)
+\begin{equation}
+	\vb{B}_{ext}\ins{0}=\frac{1}{c}\iiint\dd{V}\frac{\vb{x}\times\vb{j}_{ext}}{r^3}
+\end{equation}
+so 
+\begin{equation}
+	U = \vb{m}\cdot\vb{B}_{ext}\ins{0}
+\end{equation}
+\subsection{Radial component}
+Since there are no magnetic monopoles (don't tell the high energy people)
+\begin{equation}
+	\div{\vb{B}}=0
+\end{equation}
+or in cylindrical
+\begin{equation}
+	\frac{1}{r}\partial_r\ins{rB_r}+\partial_z B_z=0
+\end{equation}
+but 
+\begin{equation}
+	B_z = B_0 z / L
+\end{equation}
+so 
+\begin{equation}
+	\frac{1}{r}\partial_r\ins{rB_r}+B_0/L=0
+\end{equation}
+so 
+\begin{equation}
+	B_r = -\frac{B_0}{2L}r+C/r
+\end{equation}
+demanding no infinities \(C=0\) so
+\begin{equation}
+	B_r = -\frac{B_0}{2L}r
+\end{equation}
+\subsection{potential energy}
+we're given 
+\begin{equation}
+	\dd{U}=-\vb{m}\cdot\dd{\vb{B}}=-\alpha\vb{B}\cdot\dd{\vb{B}}
+\end{equation}
+so 
+\begin{equation}
+	U = -\frac{\alpha}{2}\vb{B^2}+C
+\end{equation}
+since this is a potential the choice of \(C\) is arbitrary so \(C=0\) because I say so 
+\begin{equation}
+	U = -\frac{\alpha}{2}\vb{B^2}
+\end{equation}
+but we know that 
+\begin{equation}
+	\vb{B} = \frac{B_0 z }{L}\vu{z}-\frac{B_0 r}{2L}\vu{r}
+\end{equation}
+so 
+\begin{equation}
+	B^2 = \frac{B_0^2 z^2}{L^2}+\frac{B_0^2 r^2}{4L^2}=\frac{B_0^2}{L^2}\ins{z^2+\frac{r^2}{4}}
+\end{equation}
+so 
+\begin{equation}
+	U = -\frac{\alpha B_0^2}{2L^2}\ins{z^2+\frac{r^2}{4}}
+\end{equation}
+\subsection{equilibrium}
+The equilibrium will be where the force on the particle is zero, so we need 
+\begin{equation}
+	-\grad{U}=0
+\end{equation}
+but we notice immediately that after taking the gradient the only equilibrium point would be
+\begin{equation}
+	r=0,\qquad z=0
+\end{equation}
+for it to be stable, we want the potential to rise around the point so 
+\begin{equation}
+	\alpha<0
+\end{equation}
+and recalling the potential energy of a harmonic oscillator
+\begin{equation}
+	U = \frac{1}{2}M\omega^2x^2
+\end{equation}
+we can equate it and find 
+\begin{equation}
+	\frac{1}{2}M\omega_z^2z^2=-\frac{\alpha B_0^2}{2L^2}z^2
+\end{equation}
+therefore 
+\begin{equation}
+	\omega_z^2 = -\frac{\alpha B_0^2}{ML^2}
+\end{equation}
+and 
+\begin{equation}
+	\frac{1}{2}M\omega_r^2r^2=-\frac{\alpha B_0^2}{2L^2}\frac{r^2}{4}
+\end{equation}
+so 
+\begin{equation}
+	\omega_r^2 = -\frac{\alpha B_0^2}{4ML^2}
+\end{equation}

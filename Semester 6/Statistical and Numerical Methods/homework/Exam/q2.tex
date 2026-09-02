@@ -1,0 +1,57 @@
+\clearpage
+\section{Peaches and Oranges}
+Since we have no information on any distributions or chanves, we'll treat the fruit counts as being distributed poisson.
+\subsection{Oranges in the 2376 day}
+We can use the total number of peaches counted to find the expected value of peaches per day 
+\begin{equation}
+    \lambda = 10500/7=1500
+\end{equation}
+so the number of oranges is 
+\begin{equation}
+    N = 2376-\lambda=876
+\end{equation}
+The number of fruit counted the specific day is exact so has no variance. The number of peaches has variance which comes both from the variance on the actual count of peaches and from the daily count fluctuating around the average we calculate.
+\begin{equation}
+    \sigma_{peach,week}=\sqrt{10500}\sim102.5
+\end{equation}
+but since we divided it by 7 to look at each day 
+\begin{equation}
+    \sigma_{peach,day}=\frac{102.5}{7}\sim14.6
+\end{equation}
+then the variance due to the actual daily number not being the exact average
+\begin{equation}
+    \sigma_{day}=\sqrt{1500}\sim38.7
+\end{equation}
+so the number of oranges that day is 
+\begin{equation}
+    N=876\pm14.6\pm38.7
+\end{equation}
+and since those are independent the total error is 
+\begin{equation}
+    \sigma_{total}=\sqrt{\ins{14.6}^2+\ins{38.7}^2}\sim41.4
+\end{equation}
+so 
+\begin{equation}
+    N=876\pm41.4
+\end{equation}
+\subsection{Expected Daily Count}
+This time the count of total fruit is also uncertain. We treat it as a single measurement from a poisson distribution meaning 
+\begin{equation}
+    \lambda_{fruit}=2376,\qquad \sigma_{fruit}\sim48.7
+\end{equation}
+and as for the count of peaches, this time we don't have the second source of uncertainty, since we don't need to consider whether the specific day was average or not, since we're looking at the average itself, so 
+\begin{equation}
+    \lambda_{peaches}=1500,\qquad\sigma_{peaches}=14.6
+\end{equation}
+which gives us 
+\begin{equation}
+    N=876\pm48.7\pm14.6
+\end{equation}
+and again summing independent errors
+\begin{equation}
+    \sigma=\sqrt{48.7^2+14.6^2}\sim50.8
+\end{equation}
+so 
+\begin{equation}
+    N = 876\pm50.8
+\end{equation}

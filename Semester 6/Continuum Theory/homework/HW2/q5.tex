@@ -1,0 +1,69 @@
+\clearpage
+\section{Flow over inclined plane}
+\begin{colbox}
+    Consider a layer of a viscous (also newtonian, isotropic, and incompressible) fluid with thickness \(h\) bounded below by an inclined plane at an angle \(\alpha\) to the horizon. We look for a steady state.
+    \begin{enumerate}
+        \item Using the summetries of the problem, reduce \(\vb{v}(t,x,y,z)\) to a single variable, single component field.
+        \item Write N-S equations in explicit form (with indices), and solve them to get general solutions for \(v\) and \(p\). Leave the constants that arise.
+        \item Assume the atmospheric pressure is \(p_0\). Use this and non-sliup condition to express the needed components of the stress tensor on the boundaries.
+        \item Find the constants and write the full solutions.
+        \end{enumerate}
+\end{colbox}
+\subsection{Symmetries}
+First of all, since we're looking for a steady state, it would not depend on the time. Since the fluid is isotropic, it does not depend on \(x\) or \(y\), giving us \(\vb{v}(z)\). We can further reduce this by using the fact the fluid is incompressible, giving us \(\div{\vb{v}}=0\). Due to symmetry this leaves
+\begin{equation}
+    \vb{v}(z) = v_x\vu{x}
+\end{equation}
+\subsection{Navier-Stokes}
+N-S is
+\begin{equation}
+    \rho\ins{\del{t}+\vb{v}\cdot\nabla}\vb{v} = -\grad{p}+\mu\laplacian{\vb{v}}+\rho\vb{f}
+\end{equation}
+where the force \(f\) is gravitation
+\begin{equation}
+    \vb{f} = -g\ins{\sin\alpha\vu{x}+\cos\alpha\vu{z}}
+\end{equation}
+moving to index notation
+\begin{equation}
+    \rho\ins{\del{t}+v^j\del{j}}v^i = -\del{i}p+\mu\del{j}\del{j}v^i - \rho g \ins{\sin\alpha\delta^i_1+\cos\alpha\delta^i_3}
+\end{equation}
+This can be decomposed into an equation for each spatial direction
+\begin{align}
+    \rho\ins{\del{t}+v^j\del{j}}v^x &= -\del{x}p+\mu\del{j}\del{j}v^x - \rho g \ins{\sin\alpha\delta^x_1+\cos\alpha\delta^x_3} \\
+    \rho\ins{\del{t}+v^j\del{j}}v^y &= -\del{y}p+\mu\del{j}\del{j}v^y - \rho g \ins{\sin\alpha\delta^y_1+\cos\alpha\delta^y_3} \\
+    \rho\ins{\del{t}+v^j\del{j}}v^z &= -\del{z}p+\mu\del{j}\del{j}v^z - \rho g \ins{\sin\alpha\delta^z_1+\cos\alpha\delta^z_3} 
+\end{align}
+simplifying to
+\begin{align}
+    0 &= -\del{x}p+\mu\del{z}\del{z}v^x - \rho g \sin\alpha \\
+    0 &= -\del{y}p \\
+    0 &= -\del{z}p - \rho g \cos\alpha
+\end{align}
+therefore
+\begin{align}
+    p_z &= -\rho gz \cos\alpha \\
+    p_y &= const.\\
+    p_x &= -\rho g z \sin\alpha + \mu\del{z}v^x
+\end{align}
+and \(v_x\) using the first equation
+\begin{equation}
+    \pdv[2]{v}{z} = \frac{1}{\mu}\ins{\del{x}p+\rho g \sin\alpha}
+\end{equation}
+therefore
+\begin{equation}
+    v = \frac{1}{2\mu}\ins{\del{x}p+\rho g \sin\alpha}z^2+Az+B
+\end{equation}
+but one of the symmetries we found earlier is that the velocity has no dependence on the \(x\) coordinate so \(\del{x}p\) must be a constant (which it is from what we found earlier, and it's even 0)
+\begin{align}
+    v = \frac{\rho g \sin\alpha}{2\mu} z^2+Az+B
+\end{align}
+\subsection{boundaries}
+The no slip condition and atmospheric pressure conditions give us
+\begin{align}
+    v(z=0)=0 && \sigma_{xz}=0 && p(z=h)=p_0
+\end{align}
+which in turn gives us
+\begin{align}
+    B=0 && A=\frac{\rho g h \sin\alpha}{\mu}
+\end{align}
+and I couldn't finish this due to time constaints.

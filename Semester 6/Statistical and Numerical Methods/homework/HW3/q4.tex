@@ -1,0 +1,35 @@
+\clearpage
+\section{Scholarship winners}
+\subsection{Assuming Poisson}
+If we assume the distribution is poisson for each country, then the parameter \(\lambda\) for each is
+\begin{equation}
+    \lambda_i = n_i p_i = n_i \ins{\frac{winners}{\num{1e5}}} = winners \cdot \frac{n_i}{\num{1e5}}
+\end{equation}
+and the standard deviation is the square root
+\begin{equation}
+    \sigma_i = \sqrt{\lambda_i}
+\end{equation}
+plugging in the numbers the table becomes 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cccc}
+        Country & Population & winners per 100k & error\\
+        \hline
+        Israel & \num{9e6} & 3.6 & 0.2\\
+        Germany & \num{82.8e6} & 4.0 & 0.07\\
+        Denmark & \num{5.8e6} & 3.5 & 0.25\\
+        USA & \num{325.7e6} & 10.9 & 0.06\\
+        Sri Lanka & \num{105e3} & 1.9 & 1.35\\
+        Ivory Coast & \num{33e3} & 3.2 & 3.11\\
+        Puerto Rito & \num{22e3} & 4.8 & 4.8
+    \end{tabular}
+\end{table}
+\subsection{Assuming Gaussian}
+The number of winners per 100k in Israel is 3.6 and the error is 0.2. The number of winners per 100k in Germany is 4.0. Since we assume the distribution is gaussian, we can look at the difference between Germany and Israel and express it in standard deviations of the Israeli count
+\begin{equation}
+    4-3.6 = 0.4 = 2\sigma_{Israel}
+\end{equation}
+So the chance the number of winners in Israel surpasses that of Germany is 
+\begin{equation}
+    1-\Phi(2) = 1- 0.9772 = 0.0228 = 2.28\%
+\end{equation}

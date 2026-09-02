@@ -1,0 +1,47 @@
+\clearpage
+\section{Moving Plane}
+The electric field is 
+\begin{equation}
+    \vb{E} = \begin{cases}
+        2\pi\sigma\vu{x} & x>vt\\
+        -2\pi\sigma\vu{x} & x<vt
+    \end{cases}
+\end{equation}
+but looking at the definition of the stress tensor
+\begin{equation}
+    \tensor{\sigma}{_i_j} = \frac{1}{4\pi}\ins{E_i E_j + B_i B_j - \frac{1}{2}\tensor{\delta}{_i_j}\ins{E^2+B^2}}
+\end{equation}
+we can immediately see that all the off-diagonal elements are 0, and the tensor is from a direction calculation is 
+\begin{equation}
+    \tensor{\sigma}{_i_j} = \frac{1}{8\pi}\mqty(\ins{2\pi\sigma}^2-B^2&&\\&-\ins{\ins{2\pi\sigma}^2+B^2}&\\&&B^2-\ins{2\pi\sigma}^2)
+\end{equation}
+which is constant in space.
+\subsection{Stored Momentum}
+The EM momentum density is defined as 
+\begin{equation}
+    \vb{p}_{EM} = \frac{1}{c^2}\vb{S}= \frac{1}{4\pi c}\vb{E} \times \vb{B}
+\end{equation}
+so
+\begin{equation}
+    \vb{p}_{EM} = \begin{cases}
+        \vb{p}_{EM,>} = -\frac{\sigma B}{2c}\vu{y} & x>vt\\
+        \vb{p}_{EM,<} = \frac{\sigma B}{2c}\vu{y} & x<vt
+    \end{cases}
+\end{equation}
+now that we have the density on each side, to get the total we multiply by the volume on each side
+\begin{equation}
+    \vb{p}_{EM}^{Box} = \vb{p}_{EM,>} \cdot A\ins{h+vt} + \vb{p}_{EM,<} \cdot A\ins{h-vt}=\frac{AB\sigma vt}{c}\vu{y}
+\end{equation}
+\subsection{Force per area}
+First notiving that since \(\overleftrightarrow\sigma\) is constant, the contribution from it's sum over all the faces of the box will be zero, means we can simplify to 
+\begin{equation}
+    \dv{\vb{p}_{Mech}^{Box}}{t} = -\dv{\vb{p}_{EM}^{Box}}{t}
+\end{equation}
+inserting our result
+\begin{equation}
+    \dv{\vb{p}_{Mech}^{Box}}{t} = -\frac{AB\sigma v}{c}\vu{y}
+\end{equation}
+so
+\begin{equation}
+    \frac{F}{A} = -\frac{B\sigma v}{c}\vu{y}
+\end{equation}

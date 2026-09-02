@@ -1,0 +1,85 @@
+\clearpage
+\section{Question 4 Code Explanation}\label{q4code}
+The code for this question is split into several files:
+\begin{description}
+    \item[\texttt{q4.py}] Wrapper for the other scripts. Originally everything was in this file, so to preserve my workflow I kept it, and it just calls the other files. It's completely optional.
+    \item[\texttt{q4\_common.py}] Contains functions useful for all the sections of the question which are called multiple times.
+    \item[\texttt{q4\_part\_a.py}] The code for part a.
+    \item[\texttt{q4\_part\_b.py}] The code for part b.
+    \item[\texttt{q4\_part\_c.py}] The code for part c.
+\end{description}
+\subsection{Common functions}
+The functions requiring an explanation are explained here. Some, like the excel loading function, chi squared calculations, etc, are simple enough that I don't think they need an explanation.
+\subsubsection{The models}
+\(Y_1\), \(Y_2\), and \(Y_3\) are all defined here for use everywhere.
+\subsubsection{model\_slope}
+To perform a fit on a model which also has errors on the time axis, we need to propagate the error, which itself needs the derivative of the model tested w.r.t time. This calculates this derivative. Can't use a built in gradient function because we're taking the derivative of a python function. The derivative is calculated using the derivative definition, with a small step chosen arbitrarily.
+\subsubsection{check\_fit\_quality}
+Calculates the number of degrees of freedom, reduced chi squared (chi squared divided by the degrees of freedom), and the p value.
+\subsubsection{solve\_linear}
+Performs a weighted least squares fit for a model that is linear: \(y(t)=\sum_j p_j f_j(t)\). Minimizing \(\chi^2\) in this case has a direct solution: the weighted normal equations
+\[
+    (X^T W X)\,\vec{p} = X^T W \vec{y}, \qquad W = \operatorname{diag}(1/\sigma_i^2),
+\]
+where \(X_{ij}=f_j(t_i)\) is the matrix of basis functions at the data points. The function builds \(X\) from the basis columns and solves this system without minimization, and points with smaller errors get more weight. Used to solve \(Y_3\) and the linear parameters of \(Y_1\) and \(Y_2\).
+\subsubsection{nonlinear\_ranges}
+Creates the ranges used to limit the scanning for values of the parameters. Needed because for \(Y_2\) B sometimes can diverge.
+\subsubsection{profile\_params}
+Function meant to be used only for the nonlinear models, \(Y_1\) and \(Y_2\). Takes the linear part of each model and throws it to the linear solver. Returns the model with the linear parameters solved.
+\subsubsection{fit\_model}
+performs the full fit for the model to the given points, assuming no error on the time. \(Y_3\) is sent to be solved directly, other models have the linear parameters solved and the nonlinear optimized. For the nonlinear parameters, the following algorithm is performed:
+\begin{enumerate}
+    \item A \(D\)-dimensional grid of the possible values for all the different parameters is created to scan over. The grid is then falttened into a 1D array to simplify iteration (theoretically speaking, this could be replaced with a multi-dimensional optimization algorithm such as stochastic gradient descent, but it's overkill for this).
+    \item for each point in the flattened grid, the chi squared is calculated
+    \item if the chi squared is the best seen so far, save the values at that point as the best
+    \item at each step, zoom in on the best nonlinear parameters found so far. This helps convergence, assuming the chi-squared landscape is mostly monotonous.
+    \item return the best parameters found
+\end{enumerate}
+\subsubsection{fit\_with\_t\_errors}
+If there are errors on the time, the above algorithm is insufficient, since it doesn't take the time errors into account. The total error used for most of the calculations needs to have the time error propagated. This function does:
+\begin{enumerate}
+    \item Fit the model assuming no time error 
+    \item iterate \(max\_iter\) times or until the chi squared calculated with the updated total error changes very little:
+    \begin{enumerate}
+        \item propagate the time error
+        \item perform the fit with the new error
+        \item if chi squared doesn't change a lot, fit is declared good
+        \item update the parameters and chi squared to the ones calculated in the loop
+    \end{enumerate}
+    \item return the fitted parameters, chi squared, and total error
+\end{enumerate}
+\subsection{Part a}
+This file contains only a single function because its logic is implemented almost entirely in the common functions file. The function loads the data, then performs the fit with time errors included, gets the reduced chi squared and p value, and prints a table with all the parameters and statistical values.
+\subsection{Part b}
+\subsubsection{check\_background\_gaussianity}
+Checks if a given signal (since this was made for the noise it's named this way) is gaussian noise. 
+\begin{enumerate}
+    \item Calculates the mean and standard deviation
+    \item Creates a histogram of the values in the given signal (to simplify plotting the bins are limited to \(\pm2.5\sigma\) with everything beyond in a single bin per side)
+    \item performs a chi-squared test comparing the signal's histogram to a gaussian 
+    \item plots the comparison and returns the statistical values
+\end{enumerate}
+\subsubsection{get\_signal}
+Since the noise before the signal and during the signal wasn different, the way I thought of to isolate the signal was to use a rolling window average. The function uses a constant convolution kernel to smooth out the signal. Plots the cleaned signal and the residual noise. Returns the signal, noise, and other unused parameters.
+\subsubsection{noise\_during\_signal}
+Isolates the noise during the signal using \texttt{get\_signal}, checks if its gaussian, calculates statistics for it, and plots it.
+\subsubsection{extract\_signal}
+This function gets the signal from the raw data by subtracting the baseline noise, and defines the errors on it. To get the errors on the signal, we need to consider the noise during the signal, and to do that we have to look at bins of datapoints of the signal, rather than point by point. The signal is split into bins over time, then the signal is defined as the mean of the values in the bin, and the error is calculated from the spread of the values of the signal within that bin.
+\subsubsection{part\_b}
+the main function of this part finds the background using the measurement time before the signal begins and performs the analysis on it, then estimates the signal and its error using the above function. It then prints everything.
+\subsection{Part c}
+\subsubsection{align\_simulation}
+When I first checked the data here and compared it to the previous parts, I noticed that the times given here are significantly different from the other parts. I suspected this would make it hard to perform the fit of the simulation model to the experiment data, so this function which aligns the data was made. Instead of trying to find the right offset by hand, this function finds the right offset by fitting the simulation to the experiment data. Since the simulation is just a set of points, the only variable that can be altered in it is the time offset, so there's a single parameter to optimize for. The function performs this optimization very similarly to the previous optimizations
+\begin{enumerate}
+    \item Fix the resolution mismatch. The simulation has many more data points than the experiment data, and trying to fit them against each other at this point will cause issues. The simulation data is resampled to have the same number of points.
+    \item Loop over all the possible time shift values, and for each
+    \begin{enumerate}
+        \item clip the data to only the region where there is an overlap between the simulation and measurement
+        \item perform the fit and chi-squared test between the simulation and measurement 
+        \item if this fit is the best, remember it 
+    \end{enumerate}
+    \item return the best fit found
+\end{enumerate}
+Eventually it turned out, after running part c, that the offset was extremely small so it made almost no difference, but this was kept because it gives the simulation its best chance.
+\subsubsection{part\_c}
+The function fits all models (\(Y_1\) through \(Y_3\) and the simulation) against the experimental data, then prints a table comparing them all, and plots all of them together. 

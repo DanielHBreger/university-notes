@@ -1,0 +1,66 @@
+\clearpage
+\section{"Good" Estimators}
+\begin{colbox}
+    \(\hat{a}, \hat{b}, \hat{c}, \hat{d}\) are unbiased estimators such that \(\left<a\right>=\left<b\right>=\mu;\quad\left<c\right>=2\left<d\right>=\lambda\) with variances \(\sigma_{\hat{a}}=\sigma_{\hat{b}}=4\sigma_{\hat{c}}=2\sigma_{\hat{d}}\)
+    \begin{enumerate}
+        \item Check whether the following estimators are unbiased, and fix any that are so they are unbiased
+        \begin{align}
+            \frac{\hat{c}+2\hat{d}}{5} && e^{c+d} && \frac{\hat{a}}{\hat{b}^2} && \sum_{i=1}^{\infty}\frac{\hat{b}^{2i-1}}{\ins{2i-1}!}
+        \end{align}
+        \item Which of these estimators is most efficient?
+    \end{enumerate}
+\end{colbox}
+\subsection{bias check}
+\begin{equation}
+    \left<\frac{c+2d}{5}\right> = \frac{\left<c\right>+2\left<d\right>}{5} = \frac{2}{5}\lambda
+\end{equation}
+there it is biased. We can fix it by making the estimator
+\begin{equation}
+    \frac{5}{2}\frac{\hat{c}+2\hat{d}}{5}
+\end{equation}
+onto the next one
+\begin{equation}
+    \left<e^{c+d}\right> = e^{1.5\lambda}
+\end{equation}
+so it is also biased, and the fix is
+\begin{equation}
+    \log_{1.5e}\ins{e^{c+d}}
+\end{equation}
+next
+\begin{equation}
+    \left<\frac{\hat{a}}{\hat{b}^2}\right> = \frac{\mu}{\mu^2} = \frac{1}{\mu}
+\end{equation}
+this is also biased, the fix is for example
+\begin{equation}
+    \frac{\hat{a}^3}{\hat{b}^2}
+\end{equation}
+next
+\begin{equation}
+    \sum_{i=1}^{\infty}\frac{\hat{b}^{2i-1}}{\ins{2i-1}!}
+\end{equation}
+is the taylor series for \(\sinh\) so
+\begin{equation}
+    \left<\sum_{i=1}^{\infty}\frac{\hat{b}^{2i-1}}{\ins{2i-1}!}\right> = \left<\sinh(\hat{b})\right> = \sinh(\left<\hat{b}\right>) = \sinh\mu
+\end{equation}
+which is biased and the fix is
+\begin{equation}
+    \sinh^{-1}\left(\sum_{i=1}^{\infty}\frac{\hat{b}^{2i-1}}{\ins{2i-1}!}\right)
+\end{equation}
+\subsection{most efficient}
+The most efficient estimator is the one with the lowest variance. We'll calculate all the variances and express them using \(\sigma_a\) for convenience.
+\begin{align}
+    \hat{V}\ins{\frac{5}{2}\frac{\hat{c}+2\hat{d}}{5}} = \hat{V}\ins{\frac{\hat{c}}{2}+\hat{d}}=\frac{\sigma_c^2}{4}+\frac{25}{4}\sigma_c^2 = 6.5\sigma_c = \frac{25}{20}\sigma_a
+\end{align}
+next 
+\begin{equation}
+    \hat{V}\ins{\frac{\hat{a}^3}{\hat{b}^2}} = \frac{\sigma_a^6}{\sigma_b^4}=\sigma_a^2
+\end{equation}
+next
+\begin{equation}
+    \hat{V}\ins{\sinh^{-1}\left(\sinh\ins{b}\right)} = \hat{V}\ins{b}=\sigma_b^2 = \sigma_a^2
+\end{equation}
+and 
+\begin{equation}
+    \hat{V}\ins{\log_{1.5e}\ins{e^{c+d}}} = \hat{V}\ins{c+d} = \sigma_c^2+\sigma_d^2 = \frac{1}{25}\sigma_a^2+\frac{1}{4}\sigma_a^2 = \frac{29}{100}\sigma_a^2
+\end{equation}
+so the most efficient estimator is the last one.
