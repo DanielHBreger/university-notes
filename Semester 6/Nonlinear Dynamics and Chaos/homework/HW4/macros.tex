@@ -1,0 +1,34 @@
+\newcommand{\tsr}[2]{\tensor{#1}{#2}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\newcommand{\lagr}{\mathcal{L}}
+\newcommand{\ins}[1]{\left(#1\right)}
+\newcommand{\holdpage}[0]{d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d}
+\newcommand{\blankpage}{\newpage \thispagestyle{empty} \mbox{} \newpage}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\renewcommand{\vec}[1]{\ensuremath{\bm{#1}}}
+
+\newcommand{\umat}{\pmat{1&0\\0&1}}
+\newcommand{\sigx}{\pmat{0&1\\1&0}}
+\newcommand{\sigy}{\pmat{0&-i\\i&0}}
+\newcommand{\sigz}{\pmat{1&0\\0&-1}}
+
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\reals}{\mathbb{R}}
+\let\uglyepsilon\epsilon
+\let\epsilon\varepsilon
+\DeclareSIUnit \year {\text{yr}}
+\newcommand{\del}[1]{\partial_{#1}}
+
+\newcommand{\vfield}[5]{%
+ \foreach \px in {-#5,-2.5,...,#5}{%
+  \foreach \py in {-#5,-2.5,...,#5}{%
+   \pgfmathsetmacro{\uu}{(#1)*(\px)+(#2)*(\py)}%
+   \pgfmathsetmacro{\vv}{(#3)*(\px)+(#4)*(\py)}%
+   \pgfmathsetmacro{\ll}{sqrt(\uu*\uu+\vv*\vv)+0.0001}%
+   \pgfmathsetmacro{\ax}{\px}\pgfmathsetmacro{\ay}{\py}%
+   \pgfmathsetmacro{\bx}{\px+0.32*\uu/\ll}%
+   \pgfmathsetmacro{\by}{\py+0.32*\vv/\ll}%
+   \edef\tmp{\noexpand\draw[-{Stealth[length=4pt]},gray!55,thin]
+      (axis cs:\ax,\ay) -- (axis cs:\bx,\by);}\tmp
+ }}}

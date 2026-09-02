@@ -1,0 +1,122 @@
+\clearpage
+\section{Synchronization from averaging for a weakly forced oscillator}
+\subsection{Main synchronization region}
+\subsubsection{slow phase}
+Since we define 
+\begin{equation}
+    \psi = \theta - \Omega t
+\end{equation}
+then 
+\begin{equation}
+    \dot{\psi}=\dot{\theta}-\Omega=\Delta \omega+\epsilon Q(\psi+\Omega t, \Omega t)
+\end{equation}
+both of these terms are \(O(\epsilon)\) so 
+\begin{equation}
+    \dot{\psi}=O(\epsilon)
+\end{equation}
+so over one period 
+\begin{equation}
+    \Delta\psi = O(\epsilon T)
+\end{equation}
+meaning \(\psi\) is constant to leading order during a single period.
+\subsubsection{Averaged equation}
+inserting theta and phi
+\begin{equation}
+    Q(\psi+\Omega t,\Omega t)=\sum_{m,n}c_{m,n}e^{im\psi}e^{i\ins{m+n}\Omega t}
+\end{equation}
+averaging over one period means that only the terms for which \(m+n=0\) survive which eliminates the dependence on \(\Omega\), meaning 
+\begin{equation}
+    \dot{\psi}=\Delta\omega + \epsilon f(\psi)
+\end{equation}
+where 
+\begin{equation}
+    f(\psi)=\sum_{m}c_{m,-m}e^{im\psi}
+\end{equation}
+\subsubsection{locking range}
+Since a locked solution is a fixed point of the averaged relative phase equation 
+\begin{equation}
+    0=\Delta\omega + \epsilon f(\psi^*)
+\end{equation}
+locking happens when 
+\begin{equation}
+    f_{\min} \leq -\frac{\Delta\omega}{\epsilon}\leq f_{\max}
+\end{equation}
+so 
+\begin{equation}
+    -\epsilon f_{\max}\leq \Delta\omega \leq -\epsilon f_{\min}
+\end{equation}
+so the locking width is 
+\begin{equation}
+    \Delta\omega_{\text{width}} = \epsilon\ins{f_{\max}-f_{\min}}
+\end{equation}
+and the fixed point is stable when 
+\begin{equation}
+    \epsilon f'(\psi^*)<0
+\end{equation}
+\subsection{p:q resonances}
+defining 
+\begin{equation}
+    \psi = q\theta-p\Omega t
+\end{equation}
+and assuming 
+\begin{equation}
+    q\omega_0 \approx p\Omega
+\end{equation}
+means 
+\begin{equation}
+    \dot{\psi}=q\dot{\theta}-p\Omega=\delta_{pq}+\epsilon qQ(\theta,\Omega t)
+\end{equation}
+if we define \(\phi=\Omega t\) then 
+\begin{equation}
+    \theta = \frac{\psi+p\phi}{q}
+\end{equation}
+which means 
+\begin{equation}
+    \dot{\psi}=\delta_{pq}+\epsilon q\sum_{m,n}c_{m,n}e^{im\psi/q}e^{i\ins{mp/q+n}\phi}
+\end{equation}
+and again when averaging the only terms that survive are those where 
+\begin{equation}
+    \frac{mp}{q}+n=0 \implies mp+nq=0
+\end{equation}
+but since p and q are coprime
+\begin{equation}
+    m=kq,\qquad n=-kp
+\end{equation}
+so 
+\begin{equation}
+    \dot{\psi}=\delta_{pq}+\epsilon f_{pq}(\psi)
+\end{equation}
+where 
+\begin{equation}
+    f_{pq}(\psi)=q\sum_k c_{kq,-kp}e^{ik\psi}
+\end{equation}
+\subsection{The Adler equation}
+The Adler model is 
+\begin{equation}
+    \dot{\theta}=\omega_0-\epsilon\sin\ins{\theta-\Omega t}
+\end{equation}
+so
+\begin{equation}
+    Q(\theta,\phi) = -\sin\ins{\theta-\phi}
+\end{equation}
+which if we expand this in a fourier expansion, it'll contain only the harmonics
+\begin{equation}
+    \ins{m,n}=(1,1),\quad(-1,1)
+\end{equation}
+but for a p:q resonance the coefficients need the form 
+\begin{equation}
+    \ins{m,n}=\ins{kq,-kp}
+\end{equation}
+which are satisfied for the Adler harmonics only for 
+\begin{equation}
+    p=q=1
+\end{equation}
+as a result, for every \(\ins{p,q}\neq(1,1)\)
+\begin{equation}
+    f_{pq}=0
+\end{equation}
+making the averaged equation 
+\begin{equation}
+    \dot{\psi}=\delta_{pq}
+\end{equation}
+meaning there is no finite locking interval, meaning the adler equation has no finite-width higher p:q resonances.

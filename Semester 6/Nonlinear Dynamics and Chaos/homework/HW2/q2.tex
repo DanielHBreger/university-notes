@@ -1,0 +1,66 @@
+\clearpage
+\section{Newton Method as an iterated map}
+\begin{colbox}
+    \begin{enumerate}
+        \item Write down the Newton map explicitly for \(g(x) = x^2-4\). Show that it has exactly two fixed points that coincide with the roots of \(g\), and that both are superstable in the sense of the definition above.
+        \item Starting from \(x_0=1\) iterate and report the first few iterates \(x_1,x_2,\dots\) until the result agrees with \(x^*=2\) to your tool's precision
+        \item Return to a general twice differentiable \(g\) and let \(x^*\) be a root, \(g(x^*)=0\). Show that \(x^*\) is a superstable fixed point of the newton map if \(g'(x^*)\neq0\). What happens if \(g'(x^*)=0\)?
+    \end{enumerate}
+\end{colbox}
+\subsection{Calibration}
+Since
+\begin{equation}
+    g'(x) = 2x
+\end{equation}
+we have 
+\begin{equation}
+    f(x) = x-\frac{x^2-4}{2x}=\frac{x^2+4}{2x}=\frac{x}{2}+\frac{2}{x}
+\end{equation}
+to find the fixed points we look at 
+\begin{equation}
+    f(x)=x \implies \frac{x}{2}=\frac{2}{x} \implies x=\pm2
+\end{equation}
+the multiplier for these points is 
+\begin{equation}
+    f'(x) = \frac{1}{2}-\frac{2}{x^2} \implies f'(\pm2)=\frac{1}{2}-\frac{1}{2}=0
+\end{equation}
+meaning both of the fixed points are superstable.
+\subsection{Numerical Iteration}
+Our series is 
+\begin{equation}
+    x_{n+1}=\frac{x_n}{2}+\frac{2}{x_n}
+\end{equation}
+so, using a simple python script
+\begin{table}[!htb]
+\centering
+\begin{tabular}{c|c}
+    \(n\) & \(x_n\) \\\hline
+    0 & 1 \\
+    1 & 2.5 \\
+    2 & 2.05 \\
+    3 & 2.000610 \\
+    4 & 2.000000093 \\
+    5 & 2.000000000000002 \\
+    6 & 2
+\end{tabular}
+\caption{Iterates from \(x_0=1\)}
+\end{table}
+At iteration number 6 the value is so close to 2 that a 64-bit floating point number can no longer capture the difference.
+\subsection{Generalisation}
+For 
+\begin{equation}
+    f(x) = x-\frac{g(x)}{g'(x)}
+\end{equation}
+the multiplier is 
+\begin{align}
+    f'(x) &= 1-\frac{g'(x)^2-g(x)g''(x)}{g(x)^2} = \frac{g(x)g''(x)}{g'(x)^2}
+\end{align}
+it's immediate that if
+\begin{align}
+    g(x^*)=0 && g'(x^*)\neq0
+\end{align}
+then 
+\begin{equation}
+    f'(x^*)=0
+\end{equation}
+making \(x^*\) superstable. If instead \(g'(x^*)=0\) then the Newton map formula is undefined. Instead if the root has multiplicity \(m>1\) then we can remove the singularity and get \(f'(x^*)=\frac{m-1}{m}\) making the root attracing but not superstable.
