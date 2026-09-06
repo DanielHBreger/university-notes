@@ -1,0 +1,5 @@
+sweep,filename,rpot_ohm,n_maxima,n_branches,n_slopes,unresolved_pct,cluster_pct,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_map_per_s,lambda_map_err_per_s,lambda_map_err_stat,lambda_map_err_width,map_r2_within_branch,lambda_rosenstein_per_s,lambda_rosenstein_err_per_s,status
+records,doublescroll start - 666.0 ohm.csv,666.0,1376,0,0,,,363.3476,353.992,2.57,,,,,,,1399.0,13.12,map spans only 21 quantisation steps of 201 mV (under --min-steps)
+records,doublescroll 2 - 656.7ohm.csv,656.7,1332,0,0,,,375.4155,352.9936,5.97,,,,,,,1639.88,13.54,map spans only 21 quantisation steps of 201 mV (under --min-steps)
+records,chaos - 716.9 ohm.csv,716.9,1411,0,0,,,354.2745,354.0069,0.08,,,,,,,352.45,4.01,map spans only 5 quantisation steps of 201 mV (under --min-steps)
+records,limitcycle2 - 764.6 ohm.csv,764.6,1428,0,0,,,350.2551,349.9985,0.07,,,,,,,-11.8,0.63,map spans only 1 quantisation steps of 201 mV (under --min-steps)

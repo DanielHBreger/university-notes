@@ -101,8 +101,8 @@ def main():
                    help='resistance range to show, ohm')
     p.add_argument('--ylim', nargs=2, type=float, metavar=('LO', 'HI'),
                    help='voltage range to show, V')
-    p.add_argument('--size', type=float, default=0.6, help='marker size')
-    p.add_argument('--alpha', type=float, default=0.18, help='marker alpha')
+    p.add_argument('--size', type=float, default=0.15, help='marker size')
+    p.add_argument('--alpha', type=float, default=0.35, help='marker alpha')
     a = p.parse_args()
 
     folders = resolve_folders(a.folders)
@@ -110,7 +110,7 @@ def main():
     csv_out = os.path.splitext(out)[0] + '_points.csv'
     colors = sweep_colors(len(folders))
 
-    fig, ax = plt.subplots(figsize=(10, 5.5))
+    fig, ax = plt.subplots(figsize=(14, 7.5))
     rows = []
 
     for k, folder in enumerate(folders):
@@ -149,7 +149,7 @@ def main():
         h.set_sizes([12])
     ax.grid(alpha=0.15, lw=0.5)
     fig.tight_layout()
-    fig.savefig(out, dpi=200)
+    fig.savefig(out, dpi=450)
     plt.close(fig)
 
     with open(csv_out, 'w', newline='') as fh:

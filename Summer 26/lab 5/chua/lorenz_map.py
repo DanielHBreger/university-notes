@@ -11,10 +11,13 @@ A period-1 limit cycle collapses to a single point on the diagonal, period-2
 gives two points, and chaos fills out the characteristic one-humped curve.
 
 The period that sets the smoothing window is measured per record from the
-first peak of the signal's autocorrelation, since the sweep folders change
-time base partway through (400 ns/sample early, 1 us/sample later) and a
-fixed window would be wrong for half the records. Override it with
---period-samples if you want one fixed window throughout.
+spacing of the signal's maxima (the autocorrelation only decides whether it
+oscillates), since the sweep folders change time base partway through
+(400 ns/sample early, 1 us/sample later) and a fixed window would be wrong
+for half the records. Override it with --period-samples if you want one
+fixed window throughout. Maxima closer than a quarter of a period are
+merged: the scope's 40 mV quantisation turns a maximum into a flat top that
+otherwise yields two "peaks" a few samples apart.
 
 Records with no detectable period - the circuit not yet oscillating, where the
 trace is pure noise - are skipped and listed in the summary; a prominence
@@ -58,13 +61,46 @@ SUMMARY_FIELDS = ['filename', 'rpot_ohm', 'n_maxima', 'f0_hz',
                   'signal_range', 'clip_pct', 'status']
 
 
+def quantum(x):
+    """
+    The scope's quantisation step on a channel: the smallest gap between
+    the codes actually present (43 mV or 201 mV on this bench, depending
+    on the range in use).
+    """
+    codes = np.unique(x)
+    steps = np.diff(codes)
+    return float(steps[steps > 0].min()) if len(steps) and (steps > 0).any() else 0.0
+
+
+def peak_prominence(x_range, prominence, q):
+    """
+    The prominence threshold actually used: the nominal fraction of the
+    range, but never below two quantisation steps. On the coarse-range
+    records 2 % of the range is less than one step, and then every wiggle
+    of the smoothed staircase counts as a maximum.
+    """
+    return max(prominence * x_range, 2.0 * q)
+
+
 def period_samples(x, limit=200000, max_lag=50000):
     """
-    Oscillation period in samples, from the first autocorrelation peak.
+    Winding period in samples: the median spacing of the signal's maxima.
 
-    Done through the FFT: np.correlate(y, y, 'full') is a direct O(N^2)
-    convolution, which costs ~7 s per record here and turns a folder into a
-    quarter-hour crawl. This is the same autocorrelation to the last sample.
+    The autocorrelation decides only whether the record oscillates at all
+    (a peak above 0.1 within max_lag; done through the FFT, since the direct
+    np.correlate costs ~7 s per record). The period itself is NOT read off
+    the autocorrelation: on the low-resistance double-scroll records the
+    lobe switching decorrelates successive windings, the first
+    autocorrelation peak lands at six to eight windings, and a smoothing
+    window sized from it flattens the maxima the whole chain is built on.
+    The spacing of the maxima cannot be fooled that way.
+
+    Duplicate maxima on quantised flat tops sit a few samples apart, and on
+    a coarse range they can outnumber the real ones, so the median of all
+    gaps is no anchor. Duplicates can only shorten gaps, never lengthen
+    them, so the upper quartile of the gaps is a safe stand-in for the
+    period; gaps under half of it are dropped and the median of the rest
+    is the period.
     """
     y = x[:limit] - x[:limit].mean()
     s = y.std()
@@ -78,7 +114,16 @@ def period_samples(x, limit=200000, max_lag=50000):
         return 0
     ac /= ac[0]
     p, _ = find_peaks(ac, height=0.1)
-    return int(p[0]) if len(p) else 0
+    if not len(p) or p[0] < 20:
+        return int(p[0]) if len(p) else 0
+    xs = savgol_filter(x[:limit], 9, 3)
+    pk, _ = find_peaks(xs, prominence=peak_prominence(float(np.ptp(xs)), 0.02,
+                                                      quantum(x[:limit])))
+    g = np.diff(pk)
+    if len(g) < 5:
+        return int(p[0])
+    g = g[g > 0.5 * float(np.percentile(g, 75))]
+    return int(np.median(g)) if len(g) else int(p[0])
 
 
 def _blank(dt=0.0, per=0, status='ok'):
@@ -86,14 +131,15 @@ def _blank(dt=0.0, per=0, status='ok'):
     return {'dt': dt, 'period_samples': per, 'window': 0,
             'f0_hz': 1.0 / (per * dt) if per and dt else 0.0,
             'range': 0.0, 'clip_pct': 0.0, 'status': status,
-            't_peaks': np.empty(0)}
+            'quantum': 0.0, 't_peaks': np.empty(0)}
 
 
 def maxima(path, ch='CH1', prominence=0.02, period=None):
     """
     Return (M, info): the successive local maxima of `ch`.
 
-    Smooth at period/20, then take the maxima above `prominence` * range.
+    Smooth at period/20, then take the maxima above `prominence` * range
+    (never below two quantisation steps) and at least a quarter period apart.
     """
     # Only the time column and the one channel are needed; parsing the other
     # two costs about a fifth of the per-record time on a 28 MB record.
@@ -115,6 +161,9 @@ def maxima(path, ch='CH1', prominence=0.02, period=None):
     dt = float(np.median(np.diff(t)))
     per = int(period) if period else period_samples(x)
     info = _blank(dt, per)
+    # The scope's quantisation step on this channel. It bounds how finely
+    # any maximum is known, whatever the smoothing does after.
+    info['quantum'] = quantum(x)
     # Fraction of samples pinned at either extreme: on this bench the low-R
     # records run off the scope's input range and clip hard, and a clipped
     # peak is a flat plateau at the rail rather than a real maximum. It is a
@@ -144,7 +193,17 @@ def maxima(path, ch='CH1', prominence=0.02, period=None):
         info['status'] = 'flat record'
         return np.empty(0), info
 
-    p, _ = find_peaks(xs, prominence=prominence * rng)
+    # The scope quantises V1 in steps of about 40 mV at these ranges, so a
+    # maximum is a flat plateau, and two equal-height plateaus a few samples
+    # apart both pass the prominence test (each looks down to the deep valley
+    # on its far side). Without a minimum separation every such top gives two
+    # maxima: a spurious point on the diagonal of the return map and a
+    # return time of a few microseconds. A quarter of a winding keeps every
+    # real maximum (the shortest real return here is ~0.75 of one) and
+    # merges the duplicates.
+    p, _ = find_peaks(xs, prominence=peak_prominence(rng, prominence,
+                                                     info['quantum']),
+                      distance=max(per // 4, 1))
     M = xs[p]
     # When each maximum happened, so return times can be measured from these
     # same peaks rather than re-detected somewhere else.

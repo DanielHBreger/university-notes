@@ -1,0 +1,105 @@
+sweep,filename,rpot_ohm,n_maxima,n_branches,n_slopes,unresolved_pct,cluster_pct,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_map_per_s,lambda_map_err_per_s,lambda_map_err_stat,lambda_map_err_width,map_r2_within_branch,lambda_rosenstein_per_s,lambda_rosenstein_err_per_s,status
+sweep forward,trace10.csv,791.85,606,0,0,,,329.9253,330.0011,-0.02,,,,,,,-0.76,0.89,map spread 0.021 V below --min-spread
+sweep forward,trace11.csv,803.17,606,0,0,,,330.1402,330.0123,0.04,,,,,,,1.65,1.05,map spread 0.017 V below --min-spread
+sweep forward,trace12.csv,838.57,605,0,0,,,330.3318,330.0048,0.1,,,,,,,0.05,1.53,map spread 0.023 V below --min-spread
+sweep forward,trace13.csv,859.5,604,0,0,,,330.5784,330.7983,-0.07,,,,,,,1.15,1.47,map spread 0.019 V below --min-spread
+sweep forward,trace14.csv,855.04,604,0,0,,,330.8438,330.8104,0.01,,,,,,,-0.96,1.28,map spread 0.017 V below --min-spread
+sweep forward,trace15.csv,859.77,603,0,0,,,331.1442,331.2007,-0.02,,,,,,,-1.68,2.19,map spread 0.024 V below --min-spread
+sweep forward,trace16.csv,862.65,603,0,0,,,331.4326,331.603,-0.05,,,,,,,-1.63,1.53,map spread 0.019 V below --min-spread
+sweep forward,trace17.csv,862.81,603,0,0,,,331.786,332.0009,-0.06,,,,,,,0.85,1.87,map spread 0.025 V below --min-spread
+sweep forward,trace18.csv,871.28,602,0,0,,,332.2988,332.3993,-0.03,,,,,,,1.84,1.03,map spread 0.026 V below --min-spread
+sweep forward,trace19.csv,877.72,601,0,0,,,332.7407,333.1937,-0.14,,,,,,,2.03,1.29,map spread 0.023 V below --min-spread
+sweep forward,trace20.csv,876.02,600,0,0,,,333.4431,333.5997,-0.05,,,,,,,-0.11,1.41,map spread 0.018 V below --min-spread
+sweep forward,trace21.csv,870.98,599,0,0,,,334.0956,333.6109,0.15,,,,,,,1.47,1.46,map spread 0.018 V below --min-spread
+sweep forward,trace22.csv,871.35,597,0,0,,,334.6664,334.7993,-0.04,,,,,,,3.12,1.02,map spread 0.018 V below --min-spread
+sweep forward,trace23.csv,870.41,596,0,0,,,335.4777,335.5891,-0.03,,,,,,,1.74,0.96,map spread 0.024 V below --min-spread
+sweep forward,trace24.csv,866.26,595,0,0,,,336.1562,336.3974,-0.07,,,,,,,0.15,0.99,map spread 0.040 V below --min-spread
+sweep forward,trace25.csv,864.31,594,0,0,,,336.9241,336.8035,0.04,,,,,,,5.28,2.32,map spread 0.033 V below --min-spread
+sweep forward,trace26.csv,860.61,592,0,0,,,337.6521,337.6007,0.02,,,,,,,0.75,1.15,map spread 0.049 V below --min-spread
+sweep forward,trace27.csv,857.99,590,0,0,,,339.1307,339.2003,-0.02,,,,,,,8.53,1.81,map spread 0.048 V below --min-spread
+sweep forward,trace28.csv,853.69,588,0,0,,,340.154,340.3872,-0.07,,,,,,,10.93,2.44,map spread 0.056 V below --min-spread
+sweep forward,trace29.csv,851.67,585,0,0,,,341.5356,341.5979,-0.02,,,,,,,12.98,3.87,map spread 0.070 V below --min-spread
+sweep forward,trace30.csv,850.01,584,0,0,,,342.7472,342.7938,-0.01,,,,,,,14.5,3.96,map spread 0.083 V below --min-spread
+sweep forward,trace31.csv,847.65,582,0,0,,,343.662,343.5994,0.02,,,,,,,-0.68,0.99,map spread 0.026 V below --min-spread
+sweep forward,trace32.csv,843.54,581,0,0,,,344.3614,344.3994,-0.01,,,,,,,-4.01,0.8,map spread 0.022 V below --min-spread
+sweep forward,trace33.csv,839.68,580,0,0,,,344.8946,344.8091,0.02,,,,,,,-2.9,0.44,map spread 0.026 V below --min-spread
+sweep forward,trace34.csv,834.13,578,0,0,,,345.6409,345.5952,0.01,,,,,,,0.07,1.21,map spread 0.019 V below --min-spread
+sweep forward,trace35.csv,830.09,578,0,0,,,346.1414,346.3849,-0.07,,,,,,,0.55,1.7,map spread 0.023 V below --min-spread
+sweep forward,trace36.csv,822.51,576,0,0,,,347.072,346.8115,0.08,,,,,,,-3.5,1.27,map spread 0.018 V below --min-spread
+sweep forward,trace37.csv,814.47,574,0,0,,,348.0496,347.998,0.01,,,,,,,-2.02,1.57,map spread 0.028 V below --min-spread
+sweep forward,trace38.csv,805.71,573,0,0,,,349.0042,348.8101,0.06,,,,,,,1.2,1.08,map spread 0.028 V below --min-spread
+sweep forward,trace39.csv,798.65,572,0,0,,,349.8298,349.991,-0.05,,,,,,,-0.76,0.65,map spread 0.026 V below --min-spread
+sweep forward,trace40.csv,789.12,570,0,0,,,350.904,350.8003,0.03,,,,,,,-8.13,1.52,map spread 0.026 V below --min-spread
+sweep forward,trace41.csv,778.62,568,0,0,,,352.0691,352.0008,0.02,,,,,,,-27.99,1.86,map spread 0.031 V below --min-spread
+sweep forward,trace42.csv,775.2,568,0,0,,,352.4007,352.4013,-0.0,,,,,,,-84.84,7.36,map spread 0.024 V below --min-spread
+sweep forward,trace43.csv,773.06,568,0,0,,,352.4945,352.3994,0.03,,,,,,,-103.54,11.83,map spans only 3 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace44.csv,771.89,567,0,0,,,352.5244,352.4008,0.04,,,,,,,-61.72,3.54,map spans only 4 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace45.csv,770.76,567,0,0,,,352.5463,352.3994,0.04,,,,,,,-35.13,4.01,map spans only 5 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace46.csv,769.51,567,0,0,,,352.5626,352.7999,-0.07,,,,,,,-15.77,1.38,map spans only 6 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace47.csv,768.08,567,0,0,,,352.5936,352.7999,-0.06,,,,,,,-12.99,1.05,map spans only 7 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace48.csv,766.14,567,0,0,,,352.6396,352.3985,0.07,,,,,,,-19.13,2.4,map spans only 8 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace49.csv,764.69,567,0,0,,,352.742,353.0029,-0.07,,,,,,,-6.29,1.47,map spans only 9 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace50.csv,762.85,567,0,0,,,352.7965,353.195,-0.11,,,,,,,0.03,0.83,map spans only 9 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace51.csv,760.49,566,0,0,,,352.9019,351.6003,0.37,,,,,,,-3.72,1.33,map spans only 10 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace52.csv,757.9,566,0,0,,,353.0124,355.9887,-0.84,,,,,,,6.89,0.9,map spans only 11 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace53.csv,752.4,566,0,0,,,353.2071,351.5929,0.46,,,,,,,43.38,3.1,map spans only 12 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace54.csv,750.6,566,0,0,,,353.2552,349.9985,0.92,,,,,,,-71.67,5.13,map spans only 14 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace55.csv,747.74,566,0,0,,,353.469,352.7999,0.19,,,,,,,-63.58,3.11,map spans only 15 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace56.csv,746.25,566,0,0,,,353.6028,353.2022,0.11,,,,,,,-50.92,3.56,map spans only 16 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace57.csv,744.48,566,0,0,,,353.7019,354.0069,-0.09,,,,,,,-27.36,1.49,map spans only 17 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace58.csv,743.58,566,0,0,,,353.7642,356.0102,-0.63,,,,,,,-48.67,3.76,map spans only 17 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace59.csv,742.32,565,0,0,,,353.8652,355.9962,-0.6,,,,,,,-10.57,2.2,map spans only 18 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace60.csv,741.57,565,0,0,,,353.8426,356.2011,-0.67,,,,,,,52.33,4.48,map spans only 18 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace61.csv,740.35,565,0,0,,,353.9532,356.8046,-0.81,,,,,,,59.76,7.97,map spans only 19 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace62.csv,739.29,564,0,0,,,354.0711,356.4004,-0.66,,,,,,,113.71,8.15,map spans only 19 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace63.csv,738.35,564,0,0,,,354.432,357.2013,-0.78,,,,,,,50.03,13.54,map spans only 19 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace64.csv,736.79,564,0,0,,,354.6096,356.8009,-0.62,,,,,,,159.78,11.89,map spans only 20 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace65.csv,735.17,564,0,0,,,354.6323,356.8009,-0.61,,,,,,,220.09,4.65,map spans only 20 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace66.csv,733.7,564,0,0,,,354.8419,357.2032,-0.67,,,,,,,253.03,3.77,map spans only 21 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace67.csv,731.84,563,0,0,,,355.1936,357.1915,-0.56,,,,,,,315.16,5.89,map spans only 21 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace68.csv,728.95,563,0,0,,,355.1615,358.2016,-0.86,,,,,,,383.95,8.95,map spans only 21 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace69.csv,724.02,563,0,0,,,355.131,358.4102,-0.92,,,,,,,396.04,6.61,map spans only 22 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace70.csv,716.97,562,0,0,,,355.302,358.8013,-0.98,,,,,,,525.64,23.36,map spans only 24 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace71.csv,715.35,564,0,0,,,354.9883,358.0097,-0.85,,,,,,,546.29,12.59,map spans only 24 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace72.csv,714.88,567,0,0,,,352.7463,353.5985,-0.24,,,,,,,53.03,2.12,map spans only 25 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace73.csv,711.67,568,0,0,,,352.4875,351.1999,0.37,,,,,,,221.04,6.44,map spans only 26 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace74.csv,709.85,567,0,0,,,352.6728,351.2073,0.42,,,,,,,500.75,12.93,map spans only 27 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace75.csv,707.78,565,0,0,,,354.0135,353.9948,0.01,,,,,,,694.79,14.88,map spans only 27 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace76.csv,705.94,564,0,0,,,354.2153,352.8111,0.4,,,,,,,716.76,18.08,map spans only 28 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace77.csv,702.37,564,0,0,,,354.4675,353.2097,0.35,,,,,,,760.61,17.91,map spans only 30 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace78.csv,697.38,563,1,562,0.7,0.0,354.8825,354.5992,0.08,0.5683,1601.37,83.8,80.41,23.4,0.9986,907.69,19.62,ok
+sweep forward,trace79.csv,691.42,564,1,563,0.0,0.0,354.2736,352.4013,0.53,0.56472,1594.03,74.35,73.4,11.42,0.9985,940.38,20.56,ok
+sweep forward,trace80.csv,681.61,565,1,564,0.0,0.0,353.8575,351.5974,0.64,0.64279,1816.52,76.89,62.35,44.8,0.9982,1141.08,17.24,ok
+sweep forward,trace81.csv,675.66,567,1,566,0.5,0.0,352.8148,350.4003,0.68,0.57887,1640.73,74.65,74.43,3.6,0.9984,1204.17,21.74,ok
+sweep forward,trace82.csv,672.39,566,1,565,0.0,0.0,353.0046,350.4083,0.74,0.59416,1683.14,82.53,66.34,48.84,0.9985,1218.42,56.38,ok
+sweep forward,trace83.csv,670.09,566,2,537,0.4,1.6,353.1044,334.0021,5.41,0.01647,46.65,109.85,108.02,19.98,0.9997,565.33,197.79,ok
+sweep forward,trace84.csv,669.52,565,1,564,0.2,0.0,353.7447,347.1998,1.85,0.52479,1483.52,69.17,68.36,9.08,0.9987,1130.01,14.16,ok
+sweep forward,trace85.csv,668.4,564,1,563,0.0,0.0,354.6344,351.2129,0.96,0.57724,1627.7,65.93,63.18,17.99,0.9983,1338.9,24.14,ok
+sweep forward,trace86.csv,665.88,557,1,556,0.2,0.0,359.2748,350.6001,2.41,0.59714,1662.08,124.15,68.01,103.6,0.9975,1485.0,27.4,ok
+sweep forward,trace87.csv,665.63,556,1,555,1.1,0.0,359.4688,354.4092,1.41,0.61008,1697.16,100.6,78.59,62.37,0.9974,1533.97,20.61,ok
+sweep forward,trace88.csv,661.81,1379,1,1367,0.1,0.8,362.3142,352.0101,2.84,0.68485,1890.22,242.72,46.05,238.23,0.9687,1537.38,29.44,ok
+sweep forward,trace89.csv,661.89,1379,2,1374,0.2,0.0,362.6343,353.0094,2.65,0.80894,2230.75,121.44,65.23,102.12,0.8293,1665.67,29.37,ok
+sweep forward,trace90.csv,661.28,1374,2,1369,0.9,0.0,363.7706,352.0,3.24,0.86164,2368.64,90.84,77.6,46.27,0.8547,1730.59,7.98,ok
+sweep forward,trace91.csv,659.89,1365,2,1359,0.4,0.0,366.3453,349.0001,4.73,0.91807,2506.03,112.41,86.75,70.52,0.8505,1771.98,36.35,ok
+sweep forward,trace92.csv,657.92,1369,2,1365,0.7,0.0,365.0556,349.9985,4.12,0.97827,2679.77,86.56,85.49,5.9,0.8615,1817.37,26.79,ok
+sweep forward,trace93.csv,655.09,1340,2,1339,0.7,0.0,373.1441,351.9952,5.67,1.15692,3100.46,97.88,84.53,46.19,0.8423,1911.72,19.32,ok
+sweep forward,trace94.csv,651.9,1320,2,1319,1.4,0.0,378.7036,352.9936,6.79,1.21885,3218.48,109.32,89.79,59.05,0.8541,1919.72,43.52,ok
+sweep forward,trace95.csv,643.84,1273,2,1272,1.3,0.0,392.5071,348.0203,11.33,1.17226,2986.6,102.4,99.42,10.58,0.9095,1754.83,38.94,ok
+sweep forward,trace96.csv,633.56,1275,2,1268,2.1,0.0,392.0243,345.9901,11.74,1.04045,2654.04,165.05,102.12,128.14,0.9319,1554.72,28.55,ok
+sweep forward,trace97.csv,617.73,1278,2,1277,0.1,0.0,391.1308,340.9982,12.82,1.04907,2682.15,101.52,90.86,40.43,0.9236,1510.55,96.85,ok
+sweep forward,trace98.csv,602.09,1284,2,1279,0.3,0.0,389.4505,336.01,13.72,1.03016,2645.18,112.14,90.03,63.72,0.9203,1517.16,42.2,ok
+sweep forward,trace99.csv,585.38,1302,2,1300,0.9,0.0,384.1353,333.0,13.31,0.84686,2204.59,117.57,95.54,66.48,0.9299,1400.18,14.95,ok
+sweep forward,trace100.csv,569.19,1312,2,1304,1.8,0.0,381.0152,330.0002,13.39,0.79688,2091.47,102.04,87.64,49.74,0.9375,1212.65,66.71,ok
+sweep forward,trace101.csv,547.6,1284,2,1277,2.9,0.0,389.4965,333.9946,14.25,0.91229,2342.24,133.61,88.06,98.74,0.9459,1523.93,48.62,ok
+sweep forward,trace102.csv,524.47,1297,2,1293,2.8,0.0,385.4012,331.9979,13.86,0.82002,2127.7,155.38,88.77,126.31,0.9371,1485.54,40.76,ok
+sweep forward,trace103.csv,501.04,1281,2,1274,1.9,0.0,390.3141,334.9998,14.17,0.73667,1887.38,112.79,106.71,32.27,0.9303,1538.59,13.63,ok
+sweep forward,trace104.csv,471.76,1264,2,1248,3.6,0.0,395.2716,342.0003,13.48,0.77752,1967.05,130.2,107.78,71.34,0.9295,1620.59,63.43,ok
+sweep forward,trace105.csv,442.93,1171,2,1170,0.9,0.0,427.112,414.9973,2.84,1.34414,3147.06,99.47,89.7,35.66,0.9038,1843.99,30.58,ok
+sweep forward,trace106.csv,426.56,1176,2,1166,1.1,0.0,424.9464,388.9948,8.46,1.09063,2566.52,133.41,106.07,77.93,0.9283,1540.23,57.97,ok
+sweep forward,trace107.csv,414.43,1075,2,1064,1.4,0.0,464.6927,456.9925,1.66,1.05877,2278.44,116.72,111.12,28.01,0.9512,1451.07,76.65,ok
+sweep forward,trace108.csv,393.22,996,3,987,1.8,0.0,501.4935,487.01,2.89,1.46754,2926.34,109.09,92.39,50.57,0.9145,1617.83,21.3,ok
+sweep forward,trace109.csv,371.93,795,3,790,4.2,0.0,629.1574,567.9938,9.72,1.1985,1904.93,118.85,116.64,10.7,0.8627,1372.53,6.65,ok
+sweep forward,trace110.csv,354.15,816,2,814,0.7,0.0,612.5227,561.9973,8.25,1.4291,2333.13,107.61,105.18,4.9,0.91,1212.3,19.55,ok
+sweep forward,trace111.csv,333.17,666,0,0,,,750.7985,670.9993,10.63,,,,,,,965.01,8.7,map spans only 26 quantisation steps of 43 mV (under --min-steps)
+sweep forward,trace112.csv,309.95,731,0,0,,,683.7534,683.9931,-0.04,,,,,,,-41.23,4.39,map spread 0.043 V below --min-spread
+sweep forward,trace113.csv,304.33,695,0,0,,,719.3026,718.9997,0.04,,,,,,,34.62,1.53,map spread 0.038 V below --min-spread
