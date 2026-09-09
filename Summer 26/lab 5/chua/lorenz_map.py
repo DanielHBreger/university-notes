@@ -49,6 +49,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.fft import next_fast_len
 from scipy.signal import find_peaks, savgol_filter
+from scope_data import RPOT_MAX, read_scope, validate_time
 
 from sweeplib import (list_csvs, load_rpot, resolve_folders, sibling,
                       sweep_colors)
@@ -102,6 +103,9 @@ def period_samples(x, limit=200000, max_lag=50000):
     period; gaps under half of it are dropped and the median of the rest
     is the period.
     """
+    x = np.asarray(x, dtype=float)
+    if x.ndim != 1 or len(x) < 9 or not np.isfinite(x).all():
+        return 0
     y = x[:limit] - x[:limit].mean()
     s = y.std()
     if s == 0:
@@ -109,7 +113,7 @@ def period_samples(x, limit=200000, max_lag=50000):
     y = y / s
     n = next_fast_len(2 * len(y))
     F = np.fft.rfft(y, n)
-    ac = np.fft.irfft(F * np.conj(F), n)[:max_lag]
+    ac = np.fft.irfft(F * np.conj(F), n)[:min(max_lag, len(y))]
     if ac[0] <= 0:
         return 0
     ac /= ac[0]
@@ -143,24 +147,23 @@ def maxima(path, ch='CH1', prominence=0.02, period=None):
     """
     # Only the time column and the one channel are needed; parsing the other
     # two costs about a fifth of the per-record time on a 28 MB record.
-    head = pd.read_csv(path, nrows=0)
-    names = [c.split('(')[0].strip() for c in head.columns]
-    if ch not in names:
-        raise ValueError(f'no column {ch!r} in {names}')
-    k = names.index(ch)
-    if k == 0:
-        raise ValueError(f'{ch!r} is the time column')
-    d = pd.read_csv(path, usecols=[0, k], dtype=np.float32)
-    t = d.iloc[:, 0].values.astype(np.float64)
-    x = d.iloc[:, 1].values.astype(np.float64)
-    ok = np.isfinite(t) & np.isfinite(x)
-    t, x = t[ok], x[ok]
-    if len(x) < 100:
-        raise ValueError('too few samples')
+    if not np.isfinite(prominence) or not 0 < prominence < 1:
+        raise ValueError('prominence must be between 0 and 1')
+    if period is not None and (period < 1 or int(period) != period):
+        raise ValueError('period must be a positive integer')
+    t, channels = read_scope(path, (ch,), min_samples=100)
+    return maxima_from_arrays(t, channels[:, 0], prominence, period)
 
-    dt = float(np.median(np.diff(t)))
-    per = int(period) if period else period_samples(x)
+
+def maxima_from_arrays(t, x, prominence=0.02, period=None):
+    """Same peak extraction for validated arrays, used by the full-data audit."""
+    if len(t) != len(x) or len(x) < 100 or not np.isfinite(x).all():
+        raise ValueError('need matching finite time and signal vectors')
+    dt = validate_time(t)
+    per = int(period) if period is not None else period_samples(x)
     info = _blank(dt, per)
+    info['duration_s'] = float(t[-1] - t[0])
+    info['n_samples'] = len(t)
     # The scope's quantisation step on this channel. It bounds how finely
     # any maximum is known, whatever the smoothing does after.
     info['quantum'] = quantum(x)
@@ -183,7 +186,7 @@ def maxima(path, ch='CH1', prominence=0.02, period=None):
     # Savitzky-Golay, window about a twentieth of a period, forced odd and >= 5.
     w = max(5, (per // 20) | 1)
     if w >= len(x):
-        w = (len(x) - 1) | 1
+        w = len(x) if len(x) % 2 else len(x) - 1
     xs = savgol_filter(x, w, 3)
     info['window'] = w
 
@@ -214,7 +217,7 @@ def maxima(path, ch='CH1', prominence=0.02, period=None):
 
 
 def collect(folder, ch='CH1', prominence=0.02, period=None,
-            max_residual=10.0, max_clip=2.0, max_files=None):
+            max_residual=5.0, max_clip=2.0, max_files=None):
     """
     The records of a sweep that count, with their maxima and their Rpot.
 
@@ -234,6 +237,9 @@ def collect(folder, ch='CH1', prominence=0.02, period=None,
             dropped.append((name, 'no Rpot entry'))
             continue
         r, resid = rpot[name]
+        if not np.isfinite([r, resid]).all() or not 0 <= r <= RPOT_MAX:
+            dropped.append((name, 'invalid or out-of-range potentiometer resistance'))
+            continue
         if resid > max_residual:
             dropped.append((name, f'Rpot fit residual {resid:.1f} %'))
             continue
@@ -260,6 +266,8 @@ def collect(folder, ch='CH1', prominence=0.02, period=None,
 
 def frame(ax, lim):
     """The square return-map frame: identity diagonal and equal axes."""
+    if lim[1] <= lim[0]:
+        lim = (lim[0] - 0.05, lim[1] + 0.05)
     ax.plot(lim, lim, ls='--', lw=0.8, color='0.5', zorder=0)
     ax.set_xlim(lim)
     ax.set_ylim(lim)
@@ -279,7 +287,9 @@ def write_csvs(out_dir, results, rpot):
     with open(pairs_csv, 'w', newline='') as fh:
         w = csv.writer(fh)
         w.writerow(['filename', 'rpot_ohm', 'n', 'm_n', 'm_next'])
-        for name, M, _ in results:
+        for name, M, info in results:
+            if info['status'] != 'ok':
+                continue
             r = rpot.get(name, '')
             w.writerows((name, r, n, round(float(M[n]), 6),
                          round(float(M[n + 1]), 6)) for n in range(len(M) - 1))
@@ -305,20 +315,26 @@ def plot_grid(out_dir, usable, rpot, lim, ch, folder, rows, cols):
     pages = (len(usable) + per_page - 1) // per_page
     for pg in range(pages):
         chunk = usable[pg * per_page:(pg + 1) * per_page]
-        fig, axes = plt.subplots(rows, cols, figsize=(2.3 * cols, 2.5 * rows))
-        for ax, (name, M, _) in zip(np.ravel(axes), chunk):
+        fig, axes = plt.subplots(rows, cols, figsize=(2.8 * cols, 2.8 * rows), squeeze=False,
+                                 layout='constrained')
+        for ax, (name, M, info) in zip(np.ravel(axes), chunk):
             r = rpot.get(name, '')
             lab = f'{name}\n{r:.0f} $\\Omega$' if r != '' else name
             draw(ax, M, lab, lim)
+            ax.tick_params(labelsize=8)
+            if info['status'] != 'ok':
+                ax.set_facecolor('#f4f4f4')
+                ax.text(.5,.08,'Excluded from analysis\n'+info['status'][:45],
+                        transform=ax.transAxes,ha='center',fontsize=6,color='#9c2f18',
+                        bbox=dict(facecolor='white',alpha=.85,edgecolor='none'))
         for ax in np.ravel(axes)[len(chunk):]:
             ax.axis('off')
         fig.suptitle(f'Lorenz map, {ch} maxima - {os.path.basename(folder)}'
                      + (f' (page {pg + 1}/{pages})' if pages > 1 else ''))
         fig.supxlabel('$M_n$  (V)')
         fig.supylabel('$M_{n+1}$  (V)')
-        fig.tight_layout()
         out = os.path.join(out_dir, f'lorenz_grid_{pg + 1:02d}.png')
-        fig.savefig(out, dpi=140)
+        fig.savefig(out, dpi=180)
         plt.close(fig)
         print(f'wrote {out}')
 
@@ -384,7 +400,11 @@ def main():
     p.add_argument('--cols', type=int, default=6, help='panels per grid row')
     p.add_argument('--rows', type=int, default=4, help='panel rows per page')
     p.add_argument('--max-files', type=int, help='stop after this many records')
+    p.add_argument('--max-residual', type=float, default=5.0)
+    p.add_argument('--max-clip', type=float, default=2.0)
     a = p.parse_args()
+    if a.rows < 1 or a.cols < 1 or (a.max_files is not None and a.max_files < 1):
+        p.error('rows, cols and max-files must be positive')
 
     folder = resolve_folders([a.folder] if a.folder else [], multi=False)[0]
     files = list_csvs(folder)
@@ -395,7 +415,9 @@ def main():
 
     out_dir = a.out_dir or sibling(folder, '_lorenz')
     os.makedirs(out_dir, exist_ok=True)
-    rpot = {k: v[0] for k, v in load_rpot(folder).items()}
+    rpot_info = load_rpot(folder)
+    has_sidecar = os.path.exists(sibling(folder, '_rpot.csv'))
+    rpot = {k: v[0] for k, v in rpot_info.items()}
     if rpot:
         print(f'labelling panels with Rpot from '
               f'{os.path.basename(folder)}_rpot.csv')
@@ -410,6 +432,17 @@ def main():
             print(f'-> ERROR: {e}')
             results.append((name, np.empty(0), _blank(status=f'error: {e}')))
             continue
+        if info['status'] == 'ok':
+            if info['clip_pct'] > a.max_clip:
+                info['status'] = 'suspected clipping / rail plateaus'
+            elif has_sidecar and name not in rpot_info:
+                info['status'] = 'no valid resistance fit'
+            elif name in rpot_info:
+                r, residual = rpot_info[name]
+                if not 0 <= r <= RPOT_MAX:
+                    info['status'] = 'resistance outside 0-1000 ohm'
+                elif residual > a.max_residual:
+                    info['status'] = f'divider residual {residual:.1f}%'
         print(f'-> {len(M):5d} maxima  win={info["window"]:3d}  '
               f'f0={info["f0_hz"]:7.0f} Hz  {info["status"]}')
         results.append((name, M, info))
@@ -421,16 +454,17 @@ def main():
         raise SystemExit('no record produced a usable set of maxima')
 
     # Common axis limits so panels are comparable across the sweep.
-    allM = np.concatenate([M for _, M, _ in usable])
+    allM = np.concatenate([M for _, M, info in usable if info['status'] == 'ok']
+                         or [M for _, M, _ in usable])
     lo, hi = float(allM.min()), float(allM.max())
     pad = 0.05 * (hi - lo)
     lim = (lo - pad, hi + pad)
 
     plot_grid(out_dir, usable, rpot, lim, a.ch, folder, a.rows, a.cols)
     if a.each:
-        plot_each(out_dir, usable, rpot, lim)
+        plot_each(out_dir, [r for r in usable if r[2]['status'] == 'ok'], rpot, lim)
     if a.pooled:
-        plot_pooled(out_dir, usable, rpot, lim, folder)
+        plot_pooled(out_dir, [r for r in usable if r[2]['status'] == 'ok'], rpot, lim, folder)
 
     skipped = len(results) - len(usable)
     print(f'\n{len(usable)}/{len(results)} records mapped'

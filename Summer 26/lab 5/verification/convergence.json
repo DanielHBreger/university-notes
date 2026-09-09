@@ -1,0 +1,44 @@
+[
+  {
+    "offset_removed_A": 0,
+    "rpot_ohm": 316,
+    "max_v1_difference_V": 0.0007820143321277673,
+    "max_v2_difference_V": 0.00019301983137065548,
+    "max_iL_difference_A": 5.688158860768511e-07
+  },
+  {
+    "offset_removed_A": 0,
+    "rpot_ohm": 660,
+    "max_v1_difference_V": 0.0007588788259318413,
+    "max_v2_difference_V": 0.00016344512497301622,
+    "max_iL_difference_A": 3.452057817116688e-07
+  },
+  {
+    "offset_removed_A": 0,
+    "rpot_ohm": 773,
+    "max_v1_difference_V": 9.677173654676352e-05,
+    "max_v2_difference_V": 3.431205470860732e-06,
+    "max_iL_difference_A": 9.741687836614665e-09
+  },
+  {
+    "offset_removed_A": -0.0004129710487129946,
+    "rpot_ohm": 316,
+    "max_v1_difference_V": 0.0010728219886573243,
+    "max_v2_difference_V": 0.0003972494896363199,
+    "max_iL_difference_A": 1.129107753985309e-06
+  },
+  {
+    "offset_removed_A": -0.0004129710487129946,
+    "rpot_ohm": 660,
+    "max_v1_difference_V": 0.4070447929558232,
+    "max_v2_difference_V": 0.08336222900935664,
+    "max_iL_difference_A": 0.00017005607244431793
+  },
+  {
+    "offset_removed_A": -0.0004129710487129946,
+    "rpot_ohm": 773,
+    "max_v1_difference_V": 0.0015575933921812002,
+    "max_v2_difference_V": 0.0006171311926276291,
+    "max_iL_difference_A": 1.914909424407087e-06
+  }
+]

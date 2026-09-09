@@ -1,0 +1,282 @@
+[
+  {
+    "path": "chua/records_lyapunov.png",
+    "size": [
+      2000,
+      1100
+    ]
+  },
+  {
+    "path": "chua/records_lyapunov_each/chaos - 716.9 ohm.png",
+    "size": [
+      2310,
+      616
+    ]
+  },
+  {
+    "path": "chua/records_lyapunov_each/doublescroll 2 - 656.7ohm.png",
+    "size": [
+      2310,
+      616
+    ]
+  },
+  {
+    "path": "chua/records_lyapunov_each/doublescroll start - 666.0 ohm.png",
+    "size": [
+      2310,
+      616
+    ]
+  },
+  {
+    "path": "chua/records_lyapunov_each/limitcycle2 - 764.6 ohm.png",
+    "size": [
+      2310,
+      616
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep back_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_01.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_02.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_03.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_04.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_05.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_06.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_07.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_08.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_09.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_10.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/set 2/sweep forward_lyapunov.png",
+    "size": [
+      2000,
+      1100
+    ]
+  },
+  {
+    "path": "chua/simulated_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/simulated_bifurcation_corrected.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/simulated_nr.png",
+    "size": [
+      1200,
+      750
+    ]
+  },
+  {
+    "path": "chua/simulated_nr_corrected.png",
+    "size": [
+      1200,
+      750
+    ]
+  },
+  {
+    "path": "chua/simulated_portraits.png",
+    "size": [
+      1560,
+      2496
+    ]
+  },
+  {
+    "path": "chua/simulated_portraits_corrected.png",
+    "size": [
+      1560,
+      2496
+    ]
+  },
+  {
+    "path": "chua/simulated_timeseries.png",
+    "size": [
+      1560,
+      1481
+    ]
+  },
+  {
+    "path": "chua/simulated_timeseries_corrected.png",
+    "size": [
+      1560,
+      1481
+    ]
+  },
+  {
+    "path": "chua/sweep back_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_01.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_02.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_03.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep back_lyapunov.png",
+    "size": [
+      2000,
+      1100
+    ]
+  },
+  {
+    "path": "chua/sweep forward_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_01.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_02.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_03.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_04.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_05.png",
+    "size": [
+      1931,
+      1400
+    ]
+  },
+  {
+    "path": "chua/sweep forward_lyapunov.png",
+    "size": [
+      2000,
+      1100
+    ]
+  },
+  {
+    "path": "current_vs_voltage.png",
+    "size": [
+      1500,
+      900
+    ]
+  },
+  {
+    "path": "optimized_breakpoints.png",
+    "size": [
+      1500,
+      900
+    ]
+  }
+]

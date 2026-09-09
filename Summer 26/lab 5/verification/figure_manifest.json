@@ -1,0 +1,497 @@
+[
+  {
+    "path": "chua/hysteresis_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "861ae96cd7588cf158f1545ad77c531f9cab8e3bdd1b5b5a5720a1d858d7a2db",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov.png",
+    "size": [
+      2200,
+      1210
+    ],
+    "sha256": "c1f32e406ed1f6a03a368a6afd01d6d6abae4fdf34adb6caa65957e7f9a3713c",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/chaos - 716.9 ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "617b00bb5a548665a5ccf64c996e7ad968021bc0a0e23a41e69c382161e03838",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/doublescroll 2 - 656.7ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "fd5dabf823594217adde363cf42610b197af5b3cd195968f9251dde3f36a2a9d",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/doublescroll end - 316.1ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "745f5a97d6f4497334f75ea9d8456854f12c5aa6480c1a57b9dddfaf6154c9c5",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/doublescroll start - 666.0 ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "ee210ff8fd9f954534e7a7775100bee79810d304d23c4857f56daf414c2f2b7e",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/limitcycle1 - 773.0 ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "a413fba80648a4d2697e27721f6e0e6161e90c9f877838628b751ef2fdd49479",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/records_lyapunov_each/limitcycle2 - 764.6 ohm.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "d7785c04efb7bd411a9dd6f7ef72f21bda559386cd804d05b8a8302f660c65ca",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/hysteresis_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "68cdac11ae4e9b7ef9fd842ebc5d211171127ed83623567d2abe161818ac5bed",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep back_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "1873f173ac27eedcb02630e9f1a9715cc77d1004c4629e05e77379d558d8f388",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep back_lorenz/lorenz_grid_01.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "b51caa69ecbc707399bd7fe1e511602d469c5664321395a6ab5a5b3307e44e37",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep back_lorenz/lorenz_grid_02.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "6a217b578323bce231fa7255c094864f34c664148ffed04c6be762f00889fce5",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep back_lorenz/lorenz_grid_03.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "85ff2a1745d5c01b5f2098c1de67d429b32b4d8190c9e38d86be779961802a97",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep back_lyapunov.png",
+    "size": [
+      2200,
+      1210
+    ],
+    "sha256": "cd968e54aeacd002be8b3a2c069d482fe2691f6c58be63fe0a634e50bc379e64",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "2bc9f0a987201e483263695a654adc239da9897ebbe44789d73f16caca8819ac",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_01.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "eb0a27d5572c7eb8d30db69412730fef3fcd5534ff5ab3350afc2ae8a1e77bbe",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_02.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "fe952a5b0154154fb5f976eb9f17bec6d7552dd1a5d152b3de99ee89c664ef31",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_03.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "929809ba4bee1f7972c1ca32cd4efe91cde008809498e80dbc589cc3a59d00f6",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_04.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "3af9da9d173d2ab072092af6e3dd584ee2e9188fe8b860c65a8e49e035d55642",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_05.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "99509a9b6e06470eabb353d27c1f5d36f65f8b57bf1d07138588423adf168f59",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_06.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "7689b51a01e2f7b1e823820276dc5ad58545deb7168de1c1e4d96a450955f040",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_07.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "cf2e9267b80232c2bb2e87d613535544ebf8843c449522ad27b72dc2d73559de",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_08.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "af206fbc23a101f867b2906343726d79aecd241a87531201a5120c535b9deec0",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_09.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "37a1b17d36468025f7bc318f78ea51c5f7f5afc5b8f6e5279b27c237b2ed1ca8",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lorenz/lorenz_grid_10.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "2ef7ae3ae3d8ad704cd120910fddc32a8e51ce99e05aeccbd95e8c107141abd1",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/set 2/sweep forward_lyapunov.png",
+    "size": [
+      2200,
+      1210
+    ],
+    "sha256": "f8361c11533b84defab3683ec563f70dfe8b515d87678423bf686fa60acfdb5c",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "bb11fbbd4eab8c5adc6ae4fbe074bed2ce8928255d5dd08620a36b3c099ca626",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_bifurcation_corrected.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "caed02d63f6f8f127693c76bca2cf5d3a382028167c004e445d54c033914e5a1",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_nr.png",
+    "size": [
+      1200,
+      750
+    ],
+    "sha256": "15fc2a2977971bc0de5611b544759770a9d5d09a17179805d532227e97967e2b",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_nr_corrected.png",
+    "size": [
+      1200,
+      750
+    ],
+    "sha256": "3570c8bbe0d97fccbad4e63bcef3b10bca3552a34c1d3d67360b09644f6ec941",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_portraits.png",
+    "size": [
+      1560,
+      2496
+    ],
+    "sha256": "619182e1d5c368c74c9b60369513731798255308314fa97f6283e07a4a31d167",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_portraits_corrected.png",
+    "size": [
+      1560,
+      2496
+    ],
+    "sha256": "027832e88ff5e6d6ae7f5a37e72d3e0bdee6b358594e250a9c9d60685de613dd",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_timeseries.png",
+    "size": [
+      1560,
+      1482
+    ],
+    "sha256": "ca0902d1d8132d7a955579926d5b8b92f8075c46967f76a87cfdcf8ff2038846",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/simulated_timeseries_corrected.png",
+    "size": [
+      1560,
+      1482
+    ],
+    "sha256": "dcc0e625a7e87b283e4d32932040b450bb5d8b0971d2dcc1c88840a045a2fa0d",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep back_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "77778a283e076754e581c7d9e7f718143fcdec40b45e28a2722a7c75312422c8",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_01.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "0eaccace892a30e4002401ae53fbc94d7f2426be098baa407e9ad802b0d9a881",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_02.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "4e6a322d35dec81c44c647dcf85f5e95c50e38f24dd76edd22b6ed01cf2651cd",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep back_lorenz/lorenz_grid_03.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "76be542583f4ad7d17c6fcc3f5759eac6f0b77cfcc0d4632257adba493c9fcad",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep back_lyapunov.png",
+    "size": [
+      2200,
+      1210
+    ],
+    "sha256": "a8c2e7ed7a1e4a3dfe8c26b5fb2a600df7d4ae86564df963c6ff60dd97516fc2",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_bifurcation.png",
+    "size": [
+      6300,
+      3375
+    ],
+    "sha256": "5de56ee99f18384a9500758077d87c565bf07f7f44c21892d7733f6c21f7db3e",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_01.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "354447e4eed74a6985313d77c44de5c9307bb1dee1946720829e0ba8da0e6a38",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_02.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "25462a3fefd455cbd1077439bbfe290369483e90d0124be776c52cc29e764eed",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_03.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "329599a3be90a87a626ce62cd00ad1e43ea9741e7da9364934e3cf316aa90ffd",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_04.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "b003adc0030d977a910e0cfca787f819f73b2c5e104880e9bd86949ae07d20fe",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lorenz/lorenz_grid_05.png",
+    "size": [
+      3024,
+      2016
+    ],
+    "sha256": "4b07bd1cf49bbc00ee25ef5d1530748432c9699317b3885829b83774e26e017b",
+    "integrity": "passed"
+  },
+  {
+    "path": "chua/sweep forward_lyapunov.png",
+    "size": [
+      2200,
+      1210
+    ],
+    "sha256": "fc275171f4c7519d10bcf507aa4380f95cf8440acec7755d55f09b1525c6ef99",
+    "integrity": "passed"
+  },
+  {
+    "path": "current_vs_voltage.png",
+    "size": [
+      2000,
+      1560
+    ],
+    "sha256": "b2b0410b7a8c78553317f1cd42e8996ea9173ae2a2d74439f7bb3d074e8c3d06",
+    "integrity": "passed"
+  },
+  {
+    "path": "optimized_breakpoints.png",
+    "size": [
+      2000,
+      1560
+    ],
+    "sha256": "87b3c05aed1dc140b141e2ab8feb0088e3cf08adf1e15240324d5cfc93effd54",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/M2_M3_resistance_comparison.png",
+    "size": [
+      2640,
+      1100
+    ],
+    "sha256": "1b3cb9058eabe5f06234e52838e0f928843164a45f853020ac652ace0f777ab4",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/M3_phase_portraits.png",
+    "size": [
+      3080,
+      1760
+    ],
+    "sha256": "56311a34089fdfe8f3849c9f96171c4045272396ba3b93120f8f66e10b135822",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/M3_selected_records.png",
+    "size": [
+      3080,
+      1540
+    ],
+    "sha256": "38bbae771f41e97cf0905a8d984ba848b19e9cf606b6c186621b96756f08084d",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/M4_return_maps.png",
+    "size": [
+      3080,
+      1100
+    ],
+    "sha256": "f89c084110f023c2c70dc719c424b7a3b841d80df3069b6280e4fa98632a4398",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/trace101_M5.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "036daaed7a6b26e4f26287e44c1b38b2ce5270cc5643ff36238e8aea75f4567c",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/trace105_M5.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "c5641300f13de8e0342860c6a84bfbce33bbaa09ba65ae21198ca875611129ba",
+    "integrity": "passed"
+  },
+  {
+    "path": "verification/trace94_M5.png",
+    "size": [
+      2310,
+      616
+    ],
+    "sha256": "86b441697ebce4bdfc3eee4a6712a95b7b435e3ac93076e8c711828821cb614f",
+    "integrity": "passed"
+  }
+]

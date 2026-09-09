@@ -1,0 +1,50 @@
+[
+  {
+    "path": "chua/limitcycle1 - 773.0 ohm.csv",
+    "rpot_ohm": 760.1239843741406,
+    "residual_pct": 3.4898993996623697,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100490000000004,
+    "clip_pct": 0.9544019088038176
+  },
+  {
+    "path": "chua/limitcycle2 - 764.6 ohm.csv",
+    "rpot_ohm": 752.13650283721,
+    "residual_pct": 4.101977231074718,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100479999999998,
+    "clip_pct": 1.9202038404076809
+  },
+  {
+    "path": "chua/chaos - 716.9 ohm.csv",
+    "rpot_ohm": 709.0307266657205,
+    "residual_pct": 3.4276649383358198,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100490000000004,
+    "clip_pct": 0.0416000832001664
+  },
+  {
+    "path": "chua/doublescroll start - 666.0 ohm.csv",
+    "rpot_ohm": 654.7657173459495,
+    "residual_pct": 2.226063768677471,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100479999999998,
+    "clip_pct": 0.111000222000444
+  },
+  {
+    "path": "chua/doublescroll 2 - 656.7ohm.csv",
+    "rpot_ohm": 642.8742046910239,
+    "residual_pct": 2.3438260267661866,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100479999999998,
+    "clip_pct": 0.0068000136000272
+  },
+  {
+    "path": "chua/doublescroll end - 316.1ohm.csv",
+    "rpot_ohm": 315.6318450984347,
+    "residual_pct": 0.7141826584203667,
+    "duration_s": 0.499998,
+    "quantum_V": 0.20100479999999998,
+    "clip_pct": 0.006000012000024
+  }
+]

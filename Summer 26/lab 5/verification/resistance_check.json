@@ -1,0 +1,270 @@
+{
+  "coupling_resistors_ohm": [
+    990,
+    "Rpot"
+  ],
+  "shunt_ohm": 216,
+  "shunt_in_chaos_path": false,
+  "three_equilibria_slope_total_lower_ohm": 1394.5761162915212,
+  "three_equilibria_slope_pot_lower_ohm": 404.5761162915212,
+  "recorded_end_pot_divider_ohm": 315.6318450984,
+  "recorded_end_total_ohm": 1305.6318450984,
+  "total_shortfall_ohm": 88.94427119312127,
+  "offset_retained_A": -0.0004129710487129946,
+  "equilibria": [
+    {
+      "calibration": "Measured offset retained",
+      "rpot_ohm": 315.6318450984,
+      "total_ohm": 1305.6318450984,
+      "v1_equilibrium_V": 2.2621869466159996,
+      "slope_S": -0.00043366825277103144,
+      "eigenvalues": [
+        "(-45026.35877189432+0j)",
+        "(2071.394016744209+20140.693240101347j)",
+        "(2071.394016744209-20140.693240101347j)"
+      ],
+      "sigma_per_s": 2071.394016744209,
+      "gamma_per_s": -45026.35877189432,
+      "shilnikov_magnitude_ratio": 0.04600403126617432
+    },
+    {
+      "calibration": "Measured offset retained",
+      "rpot_ohm": 642.874204691,
+      "total_ohm": 1632.8742046910002,
+      "v1_equilibrium_V": 4.204778168666781,
+      "slope_S": -0.00043366825277103144,
+      "eigenvalues": [
+        "(-26926.594664231172+0j)",
+        "(1463.772337141363+19148.261116459384j)",
+        "(1463.772337141363-19148.261116459384j)"
+      ],
+      "sigma_per_s": 1463.772337141363,
+      "gamma_per_s": -26926.594664231172,
+      "shilnikov_magnitude_ratio": 0.05436158398023547
+    },
+    {
+      "calibration": "Measured offset retained",
+      "rpot_ohm": 654.765717346,
+      "total_ohm": 1644.765717346,
+      "v1_equilibrium_V": 4.311578727803607,
+      "slope_S": -0.00043366825276886303,
+      "eigenvalues": [
+        "(-26369.983290599204+0j)",
+        "(1428.9913509706548+19110.54229055324j)",
+        "(1428.9913509706548-19110.54229055324j)"
+      ],
+      "sigma_per_s": 1428.9913509706548,
+      "gamma_per_s": -26369.983290599204,
+      "shilnikov_magnitude_ratio": 0.0541900741924279
+    },
+    {
+      "calibration": "Measured offset retained",
+      "rpot_ohm": 760.123984374,
+      "total_ohm": 1750.123984374,
+      "v1_equilibrium_V": 5.45744933081061,
+      "slope_S": -0.00043366825276886303,
+      "eigenvalues": [
+        "(-21619.684032168007+0j)",
+        "(1066.9097263574563+18781.82331589882j)",
+        "(1066.9097263574563-18781.82331589882j)"
+      ],
+      "sigma_per_s": 1066.9097263574563,
+      "gamma_per_s": -21619.684032168007,
+      "shilnikov_magnitude_ratio": 0.04934899718099475
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 315.6318450984,
+      "total_ohm": 1305.6318450984,
+      "v1_equilibrium_V": -1.1102230246251565e-16,
+      "slope_S": -0.0007170637646223936,
+      "eigenvalues": [
+        "(-19415.97427674745+0j)",
+        "(3435.977361738874+11312.253252590739j)",
+        "(3435.977361738874-11312.253252590739j)"
+      ],
+      "sigma_per_s": 3435.977361738874,
+      "gamma_per_s": -19415.97427674745,
+      "shilnikov_magnitude_ratio": 0.17696651802087507
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 315.6318450984,
+      "total_ohm": 1305.6318450984,
+      "v1_equilibrium_V": 0.5620914239318068,
+      "slope_S": -0.00406680359896699,
+      "eigenvalues": [
+        "(331808.6739386391+0j)",
+        "(-4689.355028724435+23036.630915354082j)",
+        "(-4689.355028724435-23036.630915354082j)"
+      ],
+      "sigma_per_s": -4689.355028724435,
+      "gamma_per_s": 331808.6739386391,
+      "shilnikov_magnitude_ratio": 0.014132707783255934
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 315.6318450984,
+      "total_ohm": 1305.6318450984,
+      "v1_equilibrium_V": 1.01921339722798,
+      "slope_S": -0.00043366825277048934,
+      "eigenvalues": [
+        "(-45026.35877194056+0j)",
+        "(2071.394016740225+20140.693240107907j)",
+        "(2071.394016740225-20140.693240107907j)"
+      ],
+      "sigma_per_s": 2071.394016740225,
+      "gamma_per_s": -45026.35877194056,
+      "shilnikov_magnitude_ratio": 0.0460040312660386
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 642.874204691,
+      "total_ohm": 1632.8742046910002,
+      "v1_equilibrium_V": -1.9394313820211815,
+      "slope_S": -0.00041755943847553156,
+      "eigenvalues": [
+        "(-28447.133263580392+0j)",
+        "(1418.600922040982+19455.92113746468j)",
+        "(1418.600922040982-19455.92113746468j)"
+      ],
+      "sigma_per_s": 1418.600922040982,
+      "gamma_per_s": -28447.133263580392,
+      "shilnikov_magnitude_ratio": 0.04986797470580819
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 642.874204691,
+      "total_ohm": 1632.8742046910002,
+      "v1_equilibrium_V": 0.0,
+      "slope_S": -0.0007170637646218515,
+      "eigenvalues": [
+        "(17208.234381584174+0j)",
+        "(-6433.8665932253125+17217.71793749662j)",
+        "(-6433.8665932253125-17217.71793749662j)"
+      ],
+      "sigma_per_s": -6433.8665932253125,
+      "gamma_per_s": 17208.234381584174,
+      "shilnikov_magnitude_ratio": 0.3738830173135413
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 642.874204691,
+      "total_ohm": 1632.8742046910002,
+      "v1_equilibrium_V": 1.8944350502453757,
+      "slope_S": -0.00043366825276994724,
+      "eigenvalues": [
+        "(-26926.59466433433+0j)",
+        "(1463.772337138729+19148.261116481102j)",
+        "(1463.772337138729-19148.261116481102j)"
+      ],
+      "sigma_per_s": 1463.772337138729,
+      "gamma_per_s": -26926.59466433433,
+      "shilnikov_magnitude_ratio": 0.05436158397992938
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 654.765717346,
+      "total_ohm": 1644.765717346,
+      "v1_equilibrium_V": -1.9845254729799628,
+      "slope_S": -0.00041755943847553156,
+      "eigenvalues": [
+        "(-27900.584334494153+0j)",
+        "(1388.851158251563+19423.040034164893j)",
+        "(1388.851158251563-19423.040034164893j)"
+      ],
+      "sigma_per_s": 1388.851158251563,
+      "gamma_per_s": -27900.584334494153,
+      "shilnikov_magnitude_ratio": 0.04977856885006145
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 654.765717346,
+      "total_ohm": 1644.765717346,
+      "v1_equilibrium_V": -1.1102230246251565e-16,
+      "slope_S": -0.0007170637646223936,
+      "eigenvalues": [
+        "(17598.33938164916+0j)",
+        "(-6385.394392476993+17422.969156522217j)",
+        "(-6385.394392476993-17422.969156522217j)"
+      ],
+      "sigma_per_s": -6385.394392476993,
+      "gamma_per_s": 17598.33938164916,
+      "shilnikov_magnitude_ratio": 0.36284073479884277
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 654.765717346,
+      "total_ohm": 1644.765717346,
+      "v1_equilibrium_V": 1.94255333722715,
+      "slope_S": -0.00043366825276994724,
+      "eigenvalues": [
+        "(-26369.98329049529+0j)",
+        "(1428.9913509729042+19110.54229053118j)",
+        "(1428.9913509729042-19110.54229053118j)"
+      ],
+      "sigma_per_s": 1428.9913509729042,
+      "gamma_per_s": -26369.98329049529,
+      "shilnikov_magnitude_ratio": 0.05419007419272674
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 760.123984374,
+      "total_ohm": 1750.123984374,
+      "v1_equilibrium_V": -2.4567137522071794,
+      "slope_S": -0.00041755943847553156,
+      "eigenvalues": [
+        "(-23263.131171923174+0j)",
+        "(1083.192581568464+19136.10884583075j)",
+        "(1083.192581568464-19136.10884583075j)"
+      ],
+      "sigma_per_s": 1083.192581568464,
+      "gamma_per_s": -23263.131171923174,
+      "shilnikov_magnitude_ratio": 0.04656263052309118
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 760.123984374,
+      "total_ohm": 1750.123984374,
+      "v1_equilibrium_V": 0.0,
+      "slope_S": -0.0007170637646218515,
+      "eigenvalues": [
+        "(20698.408256725805+0j)",
+        "(-5922.360825440028+18866.01143949528j)",
+        "(-5922.360825440028-18866.01143949528j)"
+      ],
+      "sigma_per_s": -5922.360825440028,
+      "gamma_per_s": 20698.408256725805,
+      "shilnikov_magnitude_ratio": 0.2861263896230087
+    },
+    {
+      "calibration": "Offset removed (assumption)",
+      "rpot_ohm": 760.123984374,
+      "total_ohm": 1750.123984374,
+      "v1_equilibrium_V": 2.458817774090549,
+      "slope_S": -0.00043366825277103144,
+      "eigenvalues": [
+        "(-21619.684031943187+0j)",
+        "(1066.909726353455+18781.823315848687j)",
+        "(1066.909726353455-18781.823315848687j)"
+      ],
+      "sigma_per_s": 1066.909726353455,
+      "gamma_per_s": -21619.684031943187,
+      "shilnikov_magnitude_ratio": 0.04934899718132285
+    }
+  ],
+  "hopf_slope_only": [
+    {
+      "branch": "Gb left",
+      "total_ohm": 1997.7926365606113,
+      "pot_ohm": 1007.7926365606113,
+      "frequency_hz": 2962.784388317564
+    },
+    {
+      "branch": "Gb right",
+      "total_ohm": 1958.081501891879,
+      "pot_ohm": 968.081501891879,
+      "frequency_hz": 2909.0086781441814
+    }
+  ]
+}

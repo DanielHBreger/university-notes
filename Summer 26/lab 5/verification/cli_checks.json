@@ -1,0 +1,45 @@
+{
+  "compiled_files": 24,
+  "help_checks": [
+    {
+      "script": "find_breakpoints.py",
+      "returncode": 0
+    },
+    {
+      "script": "plot_current.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/rpot.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/batch_rpot.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/lorenz_map.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/bifurcation.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/lyapunov.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/rosenstein.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/simulate.py",
+      "returncode": 0
+    },
+    {
+      "script": "chua/benchmark_lyapunov.py",
+      "returncode": 0
+    }
+  ]
+}

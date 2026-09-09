@@ -1,0 +1,71 @@
+[
+  {
+    "path": "chua/sweep forward/trace105.csv",
+    "rpot_ohm": 442.0406668961732,
+    "duration_s": 0.49999899999999997,
+    "n_maxima": 1171,
+    "residual_pct": 0.9136923667160987,
+    "quantum_V": 0.04341699999999982,
+    "mean_T_us": 427.11196581196583,
+    "median_T_us": 414.9999999999987,
+    "mean_median_difference_pct": 2.835782366560845,
+    "lambda_map_per_s": 3147.0556769548916,
+    "lambda_map_err_per_s": 205.2683290009925,
+    "map_r2": 0.9037778320156625,
+    "map_coverage": 1.0,
+    "lambda_rosenstein_per_s": 1841.0006946771482,
+    "lambda_rosenstein_block_sem": 30.53364775576033,
+    "rosenstein_fit_r2": 0.9991538320695714,
+    "rosenstein_fit_sensitivity_per_s": [
+      1875.6003592252903,
+      1841.0006946771482,
+      1729.641294592515
+    ]
+  },
+  {
+    "path": "chua/sweep forward/trace101.csv",
+    "rpot_ohm": 546.4949045122188,
+    "duration_s": 0.49999899999999997,
+    "n_maxima": 1284,
+    "residual_pct": 0.7247688161011259,
+    "quantum_V": 0.04341699999999982,
+    "mean_T_us": 389.49649259547937,
+    "median_T_us": 334.00000000000097,
+    "mean_median_difference_pct": 14.248265042303107,
+    "lambda_map_per_s": 2342.2376141573263,
+    "lambda_map_err_per_s": 269.9947536274825,
+    "map_r2": 0.9458642800516878,
+    "map_coverage": 0.995323460639127,
+    "lambda_rosenstein_per_s": 1521.4507588023052,
+    "lambda_rosenstein_block_sem": 48.54346210829273,
+    "rosenstein_fit_r2": 0.9973601556861815,
+    "rosenstein_fit_sensitivity_per_s": [
+      1482.1747647094633,
+      1521.4507588023052,
+      1547.2943589148545
+    ]
+  },
+  {
+    "path": "chua/sweep forward/trace94.csv",
+    "rpot_ohm": 650.5846141345263,
+    "duration_s": 0.49999899999999997,
+    "n_maxima": 1320,
+    "residual_pct": 0.5975100106451416,
+    "quantum_V": 0.04341699999999982,
+    "mean_T_us": 378.70356330553454,
+    "median_T_us": 352.9999999999922,
+    "mean_median_difference_pct": 6.787251506478412,
+    "lambda_map_per_s": 3218.4761722991657,
+    "lambda_map_err_per_s": 95.12339779310784,
+    "map_r2": 0.8541221834502181,
+    "map_coverage": 1.0,
+    "lambda_rosenstein_per_s": 1916.6021158570509,
+    "lambda_rosenstein_block_sem": 43.444833329756484,
+    "rosenstein_fit_r2": 0.9991439750726839,
+    "rosenstein_fit_sensitivity_per_s": [
+      1913.2069880404104,
+      1916.6021158570509,
+      1912.0313302942016
+    ]
+  }
+]

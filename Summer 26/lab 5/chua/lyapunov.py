@@ -19,13 +19,10 @@ The two traps the plan names, and how they are handled:
 
   ln |f'| is averaged over the points ACTUALLY VISITED, including the
   neighbourhood of the turning point where the slope falls toward zero.
-  That region pulls the average down and must not be left out - which is
-  the trap of this estimator on noisy data, because a slope that small is
-  not distinguishable from zero. A slope smaller than its own standard
-  error is therefore floored at se/e: for a slope passing uniformly
-  through zero within +-se the exact mean of ln|f'| is ln(se) - 1, so the
-  floor reproduces that expectation without letting one fluke dominate.
-  The share of such points is reported (unresolved_pct).
+  That region pulls the average down and must not be left out. Noisy slopes
+  are regularised with a lower bound se/e on |slope|. This is a heuristic
+  motivated by averaging log|s| across a zero crossing, not a correction
+  with guaranteed accuracy. The unresolved fraction is reported.
 
 What it takes to have a slope at all. The formula assumes M_(n+1) is a
 function of M_n. A periodic orbit is a few tight clusters of noise, and
@@ -46,33 +43,25 @@ number of nearest points squeezes the x-range of the window to a sliver
 while M_(n+1) keeps its full noise, and the slope of pure noise then comes
 out above 1.
 
-Quantisation. The scope resolves V1 in 43 mV steps, so a maximum is known
-to about that. A map spanning a few volts (the double scroll) is fine; one
-spanning a few tenths of a volt (just past the period-doubling cascade, or
-a single scroll) is a handful of steps wide, and on a simulated single
-scroll with this step the local slopes are fiction: the estimate came out
-at 1.7 times the true exponent with clean maxima giving 0.6. On synthetic
-one-hump maps quantised the same way the estimate is within 10 % from
-about 35 steps up and 20-30 % low at 23 steps, so a map narrower than
---min-steps (30) quantisation steps is refused.
+Quantisation. Resolution is estimated separately for each recording;
+these files include both 43 mV and 201 mV steps. A map spanning only a few
+codes cannot support reliable local slopes. Maps narrower than --min-steps
+(30) codes are refused. This threshold is a heuristic quality gate, not
+an accuracy guarantee for maps that pass it.
 
-Uncertainty on lambda: the standard error of the mean of ln|f'| (successive
-maxima of a chaotic orbit decorrelate within a few windings), half the
-change when the window is doubled, and the standard error of <T>, combined
-in quadrature. It is a precision, not an accuracy.
+Uncertainty on lambda: the nominal standard error of the mean of ln|f'|,
+half the change when the actual window width is doubled, and the standard
+error of <T>, combined in quadrature. Serial correlation can make these
+errors optimistic. They describe precision, not total accuracy.
 
-Accuracy, and the direct calculation. The return map of maxima of V1 is
-only approximately a one-dimensional function of M_n: the lobe switch and
-the fold of the band give it a near-vertical stretch whose slope is a
-property of the projection, not of the flow, and such a map reads high. On
-simulated Chua circuits with this bench's parameters and quantisation
-(benchmark_lyapunov.py) the map estimate lands between 1.1 and 1.7 times
-the true exponent on the double scroll, while the Rosenstein calculation
-on the (smoothed) time series lands within about 20 % on either side. So
---rosenstein computes the direct estimate for every record that has a map
-lambda (rosenstein.py) and plots it alongside. Quote the map value as what
-it is - an estimate from the return map, an upper figure - and the direct
-value as the measurement.
+Accuracy and the direct calculation. A maxima projection need not be a
+single-valued one-dimensional map. Folds, lobe switching and quantisation
+can bias either estimate. The benchmark gives case-specific comparisons
+with a variational exponent; it does not establish a universal correction
+factor or an upper bound. Both methods are estimates. --rosenstein computes
+neighbour divergence for every admitted record, independently of whether
+the map fit is accepted. Inspect its fit window and sensitivity; the block
+SEM is precision only and omits calibration and reconstruction bias.
 
 Records: any number of sweep folders (chosen by lorenz_map.collect, the
 same gate the bifurcation diagram uses) and/or single CSV records named
@@ -88,8 +77,10 @@ import argparse
 import csv
 import os
 import re
+import textwrap
 
 import numpy as np
+import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -97,11 +88,14 @@ import matplotlib.pyplot as plt
 from bifurcation import add_record_args
 from lorenz_map import Record, collect, frame, maxima
 from rosenstein import draw_curve, load_channels, rosenstein
-from sweeplib import resolve_folders, sibling, sweep_colors
+from rpot import rpot as measure_rpot
+from scope_data import R0
+from sweeplib import resolve_folders, sibling, sweep_colors, folder_labels
 
 CSV_FIELDS = [
     ('sweep', 'sweep', None), ('filename', 'filename', None),
     ('rpot_ohm', 'rpot', 2), ('n_maxima', 'n_maxima', None),
+    ('rpot_source', 'rpot_source', None), ('nominal_rpot_ohm', 'nominal_rpot', 2),
     ('n_branches', 'n_branches', None), ('n_slopes', 'n_used', None),
     ('unresolved_pct', 'unresolved_pct', 1), ('cluster_pct', 'cluster_pct', 1),
     ('mean_T_us', 'mean_T_us', 4), ('median_T_us', 'median_T_us', 4),
@@ -113,6 +107,8 @@ CSV_FIELDS = [
     ('map_r2_within_branch', 'r2', 4),
     ('lambda_rosenstein_per_s', 'lam_ros', 2),
     ('lambda_rosenstein_err_per_s', 'lam_ros_err', 2),
+    ('rosenstein_fit_r2', 'ros_fit_r2', 4),
+    ('rosenstein_status', 'ros_status', None),
     ('status', 'status', None),
 ]
 
@@ -126,6 +122,8 @@ def split_branches(m_n, gap):
     in ascending m_n order, so callers need not re-sort.
     """
     order = np.argsort(m_n, kind='stable')
+    if not len(order):
+        return []
     v = m_n[order]
     span = float(v[-1] - v[0])
     if span <= 0:
@@ -146,6 +144,11 @@ def local_fit(x, y, width, min_points):
     n = len(x)
     if n == 0:
         return np.empty(0), np.empty(0), np.empty(0)
+    if width <= 0 or min_points < 3:
+        raise ValueError('positive width and at least three fit points required')
+    # Center before forming prefix sums to avoid cancellation for offset data.
+    origin_x, origin_y = x.mean(), y.mean()
+    x, y = x - origin_x, y - origin_y
     h = width / 2.0
     lo = np.searchsorted(x, x - h, 'left')
     hi = np.searchsorted(x, x + h, 'right')
@@ -168,7 +171,7 @@ def local_fit(x, y, width, min_points):
     slope[~ok] = np.nan
     pred[~ok] = np.nan
     se[~ok] = np.nan
-    return slope, pred, se
+    return slope, pred + origin_y, se
 
 
 def fit_map(m_n, m_next, width, min_width, gap, min_spread, min_points):
@@ -197,7 +200,7 @@ def fit_map(m_n, m_next, width, min_width, gap, min_spread, min_points):
         if not good.any():
             continue
         n_branches += 1
-        n_on_curve += len(idx)
+        n_on_curve += int(good.sum())
         slopes[idx], fit[idx], se[idx] = s, pred, e
         ss_res += float(np.sum((y[good] - pred[good]) ** 2))
         ss_tot += float(np.sum((y[good] - y[good].mean()) ** 2))
@@ -217,7 +220,10 @@ def mean_ln_slope(slopes, se):
     floor = se[ok] / np.e
     unresolved = a <= se[ok]
     a = np.maximum(a, floor)
-    a = a[a > 0]
+    if np.any(a == 0):
+        # An exactly zero derivative contributes -infinity; deleting it biases
+        # the invariant average upward. Report an unresolved estimate instead.
+        return -np.inf, np.nan, 100.0 * float(unresolved.mean()), len(a)
     if len(a) < 2:
         return np.nan, np.nan, np.nan, 0
     ln = np.log(a)
@@ -236,6 +242,10 @@ def lyapunov(M, t_peaks, width=0.1, min_width=0.02, gap=0.05,
     standard errors come back under 'slopes', 'fit' and 'se', indexed like
     M[:-1], so the diagnostic plot shows exactly what was measured.
     """
+    M, t_peaks = np.asarray(M,float), np.asarray(t_peaks,float)
+    if not (0 < width and 0 < min_width and 0 <= gap < 1 and min_points >= 3
+            and 0 < min_curve_frac <= 1 and quantum >= 0 and min_steps >= 0):
+        raise ValueError('invalid map-fit parameters')
     min_width = max(min_width, 3.0 * quantum)
     n_pairs = max(len(M) - 1, 0)
     out = {'n_maxima': len(M), 'status': 'ok', 'n_branches': 0,
@@ -244,22 +254,28 @@ def lyapunov(M, t_peaks, width=0.1, min_width=0.02, gap=0.05,
            'lam_stat': np.nan, 'lam_sys': np.nan, 'n_used': 0,
            'unresolved_pct': np.nan, 'cluster_pct': np.nan, 'spread': 0.0,
            'r2': np.nan, 'lam_ros': np.nan, 'lam_ros_err': np.nan,
+           'ros_fit_r2': np.nan, 'ros_status': 'not requested',
            'slopes': np.full(n_pairs, np.nan), 'fit': np.full(n_pairs, np.nan),
            'se': np.full(n_pairs, np.nan)}
-    if len(M) < 2 * min_points + 2 or len(t_peaks) != len(M):
+    if M.ndim != 1 or t_peaks.shape != M.shape or not np.isfinite(M).all() or not np.isfinite(t_peaks).all():
+        out['status'] = 'invalid maxima or peak times'
+        return out
+    if len(M) < 2:
         out['status'] = 'too few maxima for a local fit'
         return out
 
     # Return times, from the same peaks the map is built from.
     T = np.diff(t_peaks)
-    T = T[np.isfinite(T) & (T > 0)]
-    if len(T) < 2:
-        out['status'] = 'no usable return times'
+    if np.any(T <= 0):
+        out['status'] = 'peak times must be strictly increasing'
         return out
     mean_T, med_T = float(T.mean()), float(np.median(T))
     out['mean_T'], out['median_T'] = mean_T, med_T
     out['T_diff_pct'] = 100.0 * (mean_T - med_T) / mean_T if mean_T else np.nan
-    rel_T = float(T.std(ddof=1) / np.sqrt(len(T)) / mean_T)
+    rel_T = float(T.std(ddof=1) / np.sqrt(len(T)) / mean_T) if len(T)>1 else np.nan
+    if len(M) < 2 * min_points + 2:
+        out['status'] = 'too few maxima for a local fit'
+        return out
 
     m_n, m_next = M[:-1], M[1:]
     spread = float(m_n.max() - m_n.min())
@@ -291,13 +307,13 @@ def lyapunov(M, t_peaks, width=0.1, min_width=0.02, gap=0.05,
         return out
 
     mean_ln, sem, unresolved_pct, n_used = mean_ln_slope(fm['slopes'], fm['se'])
-    if n_used < min_points:
+    if n_used < min_points or not np.isfinite(mean_ln):
         out['status'] = 'too few usable slopes'
         return out
     # Window sensitivity: the same average with the window doubled; half
     # the change is the systematic on <ln|f'|>. (Halving is not used: on
     # quantised maxima a half window holds one or two distinct M_n values.)
-    f2 = fit_map(m_n, m_next, 2.0 * width, min_width, gap, min_spread,
+    f2 = fit_map(m_n, m_next, 2.0 * width, 2.0 * min_width, gap, min_spread,
                  min_points)
     alt = mean_ln_slope(f2['slopes'], f2['se'])[0]
     sys_ln = 0.5 * abs(alt - mean_ln) if np.isfinite(alt) else 0.0
@@ -330,9 +346,13 @@ def diagnostic(path, M, t_peaks, res, title, gap, ros=None, period_s=None):
         a1.scatter(m_n[unres], m_next[unres], s=5, color='0.6', lw=0,
                    label=f'|f\'| below noise ({int(unres.sum())})')
     shown = fitted & ~unres
-    sc = a1.scatter(m_n[shown], m_next[shown], c=np.log(np.abs(slopes[shown])),
-                    s=4, cmap='coolwarm', lw=0)
-    fig.colorbar(sc, ax=a1, label="$\\ln|f'(M_n)|$")
+    # Always show unfitted points: dropping them makes a cloud look like a curve.
+    a1.scatter(m_n[~fitted],m_next[~fitted],s=4,color='0.65',lw=0,alpha=.5,
+               label='Not fitted' if (~fitted).any() else None)
+    if shown.any():
+        sc = a1.scatter(m_n[shown], m_next[shown], c=np.log(np.abs(slopes[shown])),
+                        s=4, cmap='coolwarm', lw=0)
+        fig.colorbar(sc, ax=a1, label="$\\ln|f'(M_n)|$")
     for idx in split_branches(m_n, gap):
         ok = np.isfinite(fit[idx])
         if ok.sum() > 1:
@@ -345,11 +365,11 @@ def diagnostic(path, M, t_peaks, res, title, gap, ros=None, period_s=None):
     a1.set_ylabel('$M_{n+1}$  (V)')
     a1.set_title(f'return map, local fit (black) and slope   '
                  f'R$^2$ = {res["r2"]:.2f}', fontsize=9)
-    if unres.any():
+    if unres.any() or ((~fitted).any() and fitted.any()):
         a1.legend(fontsize=7, loc='upper left')
     if not fitted.any():
         a1.scatter(m_n, m_next, s=4, color='C0', lw=0, alpha=0.6)
-        a1.set_title(f'return map: {res["status"][:60]}', fontsize=8)
+        a1.set_title('Map estimate unavailable\n'+textwrap.fill(res['status'],48), fontsize=8)
 
     T = np.diff(t_peaks) * 1e6
     if len(T) > 1:
@@ -384,14 +404,13 @@ def regime_report(label, rows):
     """
     The mean/median return-time gap, split by regime.
 
-    It is a lobe-switch effect, so it belongs split this way: one branch means
-    a single scroll with no lobe switches to skew the distribution, two or
-    more means a double scroll where the long switching returns build the tail.
+    Group by the number of fitted map branches. This is a descriptive split;
+    branch count alone does not establish the number of physical scrolls.
     """
     mine = [r for r in rows if r['sweep'] == label and r['status'] == 'ok']
-    for tag, sel in (('single scroll (1 branch) ',
+    for tag, sel in (('one fitted map branch   ',
                       [r for r in mine if r['n_branches'] == 1]),
-                     ('double scroll (2+ branch)',
+                     ('two or more map branches',
                       [r for r in mine if r['n_branches'] >= 2])):
         d = [abs(r['T_diff_pct']) for r in sel if np.isfinite(r['T_diff_pct'])]
         if d:
@@ -406,7 +425,7 @@ def rpot_from_name(name):
     return float(m.group(1)) if m else np.nan
 
 
-def single_records(paths, ch, prominence, period):
+def single_records(paths, ch, prominence, period, max_clip=2.0, max_residual=5.0):
     """Named CSV records as a pseudo-sweep: (label, records, dropped)."""
     records, dropped = [], []
     for path in paths:
@@ -418,11 +437,26 @@ def single_records(paths, ch, prominence, period):
             print(f'-> ERROR: {e}')
             dropped.append((name, f'error: {e}'))
             continue
+        if info['clip_pct'] > max_clip:
+            dropped.append((name, 'suspected clipping / rail plateaus'))
+            continue
         if len(M) < 2:
             print(f'-> skipped ({info["status"]})')
             dropped.append((name, info['status']))
             continue
         r = rpot_from_name(name)
+        info['nominal_rpot'] = r
+        info['rpot_source'] = 'filename'
+        names = [c.split('(')[0] for c in pd.read_csv(path,nrows=0).columns]
+        if 'CH3' in names:
+            try:
+                r,residual=measure_rpot(path,R0,1)
+                if not 0 <= r <= 1000 or 100*residual > max_residual:
+                    raise ValueError('invalid resistance or excessive divider residual')
+            except ValueError as exc:
+                dropped.append((name,f'divider: {exc}'))
+                continue
+            info['rpot_source'] = 'divider fit (R0=990 ohm)'
         print(f'-> R={r:7.1f} ohm  {len(M):5d} maxima')
         records.append(Record(name, r, 0.0, M, info))
     return records, dropped
@@ -458,7 +492,7 @@ def main():
                         'steps of the channel')
     p.add_argument('--rosenstein', action='store_true',
                    help='also compute the direct time-series estimate for '
-                        'every record that has a map lambda')
+                        'every admitted record')
     p.add_argument('--fit', nargs=2, type=float, default=(0.5, 2.5),
                    metavar=('LO', 'HI'),
                    help='Rosenstein fit window, in periods')
@@ -467,6 +501,8 @@ def main():
     a = p.parse_args()
 
     files = [f for f in a.inputs if f.lower().endswith('.csv')]
+    if len({os.path.basename(f) for f in files}) != len(files):
+        p.error('single-record basenames must be unique; use sweep folders for duplicates')
     folder_args = [f for f in a.inputs if f not in files]
     for f in files:
         if not os.path.isfile(f):
@@ -476,10 +512,11 @@ def main():
     out = a.out or sibling(first, '_lyapunov.png')
     csv_out = os.path.splitext(out)[0] + '.csv'
     each_dir = os.path.splitext(out)[0] + '_each'
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     if a.each:
         os.makedirs(each_dir, exist_ok=True)
 
-    groups = [(os.path.basename(f), 'folder', f) for f in folders]
+    groups = [(label, 'folder', f) for label, f in zip(folder_labels(folders), folders)]
     if files:
         groups.append(('records', 'files', files))
     colors = sweep_colors(len(groups))
@@ -495,7 +532,7 @@ def main():
                                        a.max_clip, a.max_files)
         else:
             records, dropped = single_records(src, a.ch, a.prominence,
-                                              a.period_samples)
+                                              a.period_samples, a.max_clip, a.max_residual)
         if dropped:
             print(f'  dropped {len(dropped)} before fitting')
 
@@ -517,7 +554,9 @@ def main():
                                      rec.info['period_samples'],
                                      fit=tuple(a.fit))
                     res['lam_ros'], res['lam_ros_err'] = ros['lam'], ros['lam_err']
+                    res['ros_fit_r2'], res['ros_status'] = ros['fit_r2'], 'ok'
                 except Exception as e:
+                    res['ros_status'] = f'error: {e}'
                     print(f'  {rec.name}: rosenstein failed: {e}')
                 if ros and np.isfinite(rec.rpot):
                     xr.append(rec.rpot)
@@ -543,8 +582,11 @@ def main():
                     ys.append(res['lam'])
                     es.append(res['lam_err'])
             if a.each and (res['n_branches'] or ros):
+                destination = (os.path.join(each_dir, label.replace('/', '_').replace('\\', '_'))
+                               if len(groups) > 1 else each_dir)
+                os.makedirs(destination, exist_ok=True)
                 diagnostic(
-                    os.path.join(each_dir,
+                    os.path.join(destination,
                                  os.path.splitext(rec.name)[0] + '.png'),
                     rec.M, rec.info['t_peaks'], res,
                     f'{label} / {rec.name}   '
@@ -556,13 +598,15 @@ def main():
                     rec.info['period_samples'] * rec.info['dt'])
             rows.append(dict(res, sweep=label, filename=rec.name,
                              rpot=rec.rpot,
+                             rpot_source=rec.info.get('rpot_source','divider sidecar (R0=990 ohm)'),
+                             nominal_rpot=rec.info.get('nominal_rpot',np.nan),
                              mean_T_us=res['mean_T'] * 1e6,
                              median_T_us=res['median_T'] * 1e6))
 
         if xs:
             o = np.argsort(xs)
             xs, ys, es = (np.asarray(v)[o] for v in (xs, ys, es))
-            ax.errorbar(xs, ys, yerr=es, fmt='.-', ms=5, lw=0.8,
+            ax.errorbar(xs, ys, yerr=es, fmt='o', ms=4, lw=0.8,
                         elinewidth=0.6, capsize=2, color=colors[k],
                         label=f'{label}: return map  ({len(xs)} records)')
             plotted = True
@@ -574,7 +618,7 @@ def main():
         if xr:
             o = np.argsort(xr)
             xr, yr, er = (np.asarray(v)[o] for v in (xr, yr, er))
-            ax.errorbar(xr, yr, yerr=er, fmt='o--', ms=4, lw=0.8,
+            ax.errorbar(xr, yr, yerr=er, fmt='s', ms=4, lw=0.8,
                         elinewidth=0.6, capsize=2, color=colors[k],
                         mfc='none', label=f'{label}: direct (Rosenstein, '
                                           f'{len(xr)} records)')
@@ -589,25 +633,25 @@ def main():
                      for r in rows])
 
     if not plotted:
-        raise SystemExit(f'no record yielded a lambda\nsummary -> {csv_out}')
+        ax.text(.5,.5,'No reliable Lyapunov estimate from these records\n'
+                'See the CSV for per-record exclusion reasons',
+                transform=ax.transAxes,ha='center',va='center',fontsize=12)
 
     ax.axhline(0, color='0.4', lw=0.8, ls='--')
     ax.set_xlabel('$R_{pot}$  ($\\Omega$)')
     ax.set_ylabel('$\\lambda$  (s$^{-1}$)')
-    ax.set_title('Largest Lyapunov exponent\n'
-                 "return map: $\\lambda \\simeq \\langle \\ln|f'(M_n)| \\rangle"
-                 " / \\langle T \\rangle$   (records whose map is not a curve"
-                 ' are left out)', fontsize=11)
-    ax.legend(fontsize=8)
+    ax.set_title('Lyapunov estimates from recorded data\n'
+                 'Error bars show estimator precision; calibration and fit-window bias are additional', fontsize=11)
+    if plotted:
+        ax.legend(fontsize=8)
     ax.grid(alpha=0.15, lw=0.5)
     fig.tight_layout()
     fig.savefig(out, dpi=200)
     plt.close(fig)
 
     print(f'\nplot    -> {out}\nsummary -> {csv_out}')
-    print('the map value is an estimate from the return map and reads high '
-          'where the map\nis not single-valued (see benchmark_lyapunov.py); '
-          'periodic windows carry no lambda by design.')
+    print('Both methods are estimates; map projection and direct fit-window bias '
+          'are not covered by the reported precision. See benchmark_lyapunov.py.')
 
 
 if __name__ == '__main__':

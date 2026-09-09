@@ -1,0 +1,26 @@
+filename,rpot_ohm,residual_pct,status
+trace1.csv,,,non-physical divider coefficients; check channels/clipping
+trace2.csv,,,non-physical divider coefficients; check channels/clipping
+trace3.csv,,,non-physical divider coefficients; check channels/clipping
+trace4.csv,,,non-physical divider coefficients; check channels/clipping
+trace5.csv,,,non-physical divider coefficients; check channels/clipping
+trace6.csv,,,non-physical divider coefficients; check channels/clipping
+trace7.csv,,,non-physical divider coefficients; check channels/clipping
+trace8.csv,,,non-physical divider coefficients; check channels/clipping
+trace9.csv,250.76,13.238,CHECK
+trace10.csv,397.88,11.365,CHECK
+trace11.csv,450.23,11.155,CHECK
+trace12.csv,544.21,5.296,CHECK
+trace13.csv,708.18,8.252,CHECK
+trace14.csv,776.24,8.208,CHECK
+trace15.csv,851.94,5.758,CHECK
+trace16.csv,868.91,5.237,CHECK
+trace17.csv,871.01,4.299,ok
+trace18.csv,870.37,3.483,ok
+trace19.csv,867.27,2.901,ok
+trace20.csv,872.46,2.482,ok
+trace21.csv,868.98,2.268,ok
+trace22.csv,867.09,2.051,ok
+trace23.csv,866.68,1.671,ok
+trace24.csv,861.54,1.486,ok
+trace25.csv,858.42,1.292,ok

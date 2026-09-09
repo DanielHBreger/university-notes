@@ -1,0 +1,154 @@
+PAGE 1
+Chua Oscillator: Experiment Plan
+Summer 2026 — v5
+Thisplanaccompaniesthelabguide. Theguidesetsouttheconceptsandthepre-labcalculation;
+this document says what we actually do at the bench, in what order, and what is optional.
+The programme is split intomust-haveandnice-to-have. The must-have part is designed to
+be reachable even though the potentiometer dial is coarse and cannot be set blind to a target value.
+Anything that needs specific resistances on an even grid has been moved to nice-to-have.
+The setup
+Figure 1: The oscillator as built. Resonant partL,C2; coupling resistanceR0 +Rwith disconnect
+switchK 1;C 1; and the nonlinear elementNR. Probe points:1 =V 1 (CH1),2 =V 2 (CH2), and
+3 =V 3, the node betweenR 0 andR(CH3).K 2 selects oscillator mode (CHAOS) or theV–I
+measurement ofN R (VI, withK 1 open), for which a triangular sweep is applied at terminal V and
+the current is taken across the shuntRs.
+Values:L= 18 mH,C 2 = 100 nF,C 1 = 10 nF,R 0 = 990 Ωmeasured,Ra0–1 kΩten-turn
+potentiometer, shuntR s = 216 Ω. Oscilloscope: Agilent InfiniiVision DSO-X 3014A.
+1
+
+PAGE 2
+The key simplification: readingRwithout opening the circuit
+OpeningK 1 to measureRwith a multimeter kills the oscillation and resets the state — and the
+state is not determined byRalone. Instead we use node 3.
+No current flows into a scope probe, so node 3 is a plain voltage divider betweenV1 andV 2.
+SinceR 0 sits on theV2 side and the potentiometer on theV1 side,
+V3 = R0
+R0 +R V1 + R
+R0 +R V2,
+so fittingV 3 =AV 1 +BV 2 +Cover a whole record gives
+R=R 0
+B
+A
+The fitted constantCabsorbs any channel offset. Run it aspython rpot.py record.csv; the
+printed fit residual is the health check (about1 %is normal, above5 %means a probe has moved
+or a channel is clipping).
+Consequence for the procedure: we never “setRto1750 Ωand record”. We turn the knob slowly,
+watch the scope, record when something worth recording appears, and find out afterwards whatR
+was.
+Absolute accuracy is a few percent, dominated by the relative gain of the channels; relative
+accuracy across a sweep is a fraction of an ohm. That is the right way round — a constant offset
+shifts the whole picture without changing any spacing.
+Must have
+M1.V–Icharacteristic ofN R
+K1 open,K 2 in position VI. Apply a slow triangular sweep at the outer terminal V,20 Hzto100 Hz,
+with amplitude enough to pass±7 Vat the element so that both saturation segments are captured.
+Then
+v=V I , i= VV −V I
+Rs
+.
+Check that the forward and backward sweeps overlap; if they open into a loop, lower the frequency.
+Fit straight segments:G a (inner),G b (outer, left and right separately — they are not equal),
+Gc (saturation), and the breakpoints.
+Two traps: set the segment boundaries at the breakpoints you find rather than by eye, and
+check the intercept of the inner segment — a nonzero value means the whole curve is offset, which
+barely moves the slopes but directly moves the equilibrium positions.
+M2. Predicted range for three equilibria
+From the fitted slopes alone, before touching the oscillator:
+1
+|Ga| < R total < 1
+|Gb| , R total =R 0 +R.
+Three equilibria are necessary for a double scroll, so this bounds where it can live. Convert to
+dial readings and write the prediction downbeforelooking. This is the same calculation as in the
+pre-lab, now with the students’ own measured slopes instead of the canonical ones.
+2
+
+PAGE 3
+M3. Find the double scroll
+K2 in position CHAOS,K1 closed. Turn the knob slowly and watch the XY display of CH2 against
+CH1 (V2 vertical,V 1 horizontal). Record whenever the picture changes character, and in particular
+at the two resistances where the second lobe appears and disappears. Records of200 msat20 ms
+per division; each holds about 570 cycles.
+Then runrpot.pyover the files and sort byR. Compare the observed double-scroll range with
+M2: it must lie inside.
+Take at least three long, clean records well inside the range — these carry the rest of the analysis.
+M4. Lorenz map
+From one long double-scroll record: smoothV1 lightly (Savitzky–Golay, window about1/20of a
+period), find the local maxima with a prominence threshold of2 %of the range, and plotM n+1
+againstM n. Draw the diagonal.
+If the points fall on a curve rather than a cloud, the three-dimensional flow has reduced to a
+one-dimensional map — the experimental signature of a horseshoe, and the strongest single result
+in the experiment. Repeat for two or three records at differentRand show how the map changes.
+M5. Lyapunov exponent
+From the same map: estimate the local slopef′(Mn)by a sliding linear fit alongMn, and combine
+with the mean return time,
+λ≃ ⟨ln|f ′(Mn)|⟩
+⟨T⟩ .
+Two traps worth stating in the report. Use themeanreturn time, not the median — the
+distribution is skewed because lobe switches take about twice as long as an ordinary winding, and
+the difference exceeds10 %. And averageln|f ′|over the points actually visited, not from one
+straight-line fit per branch: the neighbourhood of the turning point, where the slope drops toward
+zero, pulls the average down substantially.
+Quote it as an estimate from the return map, not a direct measurement; a proper Rosenstein or
+Wolf calculation from the time series typically comes out10 %to20 %lower.
+Nice to have
+Only if the must-have programme is finished and working.
+N1. The Hopf point.
+The value ofRat which the outer equilibria stop being resting states and an oscillation is
+born, i.e. where the real partσof the complex eigenvalue pair changes sign:
+RHopf = −Gb (1 +C 1/C2)
+G2
+b +C 2
+1 /(C2L) .
+Measure the onset of oscillation and compare, and compare the frequency there as well. Cheap,
+and the agreement is usually striking — the best first choice if any time is left.
+N2. Phase-portrait gallery .
+Limit cycle, period-2, single scroll, double scroll: four clean records for the report.
+3
+
+PAGE 4
+N3. Bifurcation diagram.
+Local maxima ofV1 againstR, one column per record. With a coarse dial this will be unevenly
+sampled; present it as a scatter of the points you have, not as a uniform sweep.
+N4. T wo directions and hysteresis.
+Sweep up and down without opening the circuit and overlay. Where the branches differ there
+are coexisting attractors. Be honest if the sampling is too sparse to resolve it.
+N5. Period doubling and F eigenbaum.
+Needs a fine, even step — the hardest item on this list with a coarse dial.
+N6. Shilnikov ratios.
+Compute the eigenvalues at all three equilibria from your own measured slopes and check
+|σ|<|γ|.
+Oscilloscope settings — check at the start of every session
+1.Channel mapping.CH1=V 1 (node 1), CH2=V 2 (node 2), CH3=V 3 (node 3), as labelled
+in Figure 1. These are the defaults assumed byrpot.py. Verify once at the start:V 1 is
+the one with the larger swing, several volts, whileV2 stays below a volt. Swapping CH1 and
+CH2 makesrpot.pyreturn a resistance outside the range of the potentiometer, which is the
+quickest way to notice.
+2.DC coupling on all three channels.AC coupling deletes exactly the information that
+distinguishes a single scroll from a symmetric orbit.
+3.20 MHzbandwidth limit ON.The signal is2.85 kHz; the filter is free.
+4.Fix V/div once and leave it.Changing a range changes that channel’s gain by a percent
+or two, which is tens of ohms in the divider result.
+5.Probe attenuation in the menu must match the probe switch.
+6.×10probes, compensatedagainst the Probe Comp square wave.×1probes add about
+90 pFto node 1 —0.9 %ofC 1, enough to shift boundaries by a few ohms.
+7.Acquisition Normal, not Peak Detect or Average.
+8.20 msper division, giving a200 msrecord.
+Time budget
+Three measurement meetings of six hours.
+Meeting A.
+Setup and channel check,V–Icurve (M1), fit, and the M2 prediction. Then a first hunt for
+the double scroll. Must end with the fitted curve and a written prediction.
+Meeting B.
+M3 in earnest: both boundaries of the double-scroll range, plus the long records. Start M4 on
+the spot, so you know whether the records are good enough before the equipment goes away.
+4
+
+PAGE 5
+Meeting C.
+Finish M4 and M5. Remaining time goes to the nice-to-have list, starting with N1 and N2.
+Two things that can still ruin it
+1.A wrong channel mapping, AC coupling, or a changed V/div.Each quietly corrupts
+either the resistance scale or the asymmetric regimes.
+2.Records that are too short.A few cycles cannot show a lobe switch, so the attractor looks
+single-scrolled even when it is not.200 msat20 msper division.
+5

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "input": "C:\\Users\\danib\\Documents\\university-notes\\Summer 26\\lab 5\\trace1.csv",
+  "voltage_column": "CH2(V)",
+  "source_column": "CH1(V)",
+  "voltage_basis": "element",
+  "current_definition": "(CH1(V) - CH2(V)) / 216 ohm",
+  "shunt_ohm": 216.0,
+  "r0_ohm": 990.0,
+  "source_fit_range_V": [
+    -9.33,
+    8.28
+  ],
+  "n_input": 58571,
+  "n_fit": 47562,
+  "combined_r2": 0.9638267982038643,
+  "segments": [
+    {
+      "label": "Gc left",
+      "v_lo": -8.619096,
+      "v_hi": -6.7537695,
+      "n": 9533,
+      "slope_S": 0.0036231870444477163,
+      "intercept_A": 0.02714242750473985,
+      "slope_se_S": 9.015292466301246e-06,
+      "intercept_se_A": 6.899015394087279e-05,
+      "r2": 0.944279238654031
+    },
+    {
+      "label": "Gb left",
+      "v_lo": -6.7537695,
+      "v_hi": -1.0934675,
+      "n": 13239,
+      "slope_S": -0.0004175594384744763,
+      "intercept_A": -3.5058086001860136e-05,
+      "slope_se_S": 1.5456649844461747e-06,
+      "intercept_se_A": 6.625240982566071e-06,
+      "r2": 0.8464693964446127
+    },
+    {
+      "label": "Ga inner",
+      "v_lo": -1.0934675,
+      "v_hi": 0.5788945,
+      "n": 3500,
+      "slope_S": -0.0007170637646220528,
+      "intercept_A": -0.0004129710487129946,
+      "slope_se_S": 1.0139414621842924e-05,
+      "intercept_se_A": 5.536200385480069e-06,
+      "r2": 0.5884405325747402
+    },
+    {
+      "label": "Gb right",
+      "v_lo": 0.5788945,
+      "v_hi": 5.98191,
+      "n": 12451,
+      "slope_S": -0.00043366825277034454,
+      "intercept_A": -0.0007515990313621883,
+      "slope_se_S": 1.6649179946736074e-06,
+      "intercept_se_A": 6.070419550057733e-06,
+      "r2": 0.8449608170335202
+    },
+    {
+      "label": "Gc right",
+      "v_lo": 5.98191,
+      "v_hi": 7.718594,
+      "n": 8839,
+      "slope_S": 0.003786431370614927,
+      "intercept_A": -0.02606368373724144,
+      "slope_se_S": 1.0352310517834285e-05,
+      "intercept_se_A": 7.08370602788402e-05,
+      "r2": 0.9380360914136467
+    }
+  ],
+  "ranges": [
+    {
+      "side": "left",
+      "valid": true,
+      "total_lo_ohm": 1394.5761162915212,
+      "total_hi_ohm": 2394.8686291308104,
+      "pot_lo_ohm": 404.5761162915212,
+      "pot_hi_ohm": 1404.8686291308104
+    },
+    {
+      "side": "right",
+      "valid": true,
+      "total_lo_ohm": 1394.5761162915212,
+      "total_hi_ohm": 2305.9100905169666,
+      "pot_lo_ohm": 404.5761162915212,
+      "pot_hi_ohm": 1315.9100905169666
+    }
+  ],
+  "drive_frequency_hz": 9.167785136453315,
+  "directional_rms_difference_A": 2.651251036572372e-05,
+  "uncertainty_note": "OLS standard errors only; quantisation, channel gains, correlated errors and drift are not included."
+}

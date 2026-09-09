@@ -16,7 +16,8 @@ entirely; only the relative gain of the two end channels survives, and that is
 close to 1 when they sit on the same V/div. The fitted offset C absorbs any
 DC offset in the channels.
 
-Defaults match this bench: R0 = 992 ohm, CH1 = v_C1, CH2 = v_C2, CH3 = midpoint.
+Defaults match the experiment plan: R0 = 990 ohm, CH1 = v_C1,
+CH2 = v_C2, CH3 = midpoint.
 
 Usage:
     python rpot.py record.csv
@@ -26,21 +27,37 @@ Usage:
 import argparse
 import glob
 import numpy as np
+from scope_data import R0, RPOT_MAX, read_scope
+from sweeplib import CLEAN_DIVIDER_MAX_PCT
 
 
 def rpot(path, r0, g21, c1='CH1', c2='CH2', mid='CH3'):
     """Return (Rpot, residual_fraction) for one record."""
-    with open(path) as f:
-        names = [h.split('(')[0].strip() for h in f.readline().split(',')]
-    d = np.genfromtxt(path, delimiter=',', skip_header=1)
-    v1, v2, vm = (d[:, names.index(c1)], d[:, names.index(c2)],
-                  d[:, names.index(mid)])
-    ok = np.isfinite(v1) & np.isfinite(v2) & np.isfinite(vm)
-    v1, v2, vm = v1[ok], v2[ok], vm[ok]
+    if not np.isfinite([r0, g21]).all() or r0 <= 0 or g21 <= 0:
+        raise ValueError('r0 and g21 must be positive and finite')
+    _, d = read_scope(path, (c1, c2, mid), min_samples=10)
+    return fit_divider(d, r0, g21)
 
-    M = np.column_stack([v1, v2, np.ones_like(v1)])
-    (A, B, _), *_ = np.linalg.lstsq(M, vm, rcond=None)
-    resid = float(np.sqrt(np.mean((vm - M @ np.linalg.lstsq(M, vm, rcond=None)[0]) ** 2)))
+
+def fit_divider(d, r0=R0, g21=1.0):
+    """Fit already validated simultaneous CH1, CH2, CH3 samples."""
+    if not np.isfinite([r0,g21]).all() or min(r0,g21)<=0:
+        raise ValueError('r0 and g21 must be positive and finite')
+    if d.ndim != 2 or d.shape[1] != 3 or len(d) < 10 or not np.isfinite(d).all():
+        raise ValueError('need at least ten finite three-channel samples')
+    v1, v2, vm = d.T
+    M = np.column_stack([v1 - v1.mean(), v2 - v2.mean()])
+    scales = M.std(axis=0)
+    if np.any(scales <= 1e-12) or np.ptp(vm) <= 1e-12:
+        raise ValueError('flat channels cannot identify the divider')
+    Z = M / scales
+    coef, _, rank, singular = np.linalg.lstsq(Z, vm - vm.mean(), rcond=None)
+    if rank < 2 or singular[-1] / singular[0] < 1e-4:
+        raise ValueError('end channels are collinear; divider ratio is unidentifiable')
+    A, B = coef / scales
+    if A <= 1e-10 or B < 0:
+        raise ValueError('non-physical divider coefficients; check channels/clipping')
+    resid = float(np.sqrt(np.mean((vm - vm.mean() - Z @ coef) ** 2)))
     span = float(vm.max() - vm.min())
     return r0 * (B / A) * g21, resid / max(span, 1e-12)
 
@@ -48,7 +65,7 @@ def rpot(path, r0, g21, c1='CH1', c2='CH2', mid='CH3'):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('csv', nargs='+')
-    p.add_argument('--r0', type=float, default=992.0, help='fixed resistor, ohm')
+    p.add_argument('--r0', type=float, default=R0, help='fixed resistor, ohm')
     p.add_argument('--g21', type=float, default=1.0,
                    help='gain ratio of the v_C2 channel to the v_C1 channel')
     p.add_argument('--c1', default='CH1', help='column with v_C1')
@@ -66,7 +83,10 @@ def main():
         except Exception as e:
             print(f"{f}: {e}")
             continue
-        warn = "   CHECK: not a clean divider" if res > 0.05 else ""
+        warn = ("   CHECK: not a clean divider"
+                if 100 * res > CLEAN_DIVIDER_MAX_PCT else "")
+        if not 0 <= r <= RPOT_MAX:
+            warn += "   CHECK: outside 0-1000 ohm potentiometer range"
         print(f"{f}: Rpot = {r:7.1f} ohm   (fit residual {100*res:.2f} %){warn}")
 
 

@@ -1,216 +1,216 @@
-sweep,filename,rpot_ohm,n_maxima,n_branches,n_slopes_fitted,n_slopes_dropped,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_per_s,map_r2,status
-sweep forward,trace9.csv,881.4,610,1,0,0,327.8424,330.4109,-0.78,,,0.0633,return map is not a function (local fit R2 = 0.06)
-sweep forward,trace10.csv,885.11,607,0,0,0,329.6304,330.7909,-0.35,,,,map spread 0.008 V below --min-spread
-sweep forward,trace11.csv,888.59,604,0,0,0,330.7622,330.7983,-0.01,,,,map spread 0.007 V below --min-spread
-sweep forward,trace12.csv,891.05,605,0,0,0,330.8285,330.7983,0.01,,,,map spread 0.009 V below --min-spread
-sweep forward,trace13.csv,895.46,605,0,0,0,330.804,331.1895,-0.12,,,,map spread 0.008 V below --min-spread
-sweep forward,trace14.csv,896.32,604,0,0,0,330.865,330.7909,0.02,,,,map spread 0.008 V below --min-spread
-sweep forward,trace15.csv,896.28,604,0,0,0,330.9479,331.1932,-0.07,,,,map spread 0.008 V below --min-spread
-sweep forward,trace16.csv,897.79,604,0,0,0,331.0229,330.8002,0.07,,,,map spread 0.008 V below --min-spread
-sweep forward,trace17.csv,901.43,606,0,0,0,330.1124,331.2118,-0.33,,,,map spread 0.007 V below --min-spread
-sweep forward,trace18.csv,900.6,604,0,0,0,330.8683,331.2007,-0.1,,,,map spread 0.008 V below --min-spread
-sweep forward,trace19.csv,903.37,605,0,0,0,331.0066,331.59,-0.18,,,,map spread 0.007 V below --min-spread
-sweep forward,trace20.csv,902.7,603,0,0,0,331.592,331.6104,-0.01,,,,map spread 0.008 V below --min-spread
-sweep forward,trace21.csv,900.53,603,0,0,0,331.8365,331.9979,-0.05,,,,map spread 0.007 V below --min-spread
-sweep forward,trace22.csv,897.52,603,0,0,0,332.0452,332.0016,0.01,,,,map spread 0.010 V below --min-spread
-sweep forward,trace23.csv,897.29,602,0,0,0,332.197,332.4002,-0.06,,,,map spread 0.009 V below --min-spread
-sweep forward,trace24.csv,895.8,601,0,0,0,332.4647,332.4114,0.02,,,,map spread 0.008 V below --min-spread
-sweep forward,trace25.csv,893.0,601,0,0,0,332.8046,332.8025,0.0,,,,map spread 0.008 V below --min-spread
-sweep forward,trace26.csv,889.78,601,0,0,0,332.798,333.2049,-0.12,,,,map spread 0.011 V below --min-spread
-sweep forward,trace27.csv,887.49,599,0,0,0,333.7057,333.6091,0.03,,,,map spread 0.008 V below --min-spread
-sweep forward,trace28.csv,885.5,599,0,0,0,334.0582,334.0021,0.02,,,,map spread 0.011 V below --min-spread
-sweep forward,trace29.csv,881.28,597,0,0,0,334.9644,334.8067,0.05,,,,map spread 0.013 V below --min-spread
-sweep forward,trace30.csv,878.72,596,0,0,0,335.5778,335.5965,-0.01,,,,map spread 0.025 V below --min-spread
-sweep forward,trace31.csv,873.61,594,0,0,0,336.4074,336.4012,0.0,,,,map spread 0.034 V below --min-spread
-sweep forward,trace32.csv,869.73,593,0,0,0,337.0169,336.8109,0.06,,,,map spread 0.040 V below --min-spread
-sweep forward,trace33.csv,866.02,592,0,0,0,337.6575,337.6007,0.02,,,,map spread 0.048 V below --min-spread
-sweep forward,trace34.csv,868.23,591,0,0,0,338.5105,338.4016,0.03,,,,map spread 0.047 V below --min-spread
-sweep forward,trace35.csv,864.99,590,0,0,0,339.1001,339.1951,-0.03,,,,map spread 0.051 V below --min-spread
-sweep forward,trace36.csv,857.0,586,0,0,0,341.5262,341.5998,-0.02,,,,map spread 0.099 V below --min-spread
-sweep forward,trace37.csv,853.32,583,0,0,0,343.0076,343.1886,-0.05,,,,map spread 0.082 V below --min-spread
-sweep forward,trace38.csv,851.17,580,0,0,0,344.6149,344.7905,-0.05,,,,map spread 0.010 V below --min-spread
-sweep forward,trace39.csv,844.4,578,0,0,0,345.8045,345.6026,0.06,,,,map spread 0.014 V below --min-spread
-sweep forward,trace40.csv,839.17,578,0,0,0,346.2475,346.3887,-0.04,,,,map spread 0.010 V below --min-spread
-sweep forward,trace41.csv,829.9,576,0,0,0,347.3802,347.212,0.05,,,,map spread 0.014 V below --min-spread
-sweep forward,trace42.csv,820.0,574,0,0,0,348.5305,348.7878,-0.07,,,,map spread 0.015 V below --min-spread
-sweep forward,trace43.csv,810.17,572,0,0,0,349.6091,349.5999,0.0,,,,map spread 0.014 V below --min-spread
-sweep forward,trace44.csv,800.59,572,0,0,0,349.4844,350.7994,-0.38,,,,map spread 0.014 V below --min-spread
-sweep forward,trace45.csv,789.81,568,0,0,0,351.8462,351.6115,0.07,,,,map spread 0.013 V below --min-spread
-sweep forward,trace46.csv,779.02,566,0,0,0,353.0181,353.191,-0.05,,,,map spread 0.028 V below --min-spread
-sweep forward,trace47.csv,779.48,567,0,0,0,352.8085,352.7999,0.0,,,,map spread 0.027 V below --min-spread
-sweep forward,trace48.csv,778.08,567,0,0,0,352.8092,352.8,0.0,,,,map spread 0.025 V below --min-spread
-sweep forward,trace49.csv,778.37,567,2,566,0,352.824,352.9992,-0.05,-0.13778,-390.52,0.9955,ok
-sweep forward,trace50.csv,777.45,566,2,565,0,352.9211,353.191,-0.08,0.22361,633.6,0.9989,ok
-sweep forward,trace51.csv,776.57,566,2,565,0,352.8885,352.8073,0.02,0.36636,1038.19,0.9992,ok
-sweep forward,trace52.csv,776.0,566,2,565,0,352.9451,352.8018,0.04,0.31611,895.63,0.9994,ok
-sweep forward,trace53.csv,775.39,567,2,566,0,352.3003,353.0001,-0.2,0.46268,1313.3,0.9926,ok
-sweep forward,trace54.csv,773.76,567,2,566,0,352.2784,352.4036,-0.04,0.42892,1217.55,0.993,ok
-sweep forward,trace55.csv,772.26,566,2,565,0,352.8786,350.7994,0.59,0.1754,497.06,0.9997,ok
-sweep forward,trace56.csv,770.8,566,2,565,0,352.9111,349.6036,0.94,0.37139,1052.36,0.9999,ok
-sweep forward,trace57.csv,769.13,566,2,565,0,353.0351,349.5999,0.97,0.20742,587.53,0.9999,ok
-sweep forward,trace58.csv,768.16,566,2,565,0,353.0924,356.4022,-0.94,0.26272,744.05,0.9998,ok
-sweep forward,trace59.csv,767.67,567,2,566,0,352.583,352.8036,-0.06,0.40445,1147.11,0.9931,ok
-sweep forward,trace60.csv,766.27,566,2,565,0,353.2092,357.9892,-1.35,0.26879,760.99,0.9999,ok
-sweep forward,trace61.csv,763.47,566,2,565,0,353.2616,357.5906,-1.23,0.28059,794.29,0.9999,ok
-sweep forward,trace62.csv,760.49,566,2,565,0,353.338,359.1897,-1.66,0.23409,662.52,0.9999,ok
-sweep forward,trace63.csv,757.51,566,2,565,0,353.3876,347.1896,1.75,0.09275,262.46,0.9999,ok
-sweep forward,trace64.csv,756.73,1441,2,1439,1,346.959,347.0033,-0.01,1.66561,4800.61,0.9417,ok
-sweep forward,trace65.csv,756.52,1438,2,1437,0,347.6771,348.0017,-0.09,1.40793,4049.53,0.9415,ok
-sweep forward,trace66.csv,756.27,1431,2,1430,0,349.4126,348.0017,0.4,1.10643,3166.55,0.964,ok
-sweep forward,trace67.csv,755.85,1436,2,1434,1,348.1652,348.0017,0.05,1.51996,4365.63,0.9497,ok
-sweep forward,trace68.csv,755.59,1456,3,1450,5,343.3911,347.0033,-1.05,1.96547,5723.71,0.9043,ok
-sweep forward,trace69.csv,755.24,1441,3,1440,0,346.9889,348.0017,-0.29,1.39547,4021.67,0.9319,ok
-sweep forward,trace70.csv,754.75,1432,4,1431,0,349.1929,349.0001,0.06,1.18585,3395.96,0.9601,ok
-sweep forward,trace71.csv,754.5,1431,4,1430,0,349.4231,349.0001,0.12,1.25396,3588.66,0.9606,ok
-sweep forward,trace72.csv,753.95,1430,4,1429,0,349.7929,349.0001,0.23,1.01068,2889.36,0.9702,ok
-sweep forward,trace73.csv,753.24,1444,4,1443,0,346.2696,349.0001,-0.79,1.44553,4174.58,0.9308,ok
-sweep forward,trace74.csv,752.41,1437,4,1436,0,347.7883,349.9985,-0.64,1.54633,4446.17,0.9482,ok
-sweep forward,trace75.csv,751.96,1434,4,1433,0,348.5967,350.0059,-0.4,1.23909,3554.52,0.9577,ok
-sweep forward,trace76.csv,751.04,1433,4,1432,0,348.9923,349.9985,-0.29,1.44247,4133.25,0.9507,ok
-sweep forward,trace77.csv,750.44,1443,4,1442,0,346.6484,350.5014,-1.11,1.25136,3609.87,0.932,ok
-sweep forward,trace78.csv,750.1,1440,4,1439,0,347.0869,350.9969,-1.13,1.06917,3080.41,0.9353,ok
-sweep forward,trace79.csv,750.17,1431,4,1430,0,349.3552,351.9976,-0.76,0.57324,1640.85,0.9545,ok
-sweep forward,trace80.csv,749.95,1438,4,1437,0,347.7112,351.0118,-0.95,0.81149,2333.8,0.9327,ok
-sweep forward,trace81.csv,749.59,1433,3,1432,0,349.0175,351.9976,-0.85,0.48838,1399.3,0.9457,ok
-sweep forward,trace82.csv,749.46,1444,2,1443,0,346.3659,351.9952,-1.63,0.79722,2301.67,0.9252,ok
-sweep forward,trace83.csv,749.01,1443,2,1442,0,346.6595,351.9952,-1.54,0.88873,2563.69,0.9092,ok
-sweep forward,trace84.csv,748.64,1435,2,1434,0,348.3668,352.0101,-1.05,0.7263,2084.86,0.94,ok
-sweep forward,trace85.csv,748.34,1439,2,1438,0,347.2796,353.0048,-1.65,0.76756,2210.21,0.932,ok
-sweep forward,trace86.csv,747.91,1446,2,1445,0,345.7086,353.9845,-2.39,0.92303,2669.97,0.9089,ok
-sweep forward,trace87.csv,746.92,1447,2,1446,0,345.6169,354.0069,-2.43,0.9274,2683.32,0.9109,ok
-sweep forward,trace88.csv,747.36,1452,2,1451,0,344.4328,353.992,-2.78,0.88748,2576.65,0.8943,ok
-sweep forward,trace89.csv,747.04,1454,2,1449,4,343.8995,354.9904,-3.23,0.94521,2748.51,0.883,ok
-sweep forward,trace90.csv,746.2,1444,2,1443,0,346.2619,356.0036,-2.81,0.88826,2565.27,0.9028,ok
-sweep forward,trace91.csv,745.82,1451,2,1450,0,344.6614,356.0036,-3.29,0.96236,2792.2,0.89,ok
-sweep forward,trace92.csv,745.43,1434,2,1433,0,348.635,356.9871,-2.4,0.61774,1771.89,0.9235,ok
-sweep forward,trace93.csv,744.2,1435,2,1434,0,348.2671,357.002,-2.51,0.63568,1825.27,0.924,ok
-sweep forward,trace94.csv,743.24,1436,1,1435,0,348.3777,357.002,-2.48,0.59272,1701.38,0.9323,ok
-sweep forward,trace95.csv,742.48,1438,1,1437,0,347.6729,358.0004,-2.97,0.73425,2111.9,0.9062,ok
-sweep forward,trace96.csv,741.58,1444,1,1443,0,346.2259,358.0004,-3.4,0.71947,2078.03,0.9119,ok
-sweep forward,trace97.csv,740.49,1433,1,1432,0,348.9623,358.0004,-2.59,0.58302,1670.72,0.9354,ok
-sweep forward,trace98.csv,738.12,1435,1,1434,0,348.3138,358.9988,-3.07,0.6736,1933.89,0.935,ok
-sweep forward,trace99.csv,736.37,1444,1,1443,0,346.2689,359.9972,-3.96,0.8109,2341.81,0.9096,ok
-sweep forward,trace100.csv,734.36,1446,1,1445,0,345.8803,359.9972,-4.08,0.89925,2599.9,0.9014,ok
-sweep forward,trace101.csv,731.96,1428,1,1427,0,350.0021,360.0009,-2.86,0.72723,2077.78,0.9358,ok
-sweep forward,trace102.csv,730.19,1443,1,1442,0,346.6054,359.0062,-3.58,0.94817,2735.6,0.9167,ok
-sweep forward,trace103.csv,728.44,1430,1,1429,0,349.4955,359.9972,-3.0,0.79414,2272.26,0.9269,ok
-sweep forward,trace104.csv,728.07,1437,3,1436,0,347.7249,353.9994,-1.8,1.90551,5479.93,0.9648,ok
-sweep forward,trace105.csv,726.25,1447,3,1444,2,345.5277,353.0011,-2.16,1.38213,4000.06,0.9386,ok
-sweep forward,trace106.csv,726.25,1441,3,1440,0,346.7882,353.0011,-1.79,1.17247,3380.94,0.9498,ok
-sweep forward,trace107.csv,725.91,1440,3,1439,0,347.0737,352.9999,-1.71,0.96678,2785.52,0.9649,ok
-sweep forward,trace108.csv,724.81,1461,3,1460,0,342.1664,352.9899,-3.16,1.43575,4196.07,0.9137,ok
-sweep forward,trace109.csv,724.45,1450,1,1449,0,344.9952,356.0036,-3.19,1.02045,2957.88,0.9109,ok
-sweep forward,trace110.csv,723.8,1431,1,1430,0,349.4497,355.0053,-1.59,0.76571,2191.18,0.9435,ok
-sweep forward,trace111.csv,723.64,1430,1,1429,0,349.5682,356.0036,-1.84,0.68037,1946.3,0.9558,ok
-sweep forward,trace112.csv,721.42,1452,1,1451,0,344.4197,353.9994,-2.78,0.99571,2890.98,0.9194,ok
-sweep forward,trace113.csv,719.81,1435,1,1434,0,348.3201,355.9892,-2.2,0.85064,2442.12,0.9329,ok
-sweep forward,trace114.csv,717.43,1439,1,1438,0,347.5285,355.9887,-2.43,0.92641,2665.71,0.9273,ok
-sweep forward,trace115.csv,713.41,1440,1,1439,0,347.1251,355.0015,-2.27,0.92665,2669.49,0.929,ok
-sweep forward,trace116.csv,707.04,1444,1,1443,0,346.1157,352.0101,-1.7,0.93114,2690.25,0.922,ok
-sweep forward,trace117.csv,698.38,1432,1,1431,0,348.9755,351.9952,-0.87,0.7153,2049.72,0.9756,ok
-sweep forward,trace118.csv,692.67,1435,1,1434,0,348.4561,351.0006,-0.73,0.6278,1801.65,0.9793,ok
-sweep forward,trace119.csv,678.95,1415,1,1410,0,353.3366,351.9977,0.38,0.89234,2525.47,0.9223,ok
-sweep forward,trace120.csv,690.99,1511,2,1510,0,330.7285,344.9994,-4.31,1.02384,3095.7,0.8801,ok
-sweep forward,trace121.csv,689.9,1531,2,1530,0,326.6033,343.9933,-5.32,1.0379,3177.86,0.9233,ok
-sweep forward,trace122.csv,688.92,1530,2,1529,0,326.6527,342.9949,-5.0,1.18006,3612.59,0.9352,ok
-sweep forward,trace123.csv,685.83,1534,2,1533,0,325.9752,344.0082,-5.53,1.13855,3492.75,0.9261,ok
-sweep forward,trace124.csv,682.56,1547,2,1546,0,322.7406,340.9982,-5.66,1.15226,3570.25,0.9215,ok
-sweep forward,trace125.csv,680.84,1493,2,1491,1,334.9216,343.9914,-2.71,1.09087,3257.1,0.9471,ok
-sweep forward,trace126.csv,679.57,1501,2,1499,1,333.19,342.9949,-2.94,1.02682,3081.79,0.9412,ok
-sweep forward,trace127.csv,675.04,1448,2,1447,0,345.2433,346.9884,-0.51,1.19656,3465.84,0.9297,ok
-sweep forward,trace128.csv,673.15,1447,2,1446,0,345.7337,343.4997,0.65,1.10803,3204.87,0.9353,ok
-sweep forward,trace129.csv,670.07,1449,2,1445,3,344.8964,342.0049,0.84,1.20765,3501.49,0.9166,ok
-sweep forward,trace130.csv,666.74,1439,2,1438,0,347.4305,341.9966,1.56,1.10385,3177.19,0.9145,ok
-sweep forward,trace131.csv,663.44,1451,2,1446,4,344.5593,341.0093,1.03,1.25682,3647.61,0.9091,ok
-sweep forward,trace132.csv,657.58,1455,2,1451,3,343.6369,339.0014,1.35,1.23083,3581.76,0.9097,ok
-sweep forward,trace133.csv,649.64,1440,2,1439,0,346.7081,336.9898,2.8,1.30184,3754.86,0.9094,ok
-sweep forward,trace134.csv,644.47,1440,2,1439,0,347.164,335.9998,3.22,1.13578,3271.59,0.9005,ok
-sweep forward,trace135.csv,641.52,1449,2,1448,0,345.029,335.5015,2.76,1.07993,3129.97,0.9253,ok
-sweep forward,trace136.csv,636.0,1465,2,1462,2,341.3531,332.9962,2.45,1.16659,3417.54,0.8918,ok
-sweep forward,trace137.csv,630.55,1486,2,1485,0,336.0202,332.0053,1.19,1.23319,3669.99,0.9152,ok
-sweep forward,trace138.csv,625.45,1492,2,1482,9,335.1791,330.9995,1.25,1.08788,3245.67,0.9245,ok
-sweep forward,trace139.csv,616.58,1529,2,1524,4,326.8737,328.0044,-0.35,0.92088,2817.23,0.9604,ok
-sweep forward,trace140.csv,610.17,1517,2,1516,0,329.4195,329.0027,0.13,0.90318,2741.73,0.9152,ok
-sweep forward,trace141.csv,606.09,1525,2,1507,17,327.899,329.0018,-0.34,1.02657,3130.76,0.9016,ok
-sweep forward,trace142.csv,604.24,1519,2,1502,16,329.1548,329.0027,0.05,1.02158,3103.64,0.917,ok
-sweep forward,trace143.csv,598.78,1499,2,1497,1,333.4219,329.0027,1.33,0.99259,2976.96,0.9125,ok
-sweep forward,trace144.csv,595.64,1539,2,1517,21,324.7146,326.9985,-0.7,1.14991,3541.29,0.9243,ok
-sweep forward,trace145.csv,593.12,1491,2,1483,7,334.8107,328.0044,2.03,1.12299,3354.1,0.9093,ok
-sweep forward,trace146.csv,590.28,1497,2,1495,1,334.0989,329.0009,1.53,1.08769,3255.58,0.9294,ok
-sweep forward,trace147.csv,584.08,1563,2,1554,8,319.669,326.0076,-1.98,1.23294,3856.93,0.9041,ok
-sweep forward,trace148.csv,579.79,1566,2,1544,21,319.3917,325.0092,-1.76,0.98064,3070.32,0.9312,ok
-sweep forward,trace149.csv,574.77,1518,2,1513,4,329.0943,327.006,0.63,1.06274,3229.28,0.9223,ok
-sweep forward,trace150.csv,566.7,1309,2,1308,0,382.0894,324.0104,15.2,0.53072,1388.99,0.9837,ok
-sweep forward,trace151.csv,563.74,1295,2,1294,0,386.0317,324.9943,15.81,0.66898,1732.97,0.9808,ok
-sweep forward,trace152.csv,560.68,1301,2,1300,0,384.1869,324.0108,15.66,0.67469,1756.16,0.9836,ok
-sweep forward,trace153.csv,555.97,1565,2,1543,21,319.3018,326.0,-2.1,1.26582,3964.33,0.9146,ok
-sweep forward,trace154.csv,554.32,1583,2,1581,1,315.8818,325.9927,-3.2,1.26425,4002.3,0.9111,ok
-sweep forward,trace155.csv,551.02,1325,2,1324,0,377.5249,324.0108,14.17,0.64205,1700.68,0.989,ok
-sweep forward,trace156.csv,545.38,1337,2,1336,0,373.8698,322.9976,13.61,0.56655,1515.36,0.9848,ok
-sweep forward,trace157.csv,539.45,1316,2,1315,0,379.7468,322.9999,14.94,0.68217,1796.37,0.9813,ok
-sweep forward,trace158.csv,533.46,1299,2,1298,0,384.8529,325.0055,15.55,0.67219,1746.6,0.9859,ok
-sweep forward,trace159.csv,527.54,1307,2,1306,0,382.5322,322.9976,15.56,0.65469,1711.47,0.9921,ok
-sweep forward,trace160.csv,522.41,1283,2,1282,0,389.6568,323.9997,16.85,0.66752,1713.09,0.9776,ok
-sweep forward,trace161.csv,518.64,1288,2,1287,0,387.9277,323.0087,16.73,0.73027,1882.49,0.9823,ok
-sweep forward,trace162.csv,515.68,1284,2,1283,0,389.4482,323.9959,16.81,0.69145,1775.45,0.9877,ok
-sweep forward,trace163.csv,512.28,1296,2,1295,0,385.6247,330.9995,14.17,0.70172,1819.7,0.981,ok
-sweep forward,trace164.csv,510.39,1299,2,1298,0,384.9453,330.0048,14.27,0.62301,1618.43,0.9818,ok
-sweep forward,trace165.csv,507.35,834,2,0,0,599.1105,521.9951,12.87,,,0.6914,return map is not a function (local fit R2 = 0.69)
-sweep forward,trace166.csv,505.29,261,2,0,0,1908.5116,1885.4942,1.21,,,0.122,return map is not a function (local fit R2 = 0.12)
-sweep forward,trace167.csv,502.73,1263,2,1262,0,395.8463,336.5036,14.99,0.74941,1893.19,0.9827,ok
-sweep forward,trace168.csv,500.13,1256,2,1255,0,398.212,338.003,15.12,0.74583,1872.95,0.9838,ok
-sweep forward,trace169.csv,498.71,1110,2,1109,0,450.3436,383.9992,14.73,1.14186,2535.54,0.9096,ok
-sweep forward,trace170.csv,496.33,1263,2,1262,0,395.9699,339.0014,14.39,0.79828,2016.01,0.9702,ok
-sweep forward,trace171.csv,494.83,1266,2,1265,0,394.8877,341.9966,13.39,0.77456,1961.47,0.9789,ok
-sweep forward,trace172.csv,493.26,1272,2,1271,0,393.026,344.9842,12.22,0.72139,1835.47,0.9799,ok
-sweep forward,trace173.csv,490.55,1258,2,1257,0,397.4057,350.9969,11.68,0.78553,1976.64,0.9765,ok
-sweep forward,trace174.csv,487.24,1257,2,1256,0,397.6465,341.9966,13.99,0.75173,1890.45,0.9822,ok
-sweep forward,trace175.csv,484.73,1279,2,1278,0,390.8646,338.003,13.52,0.68933,1763.6,0.9803,ok
-sweep forward,trace176.csv,482.2,1296,2,1295,0,385.6255,343.0098,11.05,0.69758,1808.95,0.9806,ok
-sweep forward,trace177.csv,478.83,1285,2,1284,0,389.2274,352.9964,9.31,0.64991,1669.74,0.9836,ok
-sweep forward,trace178.csv,477.7,1281,2,1277,0,390.2883,357.002,8.53,0.51385,1316.6,0.9875,ok
-sweep forward,trace179.csv,475.17,1267,2,1266,0,394.6019,360.9955,8.52,0.65361,1656.39,0.9832,ok
-sweep forward,trace180.csv,473.43,1262,2,1261,0,396.345,374.9877,5.39,0.65328,1648.25,0.986,ok
-sweep forward,trace181.csv,471.92,1252,2,1251,0,399.3174,378.9961,5.09,0.64077,1604.67,0.982,ok
-sweep forward,trace182.csv,469.6,1247,2,1246,0,401.0915,387.9964,3.26,0.7335,1828.75,0.9785,ok
-sweep forward,trace183.csv,467.0,1238,2,1237,0,403.7243,389.0023,3.65,0.73044,1809.26,0.9884,ok
-sweep forward,trace184.csv,464.79,1222,2,1221,0,408.9697,386.9999,5.37,0.8778,2146.38,0.9796,ok
-sweep forward,trace185.csv,461.91,1200,2,1199,0,416.4746,394.0016,5.4,0.83916,2014.92,0.9835,ok
-sweep forward,trace186.csv,456.86,1011,2,1010,0,494.098,459.9988,6.9,1.44113,2916.69,0.8737,ok
-sweep forward,trace187.csv,452.67,1199,2,1198,0,416.7805,392.0011,5.95,0.76906,1845.25,0.9807,ok
-sweep forward,trace188.csv,450.06,1186,2,1185,0,421.0869,392.0011,6.91,0.83329,1978.9,0.9847,ok
-sweep forward,trace189.csv,447.19,1157,2,1156,0,431.4844,409.0033,5.21,0.89902,2083.55,0.9757,ok
-sweep forward,trace190.csv,444.52,1187,2,1186,0,420.7993,383.0045,8.98,0.8007,1902.8,0.976,ok
-sweep forward,trace191.csv,438.29,1189,2,1186,0,420.3636,383.9955,8.65,0.67603,1608.21,0.9841,ok
-sweep forward,trace192.csv,432.29,1136,2,1129,0,440.23,448.0109,-1.77,0.61071,1387.25,0.9846,ok
-sweep forward,trace193.csv,427.27,1136,2,1135,0,439.9101,455.9904,-3.66,0.3217,731.28,0.9901,ok
-sweep forward,trace194.csv,426.23,1095,2,1076,0,456.3245,458.0021,-0.37,0.57582,1261.86,0.9904,ok
-sweep forward,trace195.csv,427.12,1178,4,1177,0,424.0442,380.0094,10.38,0.29145,687.31,1.0,ok
-sweep forward,trace196.csv,425.01,1155,2,1151,0,432.9428,427.0039,1.37,0.4084,943.32,0.9946,ok
-sweep forward,trace197.csv,423.54,1147,2,1146,0,435.911,454.5003,-4.26,0.36533,838.08,0.9915,ok
-sweep forward,trace198.csv,422.75,1129,2,1128,0,442.7677,455.9979,-2.99,0.46934,1060.0,0.9927,ok
-sweep forward,trace199.csv,421.72,1085,2,1084,0,460.6504,458.9912,0.36,0.62255,1351.45,0.991,ok
-sweep forward,trace200.csv,419.77,1059,2,1058,0,472.2495,467.0005,1.11,1.84598,3908.91,0.8302,ok
-sweep forward,trace201.csv,414.89,983,2,982,0,508.5173,487.9981,4.04,1.16486,2290.71,0.9483,ok
-sweep forward,trace202.csv,410.29,933,2,932,0,536.2242,502.5007,6.29,1.30598,2435.51,0.8955,ok
-sweep forward,trace203.csv,406.33,932,2,931,0,536.4672,507.0111,5.49,1.44432,2692.28,0.8843,ok
-sweep forward,trace204.csv,398.48,953,4,952,0,524.8634,525.9961,-0.22,0.11084,211.18,1.0,ok
-sweep forward,trace205.csv,396.6,898,2,897,0,556.8216,529.0024,5.0,1.23078,2210.37,0.9315,ok
-sweep forward,trace206.csv,394.24,864,2,863,0,578.6153,560.0005,3.22,1.41138,2439.23,0.9184,ok
-sweep forward,trace207.csv,388.87,937,2,936,0,533.5908,525.5044,1.52,0.82258,1541.59,0.9611,ok
-sweep forward,trace208.csv,385.16,931,2,930,0,537.4194,523.001,2.68,0.76676,1426.75,0.9551,ok
-sweep forward,trace209.csv,380.84,853,2,852,0,586.1995,548.0042,6.52,1.099,1874.79,0.9308,ok
-sweep forward,trace210.csv,376.47,819,2,818,0,610.3607,581.9984,4.65,1.19474,1957.43,0.9356,ok
-sweep forward,trace211.csv,372.27,837,2,836,0,596.2763,599.0053,-0.46,1.04659,1755.21,0.9667,ok
-sweep forward,trace212.csv,367.87,791,2,790,0,631.9658,622.0024,1.58,1.15216,1823.14,0.9366,ok
-sweep forward,trace213.csv,364.42,797,2,796,0,627.2487,625.0013,0.36,1.44182,2298.64,0.907,ok
-sweep forward,trace214.csv,361.92,778,2,777,0,641.6692,649.9887,-1.3,0.98285,1531.72,0.9529,ok
-sweep forward,trace215.csv,358.78,741,2,740,0,674.6784,652.9987,3.21,1.21922,1807.12,0.9242,ok
-sweep forward,trace217.csv,360.05,1386,0,0,0,360.7307,361.9902,-0.35,,,,map spread 0.073 V below --min-spread
-sweep forward,trace218.csv,349.56,1389,0,0,0,359.9971,361.9883,-0.55,,,,map spread 0.058 V below --min-spread
-sweep forward,trace219.csv,333.7,556,0,0,0,359.8306,361.1967,-0.38,,,,map spread 0.050 V below --min-spread
-sweep forward,trace221.csv,299.2,555,0,0,0,360.3227,360.3995,-0.02,,,,map spread 0.046 V below --min-spread
-sweep forward,trace222.csv,274.13,556,0,0,0,359.7514,359.6097,0.04,,,,map spread 0.038 V below --min-spread
-sweep forward,trace225.csv,144.98,560,0,0,0,357.2937,357.5906,-0.08,,,,map spread 0.034 V below --min-spread
-sweep forward,trace228.csv,20.99,564,0,0,0,354.7453,355.5994,-0.24,,,,map spread 0.028 V below --min-spread
-sweep forward,trace229.csv,2.57,566,0,0,0,353.2927,355.1999,-0.54,,,,map spread 0.022 V below --min-spread
+sweep,filename,rpot_ohm,n_maxima,rpot_source,nominal_rpot_ohm,n_branches,n_slopes,unresolved_pct,cluster_pct,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_map_per_s,lambda_map_err_per_s,lambda_map_err_stat,lambda_map_err_width,map_r2_within_branch,lambda_rosenstein_per_s,lambda_rosenstein_err_per_s,rosenstein_fit_r2,rosenstein_status,status
+sweep forward,trace9.csv,879.62,605,divider fit (R0=990 ohm),,0,0,,,330.5563,330.79,-0.07,,,,,,,,,,not requested,map spread 0.007 V below --min-spread
+sweep forward,trace10.csv,883.33,605,divider fit (R0=990 ohm),,0,0,,,330.7219,330.795,-0.02,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace11.csv,886.8,604,divider fit (R0=990 ohm),,0,0,,,330.7622,330.8,-0.01,,,,,,,,,,not requested,map spread 0.007 V below --min-spread
+sweep forward,trace12.csv,889.26,605,divider fit (R0=990 ohm),,0,0,,,330.8285,330.8,0.01,,,,,,,,,,not requested,map spread 0.009 V below --min-spread
+sweep forward,trace13.csv,893.66,605,divider fit (R0=990 ohm),,0,0,,,330.804,331.19,-0.12,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace14.csv,894.51,604,divider fit (R0=990 ohm),,0,0,,,330.865,330.79,0.02,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace15.csv,894.47,604,divider fit (R0=990 ohm),,0,0,,,330.9479,331.19,-0.07,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace16.csv,895.98,604,divider fit (R0=990 ohm),,0,0,,,331.0229,330.8,0.07,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace17.csv,899.61,604,divider fit (R0=990 ohm),,0,0,,,331.2073,331.59,-0.12,,,,,,,,,,not requested,map spread 0.007 V below --min-spread
+sweep forward,trace18.csv,898.78,603,divider fit (R0=990 ohm),,0,0,,,331.4179,331.2,0.07,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace19.csv,901.55,604,divider fit (R0=990 ohm),,0,0,,,331.5556,331.59,-0.01,,,,,,,,,,not requested,map spread 0.007 V below --min-spread
+sweep forward,trace20.csv,900.88,603,divider fit (R0=990 ohm),,0,0,,,331.592,331.61,-0.01,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace21.csv,898.71,603,divider fit (R0=990 ohm),,0,0,,,331.8365,332.0,-0.05,,,,,,,,,,not requested,map spread 0.007 V below --min-spread
+sweep forward,trace22.csv,895.71,603,divider fit (R0=990 ohm),,0,0,,,332.0452,332.0,0.01,,,,,,,,,,not requested,map spread 0.010 V below --min-spread
+sweep forward,trace23.csv,895.48,602,divider fit (R0=990 ohm),,0,0,,,332.197,332.4,-0.06,,,,,,,,,,not requested,map spread 0.009 V below --min-spread
+sweep forward,trace24.csv,893.99,601,divider fit (R0=990 ohm),,0,0,,,332.4647,332.41,0.02,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace25.csv,891.2,601,divider fit (R0=990 ohm),,0,0,,,332.8046,332.8,0.0,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace26.csv,887.98,600,divider fit (R0=990 ohm),,0,0,,,333.3536,333.2,0.05,,,,,,,,,,not requested,map spread 0.011 V below --min-spread
+sweep forward,trace27.csv,885.7,599,divider fit (R0=990 ohm),,0,0,,,333.7057,333.61,0.03,,,,,,,,,,not requested,map spread 0.008 V below --min-spread
+sweep forward,trace28.csv,883.71,599,divider fit (R0=990 ohm),,0,0,,,334.0582,334.0,0.02,,,,,,,,,,not requested,map spread 0.011 V below --min-spread
+sweep forward,trace29.csv,879.5,597,divider fit (R0=990 ohm),,0,0,,,334.9644,334.81,0.05,,,,,,,,,,not requested,map spread 0.013 V below --min-spread
+sweep forward,trace30.csv,876.94,596,divider fit (R0=990 ohm),,0,0,,,335.5778,335.6,-0.01,,,,,,,,,,not requested,map spread 0.025 V below --min-spread
+sweep forward,trace31.csv,871.85,594,divider fit (R0=990 ohm),,0,0,,,336.4074,336.4,0.0,,,,,,,,,,not requested,map spread 0.034 V below --min-spread
+sweep forward,trace32.csv,867.98,593,divider fit (R0=990 ohm),,0,0,,,337.0169,336.81,0.06,,,,,,,,,,not requested,map spread 0.040 V below --min-spread
+sweep forward,trace33.csv,864.28,592,divider fit (R0=990 ohm),,0,0,,,337.6575,337.6,0.02,,,,,,,,,,not requested,map spread 0.048 V below --min-spread
+sweep forward,trace34.csv,866.48,591,divider fit (R0=990 ohm),,0,0,,,338.5105,338.4,0.03,,,,,,,,,,not requested,map spread 0.047 V below --min-spread
+sweep forward,trace35.csv,863.25,590,divider fit (R0=990 ohm),,0,0,,,339.1002,339.2,-0.03,,,,,,,,,,not requested,map spread 0.051 V below --min-spread
+sweep forward,trace36.csv,855.28,586,divider fit (R0=990 ohm),,0,0,,,341.5262,341.6,-0.02,,,,,,,,,,not requested,map spread 0.099 V below --min-spread
+sweep forward,trace37.csv,851.6,583,divider fit (R0=990 ohm),,0,0,,,343.0076,343.19,-0.05,,,,,,,,,,not requested,map spread 0.082 V below --min-spread
+sweep forward,trace38.csv,849.46,580,divider fit (R0=990 ohm),,0,0,,,344.6149,344.79,-0.05,,,,,,,,,,not requested,map spread 0.010 V below --min-spread
+sweep forward,trace39.csv,842.7,578,divider fit (R0=990 ohm),,0,0,,,345.8045,345.6,0.06,,,,,,,,,,not requested,map spread 0.014 V below --min-spread
+sweep forward,trace40.csv,837.47,578,divider fit (R0=990 ohm),,0,0,,,346.2475,346.39,-0.04,,,,,,,,,,not requested,map spread 0.010 V below --min-spread
+sweep forward,trace41.csv,828.23,576,divider fit (R0=990 ohm),,0,0,,,347.3802,347.21,0.05,,,,,,,,,,not requested,map spread 0.014 V below --min-spread
+sweep forward,trace42.csv,818.35,574,divider fit (R0=990 ohm),,0,0,,,348.5305,348.79,-0.07,,,,,,,,,,not requested,map spread 0.015 V below --min-spread
+sweep forward,trace43.csv,808.54,572,divider fit (R0=990 ohm),,0,0,,,349.6091,349.6,0.0,,,,,,,,,,not requested,map spread 0.014 V below --min-spread
+sweep forward,trace44.csv,798.98,570,divider fit (R0=990 ohm),,0,0,,,350.7128,350.8,-0.02,,,,,,,,,,not requested,map spread 0.014 V below --min-spread
+sweep forward,trace45.csv,788.21,568,divider fit (R0=990 ohm),,0,0,,,351.8462,351.61,0.07,,,,,,,,,,not requested,map spread 0.013 V below --min-spread
+sweep forward,trace46.csv,777.45,566,divider fit (R0=990 ohm),,0,0,,,353.0181,353.19,-0.05,,,,,,,,,,not requested,map spread 0.028 V below --min-spread
+sweep forward,trace47.csv,777.91,567,divider fit (R0=990 ohm),,0,0,,,352.8085,352.8,0.0,,,,,,,,,,not requested,map spread 0.027 V below --min-spread
+sweep forward,trace48.csv,776.51,567,divider fit (R0=990 ohm),,0,0,,,352.8092,352.8,0.0,,,,,,,,,,not requested,map spread 0.025 V below --min-spread
+sweep forward,trace49.csv,776.8,567,divider fit (R0=990 ohm),,0,0,,,352.824,353.0,-0.05,,,,,,,,,,not requested,map spans only 5 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace50.csv,775.88,566,divider fit (R0=990 ohm),,0,0,,,352.9218,352.8,0.03,,,,,,,,,,not requested,map spans only 7 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace51.csv,775.01,566,divider fit (R0=990 ohm),,0,0,,,352.8885,352.81,0.02,,,,,,,,,,not requested,map spans only 9 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace52.csv,774.43,566,divider fit (R0=990 ohm),,0,0,,,352.9451,352.8,0.04,,,,,,,,,,not requested,map spans only 10 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace53.csv,773.83,566,divider fit (R0=990 ohm),,0,0,,,352.9253,353.59,-0.19,,,,,,,,,,not requested,map spans only 11 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace54.csv,772.2,566,divider fit (R0=990 ohm),,0,0,,,352.9019,352.41,0.14,,,,,,,,,,not requested,map spans only 13 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace55.csv,770.7,566,divider fit (R0=990 ohm),,0,0,,,352.8786,350.8,0.59,,,,,,,,,,not requested,map spans only 15 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace56.csv,769.25,566,divider fit (R0=990 ohm),,0,0,,,352.909,350.4,0.71,,,,,,,,,,not requested,map spans only 16 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace57.csv,767.57,566,divider fit (R0=990 ohm),,0,0,,,353.035,349.6,0.97,,,,,,,,,,not requested,map spans only 17 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace58.csv,766.61,566,divider fit (R0=990 ohm),,0,0,,,353.0924,356.4,-0.94,,,,,,,,,,not requested,map spans only 18 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace59.csv,766.12,566,divider fit (R0=990 ohm),,0,0,,,353.2071,356.4,-0.9,,,,,,,,,,not requested,map spans only 19 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace60.csv,764.72,566,divider fit (R0=990 ohm),,0,0,,,353.2092,357.99,-1.35,,,,,,,,,,not requested,map spans only 20 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace61.csv,761.94,566,divider fit (R0=990 ohm),,0,0,,,353.2616,357.59,-1.23,,,,,,,,,,not requested,map spans only 22 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace62.csv,758.96,566,divider fit (R0=990 ohm),,0,0,,,353.338,359.19,-1.66,,,,,,,,,,not requested,map spans only 24 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace63.csv,755.99,566,divider fit (R0=990 ohm),,0,0,,,353.3876,347.19,1.75,,,,,,,,,,not requested,map spans only 26 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace64.csv,755.21,1415,divider fit (R0=990 ohm),,0,0,,,353.3388,353.505,-0.05,,,,,,,,,,not requested,map spans only 27 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace65.csv,754.99,1415,divider fit (R0=990 ohm),,0,0,,,353.3324,353.0,0.09,,,,,,,,,,not requested,map spans only 28 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace66.csv,754.75,1415,divider fit (R0=990 ohm),,0,0,,,353.3663,354.0,-0.18,,,,,,,,,,not requested,map spans only 29 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace67.csv,754.33,1415,divider fit (R0=990 ohm),,0,0,,,353.3359,354.5,-0.33,,,,,,,,,,not requested,map spans only 29 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace68.csv,754.07,1415,divider fit (R0=990 ohm),,0,0,,,353.3479,353.5,-0.04,,,,,,,,,,not requested,map spans only 29 quantisation steps of 21 mV (under --min-steps)
+sweep forward,trace69.csv,753.72,1415,divider fit (R0=990 ohm),,0,0,,100.0,353.3692,353.495,-0.04,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace70.csv,753.23,1415,divider fit (R0=990 ohm),,0,0,,100.0,353.3911,354.005,-0.17,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace71.csv,752.97,1415,divider fit (R0=990 ohm),,0,0,,100.0,353.3769,353.5,-0.03,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace72.csv,752.43,1416,divider fit (R0=990 ohm),,0,0,,100.0,353.2537,350.0,0.92,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace73.csv,751.73,1415,divider fit (R0=990 ohm),,0,0,,100.0,353.3713,354.5,-0.32,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace74.csv,750.89,1414,divider fit (R0=990 ohm),,0,0,,100.0,353.4494,357.0,-1.0,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace75.csv,750.44,1414,divider fit (R0=990 ohm),,0,0,,100.0,353.5308,356.0,-0.7,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace76.csv,749.52,1414,divider fit (R0=990 ohm),,0,0,,100.0,353.6851,353.0,0.19,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace77.csv,748.93,1414,divider fit (R0=990 ohm),,0,0,,100.0,353.7629,353.0,0.22,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace78.csv,748.59,1412,divider fit (R0=990 ohm),,1,0,,75.0,353.9745,355.0,-0.29,,,,,,0.8312,,,,not requested,only 25 % of points lie on a branch wide enough to fit
+sweep forward,trace79.csv,748.66,1412,divider fit (R0=990 ohm),,1,0,,75.1,354.0595,356.0,-0.55,,,,,,0.8586,,,,not requested,only 25 % of points lie on a branch wide enough to fit
+sweep forward,trace80.csv,748.44,1412,divider fit (R0=990 ohm),,1,0,,75.1,354.1184,355.0,-0.25,,,,,,0.9015,,,,not requested,only 25 % of points lie on a branch wide enough to fit
+sweep forward,trace81.csv,748.08,1412,divider fit (R0=990 ohm),,2,1058,0.7,25.0,354.2119,358.0,-1.07,-0.09268,-261.66,115.62,100.21,57.67,0.9963,,,,not requested,ok
+sweep forward,trace82.csv,747.95,1412,divider fit (R0=990 ohm),,2,1411,0.5,0.0,354.2211,354.0,0.06,0.04399,124.18,82.86,70.87,42.93,0.996,,,,not requested,ok
+sweep forward,trace83.csv,747.5,1412,divider fit (R0=990 ohm),,2,1411,0.3,0.0,354.2757,357.0,-0.77,0.12963,365.89,64.58,60.93,21.38,0.9957,,,,not requested,ok
+sweep forward,trace84.csv,747.13,1411,divider fit (R0=990 ohm),,2,1410,0.9,0.0,354.2965,356.0,-0.48,0.1493,421.39,63.42,63.14,5.88,0.9952,,,,not requested,ok
+sweep forward,trace85.csv,746.83,1410,divider fit (R0=990 ohm),,2,1409,0.1,0.0,354.4273,357.0,-0.73,0.18451,520.58,56.71,56.59,3.67,0.9956,,,,not requested,ok
+sweep forward,trace86.csv,746.4,1410,divider fit (R0=990 ohm),,2,1409,0.6,0.0,354.5415,356.0,-0.41,0.16886,476.27,70.23,64.78,27.14,0.9969,,,,not requested,ok
+sweep forward,trace87.csv,745.42,1410,divider fit (R0=990 ohm),,2,1409,0.8,0.0,354.6927,357.0,-0.65,0.15975,450.38,80.75,74.67,30.72,0.997,,,,not requested,ok
+sweep forward,trace88.csv,745.85,1410,divider fit (R0=990 ohm),,2,1409,0.6,0.0,354.6998,357.0,-0.65,0.17882,504.15,69.98,68.29,15.29,0.9971,,,,not requested,ok
+sweep forward,trace89.csv,745.53,1409,divider fit (R0=990 ohm),,2,1408,0.4,0.0,354.8906,357.0,-0.59,0.12253,345.27,82.59,82.31,6.8,0.9976,,,,not requested,ok
+sweep forward,trace90.csv,744.69,1408,divider fit (R0=990 ohm),,2,1407,1.6,0.0,355.1215,357.99,-0.81,0.14967,421.47,80.44,78.53,17.42,0.9977,,,,not requested,ok
+sweep forward,trace91.csv,744.31,1408,divider fit (R0=990 ohm),,2,1407,1.0,0.0,355.1947,358.0,-0.79,0.22778,641.27,70.18,68.74,14.12,0.9975,,,,not requested,ok
+sweep forward,trace92.csv,743.92,1407,divider fit (R0=990 ohm),,2,1406,1.2,0.0,355.33,357.99,-0.75,0.22726,639.58,74.36,70.72,22.95,0.9978,,,,not requested,ok
+sweep forward,trace93.csv,742.7,1406,divider fit (R0=990 ohm),,2,1405,0.9,0.0,355.4527,358.0,-0.72,0.26042,732.63,78.41,69.19,36.88,0.9976,,,,not requested,ok
+sweep forward,trace94.csv,741.74,1406,divider fit (R0=990 ohm),,1,1405,0.9,0.0,355.8164,358.0,-0.61,0.27278,766.63,77.08,73.05,24.59,0.9995,,,,not requested,ok
+sweep forward,trace95.csv,740.98,1404,divider fit (R0=990 ohm),,1,1403,0.7,0.0,356.0984,358.0,-0.53,0.32254,905.76,64.55,64.47,3.27,0.9993,,,,not requested,ok
+sweep forward,trace96.csv,740.09,1403,divider fit (R0=990 ohm),,1,1402,0.4,0.0,356.3509,359.0,-0.74,0.34967,981.26,63.0,62.02,11.01,0.9993,,,,not requested,ok
+sweep forward,trace97.csv,739.0,1403,divider fit (R0=990 ohm),,1,1402,0.2,0.0,356.4294,358.995,-0.72,0.35983,1009.54,62.48,61.55,10.77,0.9993,,,,not requested,ok
+sweep forward,trace98.csv,736.63,1402,divider fit (R0=990 ohm),,1,1401,0.3,0.0,356.5182,359.0,-0.7,0.35463,994.71,70.84,65.22,27.64,0.9994,,,,not requested,ok
+sweep forward,trace99.csv,734.89,1402,divider fit (R0=990 ohm),,1,1401,0.1,0.0,356.6495,361.0,-1.22,0.37926,1063.41,66.66,64.95,15.0,0.9993,,,,not requested,ok
+sweep forward,trace100.csv,732.88,1402,divider fit (R0=990 ohm),,1,1401,0.8,0.0,356.743,360.01,-0.92,0.34451,965.7,102.44,82.0,61.4,0.9993,,,,not requested,ok
+sweep forward,trace101.csv,730.48,1402,divider fit (R0=990 ohm),,1,1401,0.5,0.0,356.4975,361.0,-1.26,0.36224,1016.11,80.27,79.43,11.53,0.9991,,,,not requested,ok
+sweep forward,trace102.csv,728.72,1402,divider fit (R0=990 ohm),,1,1401,0.3,0.0,356.7488,360.0,-0.91,0.43574,1221.41,70.48,69.81,9.66,0.9992,,,,not requested,ok
+sweep forward,trace103.csv,726.97,1401,divider fit (R0=990 ohm),,1,1400,0.1,0.0,356.735,360.0,-0.92,0.44542,1248.61,67.25,63.17,23.04,0.9991,,,,not requested,ok
+sweep forward,trace104.csv,726.61,1410,divider fit (R0=990 ohm),,0,0,,100.0,354.3882,354.01,0.11,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace105.csv,724.79,1411,divider fit (R0=990 ohm),,0,0,,100.0,354.3496,353.01,0.38,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace106.csv,724.79,1410,divider fit (R0=990 ohm),,0,0,,100.0,354.418,353.01,0.4,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace107.csv,724.45,1410,divider fit (R0=990 ohm),,1,0,,66.7,354.4634,353.01,0.41,,,,,,0.9006,,,,not requested,only 33 % of points lie on a branch wide enough to fit
+sweep forward,trace108.csv,723.35,1410,divider fit (R0=990 ohm),,1,0,,66.6,354.5515,353.0,0.44,,,,,,0.9386,,,,not requested,only 33 % of points lie on a branch wide enough to fit
+sweep forward,trace109.csv,722.99,1406,divider fit (R0=990 ohm),,1,1405,0.3,0.0,355.7993,357.0,-0.34,0.33481,941.01,75.79,69.82,29.46,0.9993,,,,not requested,ok
+sweep forward,trace110.csv,722.34,1405,divider fit (R0=990 ohm),,1,1404,0.3,0.0,355.9209,356.0,-0.02,0.34326,964.43,80.2,68.12,42.32,0.9993,,,,not requested,ok
+sweep forward,trace111.csv,722.19,1404,divider fit (R0=990 ohm),,1,1403,0.2,0.0,356.0463,357.0,-0.27,0.37266,1046.65,91.66,66.26,63.32,0.9992,,,,not requested,ok
+sweep forward,trace112.csv,719.96,1404,divider fit (R0=990 ohm),,1,1403,0.5,0.0,356.2031,355.01,0.33,0.43533,1222.15,61.74,57.57,22.26,0.9991,,,,not requested,ok
+sweep forward,trace113.csv,718.36,1402,divider fit (R0=990 ohm),,1,1401,0.3,0.0,356.5246,357.0,-0.13,0.48508,1360.59,58.92,52.38,26.92,0.999,,,,not requested,ok
+sweep forward,trace114.csv,715.98,1402,divider fit (R0=990 ohm),,1,1401,0.6,0.0,356.7066,356.01,0.2,0.51861,1453.88,62.82,53.18,33.39,0.9987,,,,not requested,ok
+sweep forward,trace115.csv,711.97,1401,divider fit (R0=990 ohm),,1,1400,0.1,0.0,356.795,357.0,-0.06,0.56255,1576.67,53.47,49.54,20.02,0.9986,,,,not requested,ok
+sweep forward,trace116.csv,705.61,1404,divider fit (R0=990 ohm),,1,1403,0.1,0.0,355.9836,353.0,0.84,0.56873,1597.63,47.78,46.89,8.95,0.9985,,,,not requested,ok
+sweep forward,trace117.csv,696.97,1406,divider fit (R0=990 ohm),,1,1405,0.2,0.0,355.4349,352.01,0.96,0.61032,1717.12,43.76,43.63,2.25,0.9984,,,,not requested,ok
+sweep forward,trace118.csv,691.27,1411,divider fit (R0=990 ohm),,1,1410,0.1,0.0,354.3872,352.0,0.67,0.59479,1678.36,70.26,41.76,56.43,0.9987,,,,not requested,ok
+sweep forward,trace119.csv,677.58,1367,divider fit (R0=990 ohm),,1,1362,0.7,0.3,365.7526,354.0,3.21,0.62617,1712.0,330.99,50.97,326.98,0.9743,,,,not requested,ok
+sweep forward,trace120.csv,689.59,1363,divider fit (R0=990 ohm),,2,1350,0.7,0.9,366.6667,352.0,4.0,0.71374,1946.57,185.5,62.1,174.62,0.8802,,,,not requested,ok
+sweep forward,trace121.csv,688.51,1370,divider fit (R0=990 ohm),,2,1364,0.9,0.4,365.0131,351.0,3.84,0.77793,2131.23,92.24,77.51,49.28,0.8315,,,,not requested,ok
+sweep forward,trace122.csv,687.53,1363,divider fit (R0=990 ohm),,2,1359,0.2,0.2,366.7048,350.0,4.56,0.82386,2246.66,102.51,83.15,59.17,0.8327,,,,not requested,ok
+sweep forward,trace123.csv,684.45,1365,divider fit (R0=990 ohm),,2,1356,0.7,0.6,366.3636,351.0,4.19,0.88282,2409.7,111.48,86.04,70.06,0.869,,,,not requested,ok
+sweep forward,trace124.csv,681.18,1353,divider fit (R0=990 ohm),,2,1352,1.0,0.0,369.0496,350.0,5.16,1.06117,2875.42,91.24,88.55,16.54,0.8736,,,,not requested,ok
+sweep forward,trace125.csv,679.46,1336,divider fit (R0=990 ohm),,2,1335,0.9,0.0,374.3079,350.99,6.23,1.12939,3017.28,99.63,87.13,45.11,0.8695,,,,not requested,ok
+sweep forward,trace126.csv,678.2,1329,divider fit (R0=990 ohm),,2,1328,0.6,0.0,376.3441,352.005,6.47,1.16845,3104.75,91.41,89.44,4.67,0.8555,,,,not requested,ok
+sweep forward,trace127.csv,673.68,1300,divider fit (R0=990 ohm),,2,1295,0.6,0.3,384.5781,354.0,7.95,1.16786,3036.73,105.65,85.0,59.45,0.9127,,,,not requested,ok
+sweep forward,trace128.csv,671.79,1299,divider fit (R0=990 ohm),,2,1298,0.2,0.0,385.1549,350.0,9.13,1.15598,3001.35,93.69,90.91,10.35,0.8922,,,,not requested,ok
+sweep forward,trace129.csv,668.72,1289,divider fit (R0=990 ohm),,2,1286,0.9,0.2,387.7407,348.0,10.25,1.13386,2924.27,109.81,100.72,38.73,0.9064,,,,not requested,ok
+sweep forward,trace130.csv,665.39,1282,divider fit (R0=990 ohm),,2,1276,0.8,0.4,390.0117,348.0,10.77,1.12297,2879.32,105.46,94.65,41.8,0.8947,,,,not requested,ok
+sweep forward,trace131.csv,662.1,1286,divider fit (R0=990 ohm),,2,1285,2.3,0.0,388.8023,348.99,10.24,1.05918,2724.22,189.07,100.92,158.71,0.9284,,,,not requested,ok
+sweep forward,trace132.csv,656.25,1277,divider fit (R0=990 ohm),,2,1269,0.8,0.5,391.5737,346.0,11.64,1.0248,2617.14,158.51,99.53,121.85,0.9359,,,,not requested,ok
+sweep forward,trace133.csv,648.33,1270,divider fit (R0=990 ohm),,2,1264,2.1,0.4,393.1545,342.0,13.01,0.99115,2521.03,183.79,103.57,150.61,0.9207,,,,not requested,ok
+sweep forward,trace134.csv,643.17,1280,divider fit (R0=990 ohm),,2,1279,0.9,0.0,390.5934,342.99,12.19,1.06429,2724.81,158.59,96.68,124.08,0.9131,,,,not requested,ok
+sweep forward,trace135.csv,640.23,1289,divider fit (R0=990 ohm),,2,1288,2.6,0.0,387.8898,341.0,12.09,0.88764,2288.39,205.23,97.9,179.61,0.9337,,,,not requested,ok
+sweep forward,trace136.csv,634.72,1284,divider fit (R0=990 ohm),,2,1283,0.6,0.0,389.5097,339.0,12.97,0.94601,2428.73,151.05,96.83,114.47,0.9292,,,,not requested,ok
+sweep forward,trace137.csv,629.28,1279,divider fit (R0=990 ohm),,2,1276,0.7,0.2,390.4421,339.0,13.18,0.93985,2407.14,108.9,90.48,57.74,0.9312,,,,not requested,ok
+sweep forward,trace138.csv,624.19,1281,divider fit (R0=990 ohm),,2,1277,0.3,0.2,390.432,337.0,13.69,0.90286,2312.47,175.86,90.58,149.68,0.9401,,,,not requested,ok
+sweep forward,trace139.csv,615.34,1321,divider fit (R0=990 ohm),,2,1313,0.4,0.5,378.3811,334.0,11.73,0.62611,1654.71,300.28,78.31,289.63,0.9726,,,,not requested,ok
+sweep forward,trace140.csv,608.94,1303,divider fit (R0=990 ohm),,2,1300,1.1,0.2,383.5614,335.0,12.66,0.7392,1927.2,193.86,86.17,173.05,0.963,,,,not requested,ok
+sweep forward,trace141.csv,604.87,1299,divider fit (R0=990 ohm),,2,1298,1.1,0.0,384.9908,335.0,12.98,0.74917,1945.93,219.57,93.58,198.08,0.954,,,,not requested,ok
+sweep forward,trace142.csv,603.02,1295,divider fit (R0=990 ohm),,2,1291,1.6,0.2,386.1337,336.0,12.98,0.72824,1885.97,258.08,85.33,243.13,0.9706,,,,not requested,ok
+sweep forward,trace143.csv,597.58,1281,divider fit (R0=990 ohm),,2,1275,1.4,0.4,390.2023,335.0,14.15,0.78758,2018.4,223.46,89.28,204.21,0.9572,,,,not requested,ok
+sweep forward,trace144.csv,594.44,1291,divider fit (R0=990 ohm),,2,1285,1.7,0.4,387.1403,334.0,13.73,0.761,1965.69,234.4,102.53,210.2,0.913,,,,not requested,ok
+sweep forward,trace145.csv,591.93,1291,divider fit (R0=990 ohm),,2,1287,0.7,0.2,386.7163,334.99,13.38,0.85285,2205.35,149.08,94.39,114.12,0.9357,,,,not requested,ok
+sweep forward,trace146.csv,589.09,1299,divider fit (R0=990 ohm),,2,1295,0.5,0.2,385.0609,334.0,13.26,0.83919,2179.37,163.14,89.72,135.23,0.9325,,,,not requested,ok
+sweep forward,trace147.csv,582.9,1294,divider fit (R0=990 ohm),,2,1292,0.2,0.1,386.1732,334.0,13.51,0.86426,2238.02,150.15,87.55,120.73,0.9411,,,,not requested,ok
+sweep forward,trace148.csv,578.62,1310,divider fit (R0=990 ohm),,2,1305,1.2,0.3,381.8556,332.0,13.06,0.69426,1818.13,217.74,86.2,199.45,0.9564,,,,not requested,ok
+sweep forward,trace149.csv,573.61,1317,divider fit (R0=990 ohm),,2,1312,1.7,0.3,379.3587,334.0,11.96,0.76753,2023.22,278.67,83.2,265.56,0.9615,,,,not requested,ok
+sweep forward,trace150.csv,565.56,1318,divider fit (R0=990 ohm),,2,1309,1.1,0.6,379.4715,331.0,12.77,0.75767,1996.64,184.74,76.78,167.32,0.9391,,,,not requested,ok
+sweep forward,trace151.csv,562.6,1300,divider fit (R0=990 ohm),,2,1290,1.2,0.7,384.5289,333.0,13.4,0.81087,2108.73,128.14,86.05,93.43,0.9355,,,,not requested,ok
+sweep forward,trace152.csv,559.55,1304,divider fit (R0=990 ohm),,2,1301,0.3,0.2,383.2924,333.0,13.12,0.86609,2259.61,100.64,82.16,55.37,0.9413,,,,not requested,ok
+sweep forward,trace153.csv,554.85,1322,divider fit (R0=990 ohm),,2,1321,1.0,0.0,378.0363,334.0,11.65,0.83313,2203.83,188.61,79.35,170.39,0.9454,,,,not requested,ok
+sweep forward,trace154.csv,553.2,1308,divider fit (R0=990 ohm),,2,1307,1.1,0.0,382.3428,336.0,12.12,0.95214,2490.28,139.93,82.81,111.33,0.9452,,,,not requested,ok
+sweep forward,trace155.csv,549.91,1326,divider fit (R0=990 ohm),,2,1323,0.8,0.2,377.2355,334.0,11.46,0.8147,2159.67,156.3,80.56,133.06,0.9547,,,,not requested,ok
+sweep forward,trace156.csv,544.28,1337,divider fit (R0=990 ohm),,2,1317,2.4,1.4,373.8713,332.0,11.2,0.64922,1736.49,229.01,92.22,209.26,0.9465,,,,not requested,ok
+sweep forward,trace157.csv,538.36,1321,divider fit (R0=990 ohm),,2,1317,0.9,0.2,378.3106,330.0,12.77,0.7169,1894.99,106.5,85.87,61.39,0.9614,,,,not requested,ok
+sweep forward,trace158.csv,532.39,1302,divider fit (R0=990 ohm),,2,1298,2.2,0.2,383.9631,333.01,13.27,0.6972,1815.8,184.66,81.93,164.87,0.9584,,,,not requested,ok
+sweep forward,trace159.csv,526.48,1311,divider fit (R0=990 ohm),,2,1305,5.8,0.4,381.3595,331.0,13.21,0.46659,1223.49,235.62,96.15,214.87,0.973,,,,not requested,ok
+sweep forward,trace160.csv,521.35,1291,divider fit (R0=990 ohm),,2,1264,10.2,2.0,387.2357,331.0,14.52,0.41768,1078.62,305.98,100.24,288.9,0.9604,,,,not requested,ok
+sweep forward,trace161.csv,517.6,1291,divider fit (R0=990 ohm),,2,1281,9.4,0.7,387.0147,330.0,14.73,0.43834,1132.61,365.54,105.86,349.7,0.9631,,,,not requested,ok
+sweep forward,trace162.csv,514.64,1287,divider fit (R0=990 ohm),,2,1276,5.9,0.8,388.5459,331.0,14.81,0.45567,1172.76,301.63,99.2,284.51,0.9707,,,,not requested,ok
+sweep forward,trace163.csv,511.24,1298,divider fit (R0=990 ohm),,2,1287,4.8,0.8,385.0293,335.0,12.99,0.57033,1481.26,258.05,105.29,235.25,0.9585,,,,not requested,ok
+sweep forward,trace164.csv,509.36,1302,divider fit (R0=990 ohm),,2,1296,3.1,0.4,384.0538,335.0,12.77,0.50487,1314.59,315.51,96.78,300.07,0.9696,,,,not requested,ok
+sweep forward,trace165.csv,506.33,1278,divider fit (R0=990 ohm),,2,1274,2.8,0.2,390.6915,345.01,11.69,0.55328,1416.16,451.52,93.68,441.48,0.9725,,,,not requested,ok
+sweep forward,trace166.csv,504.27,1264,divider fit (R0=990 ohm),,2,1263,2.3,0.0,395.6168,342.0,13.55,0.72972,1844.5,340.78,86.69,329.14,0.9584,,,,not requested,ok
+sweep forward,trace167.csv,501.71,1268,divider fit (R0=990 ohm),,2,1266,3.4,0.1,394.2802,342.0,13.26,0.77477,1965.04,436.16,91.49,426.13,0.9575,,,,not requested,ok
+sweep forward,trace168.csv,499.12,1262,divider fit (R0=990 ohm),,2,1258,1.7,0.2,396.3251,343.0,13.45,0.75277,1899.38,439.95,90.18,430.31,0.9545,,,,not requested,ok
+sweep forward,trace169.csv,497.7,1258,divider fit (R0=990 ohm),,2,1257,3.7,0.0,397.3126,345.0,13.17,0.72765,1831.44,439.91,99.81,428.15,0.94,,,,not requested,ok
+sweep forward,trace170.csv,495.33,1265,divider fit (R0=990 ohm),,2,1261,2.8,0.2,395.3521,343.0,13.24,0.76568,1936.7,415.08,98.26,403.0,0.9443,,,,not requested,ok
+sweep forward,trace171.csv,493.84,1268,divider fit (R0=990 ohm),,2,1258,4.1,0.7,394.2628,344.0,12.75,0.70519,1788.63,364.89,103.64,349.58,0.9547,,,,not requested,ok
+sweep forward,trace172.csv,492.26,1276,divider fit (R0=990 ohm),,2,1270,1.8,0.4,391.789,346.0,11.69,0.69704,1779.12,434.29,94.75,423.62,0.954,,,,not requested,ok
+sweep forward,trace173.csv,489.56,1263,divider fit (R0=990 ohm),,2,1252,5.2,0.8,395.8217,349.99,11.58,0.70244,1774.63,415.7,107.67,401.27,0.9556,,,,not requested,ok
+sweep forward,trace174.csv,486.26,1258,divider fit (R0=990 ohm),,2,1242,3.5,1.2,397.3365,344.0,13.42,0.6974,1755.19,304.14,99.17,287.18,0.9668,,,,not requested,ok
+sweep forward,trace175.csv,483.75,1287,divider fit (R0=990 ohm),,2,1276,3.6,0.8,388.4269,340.0,12.47,0.57943,1491.74,398.66,100.34,385.67,0.9732,,,,not requested,ok
+sweep forward,trace176.csv,481.23,1301,divider fit (R0=990 ohm),,2,1290,3.3,0.8,384.14,343.0,10.71,0.52523,1367.29,496.21,99.91,485.96,0.9679,,,,not requested,ok
+sweep forward,trace177.csv,477.86,1285,divider fit (R0=990 ohm),,2,1275,2.5,0.7,389.2181,353.0,9.31,0.57606,1480.05,366.23,98.5,352.59,0.9781,,,,not requested,ok
+sweep forward,trace178.csv,476.74,1283,divider fit (R0=990 ohm),,2,1267,2.0,1.2,389.6771,358.0,8.13,0.48423,1242.64,474.53,104.03,462.92,0.9786,,,,not requested,ok
+sweep forward,trace179.csv,474.22,1267,divider fit (R0=990 ohm),,2,1260,2.5,0.5,394.6019,364.0,7.76,0.56097,1421.6,487.18,100.34,476.64,0.9745,,,,not requested,ok
+sweep forward,trace180.csv,472.47,1262,divider fit (R0=990 ohm),,2,1258,3.4,0.2,396.3473,373.0,5.89,0.51772,1306.23,628.62,107.48,619.3,0.9732,,,,not requested,ok
+sweep forward,trace181.csv,470.97,1252,divider fit (R0=990 ohm),,2,1241,3.1,0.8,399.3213,377.0,5.59,0.57496,1439.84,598.48,103.41,589.4,0.9728,,,,not requested,ok
+sweep forward,trace182.csv,468.66,1247,divider fit (R0=990 ohm),,2,1241,4.8,0.4,401.0875,386.0,3.76,0.6153,1534.09,596.12,102.18,587.22,0.9703,,,,not requested,ok
+sweep forward,trace183.csv,466.06,1239,divider fit (R0=990 ohm),,2,1238,1.4,0.0,403.4087,389.005,3.57,0.67578,1675.18,620.46,90.15,613.77,0.9688,,,,not requested,ok
+sweep forward,trace184.csv,463.86,1222,divider fit (R0=990 ohm),,2,1221,2.1,0.0,408.9705,382.99,6.35,0.89752,2194.59,492.9,94.89,483.41,0.9564,,,,not requested,ok
+sweep forward,trace185.csv,460.98,1201,divider fit (R0=990 ohm),,2,1199,1.0,0.1,416.135,394.0,5.32,0.96447,2317.69,476.05,91.84,466.79,0.9585,,,,not requested,ok
+sweep forward,trace186.csv,455.94,1172,divider fit (R0=990 ohm),,2,1171,1.7,0.0,426.4389,419.0,1.74,1.09525,2568.36,322.13,101.55,305.07,0.9355,,,,not requested,ok
+sweep forward,trace187.csv,451.76,1199,divider fit (R0=990 ohm),,2,1193,2.5,0.4,416.773,390.505,6.3,0.73493,1763.37,503.73,104.74,492.53,0.964,,,,not requested,ok
+sweep forward,trace188.csv,449.15,1186,divider fit (R0=990 ohm),,2,1182,1.8,0.3,421.0878,386.0,8.33,0.87205,2070.95,352.64,98.08,338.34,0.9639,,,,not requested,ok
+sweep forward,trace189.csv,446.29,1159,divider fit (R0=990 ohm),,2,1149,1.0,0.8,430.7427,407.0,5.51,0.9812,2277.92,314.92,106.3,295.82,0.9511,,,,not requested,ok
+sweep forward,trace190.csv,443.62,1187,divider fit (R0=990 ohm),,2,1176,2.3,0.8,420.8061,380.49,9.58,0.76643,1821.33,451.61,105.66,438.84,0.9659,,,,not requested,ok
+sweep forward,trace191.csv,437.4,1197,divider fit (R0=990 ohm),,2,1175,1.6,1.8,417.546,385.0,7.79,0.69609,1667.09,563.71,110.01,552.73,0.9695,,,,not requested,ok
+sweep forward,trace192.csv,431.41,1138,divider fit (R0=990 ohm),,2,1111,12.0,2.3,439.4538,446.0,-1.49,0.33489,762.05,833.71,136.27,822.47,0.9732,,,,not requested,ok
+sweep forward,trace193.csv,426.41,1136,divider fit (R0=990 ohm),,2,1113,2.0,1.9,439.9145,452.0,-2.75,0.18391,418.05,607.52,105.49,598.29,0.9907,,,,not requested,ok
+sweep forward,trace194.csv,425.37,1097,divider fit (R0=990 ohm),,3,1065,1.2,2.8,455.4854,458.5,-0.66,0.44613,979.46,438.77,108.86,424.97,0.9813,,,,not requested,ok
+sweep forward,trace195.csv,426.26,1178,divider fit (R0=990 ohm),,0,0,,100.0,424.0501,394.0,7.09,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace196.csv,424.15,1155,divider fit (R0=990 ohm),,2,1126,2.9,2.4,432.9497,426.005,1.6,0.18883,436.15,462.59,110.29,449.24,0.9958,,,,not requested,ok
+sweep forward,trace197.csv,422.69,1148,divider fit (R0=990 ohm),,2,1126,2.1,1.8,435.5187,450.0,-3.33,0.27817,638.71,294.5,99.03,277.33,0.992,,,,not requested,ok
+sweep forward,trace198.csv,421.9,1131,divider fit (R0=990 ohm),,2,1114,1.4,1.4,441.9832,454.01,-2.72,0.38537,871.91,342.22,97.34,328.04,0.9915,,,,not requested,ok
+sweep forward,trace199.csv,420.87,1088,divider fit (R0=990 ohm),,2,1078,0.7,0.8,459.3836,460.0,-0.13,0.62455,1359.53,374.96,106.14,359.44,0.9796,,,,not requested,ok
+sweep forward,trace200.csv,418.92,989,divider fit (R0=990 ohm),,2,982,4.5,0.6,505.7085,476.0,5.87,1.11691,2208.6,226.33,94.05,204.57,0.8775,,,,not requested,ok
+sweep forward,trace201.csv,414.06,983,divider fit (R0=990 ohm),,2,979,0.2,0.3,508.5112,488.995,3.84,1.38262,2718.95,102.38,90.89,38.76,0.9022,,,,not requested,ok
+sweep forward,trace202.csv,409.46,934,divider fit (R0=990 ohm),,2,933,1.6,0.0,535.6549,503.0,6.1,1.50531,2810.23,131.83,92.27,89.92,0.8581,,,,not requested,ok
+sweep forward,trace203.csv,405.51,933,divider fit (R0=990 ohm),,2,932,1.9,0.0,535.8991,508.0,5.21,1.37052,2557.43,151.49,98.47,112.35,0.8404,,,,not requested,ok
+sweep forward,trace204.csv,397.68,953,divider fit (R0=990 ohm),,0,0,,100.0,524.8613,526.0,-0.22,,,,,,,,,,not requested,"map is clusters, not a curve (no branch spans 0.10 V with 10 points)"
+sweep forward,trace205.csv,395.8,899,divider fit (R0=990 ohm),,2,898,0.8,0.0,556.2049,531.0,4.53,1.34112,2411.19,117.11,105.91,43.77,0.8997,,,,not requested,ok
+sweep forward,trace206.csv,393.45,865,divider fit (R0=990 ohm),,2,864,2.2,0.0,578.3032,560.0,3.16,1.23314,2132.34,106.67,103.88,11.16,0.8751,,,,not requested,ok
+sweep forward,trace207.csv,388.08,937,divider fit (R0=990 ohm),,2,936,1.3,0.0,533.5791,529.0,0.86,0.7841,1469.5,157.6,103.71,117.78,0.9407,,,,not requested,ok
+sweep forward,trace208.csv,384.39,931,divider fit (R0=990 ohm),,2,922,0.5,0.9,537.4312,522.505,2.78,0.90336,1680.89,251.6,86.34,235.66,0.9381,,,,not requested,ok
+sweep forward,trace209.csv,380.07,854,divider fit (R0=990 ohm),,2,851,1.3,0.2,585.5158,549.0,6.24,0.83868,1432.37,282.96,97.32,265.26,0.8904,,,,not requested,ok
+sweep forward,trace210.csv,375.71,820,divider fit (R0=990 ohm),,2,818,1.1,0.1,609.619,588.0,3.55,0.95741,1570.5,180.47,107.1,144.4,0.8563,,,,not requested,ok
+sweep forward,trace211.csv,371.52,837,divider fit (R0=990 ohm),,2,827,3.4,1.1,596.2787,598.5,-0.37,0.92585,1552.72,332.68,109.07,314.06,0.8978,,,,not requested,ok
+sweep forward,trace212.csv,367.12,793,divider fit (R0=990 ohm),,2,792,2.5,0.0,630.3737,620.995,1.49,1.01316,1607.24,165.82,113.43,119.94,0.8886,,,,not requested,ok
+sweep forward,trace213.csv,363.69,786,divider fit (R0=990 ohm),,2,776,4.0,1.1,636.0382,628.0,1.26,1.30955,2058.91,277.22,104.84,255.67,0.913,,,,not requested,ok
+sweep forward,trace214.csv,361.19,770,divider fit (R0=990 ohm),,2,762,2.8,0.9,648.3368,650.01,-0.26,1.05836,1632.42,195.99,108.95,162.0,0.9287,,,,not requested,ok
+sweep forward,trace215.csv,358.06,735,divider fit (R0=990 ohm),,2,732,2.9,0.3,680.1935,653.005,4.0,1.22594,1802.34,118.42,102.11,56.55,0.9066,,,,not requested,ok
+sweep forward,trace217.csv,359.32,1382,divider fit (R0=990 ohm),,0,0,,,361.7755,362.0,-0.06,,,,,,,,,,not requested,map spread 0.073 V below --min-spread
+sweep forward,trace218.csv,348.85,1383,divider fit (R0=990 ohm),,0,0,,,361.5601,362.0,-0.12,,,,,,,,,,not requested,map spread 0.058 V below --min-spread
+sweep forward,trace219.csv,333.03,554,divider fit (R0=990 ohm),,0,0,,,361.132,361.2,-0.02,,,,,,,,,,not requested,map spread 0.050 V below --min-spread
+sweep forward,trace221.csv,298.6,555,divider fit (R0=990 ohm),,0,0,,,360.3227,360.4,-0.02,,,,,,,,,,not requested,map spread 0.046 V below --min-spread
+sweep forward,trace222.csv,273.58,556,divider fit (R0=990 ohm),,0,0,,,359.7514,359.61,0.04,,,,,,,,,,not requested,map spread 0.038 V below --min-spread
+sweep forward,trace225.csv,144.69,560,divider fit (R0=990 ohm),,0,0,,,357.2937,357.59,-0.08,,,,,,,,,,not requested,map spread 0.034 V below --min-spread
+sweep forward,trace228.csv,20.95,563,divider fit (R0=990 ohm),,0,0,,,355.3758,355.59,-0.06,,,,,,,,,,not requested,map spread 0.027 V below --min-spread
+sweep forward,trace229.csv,2.56,563,divider fit (R0=990 ohm),,0,0,,,355.1787,355.595,-0.12,,,,,,,,,,not requested,map spread 0.019 V below --min-spread

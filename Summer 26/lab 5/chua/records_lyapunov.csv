@@ -1,5 +1,7 @@
-sweep,filename,rpot_ohm,n_maxima,n_branches,n_slopes,unresolved_pct,cluster_pct,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_map_per_s,lambda_map_err_per_s,lambda_map_err_stat,lambda_map_err_width,map_r2_within_branch,lambda_rosenstein_per_s,lambda_rosenstein_err_per_s,status
-records,doublescroll start - 666.0 ohm.csv,666.0,1376,0,0,,,363.3476,353.992,2.57,,,,,,,1399.0,13.12,map spans only 21 quantisation steps of 201 mV (under --min-steps)
-records,doublescroll 2 - 656.7ohm.csv,656.7,1332,0,0,,,375.4155,352.9936,5.97,,,,,,,1639.88,13.54,map spans only 21 quantisation steps of 201 mV (under --min-steps)
-records,chaos - 716.9 ohm.csv,716.9,1411,0,0,,,354.2745,354.0069,0.08,,,,,,,352.45,4.01,map spans only 5 quantisation steps of 201 mV (under --min-steps)
-records,limitcycle2 - 764.6 ohm.csv,764.6,1428,0,0,,,350.2551,349.9985,0.07,,,,,,,-11.8,0.63,map spans only 1 quantisation steps of 201 mV (under --min-steps)
+sweep,filename,rpot_ohm,n_maxima,rpot_source,nominal_rpot_ohm,n_branches,n_slopes,unresolved_pct,cluster_pct,mean_T_us,median_T_us,mean_vs_median_pct,mean_ln_abs_fprime,lambda_map_per_s,lambda_map_err_per_s,lambda_map_err_stat,lambda_map_err_width,map_r2_within_branch,lambda_rosenstein_per_s,lambda_rosenstein_err_per_s,rosenstein_fit_r2,rosenstein_status,status
+records,chaos - 716.9 ohm.csv,709.03,1411,divider fit (R0=990 ohm),716.9,0,0,,,354.2745,354.0,0.08,,,,,,,352.12,4.15,0.9028,ok,map spans only 5 quantisation steps of 201 mV (under --min-steps)
+records,doublescroll 2 - 656.7ohm.csv,642.87,1332,divider fit (R0=990 ohm),656.7,0,0,,,375.4155,353.0,5.97,,,,,,,1636.96,13.55,0.9989,ok,map spans only 21 quantisation steps of 201 mV (under --min-steps)
+records,doublescroll end - 316.1ohm.csv,315.63,1402,divider fit (R0=990 ohm),316.1,0,0,,,356.6674,357.0,-0.09,,,,,,,0.64,0.83,0.0009,ok,map spread 0.072 V below --min-spread
+records,doublescroll start - 666.0 ohm.csv,654.77,1376,divider fit (R0=990 ohm),666.0,0,0,,,363.3367,353.0,2.84,,,,,,,1396.85,13.0,0.9987,ok,map spans only 21 quantisation steps of 201 mV (under --min-steps)
+records,limitcycle1 - 773.0 ohm.csv,760.12,1427,divider fit (R0=990 ohm),773.0,0,0,,,350.1935,350.0,0.06,,,,,,,-0.36,1.37,0.0006,ok,map spread 0.081 V below --min-spread
+records,limitcycle2 - 764.6 ohm.csv,752.14,1428,divider fit (R0=990 ohm),764.6,0,0,,,350.2733,350.0,0.08,,,,,,,-11.77,0.63,0.3359,ok,map spans only 1 quantisation steps of 201 mV (under --min-steps)

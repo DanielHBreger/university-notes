@@ -1,155 +1,54 @@
-"""
-Simulate the Chua oscillator of Fig. 2 with the MEASURED nonlinear element.
+"""Simulate the measured Chua circuit with fixed-step RK4.
 
-The circuit (K1 closed, K2 in CHAOS): C1 in parallel with N_R at node 1,
-L and C2 at node 2, and R0 + Rpot between the two nodes. With v1 = v_C1,
-v2 = v_C2 and iL the inductor current flowing from node 2 to ground:
+C1 dv1/dt = (v2-v1)/Rt - g(v1)
+C2 dv2/dt = (v1-v2)/Rt - iL
+L diL/dt = v2 - rL*iL; Rt = 990 ohm + Rpot.
 
-    C1 dv1/dt = (v2 - v1)/Rt - g(v1)
-    C2 dv2/dt = (v1 - v2)/Rt - iL           Rt = R0 + Rpot
-    L  diL/dt = v2 - rL iL                   rL = inductor series resistance
+The five measured segments are read from ../diode_fit.json, produced by
+find_breakpoints.py using voltage ACROSS the nonlinear element. No shunt
+correction is needed. The default retains the measured current offset.
+--i0 auto is an explicit alternative calibration assumption, not a measured
+correction: it sets g(0)=0. Its effect on the equilibria must be reported.
+Independent fits are joined over --blend volts. Both starts (+1 and -1 V)
+are simulated at every resistance; this tests initial-condition dependence,
+not experimental up/down continuation hysteresis. Model/measurement disagreement
+must remain visible, and a time-step convergence check is required.
 
-g(v) is the current into N_R. It is NOT the textbook three-segment odd
-function: it is the five-segment piecewise-linear fit that find_breakpoints.py
-found on trace1.csv (V-I measurement, K2 in VI), copied verbatim into
-NR_SEGMENTS below. Two things about that fit matter for the simulation and
-are exposed as options:
-
-  --shunt   find_breakpoints.py plots the current against CH1 = V_V, the
-            SOURCE side of the 216 ohm shunt. The voltage across N_R is
-            V_I = V_V - Rs*i (Fig. 2 caption). The default, --shunt 216,
-            re-expresses the fitted lines against V_I. --shunt 0 takes the
-            fit exactly as printed, which is NOT the diode the circuit sees:
-            the slopes come out 10 % (inner) to 45 % (saturated) too small.
-  --i0      the fitted curve passes through g(0) = -0.51 mA, i.e. the
-            whole curve sits 0.5 mA low (0.11 V of CH1-CH2 offset, about one
-            scope quantum). A Chua diode passes no current at v = 0, and the
-            measured oscillator lives further on the NEGATIVE side, which a
-            downward offset cannot produce. The default, --i0 auto, removes
-            it; --i0 0 keeps it.
-
-With the fit taken literally (--shunt 0 --i0 0) the load line -v/Rt misses
-the negative-slope segments for every Rpot above ~600 ohm: the only
-equilibrium is in the saturated (positive-slope) branch near +5.4 V and it
-is stable, so the simulated circuit sits at DC where the bench shows limit
-cycles and chaos. The fitted segments also do not quite meet at the
-breakpoints (steps of up to 0.2 mA); they are bridged linearly over --blend
-volts so the integrator sees a continuous function. Beyond the fitted range
-(-9.33 V .. 8.28 V, where the trace saturates) the outer segments are
-extended, which is the physically right thing: there the op-amps are railed
-and N_R is a plain resistor.
-
-Calibration against the bench (why C1 is not 10 nF here)
----------------------------------------------------------
-The integrator itself is verified: with the textbook parameters of
-Matsumoto (alpha = 9, beta = 100/7, a = -8/7, b = -5/7) it reproduces the
-canonical double scroll (x in +-2.24, y in +-0.40, z in +-3.18), and the
-attractor statistics do not change between dt = 1, 0.5 and 0.25 us.
-
-With the nominal C1 = 10 nF and the corrected diode, however, every
-transition sits far too high in Rpot: Hopf at ~1000 ohm (bench 880-905),
-double scroll from ~950 ohm down (bench 665-690) and the large outer limit
-cycle from 580 ohm down (bench 310-360). The inductor's series resistance
-(--rl) moves the Hopf point but not the double-scroll or crisis points, and
-the bench records show <v_C2> independent of <i_L>, so rL is small
-(< ~5 ohm). What moves the WHOLE sequence into place is C1: with
-C1 = 11.5 nF (alpha = C2/C1 = 8.7 instead of 10) the simulation gives
-Hopf 884, period doubling ~780, chaos ~750, double scroll ~700, large
-cycle ~340 ohm (bench: 880-905, 775, 750, 665-690, 310-360), the
-Hopf-point period 331 us (bench 330 us) and the oscillation period
-343-350 us in the limit-cycle records (bench 350 us). A 15 % high
-"10 nF" ceramic capacitor is within its tolerance; C2 and L are pinned
-near nominal by the Hopf frequency and by beta = R^2 C2/L, so the excess
-cannot be moved onto them. --c1 10 restores the nominal value.
-
-What the diode fit cannot pin down: the positions of the outer equilibria
-v1* = -c/(Gb + 1/Rt) are a small difference of two nearly equal slopes and
-are therefore hypersensitive to the shoulder intercepts c (+-0.1 mA, i.e.
-1/6 of the 0.6 mA current quantum of the V-I trace, moves v1* by ~25 %).
-With the fit as printed the simulated attractors are ~10-15 % larger than
-the records (equilibrium -3.9 V at the Hopf point against -3.0..-3.2 V
-measured); --bp-scale 0.8 pulls the inner breakpoints in so that c shrinks
-by 20 % and the records are matched to within ~10 % on both sides. It is
-left at 1 (fit as measured) by default; the bifurcation thresholds do not
-depend on it.
-
-Sweep protocol
---------------
-Integration is a fixed-step RK4 vectorised over a batch of resistances, so a
-601-point bifurcation sweep costs about as much as a handful of single runs.
-The --r portrait runs start from v1(0) = +1 V and from v1(0) = -1 V, because
-the single-scroll attractors around the two outer equilibria coexist. The
-bifurcation sweep mimics the bench instead: the "forward" set starts every R
-on the negative outer equilibrium (plus 50 mV), as the measured forward
-sweep does when it leaves DC, and the "back" set starts every R on the large
-outer limit cycle, as the measured back sweep does; the settling time is
-long enough (--skip 0.06 s by default) for the slow growth near the Hopf
-point, which the old 20 ms transient did not resolve.
-
-Channel convention: in the records CH1 = v_C1 (the large swing, across N_R)
-and CH2 = v_C2, as rpot.py documents; the labels in the Fig. 2 caption are
-the other way round.
-
-Outputs, written beside this script (--tag adds a suffix to the names):
-
-    simulated_nr.png            g(v) with the load lines -v/Rt of the chosen R
-    simulated_portraits.png     v2 vs v1 for each --r: both starts and, when a
-                                "<...> <R> ohm.csv" record exists, the scope
-    simulated_timeseries.png    v1(t) for each --r
-    simulated_bifurcation.png   maxima of v1 against Rpot, measured sweep
-                                points (from bifurcation.py) underneath
-    simulated/                  with --export: one scope-format CSV per --r
-                                (Time, CH1 = v1, CH2 = v2, CH3 = midpoint) so
-                                batch_rpot / lorenz_map / lyapunov run on it
-
-Usage:
-    python simulate.py                                  # calibrated model
-    python simulate.py --c1 10 --tag _nominal           # nominal C1 = 10 nF
-    python simulate.py --shunt 0 --i0 0 --tag _literal  # fit taken literally
-    python simulate.py --bp-scale 0.8 --tag _bp08       # records-matched diode
-    python simulate.py --r 773 716.9 656.7 316.1 --export --t 0.2
+Run: python simulate.py
+     python simulate.py --i0 auto --tag _corrected
 """
 import argparse
 import glob
 import os
 import re
+import json
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from scope_data import read_scope, R0
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# ---- circuit values -----------------------------------------------------------
-# Fig. 2 gives C1 = 10 nF, C2 = 100 nF, L = 18 mH. C1 is the calibrated value
-# (see the docstring); the others are nominal. main() overrides them from the
-# command line (--c1 --c2 --l --r0), so read them through the module globals.
-C1_NOMINAL = 10e-9
-C1 = 11.5e-9      # F, effective value that puts the bench's bifurcations in place
+# ---- circuit values from page 1 of the experiment plan --------------------
+C1 = 10e-9        # F
 C2 = 100e-9       # F
 L = 18e-3         # H
-R0 = 990.0        # ohm, fixed part of the coupling resistance
 RS_BENCH = 216.0  # ohm, the shunt of the V-I measurement
 
+# ---- Reproducible fitted data: element voltage in V, slope in S, current in A ----
+def load_nr_segments(path=None):
+    path = path or os.path.join(HERE, '..', 'diode_fit.json')
+    with open(path, encoding='utf-8') as fh:
+        fit = json.load(fh)
+    if fit.get('voltage_basis') != 'element':
+        raise ValueError('diode_fit.json must use voltage across the element')
+    return [(f['v_lo'], f['v_hi'], f['slope_S'], f['intercept_A'])
+            for f in fit['segments']]
 
-def set_components(c1=None, c2=None, l=None, r0=None):
-    """Override the component values used by every function in this module."""
-    global C1, C2, L, R0
-    if c1 is not None: C1 = c1
-    if c2 is not None: C2 = c2
-    if l is not None: L = l
-    if r0 is not None: R0 = r0
 
-# ---- N_R: output of find_breakpoints.py on ../trace1.csv (R^2 = 0.9757) ----
-# (V_lo, V_hi, slope [S], intercept [A]); i = slope * V + intercept, V = CH1
-NR_SEGMENTS = [
-    (-9.330, -6.164,  2.0483e-03,  1.5342e-02),
-    (-6.164, -1.142, -4.6218e-04, -4.6379e-05),
-    (-1.142,  0.856, -8.9042e-04, -5.1227e-04),
-    ( 0.856,  5.371, -4.7317e-04, -8.4943e-04),
-    ( 5.371,  8.280,  2.1063e-03, -1.4491e-02),
-]
+NR_SEGMENTS = load_nr_segments()
 V_EXTEND = 40.0   # V, how far the outer segments are extrapolated
 
 
@@ -172,6 +71,8 @@ def nr_segments_v(segments=NR_SEGMENTS, shunt=0.0, i0=0.0):
     out = []
     for lo, hi, m, b in segments:
         k = 1.0 - shunt * m
+        if not np.isfinite(k) or k <= 0:
+            raise ValueError('shunt transformation is not single-valued')
         G, c = m / k, (b - i0) / k
         i_lo, i_hi = m * lo + b - i0, m * hi + b - i0
         out.append((lo - shunt * i_lo, hi - shunt * i_hi, G, c))
@@ -189,6 +90,8 @@ def nr_knots(segments_v, blend=0.05, extend=V_EXTEND):
     are extended to +-`extend` volts.
     """
     n = len(segments_v)
+    if blend <= 0 or not np.isfinite(blend):
+        raise ValueError('blend must be positive and finite')
     vs, cs = [], []
     for k, (lo, hi, G, c) in enumerate(segments_v):
         a = -extend if k == 0 else 0.5 * (segments_v[k - 1][1] + lo) + blend / 2
@@ -197,45 +100,21 @@ def nr_knots(segments_v, blend=0.05, extend=V_EXTEND):
         cs += [G * a + c, G * z + c]
     vs, cs = np.array(vs), np.array(cs)
     if np.any(np.diff(vs) <= 0):
-        raise ValueError('N_R knots not monotonic; increase --blend')
+        raise ValueError('N_R knots not monotonic; use a smaller positive --blend')
     return vs, cs
 
 
-def scale_inner_breakpoints(segments_v, scale):
-    """
-    Move the two inner breakpoints (Ga/Gb joints) inward by `scale`, keeping
-    every slope. The shoulder lines are re-anchored on the inner (Ga) line at
-    the new breakpoints, so their intercepts c shrink by about `scale`; this
-    is the one degree of freedom of the fit that the equilibria v1* =
-    -c/(Gb + 1/Rt) are hypersensitive to and that the quantised V-I trace
-    cannot pin down (R^2 is flat to 5 decimals for breakpoints anywhere in
-    -1.5..-0.75 V). scale = 1 returns the segments untouched.
-    """
-    if scale == 1.0:
-        return list(segments_v)
-    s = list(segments_v)
-    (lo1, hi1, Gn, cn), (lo2, hi2, Ga, ca), (lo3, hi3, Gp, cp) = s[1], s[2], s[3]
-    bn = 0.5 * (hi1 + lo2) * scale
-    bp = 0.5 * (hi2 + lo3) * scale
-    s[2] = (bn, bp, Ga, ca)
-    s[1] = (lo1, bn, Gn, Ga * bn + ca - Gn * bn)
-    s[3] = (bp, hi3, Gp, Ga * bp + ca - Gp * bp)
-    return s
-
-
-def make_g(blend=0.05, shunt=RS_BENCH, i0=None, bp_scale=1.0):
-    """
-    The nonlinear element as a callable g(v) [A]. Defaults: shunt corrected,
-    fitted current offset removed, breakpoints as fitted.
-    """
-    if i0 is None:
-        i0 = fitted_offset()
-    segs = scale_inner_breakpoints(nr_segments_v(NR_SEGMENTS, shunt, i0),
-                                   bp_scale)
+def make_g(blend=0.05, shunt=0.0, i0=0.0, segments=None):
+    if shunt != 0 and segments is None:
+        raise ValueError('the saved fit already uses element voltage; use --shunt 0')
+    segs = nr_segments_v(NR_SEGMENTS if segments is None else segments, shunt, i0)
     vk, ik = nr_knots(segs, blend=blend)
 
     def g(v):
-        return np.interp(v, vk, ik)
+        v = np.asarray(v)
+        value = np.interp(v, vk, ik)
+        value = np.where(v < vk[0], segs[0][2]*v + segs[0][3], value)
+        return np.where(v > vk[-1], segs[-1][2]*v + segs[-1][3], value)
     g.knots = (vk, ik)
     g.segments = segs
     return g
@@ -257,10 +136,23 @@ def equilibria(g, Rt, rL):
     """
     from scipy.optimize import brentq
     h = lambda v: g(v) + v / (Rt + rL)
-    vs = np.linspace(-15, 15, 30001)
+    if Rt <= 0 or rL < 0:
+        raise ValueError('Rt must be positive and rL nonnegative')
+    vs = g.knots[0] if hasattr(g, 'knots') else np.linspace(-40, 40, 80001)
     hv = h(vs)
     idx = np.flatnonzero(hv[:-1] * hv[1:] < 0)
-    return [brentq(h, vs[k], vs[k + 1]) for k in idx]
+    roots = list(vs[np.abs(hv) < 1e-12])
+    roots.extend(brentq(h, vs[k], vs[k + 1]) for k in idx)
+    if hasattr(g, 'segments'):
+        for side,k in [(-1,0),(1,-1)]:
+            _,_,G,c = g.segments[k]
+            slope = G + 1/(Rt+rL)
+            if abs(slope)>1e-15:
+                root = -c/slope
+                if side*(root-vs[k]) > 0:
+                    roots.append(root)
+    roots = sorted(roots)
+    return [r for i,r in enumerate(roots) if i==0 or abs(r-roots[i-1])>1e-7]
 
 
 def stability(g, v1, Rt, rL, dv=1e-4):
@@ -270,33 +162,6 @@ def stability(g, v1, Rt, rL, dv=1e-4):
                   [1 / (Rt * C2), -1 / (Rt * C2), -1 / C2],
                   [0.0, 1 / L, -rL / L]])
     return np.linalg.eigvals(J), G
-
-
-def hopf_point(g, rL, side=-1, rt_range=(1200.0, 3200.0)):
-    """
-    (Rt, v1*, period) where the outer equilibrium on `side` loses stability
-    through its complex pair as Rt decreases; None if it never does. This is
-    the DC -> limit cycle transition of the measured forward sweep.
-    """
-    from scipy.optimize import brentq
-
-    def re_part(Rt):
-        eqs = [v for v in equilibria(g, Rt, rL) if np.sign(v) == side]
-        if not eqs:
-            return np.nan
-        ev, _ = stability(g, eqs[0], Rt, rL)
-        return ev[np.abs(ev.imag) > 1.0].real.max()
-
-    Rs = np.arange(rt_range[0], rt_range[1], 10.0)
-    vals = np.array([re_part(R) for R in Rs])
-    idx = [k for k in np.flatnonzero(np.sign(vals[:-1]) != np.sign(vals[1:]))
-           if np.isfinite(vals[k]) and np.isfinite(vals[k + 1])]
-    if not idx:
-        return None
-    Rh = brentq(re_part, Rs[idx[-1]], Rs[idx[-1] + 1])
-    v = [v for v in equilibria(g, Rh, rL) if np.sign(v) == side][0]
-    ev, _ = stability(g, v, Rh, rL)
-    return Rh, v, 2 * np.pi / np.abs(ev.imag).max()
 
 
 # ---- integrator ------------------------------------------------------------
@@ -317,26 +182,31 @@ def rk4_step(y, dt, Rt, rL, g):
     return y + (dt / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
 
 
-def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0, y0=None):
+def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0):
     """
-    Integrate a batch from (v1, v2, iL) = (v1_0, 0, 0), or from the full
-    initial state y0 of shape (3, n) when given. rpot and v1_0 broadcast to
-    the same length.
+    Integrate a batch from (v1, v2, iL) = (v1_0, 0, 0). rpot and v1_0
+    broadcast to the same length.
 
     keep=True  -> returns (t, Y) with Y of shape (nt, 3, n) for t >= t_skip.
     keep=False -> returns the list of v1-maxima per column found after
                   t_skip (for the bifurcation diagram); nothing stored.
     """
     rpot = np.atleast_1d(np.asarray(rpot, float))
+    if rpot.ndim != 1 or not np.isfinite(rpot).all() or np.any(rpot < 0):
+        raise ValueError('potentiometer resistances must be finite and nonnegative')
+    if not np.isfinite([t_end, dt, rL, t_skip]).all() or dt <= 0 or rL < 0 or not 0 <= t_skip < t_end:
+        raise ValueError('require dt > 0, rL >= 0 and 0 <= skip < duration')
+    v1_0 = np.broadcast_to(np.asarray(v1_0, float), rpot.shape)
     Rt = R0 + rpot
     n = len(rpot)
-    if y0 is None:
-        y = np.zeros((3, n))
-        y[0] = np.broadcast_to(np.asarray(v1_0, float), rpot.shape)
-    else:
-        y = np.array(y0, float).reshape(3, n)
-    nsteps = int(round(t_end / dt))
-    n_skip = int(round(t_skip / dt))
+    y = np.zeros((3, n))
+    y[0] = v1_0
+    if not np.isfinite(v1_0).all():
+        raise ValueError('initial voltage must be finite')
+    nsteps = int(np.floor(t_end / dt + 1e-10))
+    n_skip = int(np.ceil(t_skip / dt - 1e-10))
+    if nsteps <= n_skip:
+        raise ValueError('no integration steps remain after the transient')
 
     if keep:
         out = np.empty((nsteps - n_skip + 1, 3, n))
@@ -344,13 +214,17 @@ def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0, y0=None):
         j = 1
         for k in range(1, nsteps + 1):
             y = rk4_step(y, dt, Rt, rL, g)
+            if k % 1000 == 0 and (not np.isfinite(y).all() or np.max(np.abs(y))>1e6):
+                raise ValueError('integration diverged; reduce --dt or check the model')
             if k == n_skip:
                 out[0] = y
                 j = 1
             elif k > n_skip:
                 out[j] = y
                 j += 1
-        t = t_skip + dt * np.arange(out.shape[0])
+        if not np.isfinite(out).all():
+            raise ValueError('integration produced non-finite states')
+        t = dt * np.arange(n_skip, nsteps + 1)
         return t, out
 
     maxima = [[] for _ in range(n)]
@@ -358,9 +232,11 @@ def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0, y0=None):
     prev1 = y[0].copy()
     for k in range(1, nsteps + 1):
         y = rk4_step(y, dt, Rt, rL, g)
+        if k % 1000 == 0 and (not np.isfinite(y).all() or np.max(np.abs(y))>1e6):
+            raise ValueError('integration diverged; reduce --dt or check the model')
         cur = y[0]
         if k > n_skip:
-            hit = (prev1 > prev2) & (prev1 >= cur)
+            hit = (prev1 - prev2 > 1e-10) & (prev1 >= cur)
             for i in np.flatnonzero(hit):
                 maxima[i].append(prev1[i])
         prev2, prev1 = prev1, cur.copy()
@@ -370,30 +246,6 @@ def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0, y0=None):
 def midpoint(v1, v2, rpot):
     """Node 3 (CH3): between R0 on the C2 side and Rpot on the C1 side."""
     return v2 + (v1 - v2) * R0 / (R0 + rpot)
-
-
-def sweep_starts(g, rpot, rL, side=-1, eps=0.05):
-    """
-    Initial states (3, n) for the two bifurcation sweeps.
-
-    forward: on the outer equilibrium of the chosen side, nudged by `eps` in
-             v1 -- what the bench does when the forward sweep leaves DC. Where
-             that side has no equilibrium (Rt below 1/|Ga|, only the origin
-             is left) the origin is used.
-    back:    on the large outer limit cycle, (v1, v2, iL) = (7 V, 6 V, 0),
-             which is inside its basin wherever it exists.
-    """
-    rpot = np.atleast_1d(np.asarray(rpot, float))
-    fwd = np.zeros((3, len(rpot)))
-    for k, r in enumerate(rpot):
-        Rt = R0 + r
-        eqs = [v for v in equilibria(g, Rt, rL) if np.sign(v) == side]
-        v = eqs[0] if eqs else 0.0
-        iL = v / (Rt + rL)
-        fwd[:, k] = (v + eps, rL * iL, iL)
-    back = np.zeros((3, len(rpot)))
-    back[0], back[1] = 7.0, 6.0
-    return fwd, back
 
 
 # ---- measured records ------------------------------------------------------
@@ -408,36 +260,46 @@ def find_records(folder):
 
 
 def load_record(path, n_max=None):
-    d = np.genfromtxt(path, delimiter=',', skip_header=1, max_rows=n_max)
-    return d[:, 0], d[:, 1], d[:, 2]     # t, CH1 = v_C1, CH2 = v_C2
+    t, channels = read_scope(path)
+    if n_max is not None:
+        if n_max < 3:
+            raise ValueError('n_max must allow at least three samples')
+        t, channels = t[:n_max], channels[:n_max]
+    return t, channels[:, 0], channels[:, 1]
 
 
 def load_measured_bifurcation(folder):
-    """(rpot, max_v, sweep) from the *_bifurcation_points.csv sidecars."""
-    rows = []
-    for f in glob.glob(os.path.join(folder, '*_bifurcation_points.csv')):
-        with open(f) as fh:
-            head = fh.readline().strip().split(',')
-            ir, im, isw = (head.index('rpot_ohm'), head.index('max_v'),
-                           head.index('sweep'))
-            for line in fh:
-                p = line.strip().split(',')
+    """Read measurement sidecars once per record, excluding simulation exports."""
+    import csv
+    records = {}
+    for path in sorted(glob.glob(os.path.join(folder, '*_bifurcation_points.csv'))):
+        with open(path, newline='') as fh:
+            reader = csv.DictReader(fh)
+            if not {'sweep','filename','rpot_ohm','max_v'}.issubset(reader.fieldnames or []):
+                continue
+            current = {}
+            for row in reader:
                 try:
-                    rows.append((float(p[ir]), float(p[im]), p[isw]))
-                except (ValueError, IndexError):
-                    pass
-    return rows
+                    value = (float(row['rpot_ohm']), float(row['max_v']), row['sweep'])
+                except (ValueError, TypeError):
+                    continue
+                if not np.isfinite(value[:2]).all():
+                    continue
+                current.setdefault((row['sweep'],row['filename']),[]).append(value)
+            for key,values in current.items():
+                records.setdefault(key,values)
+    return [value for values in records.values() for value in values]
 
 
 # ---- figures ---------------------------------------------------------------
-def plot_nr(g, rpots, path, shunt=0.0, i0=0.0):
+def plot_nr(g, rpots, path, shunt=0.0, i0=0.0, rL=0.0):
     v = np.linspace(-10, 10, 2001)
     fig, ax = plt.subplots(figsize=(8, 5))
     raw = os.path.join(HERE, '..', 'trace1.csv')
     if os.path.exists(raw):
         d = np.genfromtxt(raw, delimiter=',', skip_header=1)
         i_m = (d[:, 1] - d[:, 2]) / RS_BENCH
-        ax.plot(d[:, 1] - shunt * i_m, (i_m - i0) * 1e3, '.', ms=1,
+        ax.plot(d[:, 2], (i_m - i0) * 1e3, '.', ms=1,
                 alpha=0.15, color='steelblue',
                 label='measured (trace1.csv)'
                       + (', same corrections' if shunt or i0 else ''))
@@ -445,13 +307,13 @@ def plot_nr(g, rpots, path, shunt=0.0, i0=0.0):
     for (_, hi, _, _), (lo, _, _, _) in zip(g.segments[:-1], g.segments[1:]):
         ax.axvline(0.5 * (hi + lo), color='grey', ls='--', lw=0.7)
     for r in rpots:
-        ax.plot(v, -v / (R0 + r) * 1e3, lw=0.9,
+        ax.plot(v, -v / (R0 + r + rL) * 1e3, lw=0.9,
                 label=f'load line, Rpot = {r:g} ohm')
     ax.set_xlabel('v across N_R  (V)')
     ax.set_ylabel('current into N_R  (mA)')
-    what = (f'shunt {shunt:g} ohm, {i0 * 1e3:.2f} mA offset removed'
-            if shunt or i0 else 'fit taken literally')
-    ax.set_title(f'Nonlinear element used in the simulation ({what})')
+    what = (f'{i0 * 1e3:.3f} mA offset removed (assumption)'
+            if i0 else 'Measured current offset retained')
+    ax.set_title(f'Nonlinear element used in the simulation\n{what}')
     ax.set_ylim(-6, 6)
     ax.grid(alpha=0.3)
     ax.legend(fontsize=8)
@@ -460,7 +322,7 @@ def plot_nr(g, rpots, path, shunt=0.0, i0=0.0):
     plt.close(fig)
 
 
-def plot_portraits(runs, records, path, n_meas):
+def plot_portraits(runs, records, path, n_meas, model_note='Measured current offset retained'):
     """
     runs: list of (rpot, t, Yplus, Yminus) with Y of shape (nt, 3).
     One row per R: sim from +1 V, sim from -1 V, measured (if any).
@@ -471,14 +333,31 @@ def plot_portraits(runs, records, path, n_meas):
         for col, (y, tag) in enumerate([(yp, 'v1(0) = +1 V'),
                                         (ym, 'v1(0) = -1 V')]):
             ax = axes[row, col]
-            ax.plot(y[:, 0], y[:, 1], lw=0.3, color='C0')
+            if np.ptp(y[:,0]) < 1e-7:
+                ax.plot(y[-1,0],y[-1,1],'o',color='C0',ms=4)
+                ax.text(.03,.92,'Settled equilibrium',transform=ax.transAxes,fontsize=8)
+            else:
+                ax.plot(y[:, 0], y[:, 1], lw=0.35, alpha=.7, color='C0')
             ax.set_title(f'simulated, Rpot = {r:g} ohm, {tag}', fontsize=9)
         ax = axes[row, 2]
         rec = records.get(r)
         if rec:
+            from lorenz_map import period_samples
+            from scipy.signal import savgol_filter
+            from rpot import rpot as measure_rpot
             _, v1, v2 = load_record(rec, n_meas)
-            ax.plot(v1, v2, lw=0.3, color='C3')
-            ax.set_title(f'measured: {os.path.basename(rec)}', fontsize=9)
+            window = max(5, (period_samples(v1)//20)|1)
+            window = min(window, len(v1) if len(v1)%2 else len(v1)-1)
+            step = max(1, len(v1)//60000)
+            ax.scatter(v1[::step], v2[::step], s=2, alpha=.08, color='0.5', lw=0,
+                       rasterized=True)
+            if window > 3:
+                a,b = savgol_filter(v1,window,3),savgol_filter(v2,window,3)
+                ax.scatter(a[::step],b[::step],s=1,alpha=.15,color='C3',lw=0,
+                           rasterized=True)
+            measured_r = measure_rpot(rec,R0,1.0)[0]
+            ax.set_title(f'Measured Rpot = {measured_r:.1f} Ω (nominal {r:g} Ω)\n'
+                         f'Grey: raw codes; red: SG {window} samples', fontsize=9)
         else:
             ax.set_title('no measured record at this Rpot', fontsize=9)
             ax.set_axis_off()
@@ -486,13 +365,22 @@ def plot_portraits(runs, records, path, n_meas):
             ax.grid(alpha=0.3)
             ax.set_xlabel('v1 = v_C1 (V)')
             ax.set_ylabel('v2 = v_C2 (V)')
-    fig.suptitle('Chua oscillator: phase portraits (v_C2 against v_C1)')
+        available = [yp[:,[0,1]], ym[:,[0,1]]]
+        if rec:
+            available.append(np.column_stack([v1,v2]))
+        points = np.concatenate(available)
+        for dim in (0,1):
+            lo,hi = points[:,dim].min(),points[:,dim].max()
+            pad = max(.08*(hi-lo),.05)
+            for ax in axes[row]:
+                (ax.set_xlim if dim==0 else ax.set_ylim)(lo-pad,hi+pad)
+    fig.suptitle(f'Chua phase portraits · {model_note}\nShared voltage limits within each row')
     fig.tight_layout()
     fig.savefig(path, dpi=130)
     plt.close(fig)
 
 
-def plot_timeseries(runs, path, window=0.01):
+def plot_timeseries(runs, path, window=0.01, model_note='Measured current offset retained'):
     nrow = len(runs)
     fig, axes = plt.subplots(nrow, 1, figsize=(12, 1.9 * nrow), squeeze=False,
                              sharex=True)
@@ -507,30 +395,33 @@ def plot_timeseries(runs, path, window=0.01):
         ax.grid(alpha=0.3)
     axes[0, 0].legend(fontsize=8, loc='upper right')
     axes[-1, 0].set_xlabel('time after transient (ms)')
+    fig.suptitle(f'Simulated V1 · {model_note}')
     fig.tight_layout()
     fig.savefig(path, dpi=130)
     plt.close(fig)
 
 
-def plot_bifurcation(rpot, max_fwd, max_back, measured, path, subtitle=''):
+def plot_bifurcation(rpot, max_plus, max_minus, measured, path,
+                     model_note='Measured current offset retained'):
     fig, ax = plt.subplots(figsize=(14, 7.5))
     if measured:
         sweeps = sorted({s for _, _, s in measured})
-        for s, c in zip(sweeps, ['0.65', '0.8']):
+        for k,s in enumerate(sweeps):
+            c = plt.get_cmap('Greys')(.45+.4*k/max(len(sweeps)-1,1))
             pts = np.array([(r, m) for r, m, sw in measured if sw == s])
             ax.plot(pts[:, 0], pts[:, 1], '.', ms=0.7, color=c, alpha=0.6,
                     label=f'measured, {s}', zorder=1)
-    for maxima, c, tag in [(max_fwd, 'C0', 'sim, forward (from equilibrium)'),
-                           (max_back, 'C3', 'sim, back (from large cycle)')]:
+    for maxima, c, tag in [(max_plus, 'C0', 'sim, v1(0) = +1 V'),
+                           (max_minus, 'C3', 'sim, v1(0) = -1 V')]:
         xs = np.concatenate([np.full(len(m), r) for r, m in zip(rpot, maxima)])
         ys = np.concatenate([np.asarray(m, float) for m in maxima])
-        ax.plot(xs, ys, '.', ms=0.45, color=c, alpha=0.8, label=tag, zorder=2)
+        ax.plot(xs, ys, '.', ms=1.0, color=c, alpha=0.5, label=tag, zorder=2)
     ax.set_xlabel('Rpot (ohm)')
     ax.set_ylabel('local maxima of v1 = v_C1 (V)')
-    ax.set_title('Bifurcation diagram: simulated maxima of v1 against Rpot'
-                 + (f'  ({subtitle})' if subtitle else ''))
+    ax.set_title(f'Simulation and measurement · {model_note}\n'
+                 'Two initial conditions at each resistance; this is not a continuation sweep')
     ax.grid(alpha=0.3)
-    ax.legend(markerscale=15, fontsize=9)
+    ax.legend(markerscale=4, fontsize=9)
     fig.tight_layout()
     fig.savefig(path, dpi=450)
     plt.close(fig)
@@ -543,9 +434,7 @@ def describe(m):
         return 'no maxima (settled)'
     k = len(np.unique(np.round(m, 2)))
     lo, hi = m.min(), m.max()
-    if hi > 5:
-        return f'large cycle, max {hi:4.2f}'
-    if hi > 1 > 0 > lo:
+    if hi > 0 > lo:
         return f'double scroll, {k:3d} lvls'
     return f'{k:3d} lvls  [{lo:5.2f},{hi:5.2f}]'
 
@@ -558,37 +447,26 @@ def main():
                    default=[773.0, 764.6, 716.9, 666.0, 656.7, 316.1],
                    help='potentiometer values for portraits/time series (ohm); '
                         'defaults are the six recorded regimes')
-    p.add_argument('--shunt', type=float, default=RS_BENCH,
+    p.add_argument('--shunt', type=float, default=0.0,
                    help='shunt Rs (ohm) used to convert the fit from CH1 = V_V '
-                        'to the voltage across N_R; 216 = the bench value '
-                        '(default), 0 = fit taken literally')
-    p.add_argument('--i0', default='auto',
+                        'to the voltage across N_R; saved fits require 0, '
+                        '216 = the bench value')
+    p.add_argument('--i0', default='0',
                    help='current offset (mA) subtracted from the fit; '
-                        '"auto" (default) removes the fitted g(0), 0 keeps it')
-    p.add_argument('--bp-scale', type=float, default=1.0,
-                   help='scale of the two inner breakpoints of the diode '
-                        '(1 = as fitted; ~0.8 matches the record amplitudes)')
-    p.add_argument('--c1', type=float, default=C1 * 1e9,
-                   help=f'C1 in nF (default: calibrated {C1 * 1e9:g}; '
-                        f'nominal {C1_NOMINAL * 1e9:g})')
-    p.add_argument('--c2', type=float, default=C2 * 1e9, help='C2 in nF')
-    p.add_argument('--l', type=float, default=L * 1e3, help='L in mH')
-    p.add_argument('--r0', type=float, default=R0,
-                   help='fixed part of the coupling resistance (ohm)')
+                        '"auto" removes the fitted g(0)')
     p.add_argument('--rl', type=float, default=0.0,
                    help='inductor series resistance (ohm)')
     p.add_argument('--blend', type=float, default=0.05,
                    help='width (V) over which the fitted segments are joined')
     p.add_argument('--dt', type=float, default=0.5e-6, help='RK4 step (s)')
-    p.add_argument('--t', type=float, default=0.1,
+    p.add_argument('--t', type=float, default=0.06,
                    help='length of each portrait run (s)')
-    p.add_argument('--skip', type=float, default=0.06,
-                   help='transient discarded before plotting/maxima (s); '
-                        'the growth near the Hopf point takes ~50 ms')
+    p.add_argument('--skip', type=float, default=0.02,
+                   help='transient discarded before plotting/maxima (s)')
     p.add_argument('--sweep', type=float, nargs=3, default=[300, 900, 1],
                    metavar=('RMIN', 'RMAX', 'STEP'),
                    help='bifurcation sweep of Rpot (ohm)')
-    p.add_argument('--sweep-t', type=float, default=0.1,
+    p.add_argument('--sweep-t', type=float, default=0.05,
                    help='length of each sweep run (s); --skip is discarded')
     p.add_argument('--no-sweep', action='store_true')
     p.add_argument('--records', default=HERE,
@@ -600,14 +478,14 @@ def main():
     p.add_argument('--tag', default='', help='suffix for the output names')
     p.add_argument('--out', default=HERE, help='where the figures go')
     a = p.parse_args()
+    os.makedirs(a.out, exist_ok=True)
+    if a.n_meas is not None and a.n_meas < 3:
+        p.error('--n-meas must be at least 3')
 
-    set_components(a.c1 * 1e-9, a.c2 * 1e-9, a.l * 1e-3, a.r0)
     i0 = fitted_offset() if a.i0 == 'auto' else float(a.i0) * 1e-3
-    g = make_g(a.blend, a.shunt, i0, a.bp_scale)
-    print(f'circuit: C1 = {C1 * 1e9:g} nF, C2 = {C2 * 1e9:g} nF, '
-          f'L = {L * 1e3:g} mH, R0 = {R0:g} ohm, rL = {a.rl:g} ohm')
+    g = make_g(a.blend, a.shunt, i0)
     print(f'N_R model: shunt = {a.shunt:g} ohm, offset removed = '
-          f'{i0 * 1e3:.3f} mA, breakpoint scale = {a.bp_scale:g}')
+          f'{i0 * 1e3:.3f} mA, rL = {a.rl:g} ohm')
     print(f'{"v_lo":>8} {"v_hi":>8} {"G (mS)":>9} {"c (mA)":>9}')
     for lo, hi, G, c in g.segments:
         print(f'{lo:8.3f} {hi:8.3f} {G * 1e3:9.4f} {c * 1e3:9.4f}')
@@ -622,12 +500,6 @@ def main():
             parts.append(f'v1 = {v:6.2f} V, G = {G * 1e3:6.3f} mS, '
                          f'{"UNSTABLE" if re > 0 else "stable"}')
         print(f'   Rpot = {r:6.1f}:  ' + '  |  '.join(parts))
-    hopf = hopf_point(g, a.rl)
-    if hopf:
-        Rh, vh, Th = hopf
-        print(f'\nHopf point of the negative outer equilibrium: Rpot = '
-              f'{Rh - R0:.0f} ohm, v1* = {vh:.2f} V, period {Th * 1e6:.0f} us'
-              f'   (bench: 880-905 ohm, -3.0..-3.2 V, 330 us)')
 
     # ---- single runs (both starts at once, one batch) ----
     rp = np.repeat(a.r, 2)
@@ -649,13 +521,17 @@ def main():
                   f'{len(pk):8d}  {distinct:8d}')
 
     records = find_records(a.records)
+    model_note = 'Offset removed (assumption)' if i0 else 'Measured current offset retained'
     plot_nr(g, a.r, os.path.join(a.out, f'simulated_nr{a.tag}.png'),
-            a.shunt, i0)
+            a.shunt, i0, a.rl)
     plot_portraits(runs, records,
                    os.path.join(a.out, f'simulated_portraits{a.tag}.png'),
-                   a.n_meas)
+                   a.n_meas, model_note)
     plot_timeseries(runs,
-                    os.path.join(a.out, f'simulated_timeseries{a.tag}.png'))
+                    os.path.join(a.out, f'simulated_timeseries{a.tag}.png'), model_note=model_note)
+    np.savez_compressed(os.path.join(a.out, f'simulated_runs{a.tag}.npz'),
+                        t=t, states=Y, rpot=rp, initial_v1=v0,
+                        dt=a.dt, rL=a.rl, removed_offset_A=i0)
 
     if a.export:
         d = os.path.join(a.out, f'simulated{a.tag}')
@@ -672,21 +548,26 @@ def main():
     # ---- bifurcation sweep ----
     if not a.no_sweep:
         rmin, rmax, step = a.sweep
+        if not np.isfinite([rmin,rmax,step]).all() or step <= 0 or rmin < 0 or rmax < rmin:
+            p.error('sweep requires 0 <= RMIN <= RMAX and STEP > 0')
         rsw = np.arange(rmin, rmax + step / 2, step)
-        print(f'\nsweeping {len(rsw)} values of Rpot x 2 starts '
-              f'(forward: from the negative equilibrium; back: from the '
-              f'large cycle), {a.sweep_t} s each ...')
-        y_fwd, y_back = sweep_starts(g, rsw, a.rl)
-        mf = integrate(rsw, None, a.sweep_t, a.dt, a.rl, g, keep=False,
-                       t_skip=a.skip, y0=y_fwd)
-        mb = integrate(rsw, None, a.sweep_t, a.dt, a.rl, g, keep=False,
-                       t_skip=a.skip, y0=y_back)
+        print(f'\nsweeping {len(rsw)} values of Rpot x 2 starts, '
+              f'{a.sweep_t} s each ...')
+        mp = integrate(rsw, 1.0, a.sweep_t, a.dt, a.rl, g, keep=False,
+                       t_skip=a.skip)
+        mm = integrate(rsw, -1.0, a.sweep_t, a.dt, a.rl, g, keep=False,
+                       t_skip=a.skip)
         measured = load_measured_bifurcation(a.records)
-        plot_bifurcation(rsw, mf, mb, measured,
-                         os.path.join(a.out, f'simulated_bifurcation{a.tag}.png'),
-                         subtitle=f'C1 = {C1 * 1e9:g} nF, rL = {a.rl:g} ohm')
-        print(f'\n{"Rpot":>7}  {"forward":>24}  {"back":>24}')
-        for r, a1, a2 in zip(rsw, mf, mb):
+        plot_bifurcation(rsw, mp, mm, measured,
+                         os.path.join(a.out, f'simulated_bifurcation{a.tag}.png'), model_note)
+        import csv
+        with open(os.path.join(a.out,f'simulated_bifurcation{a.tag}_points.csv'),'w',newline='') as fh:
+            writer=csv.writer(fh); writer.writerow(['rpot_ohm','initial_v1_V','max_v'])
+            for start,maps in [(1,mp),(-1,mm)]:
+                for r,values in zip(rsw,maps):
+                    writer.writerows((r,start,float(value)) for value in values)
+        print(f'\n{"Rpot":>7}  {"from +1 V":>24}  {"from -1 V":>24}')
+        for r, a1, a2 in zip(rsw, mp, mm):
             if abs(r - round(r / 25) * 25) > step / 2:
                 continue
             print(f'{r:7.1f}  {describe(a1):>24}  {describe(a2):>24}')

@@ -1,0 +1,34 @@
+{
+  "raw_records_checked": 525,
+  "all_raw_hashes_unchanged": true,
+  "sweep_checks": [
+    {
+      "folder": "chua/sweep forward",
+      "admitted_records": 99,
+      "maxima": 72352,
+      "return_pairs": 72253,
+      "status": "passed"
+    },
+    {
+      "folder": "chua/sweep back",
+      "admitted_records": 57,
+      "maxima": 45936,
+      "return_pairs": 45879,
+      "status": "passed"
+    },
+    {
+      "folder": "chua/set 2/sweep forward",
+      "admitted_records": 215,
+      "maxima": 232651,
+      "return_pairs": 232436,
+      "status": "passed"
+    },
+    {
+      "folder": "chua/set 2/sweep back",
+      "admitted_records": 62,
+      "maxima": 60907,
+      "return_pairs": 60845,
+      "status": "passed"
+    }
+  ]
+}

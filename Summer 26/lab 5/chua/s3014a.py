@@ -14,7 +14,6 @@ Libraries or NI-VISA, the script will use those automatically.
 import tkinter as tk
 from tkinter import messagebox, simpledialog, filedialog, ttk
 import matplotlib
-matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter, MultipleLocator
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -61,12 +60,13 @@ class HostnameFilter(logging.Filter):
         return True
 
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 logger.addFilter(HostnameFilter())
 
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.DEBUG)
+console_handler.addFilter(HostnameFilter())
 console_handler.setFormatter(
     logging.Formatter('%(asctime)s %(levelname)s [%(hostname)s] %(message)s'))
 logger.addHandler(console_handler)
@@ -99,20 +99,27 @@ def find_scope():
             logger.error("pyvisa-py also unavailable: %s", e2)
             return None, None
 
-    for addr in rm.list_resources():
-        if not any(k in addr.upper() for k in ("USB", "TCPIP", "GPIB")):
-            continue
-        try:
-            inst = rm.open_resource(addr)
-            inst.timeout = 3000
-            idn = inst.query("*IDN?").strip()
-            inst.close()
-        except Exception:
-            continue
-        logger.info("Found instrument at %s: %s", addr, idn)
-        if any(k in idn.upper() for k in
-               ("INFINIIVISION", "DSO-X", "MSO-X", "AGILENT", "KEYSIGHT")):
-            return addr, idn
+    try:
+        for addr in rm.list_resources():
+            if not any(k in addr.upper() for k in ("USB", "TCPIP", "GPIB")):
+                continue
+            inst = None
+            try:
+                inst = rm.open_resource(addr)
+                inst.timeout = 3000
+                idn = inst.query("*IDN?").strip()
+            except Exception:
+                continue
+            finally:
+                if inst is not None:
+                    inst.close()
+            logger.info("Found instrument at %s: %s", addr, idn)
+            if any(k in idn.upper() for k in ("INFINIIVISION", "DSO-X", "MSO-X")):
+                return addr, idn
+    except Exception as exc:
+        logger.warning('VISA resource search failed: %s', exc)
+    finally:
+        rm.close()
     logger.warning("No InfiniiVision oscilloscope found")
     return None, None
 
@@ -125,6 +132,7 @@ class Oscilloscope:
             rm = pyvisa.ResourceManager()
         except Exception:
             rm = pyvisa.ResourceManager('@py')
+        self.rm = rm
         self.inst = rm.open_resource(address)
         self.inst.timeout = VISA_TIMEOUT_MS
         try:
@@ -139,6 +147,8 @@ class Oscilloscope:
             self.inst.close()
         except Exception:
             pass
+        finally:
+            self.rm.close()
 
     def active_channels(self, channels=CHANNELS):
         out = []
@@ -318,6 +328,17 @@ class Oscilloscope:
         self._prev_tb_mode = None
 
     def get_trace(self, channels=CHANNELS, deep=True):
+        """Restore instrument mode and acquisition even after a transfer fails."""
+        try:
+            return self._read_trace(channels, deep)
+        finally:
+            self._restore_timebase_mode()
+            try:
+                self.inst.write(':RUN')
+            except Exception:
+                pass
+
+    def _read_trace(self, channels=CHANNELS, deep=True):
         """Single acquisition, then read the waveform for each channel.
 
         With deep=True the full acquisition memory is transferred. The line
@@ -374,18 +395,21 @@ class Oscilloscope:
                         ch, len(raw), dt_transfer, len(raw) * 2 / 1000 / dt_transfer)
             data.append((raw - yref) * yinc + yorg)
 
-            if t_axis is None or len(data[-1]) < len(t_axis):
-                t_axis = (np.arange(len(data[-1])) - xref) * xinc + xorg
+            if not len(raw) or not np.isfinite(data[-1]).all() or xinc <= 0:
+                raise RuntimeError(f'Invalid waveform from CH{ch}')
+            channel_time = (np.arange(len(raw)) - xref) * xinc + xorg
+            if t_axis is None:
+                t_axis = channel_time
+            else:
+                shared = min(len(t_axis), len(channel_time))
+                if not np.allclose(t_axis[:shared],channel_time[:shared],rtol=0,atol=xinc*1e-6):
+                    raise RuntimeError('Channels have different sample times; capture again')
+                t_axis = t_axis[:shared]
 
             offsets.append(float(v.query(f":CHANnel{ch}:OFFSet?")))
             scales.append(float(v.query(f":CHANnel{ch}:SCALe?")))
             names.append(f"CH{ch}")
 
-        self._restore_timebase_mode()
-        try:
-            v.write(":RUN")                                # leave the scope running
-        except Exception:
-            pass
         n = min(len(d) for d in data)
         y = np.column_stack([d[:n] for d in data])
         return t_axis[:n], y, names, offsets, scales, tb, fresh
@@ -402,29 +426,21 @@ def envelope_decimate(t, y, max_points):
     drawn envelope matches what the scope screen shows.
     """
     n = len(t)
+    if max_points < 4 or y.ndim != 2 or len(y) != n:
+        raise ValueError('invalid display limit or channel shape')
     if n <= max_points:
         return t, y
-    buckets = max_points // 2
-    step = n // buckets
-    usable = buckets * step
-    tb = t[:usable].reshape(buckets, step)
-    yb = y[:usable].reshape(buckets, step, y.shape[1])
-    idx_min = yb.argmin(axis=1)
-    idx_max = yb.argmax(axis=1)
-    out_t = np.empty(buckets * 2)
-    out_y = np.empty((buckets * 2, y.shape[1]))
-    rows = np.arange(buckets)
-    for c in range(y.shape[1]):
-        lo = np.minimum(idx_min[:, c], idx_max[:, c])
-        hi = np.maximum(idx_min[:, c], idx_max[:, c])
-        out_y[0::2, c] = yb[rows, lo, c]
-        out_y[1::2, c] = yb[rows, hi, c]
-    out_t[0::2] = tb[rows, 0]
-    out_t[1::2] = tb[rows, step - 1]
-    if usable < n:
-        out_t = np.append(out_t, t[-1])
-        out_y = np.vstack([out_y, y[-1]])
-    return out_t, out_y
+    if max_points < 2*y.shape[1]+2:
+        raise ValueError('display limit is too small to preserve all channel extrema')
+    buckets = max(1,(max_points-2)//(2*y.shape[1]))
+    edges = np.linspace(0,n,buckets+1,dtype=int)
+    indices = [0,n-1]
+    for a,b in zip(edges[:-1],edges[1:]):
+        indices.extend(a+y[a:b].argmin(axis=0))
+        indices.extend(a+y[a:b].argmax(axis=0))
+    indices = np.unique(indices)
+    # Keep actual simultaneous samples, including extrema in the final bucket.
+    return t[indices], y[indices]
 
 
 # ---------------------------------------------------------------------------
@@ -764,6 +780,8 @@ class App:
         alpha = float(np.clip(20000.0 / max(m, 1), 0.15, 0.9))
         lw = 0.3 if m > 20000 else 0.9
         self.ax.plot(x, yv, color=colour, linewidth=lw, alpha=alpha,
+                     linestyle='-' if stride == 1 else 'None',
+                     marker=None if stride == 1 else '.', markersize=.7,
                      solid_capstyle='round', rasterized=True, zorder=2)
         logger.info("XY view: %d of %d points (stride %d, alpha %.2f)",
                     m, n, stride, alpha)
@@ -978,7 +996,7 @@ class App:
             logger.debug("Frequency measurement skipped: %s", e)
 
         if cycles is not None and cycles < MIN_PERIODS_WARN:
-            need = MIN_PERIODS_WARN * 10 / f0 / 10          # s/div for MIN_PERIODS_WARN cycles
+            need = MIN_PERIODS_WARN / (10 * f0)            # ten divisions per record
             nice = min((v for _, v in TIMEBASE_CHOICES if v >= need),
                        default=TIMEBASE_CHOICES[-1][1])
             label = next((n for n, v in TIMEBASE_CHOICES if v == nice), "")
@@ -1059,10 +1077,10 @@ class App:
         if self.scope:
             self.scope.close()
         self.master.destroy()
-        os._exit(0)
 
 
 if __name__ == "__main__":
+    matplotlib.use('TkAgg')
     logger.info("Application started, version %s", VERSION)
     root = tk.Tk()
     app = App(root)
