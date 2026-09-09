@@ -53,6 +53,8 @@ def simulate(alpha, beta, m0, m1, n, dtau, seed=0, transient=50000):
     the tangent vector is renormalised every step and the log of its growth
     accumulated, which is the standard largest-exponent calculation.
     """
+    if not np.isfinite([alpha,beta,m0,m1,dtau]).all() or alpha<=0 or beta<=0 or dtau<=0 or n<1 or transient<0:
+        raise ValueError('positive alpha, beta, dtau, sample count and nonnegative transient required')
     def fx(x):
         return m1 * x + 0.5 * (m0 - m1) * (abs(x + 1) - abs(x - 1))
 
@@ -104,10 +106,12 @@ def main():
                    help='rms noise added before quantisation, V')
     p.add_argument('--seed', type=int, default=0)
     a = p.parse_args()
+    if a.samples<100 or min(a.lsb)<=0 or a.noise<0 or R0+a.rpot<=0:
+        p.error('need at least 100 samples, positive quantisation steps and nonnegative noise')
 
     R = R0 + a.rpot
-    alpha = a.alpha or C2 / C1
-    beta = a.beta or C2 * R * R / L
+    alpha = a.alpha if a.alpha is not None else C2 / C1
+    beta = a.beta if a.beta is not None else C2 * R * R / L
     unit = C2 * R                      # seconds per unit dimensionless time
     dt = 1e-6
     dtau = dt / unit

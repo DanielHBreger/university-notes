@@ -17,6 +17,7 @@ import csv
 import os
 
 from rpot import rpot
+from scope_data import R0, RPOT_MAX
 from sweeplib import (CLEAN_DIVIDER_MAX_PCT, list_csvs, resolve_folders,
                       sibling)
 
@@ -26,7 +27,7 @@ def main():
     p.add_argument('folder', nargs='?', help='folder of scope CSVs')
     p.add_argument('-o', '--out', help='output CSV (default: <folder>_rpot.csv)')
     p.add_argument('--recursive', action='store_true', help='include subfolders')
-    p.add_argument('--r0', type=float, default=992.0, help='fixed resistor, ohm')
+    p.add_argument('--r0', type=float, default=R0, help='fixed resistor, ohm')
     p.add_argument('--g21', type=float, default=1.0,
                    help='gain ratio of the v_C2 channel to the v_C1 channel')
     p.add_argument('--c1', default='CH1', help='column with v_C1')
@@ -34,6 +35,8 @@ def main():
     p.add_argument('--mid', default='CH3', help='column with the midpoint')
     p.add_argument('--max-files', type=int, help='stop after this many records')
     a = p.parse_args()
+    if a.max_files is not None and a.max_files < 1:
+        p.error('--max-files must be positive')
 
     folder = resolve_folders([a.folder] if a.folder else [], multi=False)[0]
     files = list_csvs(folder, a.recursive, full=True)
@@ -60,6 +63,8 @@ def main():
         pct = 100 * res
         status = ('ok' if pct <= CLEAN_DIVIDER_MAX_PCT
                   else 'CHECK: not a clean divider')
+        if not 0 <= r <= RPOT_MAX:
+            status = 'CHECK: outside 0-1000 ohm potentiometer range'
         print(f'-> {r:7.1f} ohm  ({pct:.2f} %)')
         rows.append({'filename': name, 'rpot_ohm': round(r, 2),
                      'residual_pct': round(pct, 3), 'status': status})

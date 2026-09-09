@@ -20,6 +20,7 @@ import csv
 import os
 import re
 import sys
+import math
 
 # rpot.py calls a divider fit above this residual "not a clean divider".
 # batch_rpot.py writes that verdict out; the plotting scripts re-derive it
@@ -35,12 +36,13 @@ def natural_key(name):
 
 def script_dir():
     """Where the running script lives - the sweep folders sit beside it."""
-    d = os.path.dirname(os.path.abspath(sys.argv[0]))
+    d = os.path.dirname(os.path.abspath(__file__))
     return d or os.getcwd()
 
 
 def sibling(folder, suffix):
     """Path of an artefact derived from `folder`, named after it."""
+    folder = os.path.normpath(folder)
     return os.path.join(os.path.dirname(folder),
                         os.path.basename(folder) + suffix)
 
@@ -56,12 +58,20 @@ def list_csvs(folder, recursive=False, full=False):
     if recursive:
         found = [os.path.join(dirpath, n)
                  for dirpath, _, names in os.walk(folder)
-                 for n in names if n.lower().endswith('.csv')]
+                 for n in names if n.lower().endswith('.csv')
+                 and is_scope_csv(os.path.join(dirpath, n))]
         found.sort(key=natural_key)
         return found if full else [os.path.relpath(f, folder) for f in found]
     names = sorted((n for n in os.listdir(folder)
-                    if n.lower().endswith('.csv')), key=natural_key)
+                    if n.lower().endswith('.csv')
+                    and is_scope_csv(os.path.join(folder, n))), key=natural_key)
     return [os.path.join(folder, n) for n in names] if full else names
+
+
+def is_scope_csv(path):
+    """Keep generated summaries out of recursive measurement input lists."""
+    with open(path, encoding='utf-8-sig') as fh:
+        return fh.readline().split(',')[0].strip() == 'Time(s)'
 
 
 def pick_folder(title='Folder of scope CSVs', initialdir=None):
@@ -145,11 +155,19 @@ def load_rpot(folder, required=False):
     with open(path, newline='') as fh:
         for row in csv.DictReader(fh):
             try:
-                out[row['filename']] = (float(row['rpot_ohm']),
-                                        float(row['residual_pct']))
+                r, residual = float(row['rpot_ohm']), float(row['residual_pct'])
+                if math.isfinite(r) and math.isfinite(residual) and residual >= 0:
+                    out[row['filename']] = (r, residual)
             except (KeyError, ValueError):
                 continue
     return out
+
+
+def folder_labels(folders):
+    """Disambiguate set 1/set 2 folders with the same basename in overlays."""
+    names = [os.path.basename(f) for f in folders]
+    return [os.path.join(os.path.basename(os.path.dirname(f)), n)
+            if names.count(n) > 1 else n for f, n in zip(folders, names)]
 
 
 def sweep_colors(n):

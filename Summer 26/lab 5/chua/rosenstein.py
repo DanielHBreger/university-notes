@@ -1,7 +1,7 @@
 """
 Largest Lyapunov exponent straight from the time series (Rosenstein 1993).
 
-This is the "proper" calculation the experiment plan says to compare the
+This is the direct time-series estimator the experiment plan compares the
 return-map estimate against. It needs no map, no maxima and no assumption
 that the flow has collapsed to a one-dimensional function: it watches how
 fast nearby points of the reconstructed attractor separate.
@@ -21,18 +21,12 @@ fast nearby points of the reconstructed attractor separate.
      attractor is wide. The slope of the straight part, per second, is
      lambda.
 
-Quantisation. The scope resolves both channels in 43 mV steps. On the raw
-codes the nearest neighbour of almost every point sits on the same code,
-the measured distance is quantisation noise for the first periods, and the
-slope reads low: on a simulated single scroll with this step the estimate
-comes out at half the true exponent. The channels are therefore smoothed
-first with the same Savitzky-Golay filter the maxima are found on (window
-a twentieth of a period, --smooth), which averages the step down over
-~17 samples without touching the dynamics. With it, simulated double
-scrolls quantised like this bench's records (benchmark_lyapunov.py) come
-out at 0.95 to 1.15 times the true exponent at the 43 mV step and about
-1.2 times it at the coarse 201 mV step; a single scroll, whose exponent is
-small, reads about 0.85. Quote it to about 20 %.
+Quantisation limits nearest-neighbour distances. Light Savitzky-Golay
+smoothing (period/20 by default) reduces its effect but cannot recover
+information absent from the recording. benchmark_lyapunov.py compares a
+specific simulated record with its variational exponent. Such calibration
+is case-specific; no universal 20 % accuracy is assumed. Both embedding and
+fit-window choices must be checked for the records being reported.
 
 The fit window is a fixed range in periods (--fit, default 0.5 to 2.5).
 Starting after half a period skips the initial stretch where the nearest
@@ -53,16 +47,13 @@ import numpy as np
 import pandas as pd
 from scipy.signal import savgol_filter
 from scipy.spatial import cKDTree
+from scope_data import read_scope, validate_time
 
 
 def load_channels(path):
     """(t, V1, V2) from a scope CSV, finite rows only."""
-    d = pd.read_csv(path, usecols=[0, 1, 2], dtype=np.float32)
-    t = d.iloc[:, 0].values.astype(np.float64)
-    v1 = d.iloc[:, 1].values.astype(np.float64)
-    v2 = d.iloc[:, 2].values.astype(np.float64)
-    ok = np.isfinite(t) & np.isfinite(v1) & np.isfinite(v2)
-    return t[ok], v1[ok], v2[ok]
+    t, values = read_scope(path, ('CH1', 'CH2'), min_samples=100)
+    return t, values[:, 0], values[:, 1]
 
 
 def embed(v1, v2, tau, smooth_window=0):
@@ -72,8 +63,17 @@ def embed(v1, v2, tau, smooth_window=0):
     With `smooth_window` (odd, >= 5) both channels are Savitzky-Golay
     smoothed first, which is what takes the quantisation out.
     """
+    v1, v2 = np.asarray(v1, float), np.asarray(v2, float)
+    if v1.ndim != 1 or v1.shape != v2.shape or not np.isfinite([v1,v2]).all():
+        raise ValueError('channels must be matching finite vectors')
+    if not 0 < tau < len(v1) or int(tau) != tau:
+        raise ValueError('embedding delay must be an integer shorter than the record')
+    if max(np.std(v1), np.std(v2)) <= 1e-12:
+        raise ValueError('flat channels have no measurable divergence')
     if smooth_window and smooth_window >= 5:
         w = int(smooth_window) | 1
+        if w > len(v1):
+            raise ValueError('smoothing window exceeds record length')
         v1 = savgol_filter(v1, w, 3)
         v2 = savgol_filter(v2, w, 3)
     n = len(v1) - tau
@@ -95,6 +95,8 @@ def nearest_recurrent(X, last, theiler, stride, tree_stride, k_query):
     asked for at once and the first admissible one is taken; a reference
     whose first batch is all excluded is retried with a much longer list.
     """
+    if min(last, stride, tree_stride, k_query) < 1 or theiler < 0:
+        raise ValueError('invalid neighbour-search parameters')
     tree_idx = np.arange(0, last, tree_stride)
     tree = cKDTree(X[tree_idx])
     refs = np.arange(0, last, stride)
@@ -103,7 +105,7 @@ def nearest_recurrent(X, last, theiler, stride, tree_stride, k_query):
     def query(rows, k):
         k = min(k, len(tree_idx))
         _, jj = tree.query(X[refs[rows]], k=k)
-        jj = np.atleast_2d(jj)
+        jj = np.asarray(jj).reshape(len(rows), k)
         j = tree_idx[jj]
         ok = np.abs(j - refs[rows][:, None]) > theiler
         found = ok.any(1)
@@ -111,11 +113,18 @@ def nearest_recurrent(X, last, theiler, stride, tree_stride, k_query):
         partner[rows[found]] = j[np.arange(len(rows)), first][found]
         return rows[~found]
 
-    for c in range(0, len(refs), 20000):
-        rows = np.arange(c, min(c + 20000, len(refs)))
+    for c in range(0, len(refs), 1000):
+        rows = np.arange(c, min(c + 1000, len(refs)))
         missing = query(rows, k_query)
-        if len(missing):
-            query(missing, 8 * k_query)
+        k = k_query
+        while len(missing) and k < len(tree_idx):
+            k = min(2*k, len(tree_idx))
+            # Bound memory even on an almost periodic orbit with many duplicates.
+            pending = []
+            batch = max(1, 500000 // k)
+            for start in range(0,len(missing),batch):
+                pending.append(query(missing[start:start+batch], k))
+            missing = np.concatenate(pending)
     keep = partner >= 0
     return refs[keep], partner[keep]
 
@@ -163,20 +172,28 @@ def rosenstein(v1, v2, dt, period, tau=None, theiler=None, fit=(0.5, 2.5),
     defaults to whatever gives about 50 000 references. Returns a dict with
     'lam', 'lam_err', the divergence curve and everything needed to draw it.
     """
+    if not np.isfinite([dt, period, *fit, follow]).all() or dt <= 0 or period < 1:
+        raise ValueError('dt and period must be positive and finite')
+    if not 0 <= fit[0] < fit[1] <= follow:
+        raise ValueError('require 0 <= fit start < fit end <= follow')
+    if smooth < 0 or (stride is not None and stride < 1) or (tau is not None and tau < 1) or (theiler is not None and theiler < 0):
+        raise ValueError('invalid smoothing, stride, delay or Theiler window')
     period = int(period)
-    tau = int(tau) if tau else max(period // 4, 1)
-    theiler = int(theiler) if theiler else period
-    stride = int(stride) if stride else max(1, round(len(v1) / 50000))
+    tau = int(tau) if tau is not None else max(period // 4, 1)
+    theiler = int(theiler) if theiler is not None else period
+    stride = int(stride) if stride is not None else max(1, round(len(v1) / 50000))
     window = max(5, (period // smooth) | 1) if smooth else 0
     k_max = int(follow * period)
     X = embed(v1, v2, tau, window)
     ks, curve, blocks, n_pairs = divergence(X, theiler, k_max, stride,
                                             k_step=max(1, period // 200))
     t = ks * dt
-    sel = (ks >= fit[0] * period) & (ks <= fit[1] * period)
+    sel = (ks >= fit[0] * period) & (ks <= fit[1] * period) & np.isfinite(curve)
     if sel.sum() < 10:
         raise ValueError('fit window too short')
     slope, icpt = np.polyfit(t[sel], curve[sel], 1)
+    sst = float(np.sum((curve[sel] - curve[sel].mean())**2))
+    r2 = 1 - float(np.sum((curve[sel]-icpt-slope*t[sel])**2))/sst if sst > 0 else np.nan
     block_slopes = []
     for b in blocks:
         ok = sel & np.isfinite(b)
@@ -184,7 +201,7 @@ def rosenstein(v1, v2, dt, period, tau=None, theiler=None, fit=(0.5, 2.5),
             block_slopes.append(float(np.polyfit(t[ok], b[ok], 1)[0]))
     err = (float(np.std(block_slopes, ddof=1)) / np.sqrt(len(block_slopes))
            if len(block_slopes) > 1 else np.nan)
-    return {'lam': float(slope), 'lam_err': err, 'intercept': float(icpt),
+    return {'lam': float(slope), 'lam_err': err, 'intercept': float(icpt), 'fit_r2': r2,
             't': t, 'curve': curve, 'fit_sel': sel, 'n_pairs': n_pairs,
             'tau': tau, 'theiler': theiler, 'stride': stride,
             'smooth_window': window, 'block_slopes': block_slopes}
@@ -195,9 +212,10 @@ def draw_curve(ax, res, dt_period, title=None):
     tp = res['t'] / dt_period
     ax.plot(tp, res['curve'], color='0.3', lw=1)
     sel = res['fit_sel']
+    ax.axvspan(tp[sel][0],tp[sel][-1],color='C3',alpha=.08)
     ax.plot(tp[sel], res['intercept'] + res['lam'] * res['t'][sel],
             color='C3', lw=1.5,
-            label=f"$\\lambda$ = {res['lam']:.0f} $\\pm$ {res['lam_err']:.0f} s$^{{-1}}$")
+            label=f"$\\lambda$ = {res['lam']:.0f} $\\pm$ {res['lam_err']:.0f} s$^{{-1}}$ (block SEM)\nfit R² = {res['fit_r2']:.3f}")
     ax.set_xlabel('time  (periods)')
     ax.set_ylabel('$\\langle \\ln d \\rangle$')
     ax.legend(fontsize=8, loc='lower right')
@@ -227,7 +245,7 @@ def main():
 
     for path in a.files:
         t, v1, v2 = load_channels(path)
-        dt = float(np.median(np.diff(t)))
+        dt = validate_time(t)
         per = period_samples(v1)
         if per < 20:
             print(f'{path}: no periodicity found')

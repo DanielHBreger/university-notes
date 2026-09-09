@@ -259,8 +259,13 @@ def equilibria(g, Rt, rL):
     h = lambda v: g(v) + v / (Rt + rL)
     vs = np.linspace(-15, 15, 30001)
     hv = h(vs)
+    # An exact zero on the grid (the origin, once the fitted offset is removed)
+    # gives no sign change, so it is collected separately.
+    roots = [float(v) for v in vs[hv == 0]]
     idx = np.flatnonzero(hv[:-1] * hv[1:] < 0)
-    return [brentq(h, vs[k], vs[k + 1]) for k in idx]
+    roots += [brentq(h, vs[k], vs[k + 1]) for k in idx]
+    roots.sort()
+    return [r for i, r in enumerate(roots) if i == 0 or r - roots[i - 1] > 1e-9]
 
 
 def stability(g, v1, Rt, rL, dv=1e-4):
@@ -350,7 +355,7 @@ def integrate(rpot, v1_0, t_end, dt, rL, g, keep=True, t_skip=0.0, y0=None):
             elif k > n_skip:
                 out[j] = y
                 j += 1
-        t = t_skip + dt * np.arange(out.shape[0])
+        t = dt * np.arange(n_skip, nsteps + 1)     # the step each stored state was taken at
         return t, out
 
     maxima = [[] for _ in range(n)]
@@ -418,8 +423,11 @@ def load_measured_bifurcation(folder):
     for f in glob.glob(os.path.join(folder, '*_bifurcation_points.csv')):
         with open(f) as fh:
             head = fh.readline().strip().split(',')
-            ir, im, isw = (head.index('rpot_ohm'), head.index('max_v'),
-                           head.index('sweep'))
+            try:
+                ir, im, isw = (head.index('rpot_ohm'), head.index('max_v'),
+                               head.index('sweep'))
+            except ValueError:
+                continue        # not a bifurcation.py sidecar (e.g. a simulation export)
             for line in fh:
                 p = line.strip().split(',')
                 try:

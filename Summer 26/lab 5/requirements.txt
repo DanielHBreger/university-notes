@@ -1,0 +1,8 @@
+numpy>=2.0,<3
+pandas>=2.2,<3
+scipy>=1.14,<2
+matplotlib>=3.9,<4
+prettytable>=3.12,<4
+pyvisa>=1.14,<2
+pyvisa-py>=0.7,<1
+pytest>=8,<10

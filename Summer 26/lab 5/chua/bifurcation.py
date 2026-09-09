@@ -12,10 +12,9 @@ so this diagram and the Lorenz maps always agree by construction.
 
 Rpot comes from the "<folder>_rpot.csv" written by batch_rpot.py, which must
 exist - it is the x axis. Records whose divider fit is poor are dropped, since
-a bad Rpot puts a good slice at the wrong place on the axis; the cut is on the
-fit residual (--max-residual, default 10 %). rpot.py's own "not a clean
-divider" warning fires at 5 %, so the default admits a borderline band; the
-run prints exactly which records that is, and --max-residual 5 excludes them.
+a bad Rpot puts a good slice at the wrong place on the axis. The default
+cut is 5 %, as in the experiment plan; --max-residual can change it.
+Resistance fits outside the physical 0-1000 ohm potentiometer are excluded.
 
 Records that clip are dropped too (--max-clip). At the low-resistance end of
 these sweeps the waveform runs past the scope's input range and sits pinned at
@@ -48,7 +47,7 @@ import matplotlib.pyplot as plt
 
 from lorenz_map import collect
 from sweeplib import (CLEAN_DIVIDER_MAX_PCT, resolve_folders, sibling,
-                      sweep_colors)
+                      sweep_colors, folder_labels)
 
 
 def add_record_args(p):
@@ -58,7 +57,7 @@ def add_record_args(p):
                    help='peak prominence, fraction of the range')
     p.add_argument('--period-samples', type=int,
                    help='fixed period in samples (default: per-record autocorr)')
-    p.add_argument('--max-residual', type=float, default=10.0,
+    p.add_argument('--max-residual', type=float, default=5.0,
                    help='drop records whose Rpot fit residual exceeds this %%')
     p.add_argument('--max-clip', type=float, default=2.0,
                    help='drop records with more than this %% of samples at the rail')
@@ -101,20 +100,22 @@ def main():
                    help='resistance range to show, ohm')
     p.add_argument('--ylim', nargs=2, type=float, metavar=('LO', 'HI'),
                    help='voltage range to show, V')
-    p.add_argument('--size', type=float, default=0.15, help='marker size')
-    p.add_argument('--alpha', type=float, default=0.35, help='marker alpha')
+    p.add_argument('--size', type=float, default=1.5, help='marker area in points squared')
+    p.add_argument('--alpha', type=float, default=0.5, help='marker alpha')
     a = p.parse_args()
 
     folders = resolve_folders(a.folders)
     out = a.out or sibling(folders[0], '_bifurcation.png')
     csv_out = os.path.splitext(out)[0] + '_points.csv'
     colors = sweep_colors(len(folders))
+    labels = folder_labels(folders)
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
 
     fig, ax = plt.subplots(figsize=(14, 7.5))
     rows = []
 
     for k, folder in enumerate(folders):
-        label = os.path.basename(folder)
+        label = labels[k]
         print(f'\n--- {label} ---')
         records, dropped = collect(folder, a.ch, a.prominence, a.period_samples,
                                    a.max_residual, a.max_clip, a.max_files)
@@ -135,7 +136,7 @@ def main():
         raise SystemExit('no usable records in any folder')
 
     ax.set_xlabel('$R_{pot}$  ($\\Omega$)')
-    ax.set_ylabel(f'maxima of $V_{{C1}}$ ({a.ch})  (V)')
+    ax.set_ylabel(f'Local maxima of {a.ch} (V)')
     ax.set_title('Bifurcation diagram - Chua circuit')
     if a.xlim:
         ax.set_xlim(*a.xlim)
