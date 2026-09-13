@@ -1,0 +1,16 @@
+R_total = 1652 ohm  alpha = 10.00  beta = 15.16  m0 = -1.143  m1 = -0.714  time unit 165 us
+x in [-2.28, 2.28]  (double scroll)
+period 336 samples, 513 maxima, <T> = 390 us
+
+  true lambda_1                2103 /s   (lambda <T> = 0.820 per return)
+  return map, as measured      2205 +/- 187 /s   (1.05 x true;  R2 = 0.924, 2 % below noise)
+  Rosenstein, as measured      1937 +/- 68 /s   (0.92 x true;  49685 pairs)
+
+--- Matsumoto's double scroll: --alpha 9 --beta 14.286
+R_total = 1652 ohm  alpha = 9.00  beta = 14.29  m0 = -1.143  m1 = -0.714  time unit 165 us
+x in [-2.24, 2.24]  (double scroll)
+period 374 samples, 468 maxima, <T> = 427 us
+
+  true lambda_1                2079 /s   (lambda <T> = 0.888 per return)
+  return map, as measured      2962 +/- 203 /s   (1.42 x true;  R2 = 0.888, 4 % below noise)
+  Rosenstein, as measured      2271 +/- 50 /s   (1.09 x true;  49650 pairs)

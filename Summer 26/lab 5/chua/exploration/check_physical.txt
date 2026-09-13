@@ -1,0 +1,2 @@
+physical hopf (1839.1399212538938, -2.8106429351698905, np.float64(0.0003374216917847571)) back large until 740.0 forward large until 355.0
+[(330, 'large cycle, max 6.67'), (400, 'double scroll,  30 lvls'), (600, 'double scroll,  61 lvls'), (675, 'double scroll,  57 lvls'), (700, ' 65 lvls  [-1.59, 0.35]'), (725, ' 55 lvls  [-1.09, 0.05]'), (750, '  4 lvls  [-0.80,-0.20]'), (775, '  1 lvls  [-0.50,-0.50]'), (800, '  1 lvls  [-0.60,-0.60]'), (900, '  1 lvls  [-3.18,-3.18]')]

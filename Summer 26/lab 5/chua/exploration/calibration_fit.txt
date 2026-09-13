@@ -1,0 +1,105 @@
+knots [-6.77137385 -1.02679577  0.91785428  6.06984416] C1, intercept, slopes/hinges [12.65711858 28.77611319  3.78033394 -4.19733281 -0.34660005  0.38624853
+  4.60378286] cost 0.1823833102113349
+slopes mS [ 3.78033394 -0.41699887 -0.76359892 -0.37735039  4.22643247]
+C2 nF, L mH, rL ohm, channel gain [113.06734616  21.88839315  30.65913136   0.96511277] relative residual 0.05202572902286472
+              record  relative_integral_error
+     back/trace1.csv                 0.028147
+    back/trace10.csv                 0.025827
+    back/trace12.csv                 0.026138
+    back/trace14.csv                 0.026675
+    back/trace15.csv                 0.026226
+    back/trace17.csv                 0.026227
+    back/trace19.csv                 0.027475
+     back/trace2.csv                 0.027910
+    back/trace21.csv                 0.029118
+    back/trace23.csv                 0.028601
+    back/trace25.csv                 0.027986
+    back/trace27.csv                 0.028436
+    back/trace29.csv                 0.029245
+    back/trace30.csv                 0.030006
+    back/trace32.csv                 0.030296
+    back/trace34.csv                 0.030484
+    back/trace36.csv                 0.016632
+    back/trace38.csv                 0.017435
+     back/trace4.csv                 0.027207
+    back/trace40.csv                 0.017489
+    back/trace42.csv                 0.017294
+    back/trace44.csv                 0.017982
+    back/trace45.csv                 0.018015
+    back/trace47.csv                 0.018076
+    back/trace49.csv                 0.018086
+    back/trace51.csv                 0.018121
+    back/trace53.csv                 0.018070
+    back/trace55.csv                 0.018025
+    back/trace57.csv                 0.018035
+    back/trace59.csv                 0.018052
+     back/trace6.csv                 0.026393
+    back/trace60.csv                 0.018060
+    back/trace61.csv                 0.017946
+    back/trace62.csv                 0.017963
+    back/trace63.csv                 0.018038
+    back/trace64.csv                 0.018219
+    back/trace65.csv                 0.018135
+    back/trace66.csv                 0.018217
+    back/trace67.csv                 0.018390
+    back/trace68.csv                 0.018153
+    back/trace69.csv                 0.018663
+    back/trace70.csv                 0.018229
+    back/trace71.csv                 0.015234
+    back/trace72.csv                 0.009138
+    back/trace73.csv                 0.004970
+    back/trace74.csv                 0.003241
+     back/trace8.csv                 0.025576
+forward/trace107.csv                 0.020265
+forward/trace117.csv                 0.020206
+forward/trace127.csv                 0.020160
+forward/trace138.csv                 0.020023
+ forward/trace14.csv                 0.019909
+forward/trace148.csv                 0.019670
+forward/trace159.csv                 0.019413
+forward/trace169.csv                 0.019449
+forward/trace179.csv                 0.018453
+forward/trace190.csv                 0.018035
+forward/trace200.csv                 0.017558
+forward/trace210.csv                 0.019007
+forward/trace221.csv                 0.023127
+forward/trace231.csv                 0.022657
+ forward/trace24.csv                 0.005028
+forward/trace241.csv                 0.021748
+forward/trace252.csv                 0.019521
+forward/trace262.csv                 0.018150
+forward/trace272.csv                 0.017626
+forward/trace283.csv                 0.016684
+forward/trace293.csv                 0.017929
+forward/trace304.csv                 0.020995
+forward/trace314.csv                 0.017275
+forward/trace324.csv                 0.016355
+forward/trace335.csv                 0.015004
+ forward/trace34.csv                 0.009304
+forward/trace345.csv                 0.014437
+forward/trace355.csv                 0.013741
+forward/trace366.csv                 0.015503
+forward/trace376.csv                 0.016881
+forward/trace386.csv                 0.015291
+forward/trace397.csv                 0.019222
+forward/trace404.csv                 0.021354
+forward/trace405.csv                 0.021808
+forward/trace406.csv                 0.025129
+forward/trace407.csv                 0.025317
+forward/trace408.csv                 0.025367
+forward/trace409.csv                 0.025752
+forward/trace410.csv                 0.025875
+forward/trace411.csv                 0.026438
+forward/trace412.csv                 0.026320
+forward/trace413.csv                 0.026428
+forward/trace414.csv                 0.026656
+forward/trace415.csv                 0.026912
+forward/trace416.csv                 0.027151
+forward/trace417.csv                 0.028305
+forward/trace418.csv                 0.028415
+ forward/trace45.csv                 0.017862
+ forward/trace55.csv                 0.018094
+ forward/trace65.csv                 0.020241
+ forward/trace76.csv                 0.019924
+ forward/trace86.csv                 0.019787
+ forward/trace96.csv                 0.020214

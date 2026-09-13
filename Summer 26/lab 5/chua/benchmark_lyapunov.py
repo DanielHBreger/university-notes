@@ -42,7 +42,8 @@ from lorenz_map import maxima
 from lyapunov import lyapunov
 from rosenstein import rosenstein
 
-C1, C2, L, R0 = 10e-9, 100e-9, 18e-3, 990.0
+from scope_data import R0
+C1, C2, L = 10e-9, 100e-9, 18e-3
 
 
 def simulate(alpha, beta, m0, m1, n, dtau, seed=0, transient=50000):

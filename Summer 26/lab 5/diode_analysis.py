@@ -15,7 +15,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter, find_peaks
 
 HERE = Path(__file__).resolve().parent
-RS, R0 = 216.0, 990.0
+from chua.scope_data import R0
+RS = 216.0
 LABELS = ['Gc left', 'Gb left', 'Ga inner', 'Gb right', 'Gc right']
 
 

@@ -16,7 +16,7 @@ entirely; only the relative gain of the two end channels survives, and that is
 close to 1 when they sit on the same V/div. The fitted offset C absorbs any
 DC offset in the channels.
 
-Defaults match the experiment plan: R0 = 990 ohm, CH1 = v_C1,
+Defaults use the retained sweep calibration: R0 = 992 ohm, CH1 = v_C1,
 CH2 = v_C2, CH3 = midpoint.
 
 Usage:

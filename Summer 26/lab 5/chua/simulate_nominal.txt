@@ -1,0 +1,83 @@
+ideal model: C1 = 10 nF, C2 = 100 nF, L = 18 mH, R0 = 992 ohm, rL = 0 ohm
+N_R: M1 fit (diode_fit.json), offset removed = -0.413 mA, breakpoint scale = 1
+    v_lo     v_hi    G (mS)    c (mA)
+ -40.000   -6.726    3.6232   27.5554
+  -6.726   -1.262   -0.4176    0.3779
+  -1.262    1.195   -0.7171    0.0000
+   1.195    5.998   -0.4337   -0.3386
+   5.998   40.000    3.7864  -25.6507
+
+equilibria, g(v1) = -v1/(Rt + rL):
+   Rpot =  806.0:  v1 =  -2.73 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   2.76 V, G = -0.434 mS, UNSTABLE
+   Rpot =  770.0:  v1 =  -2.52 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   2.53 V, G = -0.434 mS, UNSTABLE
+   Rpot =  745.0:  v1 =  -2.39 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   2.38 V, G = -0.434 mS, UNSTABLE
+   Rpot =  700.0:  v1 =  -2.18 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   2.15 V, G = -0.434 mS, UNSTABLE
+   Rpot =  650.0:  v1 =  -1.97 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.93 V, G = -0.434 mS, UNSTABLE
+   Rpot =  450.0:  v1 =  -1.37 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.30 V, G = -0.434 mS, UNSTABLE
+   Rpot =  320.0:  v1 =   0.00 V, G = -0.717 mS, UNSTABLE
+
+Hopf point of the negative outer equilibrium: Rpot = 1006 ohm, v1* = -4.55 V, period 338 us
+
+integrating 14 runs of 0.1 s at dt = 5e-07 ...
+   Rpot   start   v1 min   v1 max   v2 min   v2 max  n maxima  distinct    period
+  806.0      eq   -4.567    4.705   -0.890    0.901       102        72   391.4 us
+  806.0   cycle   -7.288    6.582   -5.252    5.296       131         1   304.2 us
+  770.0      eq   -4.166    4.251   -0.817    0.831       112        89   357.8 us
+  770.0   cycle   -7.329    6.623   -5.587    5.629       132         1   301.5 us
+  745.0      eq   -3.910    3.962   -0.768    0.783       112        90   356.1 us
+  745.0   cycle   -7.353    6.647   -5.782    5.823       134         1   300.0 us
+  700.0      eq   -3.476    3.500   -0.689    0.697       108        89   371.7 us
+  700.0   cycle   -7.390    6.685   -6.082    6.123       134         2   298.0 us
+  650.0      eq   -3.062    3.040   -0.596    0.612       108        80   370.3 us
+  650.0   cycle   -7.425    6.722   -6.363    6.403       135         1   296.2 us
+  450.0      eq   -7.535    6.842   -7.179    7.219       137         1   291.7 us
+  450.0   cycle   -7.535    6.842   -7.179    7.219       137         1   291.7 us
+  320.0      eq   -7.594    6.910   -7.554    7.594       138         1   289.8 us
+  320.0   cycle   -7.594    6.910   -7.554    7.594       138         1   289.8 us
+measured record for Rpot = 806 ohm: forward/trace54.csv at 804.4 ohm
+measured record for Rpot = 770 ohm: forward/trace73.csv at 770.2 ohm
+measured record for Rpot = 745 ohm: forward/trace100.csv at 744.6 ohm
+measured record for Rpot = 700 ohm: forward/trace164.csv at 699.7 ohm
+measured record for Rpot = 650 ohm: forward/trace229.csv at 650.3 ohm
+measured record for Rpot = 450 ohm: forward/trace342.csv at 450.2 ohm
+measured record for Rpot = 320 ohm: forward/trace404.csv at 317.7 ohm
+
+sweeping 601 values of Rpot down from the negative equilibrium and up from the large cycle, carrying the state along (20 ms settle + 30 ms collect per step) ...
+
+   Rpot            down (forward)                 up (back)
+  300.0     large cycle, max 6.92     large cycle, max 6.92
+  325.0     large cycle, max 6.91     large cycle, max 6.91
+  350.0     large cycle, max 6.89     large cycle, max 6.89
+  375.0     large cycle, max 6.88     large cycle, max 6.88
+  400.0     large cycle, max 6.87     large cycle, max 6.87
+  425.0     large cycle, max 6.86     large cycle, max 6.86
+  450.0     large cycle, max 6.84     large cycle, max 6.84
+  475.0     large cycle, max 6.83     large cycle, max 6.83
+  500.0   double scroll,  45 lvls     large cycle, max 6.81
+  525.0   double scroll,  44 lvls     large cycle, max 6.80
+  550.0   double scroll,  55 lvls     large cycle, max 6.79
+  575.0   double scroll,  58 lvls     large cycle, max 6.77
+  600.0   double scroll,  63 lvls     large cycle, max 6.75
+  625.0   double scroll,  69 lvls     large cycle, max 6.74
+  650.0   double scroll,  65 lvls     large cycle, max 6.72
+  675.0   double scroll,  63 lvls     large cycle, max 6.70
+  700.0   double scroll,  69 lvls     large cycle, max 6.69
+  725.0   double scroll,  73 lvls     large cycle, max 6.66
+  750.0   double scroll,  67 lvls     large cycle, max 6.64
+  775.0   double scroll,  73 lvls     large cycle, max 6.62
+  800.0   double scroll,  64 lvls     large cycle, max 6.59
+  825.0   double scroll,  77 lvls     large cycle, max 6.56
+  850.0     large cycle, max 5.34     large cycle, max 6.51
+  875.0     large cycle, max 5.74     large cycle, max 6.43
+  900.0    82 lvls  [-2.73, 0.76]     large cycle, max 6.03
+
+transitions (ohm):
+   first doubling R1 (down)         None
+   chaos onset (down)               900
+   double scroll from (down)        866
+   double scroll ends (down)        489
+   large cycle from (down)          488
+   large cycle survives to (up)     900
+   double scroll from (up)          None
+
+figures written to C:\Users\danib\Documents\university-notes\Summer 26\lab 5\chua

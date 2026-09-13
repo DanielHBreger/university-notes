@@ -6,7 +6,7 @@
   "voltage_basis": "element",
   "current_definition": "(CH1(V) - CH2(V)) / 216 ohm",
   "shunt_ohm": 216.0,
-  "r0_ohm": 990.0,
+  "r0_ohm": 992.0,
   "source_fit_range_V": [
     -9.33,
     8.28
@@ -77,16 +77,16 @@
       "valid": true,
       "total_lo_ohm": 1394.5761162915212,
       "total_hi_ohm": 2394.8686291308104,
-      "pot_lo_ohm": 404.5761162915212,
-      "pot_hi_ohm": 1404.8686291308104
+      "pot_lo_ohm": 402.5761162915212,
+      "pot_hi_ohm": 1402.8686291308104
     },
     {
       "side": "right",
       "valid": true,
       "total_lo_ohm": 1394.5761162915212,
       "total_hi_ohm": 2305.9100905169666,
-      "pot_lo_ohm": 404.5761162915212,
-      "pot_hi_ohm": 1315.9100905169666
+      "pot_lo_ohm": 402.5761162915212,
+      "pot_hi_ohm": 1313.9100905169666
     }
   ],
   "drive_frequency_hz": 9.167785136453315,

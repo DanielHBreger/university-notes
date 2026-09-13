@@ -15,7 +15,10 @@ from sweeplib import list_csvs, load_rpot, sibling, folder_labels
 from lorenz_map import maxima, period_samples
 from lyapunov import lyapunov, local_fit, mean_ln_slope
 from rosenstein import nearest_recurrent, rosenstein, embed
-from simulate import make_g, equilibria, integrate, rhs, midpoint, R0, C1, C2, L
+from simulate import make_g, equilibria, integrate, rhs, midpoint, metrics, R0, C1, C2, L
+import integration as kern
+from identify import (loop_c1, inductor_loop, rayleigh_fit, kennedy_from_pwl, cycle_markers,
+                      averaged_cycle, derivative, fit_tank, admittance_rows)
 
 
 def write_scope(path, t, *channels):
@@ -38,7 +41,7 @@ def test_divider_gain_ratio(tmp_path):
     t=np.arange(1000)*1e-5
     a,b=np.sin(t*700),np.cos(t*1900)
     p=write_scope(tmp_path/'trace.csv',t,a*1.02,b*.97,midpoint(a,b,510))
-    assert rpot(p,990,.97/1.02)[0] == pytest.approx(510,rel=1e-10)
+    assert rpot(p,R0,.97/1.02)[0] == pytest.approx(510,rel=1e-10)
 
 
 @pytest.mark.parametrize('kind',['flat','collinear','negative'])
@@ -207,10 +210,35 @@ def test_csv_discovery_and_sidecar_validation(tmp_path):
 
 def test_simulation_skips_sidecars_without_a_sweep_column(tmp_path):
     from simulate import load_measured_bifurcation
-    rows=['sweep,filename,rpot_ohm,max_v','fwd,trace1.csv,600,2','back,trace2.csv,610,-1','']
+    (tmp_path/'sweep').mkdir()
+    (tmp_path/'sweep'/'trace1.csv').touch()
+    rows=['sweep,filename,rpot_ohm,max_v','sweep,trace1.csv,600,2','sweep,deleted.csv,610,-1',
+          'other,trace1.csv,610,-1','sweep,trace1.csv,nan,0','']
     (tmp_path/'sweep_bifurcation_points.csv').write_text('\n'.join(rows))
     (tmp_path/'simulated_bifurcation_points.csv').write_text('rpot_ohm,initial_v1_V,max_v\n600,1,3\n')
-    assert sorted(load_measured_bifurcation(str(tmp_path)))==[(600.,2.,'fwd'),(610.,-1.,'back')]
+    assert load_measured_bifurcation(str(tmp_path))==[(600.,2.,'sweep')]
+
+
+def test_continuation_carries_the_actual_previous_state(monkeypatch):
+    import simulate as s
+    monkeypatch.setattr(s, 'sweep_starts', lambda g,r,rl:(np.zeros((3,1)),np.ones((3,1))))
+    def hold(y,rt,*args):
+        y=y+rt[0]
+        return y,[[float(y[0,0])]]
+    monkeypatch.setattr(s,'_hold',hold)
+    r=np.array([30.,10.,20.])
+    got=s.sweep_continuation(None,r,0,1,1,1,'up')
+    expected=np.cumsum(R0+np.sort(r))+1
+    assert got==[[expected[2]],[expected[0]],[expected[1]]]
+
+
+def test_compiled_kernel_matches_matrix_exponential():
+    from integration import trajectory
+    G=.001; Rt=1650.; rl=20.; dt=2e-7
+    vk=np.array([-40.,40.]);ik=G*vk
+    y=trajectory(np.array([1.,0.,0.]),Rt,rl,C1,C2,L,vk,ik,dt,500,0)
+    A=np.array([[(-1/Rt-G)/C1,1/(Rt*C1),0],[1/(Rt*C2),-1/(Rt*C2),-1/C2],[0,1/L,-rl/L]])
+    np.testing.assert_allclose(y[-1],expm(A*dt*500)@np.array([1.,0.,0.]),atol=1e-8)
 
 
 def test_variational_exponent_agrees_with_linear_eigenvalues():
@@ -220,3 +248,109 @@ def test_variational_exponent_agrees_with_linear_eigenvalues():
     A=np.array([[-alpha*(1+m),alpha,0],[1,-1,1],[0,-beta,0]])
     expected=np.linalg.eigvals(A).real.max()
     assert exponent==pytest.approx(expected,abs=.025)
+
+
+def test_pwl_knots_are_continuous_with_the_given_slopes():
+    bp = [-6.7, -1.0, 0.9, 6.0]; G = [3.9e-3, -0.42e-3, -0.77e-3, -0.42e-3, 3.9e-3]
+    vk, ik = kern.pwl_knots(bp, G)
+    assert ik[np.searchsorted(vk, 0.0) - 1] == pytest.approx(G[2] * vk[np.searchsorted(vk, 0.0) - 1])
+    np.testing.assert_allclose(np.diff(ik) / np.diff(vk), G, rtol=1e-12)
+    assert np.interp(0.0, vk, ik) == 0.0
+
+
+def test_kennedy_mapping_reproduces_the_segments():
+    bp = [-6.7, -1.0, 0.9, 6.0]; G = [3.9e-3, -0.42e-3, -0.77e-3, -0.42e-3, 3.9e-3]
+    k = kennedy_from_pwl(G[2], G[1], G[0], bp[1], bp[2], bp[0], bp[3])
+    P = kern.bench_params(1e-8, 1e-7, 1e-2, 0, 0, 0, k['RA_ohm'], k['AA'], k['RB_ohm'], k['AB'],
+                          k['VpA_V'], k['VnA_V'], k['VpB_V'], k['VnB_V'], 1e6, 1e-7, 1e-6)
+    bp2, G2 = kern.static_pwl(P)
+    np.testing.assert_allclose(bp2, bp, rtol=1e-9)
+    np.testing.assert_allclose(G2, G, rtol=1e-9)
+
+
+def test_bench_kernel_matches_matrix_exponential_in_the_linear_limit():
+    # rails far away, no Rayleigh terms: a five-state linear system
+    c1, c2, l0, r0 = 11e-9, 89e-9, 19e-3, 3.0
+    RA, AA, RB, AB, sr, tauA, tauB = 260.0, 1.12, 22e3, 7.6, 1e12, 0.05e-6, 1.2e-6
+    P = kern.bench_params(c1, c2, l0, 0.0, r0, 0.0, RA, AA, RB, AB, 1e3, -1e3, 1e3, -1e3, sr, tauA, tauB)
+    Rt, dt, n = 1800.0, 0.02e-6, 400
+    y0 = np.array([0.3, 0.1, 0.0002, 0.2, 1.0])
+    y = kern.bench_trajectory(y0, Rt, dt, n, 0, P)
+    A = np.array([[-1 / (Rt * c1), 1 / (Rt * c1), 0, 1 / (RA * c1), 1 / (RB * c1)],
+                  [1 / (Rt * c2), -1 / (Rt * c2), -1 / c2, 0, 0],
+                  [0, 1 / l0, -r0 / l0, 0, 0],
+                  [AA / tauA, 0, 0, -1 / tauA, 0],
+                  [AB / tauB, 0, 0, 0, -1 / tauB]])
+    # the diode current -(1/RA + 1/RB) v1 / c1 sits on the v1 row
+    A[0, 0] -= (1 / RA + 1 / RB) / c1
+    np.testing.assert_allclose(y[-1], expm(A * dt * n) @ y0, rtol=1e-6, atol=1e-9)
+
+
+def test_bench_op_amps_saturate_and_hold_at_the_rails():
+    P = kern.bench_params(11e-9, 89e-9, 19e-3, 0.8, 2.8, 4700, 260.0, 1.12, 22e3, 7.6, 6.6, -7.5, 6.6, -7.5,
+                          0.5e6, 0.05e-6, 1.2e-6)
+    y = kern.bench_state(3.0, 0.0, 0.0, P)
+    assert y[4] == 6.6 and y[3] == pytest.approx(3.36)
+    d = kern.bench_derivative(3.0, 0.0, 0.0, 3.36, 6.6, 1800.0, P)
+    assert d[4] == 0.0                       # railed and pushed outward: held
+    d = kern.bench_derivative(-3.0, 0.0, 0.0, -3.36, 6.6, 1800.0, P)
+    assert d[4] == pytest.approx(-0.5e6)     # slew limited on the way down
+
+
+def test_loop_integral_c1_and_flux_loop_recover_a_linear_circuit():
+    # a sinusoidal cycle on node 1 with a static linear element g = G v1 and C1 = 11 nF
+    C1t, G, Rt, T = 11e-9, -0.42e-3, 1800.0, 340e-6
+    n = 2048; th = np.arange(n) / n * T; w = 2 * np.pi / T
+    v1 = -3.0 + 1.5 * np.sin(w * th)
+    dv1 = 1.5 * w * np.cos(w * th)
+    v2 = Rt * (C1t * dv1 + G * v1) + v1        # solves C1 v1' = (v2 - v1)/Rt - G v1
+    assert loop_c1(v1, v2, dv1, Rt) == pytest.approx(C1t, rel=1e-9)
+    # a tank of L, r with C2 known: v2 = L iL' + r iL
+    C2t, Lt, rt = 89e-9, 20e-3, 11.0
+    # several harmonics, so that C2 and L separate in the admittance fit
+    iL = 2e-3 * np.sin(w * th) + 0.5e-3 * np.sin(3 * w * th) + 0.2e-3 * np.sin(5 * w * th)
+    diL = w * (2e-3 * np.cos(w * th) + 1.5e-3 * np.cos(3 * w * th) + 1e-3 * np.cos(5 * w * th))
+    v2b = Lt * diL + rt * iL
+    dv2 = derivative(v2b, T)
+    v1b = v2b + Rt * (C2t * dv2 + iL)
+    _, _, I, L_eff, r_eff = inductor_loop(v1b, v2b, dv2, Rt, C2t, T)
+    assert I == pytest.approx(0.5 * np.ptp(iL), rel=1e-3)
+    assert r_eff == pytest.approx(rt, rel=2e-3)
+    rows = admittance_rows(v1b, v2b, Rt, T)
+    (c2f, lf, rf), resid = fit_tank(rows)
+    assert (c2f, lf, rf) == pytest.approx((C2t * 1e9, Lt * 1e3, rt), rel=0.02)
+
+
+def test_rayleigh_fit_and_cycle_markers():
+    I = np.array([1, 5, 10]) * 1e-3
+    out = rayleigh_fit(I, 0.019 + 0.4 * I, 2.8 + (8 / (3 * np.pi)) * 4700 * I)
+    assert out['L0_H'] == pytest.approx(0.019) and out['nu_H_per_A'] == pytest.approx(0.8)
+    assert out['r0_ohm'] == pytest.approx(2.8) and out['rho_ohm_per_A'] == pytest.approx(4700)
+    t = np.arange(20000) * 1e-6
+    v = np.sin(2 * np.pi * 3000 * t) + 0.02 * np.sin(2 * np.pi * 30000 * t)
+    tc = cycle_markers(t, v, 1 / 3000)
+    np.testing.assert_allclose(np.diff(tc), 1 / 3000, rtol=1e-3)
+    cyc, T, n = averaged_cycle(t, np.column_stack([v, v]), tc, nph=256)
+    assert T == pytest.approx(1 / 3000, rel=1e-3) and n >= 50
+    np.testing.assert_allclose(cyc[:, 0], np.sin(2 * np.pi * np.arange(256) / 256) + 0.02 * np.sin(2 * np.pi * 10 * np.arange(256) / 256), atol=0.02)
+
+
+def test_regime_metrics_read_a_synthetic_sweep():
+    rs = np.arange(300, 901, 5.0)
+    def down(r):
+        if r > 850: return [-3.0]
+        if r > 800: return [-0.6]
+        if r > 780: return [-0.7, -0.5]
+        if r > 700: return list(np.linspace(-1.0, 0.0, 30))
+        if r > 400: return list(np.linspace(-1.5, 2.5, 40))
+        return [6.5]
+    def up(r):
+        return [6.5] if r < 680 else down(r)
+    m = metrics(rs, [down(r) for r in rs], [up(r) for r in rs])
+    assert m['first doubling R1 (down)'] == 800
+    assert m['chaos onset (down)'] == 780
+    assert m['double scroll from (down)'] == 700
+    assert m['double scroll ends (down)'] == 405
+    assert m['large cycle from (down)'] == 400
+    assert m['large cycle survives to (up)'] == 675
+    assert m['double scroll from (up)'] == 680

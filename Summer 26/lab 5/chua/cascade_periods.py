@@ -23,34 +23,17 @@ by the doubling that produced this orbit, and it obeys the same sqrt law
 used in feigenbaum.py, so R_n follows by extrapolating D(P/2)^2 to zero.
 
 D(64)/floor is a stationarity check: on a clean record it is ~1, and it grows
-when the pot was still moving during acquisition (set 4's records above
-~769 ohm, where two acquisition batches are also interleaved -- n = 1996 and
-n = 1142 maxima).
+when the pot was still moving during acquisition.
 
-Verified on chua/trace81.csv (Rpot 745.28 ohm by its own CH3 divider fit):
-D(1) = 552.6, D(2) = 158.9, D(4) = 35.0, D(8) = 5.8, D(16) = 5.3,
-D(24) = 5.8, D(32) = 6.7 mV -- period 8, unambiguously, with the four pairs
-split by 12.9, 25.1, 34.6 and 68.0 mV against 2-11 mV of within-level
-scatter.
-
-Results (bench sweeps, negative single-scroll branch):
-
-    set 4   R_1 = 774.6-778.8   R_2 = 755.61   R_3 = 750.43   delta_1 = 3.7-4.5
-    set 2   R_1 unresolved      R_2 = 759.0    R_3 = 750.68
-    set 3   cascade crossed in 2 records (768.15 P4, 766.04 P8) -- too fast
-    sim                                                        delta_1 = 4.286
-
-The remaining uncertainty is NOT resolution: it is that no sweep samples
-densely enough near R_1. Set 4 has no clean record between 774.55 and
-783.01 ohm, and its R_1 moves delta_1 between 3.7 and 4.5 depending on
-whether the two nearest (slightly drifting) records are used or the bracket
-midpoint. The cascade also sits at a different absolute Rpot in every set
-(chaos onset 747 ohm in set 4, 757 in set 3), so sweeps cannot be pooled.
+The sweep tag names a "<tag>_bifurcation_points.csv" sidecar written by
+bifurcation.py beside this script (forward, back). Results for the current
+sweeps are kept in cascade_periods_forward.txt and cascade_periods_back.txt;
+the model's values come from feigenbaum.py.
 
 Usage:
-    python cascade_periods.py "set 4"
-    python cascade_periods.py "set 2/sweep forward" --range 745 785
-    python cascade_periods.py --record trace81.csv        # one raw record
+    python cascade_periods.py forward
+    python cascade_periods.py back --range 745 785
+    python cascade_periods.py --record forward/trace81.csv   # one raw record
 """
 import argparse
 import csv
@@ -121,7 +104,7 @@ def bifurcation_points(rows, nfit=3):
 def main():
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument('sweep', nargs='?', help='sweep tag, e.g. "set 4"')
+    p.add_argument('sweep', nargs='?', help='sweep tag, e.g. forward')
     p.add_argument('--record', help='analyse one raw scope record instead')
     p.add_argument('--range', type=float, nargs=2, default=[744, 790],
                    metavar=('RMIN', 'RMAX'))
@@ -173,7 +156,7 @@ def main():
         d = g1 / g2
         print(f'\n  g_1 = {g1:5.2f} +- {e1:.2f}    g_2 = {g2:5.2f} +- {e2:.2f}')
         print(f'  delta_1 = {d:.2f} +- {d*np.hypot(e1/g1, e2/g2):.2f}'
-              f'    (simulation 4.286, universal 4.669)')
+              f'    (universal 4.669; model: feigenbaum.py)')
 
 
 if __name__ == '__main__':

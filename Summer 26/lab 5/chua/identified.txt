@@ -1,0 +1,121 @@
+identify.py: 479 records, 109 periodic (58 period-1, 3 near-origin, 48 large cycle)
+channel gains: divider A + B = 1.0029 (max deviation 0.0125) -> CH1 and CH2 gains equal
+C1 from the loop integral: 11.10 nF at small amplitude, 11.50 nF on the period-1 cycle, 12.56 nF on the large cycle
+C1 from the KCL fits: 11.48 nF (core records), 12.67 nF (large cycle)
+C2 = 90.5 nF from the near-origin orbit (3 records, 26 harmonics) (L = 19.1 mH, r = 2.8 ohm there, residual 0.009); the period-1 cycles alone give C2 = 85.2 nF, L = 20.9 mH, r = 12.0 ohm (217 harmonics, residual 0.023)
+inductor, Rayleigh law: L0 = 19.14 mH (from the onset period 330.3 us at 882 ohm, 18 records; the flux loops extrapolate to 18.23 mH), nu = 0.64 H/A (loops alone 0.81), r0 = 2.30 ohm, rho = 4244 ohm/A
+small-signal check: the linearised circuit oscillates at 330.3 us at 882 ohm and its Hopf point is at 904 ohm; the squared amplitude of the small cycles extrapolates to zero at 893 ohm
+record                    Rpot   T us   I mA L_eff mH  r_eff
+forward/trace14.csv      870.5  328.4   0.13    16.08    2.3
+forward/trace15.csv      881.2  328.5   0.16    16.39    3.0
+forward/trace16.csv      887.7  328.7   0.20    16.70    3.8
+back/trace74.csv         900.6  327.3   0.22    17.78    4.7
+forward/trace18.csv      891.2  329.1   0.28    17.27    4.0
+forward/trace19.csv      886.8  329.4   0.33    17.35    4.1
+forward/trace20.csv      886.2  329.7   0.40    17.16    4.4
+forward/trace21.csv      885.6  329.8   0.41    17.54    4.5
+forward/trace22.csv      886.8  330.0   0.43    17.78    4.7
+back/trace73.csv         873.5  329.0   0.54    15.33    5.2
+forward/trace25.csv      886.4  330.8   0.59    18.03    5.8
+forward/trace26.csv      884.8  331.2   0.65    18.18    6.1
+forward/trace27.csv      882.2  331.6   0.69    18.28    6.2
+forward/trace403.csv     327.9  660.0   0.70    17.91    3.0
+forward/trace404.csv     317.7  687.5   0.72    17.78    2.8
+forward/trace28.csv      879.9  331.9   0.74    18.36    6.3
+forward/trace405.csv     314.7  709.0   0.74    18.11    2.8
+forward/trace29.csv      877.6  332.3   0.80    18.40    6.5
+forward/trace30.csv      875.9  332.5   0.84    18.41    6.6
+forward/trace31.csv      873.7  332.8   0.91    18.20    6.8
+forward/trace32.csv      872.4  333.1   0.94    18.43    6.9
+forward/trace33.csv      870.7  333.4   0.99    18.42    7.0
+back/trace72.csv         863.5  332.9   1.05    18.13    8.1
+forward/trace34.csv      868.3  333.9   1.08    18.60    7.3
+forward/trace35.csv      867.4  334.3   1.13    18.72    7.5
+forward/trace36.csv      863.7  334.9   1.23    18.83    7.8
+forward/trace37.csv      867.5  335.6   1.32    18.76    8.6
+forward/trace38.csv      864.8  336.3   1.46    18.82    9.0
+forward/trace39.csv      862.9  336.7   1.51    18.95    9.1
+forward/trace40.csv      860.4  337.7   1.68    18.89    9.7
+back/trace71.csv         849.1  337.7   1.89    18.12   10.9
+forward/trace41.csv      854.3  339.1   1.90    19.26   10.3
+forward/trace42.csv      852.9  339.5   2.01    19.09   10.5
+back/trace67.csv         768.3  350.1   2.17    19.08   10.7
+back/trace66.csv         767.9  350.1   2.17    19.01   10.7
+forward/trace43.csv      862.1  340.6   2.19    19.16   12.1
+forward/trace67.csv      774.5  350.5   2.20    18.86   10.9
+forward/trace63.csv      777.6  350.3   2.21    18.91   11.0
+forward/trace61.csv      779.8  350.1   2.22    18.98   11.1
+back/trace68.csv         778.4  348.8   2.23    19.03   10.9
+forward/trace60.csv      780.1  349.5   2.23    19.22   10.7
+forward/trace66.csv      783.0  349.5   2.23    19.03   11.0
+forward/trace65.csv      781.9  349.7   2.24    18.87   11.0
+forward/trace59.csv      783.5  349.2   2.28    18.96   10.7
+forward/trace58.csv      787.8  348.8   2.29    19.02   10.8
+forward/trace57.csv      791.6  348.3   2.29    19.19   10.9
+forward/trace56.csv      794.6  348.0   2.31    19.18   10.9
+forward/trace55.csv      800.7  347.3   2.35    19.10   11.0
+forward/trace54.csv      804.4  346.9   2.35    19.23   11.1
+back/trace69.csv         805.7  345.9   2.35    18.91   11.7
+forward/trace52.csv      816.2  345.8   2.40    19.24   11.3
+forward/trace51.csv      818.5  345.5   2.40    19.35   11.3
+back/trace70.csv         824.7  343.4   2.40    19.08   12.0
+forward/trace53.csv      810.3  346.3   2.41    18.99   11.2
+forward/trace50.csv      826.0  344.6   2.42    19.30   11.4
+forward/trace48.csv      830.9  344.0   2.43    19.37   11.5
+forward/trace49.csv      828.9  344.2   2.43    19.32   11.5
+forward/trace45.csv      840.5  342.8   2.43    19.49   11.6
+forward/trace44.csv      844.5  342.4   2.44    19.40   11.6
+forward/trace47.csv      835.0  343.6   2.45    19.28   11.5
+forward/trace46.csv      837.8  343.3   2.45    19.30   11.6
+back/trace35.csv         675.0  385.9   8.22    21.78   27.8
+back/trace34.csv         661.3  380.6   8.68    21.88   29.7
+back/trace33.csv         654.0  378.7   8.80    22.12   30.6
+back/trace32.csv         646.7  377.1   8.90    22.32   31.3
+back/trace31.csv         636.4  375.3   9.07    22.42   32.3
+back/trace30.csv         628.0  374.1   9.25    22.41   33.0
+back/trace29.csv         619.8  373.0   9.39    22.41   33.6
+back/trace28.csv         609.1  371.5   9.53    22.50   34.3
+back/trace27.csv         600.2  370.5   9.65    22.53   34.9
+back/trace26.csv         591.8  369.5   9.72    22.66   35.4
+back/trace25.csv         582.5  368.7   9.86    22.65   36.0
+back/trace24.csv         575.0  368.0   9.93    22.72   36.4
+back/trace23.csv         566.4  367.3  10.00    22.82   36.9
+back/trace22.csv         559.7  366.8  10.10    22.77   37.3
+back/trace21.csv         546.5  365.8  10.23    22.82   38.0
+back/trace20.csv         533.0  364.9  10.38    22.83   38.7
+back/trace19.csv         515.7  363.8  10.56    22.86   39.6
+back/trace18.csv         500.5  363.0  10.71    22.89   40.2
+back/trace17.csv         485.6  362.3  10.82    22.99   40.9
+back/trace16.csv         469.7  361.5  11.00    22.93   41.5
+back/trace15.csv         453.1  360.8  11.13    22.97   42.2
+back/trace14.csv         433.9  360.1  11.26    23.06   43.0
+back/trace13.csv         395.6  358.7  11.49    23.25   44.4
+back/trace12.csv         356.1  357.5  11.77    23.31   45.7
+back/trace11.csv         319.5  356.4  12.07    23.27   46.9
+forward/trace406.csv     314.0  355.4  12.22    23.14   46.2
+back/trace10.csv         277.8  355.4  12.34    23.31   48.0
+forward/trace407.csv     290.4  354.7  12.38    23.14   46.8
+forward/trace408.csv     274.4  354.3  12.44    23.24   47.3
+back/trace9.csv          250.5  354.7  12.52    23.31   48.8
+forward/trace409.csv     249.4  353.8  12.64    23.17   48.0
+back/trace8.csv          229.2  354.2  12.65    23.34   49.4
+back/trace7.csv          201.0  353.6  12.82    23.35   50.2
+forward/trace410.csv     220.3  353.2  12.83    23.15   48.8
+back/trace6.csv          170.6  353.0  13.00    23.34   50.9
+forward/trace411.csv     191.0  352.7  13.02    23.14   49.6
+forward/trace412.csv     172.2  352.4  13.04    23.30   50.2
+forward/trace413.csv     148.9  351.9  13.14    23.36   50.7
+back/trace5.csv          133.4  352.3  13.19    23.40   51.8
+forward/trace414.csv     121.5  351.6  13.37    23.23   51.5
+back/trace4.csv          101.1  351.7  13.39    23.38   52.5
+forward/trace415.csv      91.9  351.1  13.57    23.18   52.2
+back/trace3.csv           66.6  351.1  13.58    23.38   53.3
+forward/trace416.csv      62.1  350.7  13.64    23.33   52.9
+back/trace2.csv           36.6  350.6  13.77    23.33   53.9
+forward/trace417.csv      37.4  350.3  13.79    23.30   53.5
+back/trace1.csv            2.7  350.0  13.97    23.29   54.5
+forward/trace418.csv       3.7  349.8  14.03    23.19   54.3
+diode PWL: breakpoints [-6.782, -1.015, 0.875, 6.034] V, slopes [3.8938, -0.416, -0.7615, -0.4145, 4.2164] mS
+  inner three lines: KCL fit over 194 core records (residual 0.0100); saturation lines: plateaus of [48, 46] large-cycle records; KCL fit over the large cycle alone: residual 0.0357, apparent C1 12.67 nF
+Kennedy diode: RA = 249 ohm, AA = 1.115, RB = 22000 ohm, AB = 7.62, rails stage A +6.73/-7.56 V, stage B +6.67/-7.73 V
+large-cycle diode deviation (back/trace35.csv): up to 0.71 mA inside |v1| < 3 V at 0.14 V/us

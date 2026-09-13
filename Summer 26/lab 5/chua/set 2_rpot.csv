@@ -1,6 +1,0 @@
-filename,rpot_ohm,residual_pct,status
-sweep back_bifurcation_points.csv,,,error: 'CH1' is not in list
-sweep back_rpot.csv,,,error: 'CH1' is not in list
-sweep forward_bifurcation_points.csv,,,error: 'CH1' is not in list
-sweep forward_lyapunov.csv,,,error: 'CH1' is not in list
-sweep forward_rpot.csv,,,error: 'CH1' is not in list

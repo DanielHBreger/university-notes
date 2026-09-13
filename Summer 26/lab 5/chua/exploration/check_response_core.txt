@@ -1,0 +1,4 @@
+forward large until 0
+[(330, '  2 lvls  [ 1.08, 1.16]'), (400, 'double scroll,  43 lvls'), (600, 'double scroll,  57 lvls'), (675, 'double scroll,  58 lvls'), (700, 'double scroll,  59 lvls'), (725, 'double scroll,  63 lvls'), (750, ' 67 lvls  [-1.66, 0.39]'), (775, ' 59 lvls  [-1.18, 0.14]'), (800, '  8 lvls  [-0.87,-0.11]'), (900, '  1 lvls  [-0.82,-0.82]')]
+back large until 795.0
+[(330, 'large cycle, max 6.68'), (400, 'large cycle, max 6.67'), (600, 'large cycle, max 6.58'), (675, 'large cycle, max 6.52'), (700, 'large cycle, max 6.49'), (725, 'large cycle, max 6.46'), (750, 'large cycle, max 6.41'), (775, 'large cycle, max 6.35'), (800, '  8 lvls  [-0.87,-0.11]'), (900, '  1 lvls  [-0.82,-0.82]')]
