@@ -28,6 +28,8 @@ python bifurcation.py forward                    # N3 -> forward_bifurcation.png
 python bifurcation.py forward back -o forward_vs_back_hysteresis.png   # N4 overlay
 python lyapunov.py forward --rosenstein --each   # M5 -> forward_lyapunov.png/.csv + forward_lyapunov_each/   (same for back)
 python cascade_periods.py forward                # N5 from the bench -> cascade_periods_forward.txt   (same for back)
+python gallery.py                                # N2 -> gallery.png (limit cycle, period 2, single and double scroll, large cycle)
+python shilnikov.py                              # N6 -> shilnikov.txt (eigenvalues at the three equilibria, |sigma|/|gamma|)
 python identify.py                               # the circuit from the records -> identified.json/.txt + identified_*.png (10 min)
 python simulate.py                               # ideal model, C1 = 11.5 nF     -> simulated_*.png, log in simulate.txt
 python simulate.py --c1 10 --tag _nominal        # ideal model, nominal C1
@@ -51,6 +53,10 @@ flow between them, are in `docs/` (start at `docs/README.md`).
   (Savitzky-Golay at period/20, 2 % prominence, quarter-period spacing), return maps, the
   bifurcation diagram, the return-map and Rosenstein exponents. `cascade_periods.py` reads the
   period of each record from lag distances and locates R1, R2, R3 by the sqrt law.
+- `gallery.py`: the measured phase portraits of the regimes the plan names (N2), nearest clean
+  forward record to each resistance. `shilnikov.py`: eigenvalues at the three equilibria from
+  the measured slopes and the Shilnikov ratio |sigma|/|gamma| (N6), for the plan's model and
+  the identified circuit.
 - `diode_analysis.py` (`find_breakpoints.py`, `plot_current.py`): M1, the five segments fitted
   against the element voltage, with the sweep-direction check and the M2 range.
 - `identify.py`: recovers the circuit from the oscillator records themselves. Periodic records

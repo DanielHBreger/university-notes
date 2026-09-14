@@ -14,6 +14,8 @@ One file per script. Each file walks the script function by function, in the ord
 | 8 | [rosenstein.md](rosenstein.md) | `chua/rosenstein.py` | the direct time-series exponent |
 | 9 | [benchmark_lyapunov.md](benchmark_lyapunov.md) | `chua/benchmark_lyapunov.py` | how far either exponent can be trusted |
 | 10 | [cascade_periods.md](cascade_periods.md) | `chua/cascade_periods.py` | the measured period of each record and R1, R2, R3 |
+| 10a | [gallery.md](gallery.md) | `chua/gallery.py` | the measured portraits of the plan's four regimes |
+| 10b | [shilnikov.md](shilnikov.md) | `chua/shilnikov.py` | eigenvalues at the three equilibria and the Shilnikov ratio |
 | 11 | [identify.md](identify.md) | `chua/identify.py` | the circuit as it actually was: C1, C2, inductor law, diode |
 | 12 | [integration.md](integration.md) | `chua/integration.py` | the compiled integrators of both models |
 | 13 | [simulate.md](simulate.md) | `chua/simulate.py` | the three models, their sweeps, portraits and transitions |
@@ -40,7 +42,8 @@ Channel convention in the oscillator records: CH1 = v1, CH2 = v2, CH3 = the junc
 - **`_points.csv`**: the numbers behind the figure of the same name.
 - **Simulation outputs**: `simulated_<figure><tag>.png` and the log `simulate<tag>.txt`. The tag names the model run: empty for the plan's model with C1 = 11.5 nF, `_nominal` for C1 = 10 nF, `_sym` for the symmetrised element, `_static` for the identified circuit with constant components, `_bench` for the identified circuit in full.
 - **`identified.*`**: outputs of `identify.py`. The JSON is what `simulate.py` reads.
-- **`feigenbaum_<model>.txt`**, **`cascade_periods_<sweep>.txt`**, **`benchmark_lyapunov.txt`**: the kept printout of the script of that name.
+- **`feigenbaum_<model>.txt`**, **`cascade_periods_<sweep>.txt`**, **`benchmark_lyapunov.txt`**, **`shilnikov.txt`**: the kept printout of the script of that name. **`gallery.png`** is the one figure named after its script.
+- **Plan and schematics** at the root: `Lab5_Chua_experiment_plan.pdf` (v5), `Fig1._NR_scheme.pdf` (the element), `Fig2_Chua_Oscillator.png` (the oscillator; its CH1/CH2 labels are swapped relative to the plan and the records, see `RESULTS.md`). `PLAN_CHECKLIST.md` tracks every plan item against what was done.
 - **Legacy record names** such as `chaos - 716.9 ohm.csv` are still recognised by `lyapunov.py` and `simulate.py`, which read the resistance out of the name.
 
 ## How the pieces connect

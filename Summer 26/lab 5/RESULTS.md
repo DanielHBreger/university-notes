@@ -81,6 +81,21 @@ a 0.8 % gain difference between the two sessions.
 The amplitude grows over 50 ohm below the onset (peak-to-peak V1 0.8 V at 890, 1.5 V at 871,
 3.8 V at 845 ohm); the piecewise-linear models reach full size within a few ohm.
 
+## N2  Phase-portrait gallery  (`gallery.py` -> `chua/gallery.png`)
+
+Four clean forward-sweep records, one per regime the plan names, plus the large outer cycle,
+each as V2 against V1 with 4 ms of V1(t) underneath:
+
+| regime | record | Rpot (ohm) | V1 range (V) |
+|---|---|---|---|
+| limit cycle (period 1) | forward/trace54 | 804.4 | -4.36 .. -0.62 |
+| period 2 | forward/trace82 | 760.2 | -3.92 .. -0.20 |
+| single scroll | forward/trace164 | 699.7 | -3.38 .. +0.23 |
+| double scroll | forward/trace270 | 549.3 | -2.40 .. +1.98 |
+| large outer cycle | forward/trace411 | 191.0 | -7.33 .. +6.58 |
+
+The same records appear beside the simulations in `chua/simulated_portraits_*.png`.
+
 ## N4  Hysteresis  (`forward_vs_back_hysteresis.png`)
 
 The large outer cycle and the double scroll coexist: turning down, the double scroll survives to
@@ -144,6 +159,37 @@ A + B = 1.003 +- 0.004 over all records.
 | element | integrated KCL over 194 double-scroll and cascade records (residual 1.0 %) and the plateaus of 48 large cycles | breakpoints -6.78, -1.015, +0.875, +6.03 V; slopes +3.89, -0.416, -0.762, -0.415, +4.22 mS |
 | element as Kennedy's diode | the eight segment numbers map exactly onto two op-amp stages | RA = 249 ohm, AA = 1.115 (stage A), RB = 22 k, AB = 7.62 (stage B), rails +6.73/-7.56 V (A) and +6.67/-7.73 V (B) |
 | element dynamics | i_NR - static law inside |v1| < 3 V of the large cycle | up to 0.71 mA at 0.14 V/us: stage B stuck at its rail while v1 crosses the inner region (op-amp slew rate about 0.5 V/us); 3.6 % residual of a static fit to the large cycle against 1.0 % elsewhere |
+
+Against the schematic of the element (`Fig1._NR_scheme.pdf`: stage A with R1 = R2 = 220 ohm,
+R3 = 2.2 k; stage B with R4 = R5 = 22 k, R6 = 3.3 k; TL082 on +-9 V):
+
+| | schematic | identified from the oscillator | V-I trace fit (M1) |
+|---|---|---|---|
+| stage A gain AA = 1 + R2/R3, resistor RA = R1 | 1.100, 220 ohm | 1.115, 249 ohm | - |
+| stage B gain AB = 1 + R5/R6, resistor RB = R4 | 7.667, 22 k | 7.62, 22 k (fixed) | - |
+| Ga = -(1/R3 + 1/R6) | -0.758 mS | -0.762 mS | -0.717 mS |
+| Gb = -1/R3 + 1/R4 | -0.409 mS | -0.416 / -0.414 mS | -0.418 / -0.434 mS |
+| Gc = 1/R1 + 1/R4 | 4.59 mS | 3.89 / 4.22 mS | 3.62 / 3.79 mS |
+| inner breakpoints Vsat/AB | 0.98 V at +-7.5 V rails | -1.015 / +0.875 V | -1.09 / +0.58 V |
+| outer breakpoints Vsat/AA | 6.8 V at +-7.5 V rails | -6.78 / +6.03 V | -6.75 / +5.98 V |
+
+The identified element is the schematic to within the resistor tolerances (Ga to 0.5 %, Gb to
+1.5 %, AB to 0.6 %), which settles the inner slope the V-I trace resolved poorly (-0.717 against
+-0.758 expected). The saturation slope is lower than 1/R1 + 1/R4 on both sides (3.9-4.2 against
+4.6 mS, i.e. RA 249 against 220 ohm): a saturated TL082 output is not a stiff rail but has some
+tens of ohms of output resistance, which adds to R1. The rails, 6.7 to 7.7 V on a 9 V supply, are
+the TL082's typical swing.
+
+One thing the schematic does not support: the two op-amp constants the bench model uses
+(stage-B lag 2.4 us, slew 0.5 V/us) are those of a 741-class amplifier, whereas a TL082 has a
+3 MHz gain-bandwidth (lag 0.4 us at gain 7.6, 0.05 us at gain 1.1) and 13 V/us of slew. With the
+datasheet values the model does not reproduce the measured 0.7 mA deviation loop or the end of
+the large cycle (see the sensitivity notes below), so the two constants are an effective
+description of the real mechanism, which is the delay of a TL082 output recovering from
+saturation (stage B sits at a rail on every crossing of the inner region), not its small-signal
+speed. That is also consistent with the residual the model still has, the 25 us extra dwell on
+the positive plateau. Modelling recovery from saturation as a delay rather than a slew limit is
+the next refinement, not done here.
 
 The apparent C1 grows with amplitude (11.1 -> 11.5 -> 12.6 nF) because the loop integral
 attributes the op-amps' lag to a capacitance; the bench model carries C1 = 10.9 nF plus the
@@ -209,7 +255,39 @@ window at 746 ohm), so no period-8 window and no delta could be taken from them;
 records resolve period 8 over 5 ohm. The bench model reproduces R1 and R2 to 2 ohm; the plan's
 model with C1 = 11.5 nF has the first doubling in place but the second 23 ohm too low.
 
+## N6  Shilnikov ratios  (`shilnikov.py` -> `chua/shilnikov.txt`)
+
+Eigenvalues of the Jacobian at the three equilibria, gamma the real one and sigma +- j omega
+the pair, from the measured slopes: the V-I segments with the plan's components (C1 = 11.5 nF)
+and the identified circuit. The double scroll needs the origin to be a saddle-focus with a
+one-dimensional unstable manifold (gamma > 0, sigma < 0) and the outer equilibria the other kind
+(gamma < 0, sigma > 0); Shilnikov's condition is |sigma| / |gamma| < 1.
+
+| Rpot (ohm) | origin: gamma, sigma (1/s), ratio | outer: gamma, sigma (1/s), ratio | verdict |
+|---|---|---|---|
+| 806 | +24 180, -5 980, 0.25 | -19 860, +450, 0.02 | geometry right, condition holds |
+| 700 | +21 710, -6 500, 0.30 | -24 180, +850, 0.04 | holds |
+| 600 | +19 000, -7 030, 0.37 | -28 540, +1 150, 0.04 | holds |
+| 500 | +15 720, -7 510, 0.48 | -33 290, +1 400, 0.04 | holds |
+| 400 | +11 210, -7 690, 0.69 | -38 550, +1 600, 0.04 | holds |
+| 328 | +4 490, -6 310, 1.41 | -42 750, +1 710, 0.04 | fails at the origin |
+
+(identified circuit; the plan's model gives the same picture, ratios 0.28 to 0.64 at the
+origin between 806 and 500 ohm, and has a single equilibrium below 403 ohm.) The condition
+holds throughout the observed double-scroll range 668 .. 328 ohm at the outer equilibria, and at
+the origin down to about 350 ohm, where the ratio passes 1 as gamma of the origin shrinks; the
+measured double scroll ends at 328 ohm. The frequency of the pair, 3.0 to 3.2 kHz at the outer
+equilibria, is the winding frequency seen in every record (return times 330 to 430 us).
+
 ## Data-quality notes
+
+- The oscillator drawing supplied with the plan (`Fig2_Chua_Oscillator.png`) labels node 2 as
+  CH1 and node 1 as CH2; the plan's own Figure 1, its oscilloscope-settings list and the
+  records themselves (CH1 swings several volts, CH2 under 2 V; the divider gives 0-1000 ohm only
+  with CH1 = V1) have CH1 = V1, CH2 = V2, which is what every script assumes. The drawing's
+  labels are the ones that are wrong.
+- The plan quotes R0 = 990 ohm measured; the sidecars use 992 ohm (`scope_data.R0`), the value
+  measured on this bench. The difference is a 0.2 % scale on every Rpot.
 
 - Records are 200 or 500 ms (570 to 1400 windings), DC coupled, CH1 swings 3.6-5.8 V against
   0.7-1.8 V on CH2 in the oscillating region, and no record has more than 2 % of samples at a rail.

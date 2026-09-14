@@ -15,7 +15,7 @@ from sweeplib import list_csvs, load_rpot, sibling, folder_labels
 from lorenz_map import maxima, period_samples
 from lyapunov import lyapunov, local_fit, mean_ln_slope
 from rosenstein import nearest_recurrent, rosenstein, embed
-from simulate import make_g, equilibria, integrate, rhs, midpoint, metrics, R0, C1, C2, L
+from simulate import make_g, equilibria, integrate, rhs, midpoint, metrics, stability, R0, C1, C2, L
 import integration as kern
 from identify import (loop_c1, inductor_loop, rayleigh_fit, kennedy_from_pwl, cycle_markers,
                       averaged_cycle, derivative, fit_tank, admittance_rows)
@@ -354,3 +354,18 @@ def test_regime_metrics_read_a_synthetic_sweep():
     assert m['large cycle from (down)'] == 400
     assert m['large cycle survives to (up)'] == 675
     assert m['double scroll from (up)'] == 680
+
+
+def test_shilnikov_rows_classify_the_double_scroll_geometry():
+    from shilnikov import eigen_rows, kind
+    g = make_g()
+    rows = eigen_rows(g, R0 + 700.0, 0.0, C1, C2, L)
+    assert len(rows) == 3
+    origin = rows[1]
+    assert abs(origin['v1']) < 1e-9 and origin['gamma'] > 0 > origin['sigma']
+    assert kind(origin) == 'saddle-focus, 1-D unstable'
+    for outer in (rows[0], rows[2]):
+        assert outer['gamma'] < 0 < outer['sigma'] and outer['ratio'] < 1
+    # the eigenvalues are those of the Jacobian used by stability()
+    ev, _ = stability(g, origin['v1'], R0 + 700.0, 0.0)
+    assert origin['gamma'] == pytest.approx(ev.real[np.abs(ev.imag) < 1].max())
