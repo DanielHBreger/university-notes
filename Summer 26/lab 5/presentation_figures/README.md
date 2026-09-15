@@ -1,6 +1,6 @@
 # Figures for the 10-minute presentation
 
-Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies retain sharp text and lines when resized (dense scatter layers are rasterized). All generated static figures are exactly 1920 × 1080 pixels (16:9), with slide-ready titles. The animation is 1280 × 720 pixels (16:9). All figures use the actual project data, with no smoothing of the displayed measured phase portraits.
+Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies retain sharp text and lines when resized (dense scatter layers are rasterized). All generated static figures are exactly 1920 × 1080 pixels (16:9), with slide-ready titles. The model-comparison animation is 1280 × 720 pixels (16:9); the measured resistance-sweep animation is 1920 × 1080 for use as an entire slide. All figures use the actual project data, with no smoothing of the displayed measured phase portraits.
 
 ## Suggested selection and order
 
@@ -9,6 +9,9 @@ Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies ret
 | 01_title_double_scroll | Title | A measured double-scroll attractor introduces the phenomenon. |
 | 02_nonlinear_element | Methods | The nonlinear element has negative differential resistance; the segment fit supplies the initial model. |
 | 03_measured_regimes | Main results | The measured orbit changes as Rpot decreases. All four portraits share axes. |
+| measurements_resistance_sweep.gif | Full-slide animation | The measured downward sweep, with fixed full and zoom views and a resistance indicator. |
+| comparison_equal_r.gif | Full-slide model comparison | Measurements and the ideal simulation at the same resistance, with matched full and zoom views. |
+| comparison_equal_r_bench.gif | Full-slide model comparison | Measurements and the model with measured components at the same resistance, with matched full and zoom views. |
 | 04_bifurcation | Main results | Each vertical slice contains the maxima from one recording. The right panel resolves period doubling. |
 | 05_hysteresis | Main results | Different sweep directions give different attractors at nearby resistances. |
 | 06_lyapunov | Main results | Positive direct Lyapunov estimates support local trajectory divergence in the chaotic regimes. |
@@ -45,6 +48,10 @@ python presentation_figures/make_figures.py --animation
 ```
 
 Omit `--animation` to render the static figures 01–08, 11 and 12. `manifest.json` identifies the data sources. The original project figures and earlier animations remain available.
+
+To rebuild the full-slide measured sweep separately, run `python presentation_figures/make_measurements_sweep.py`. It uses the 130 records from `chua/animations/resistance_sweep_metadata.json`, preserving the original 120 ms frame timing (15.6 seconds, looping). It writes a GIF and matching PNG here and updates `chua/animations/measurements_resistance_sweep.gif` and its PNG. The original GIF is kept as `chua/animations/measurements_resistance_sweep_original.gif`. The fixed full view is ±9 V on both axes; the orange box marks the ±4 V / ±1 V zoom. This preserves the original selection, including the near-DC first trace whose resistance estimate is less reliable.
+
+To rebuild both full-slide comparison animations, run `python presentation_figures/make_comparison_sweeps.py` (or choose `--model ideal` / `--model bench`). Both are 1920 × 1080, with 130 frames and the same 15.6-second loop as their originals. The script reads the original sweep metadata, reruns the existing continuation simulation, and preserves the full/zoom views and matched scales. GIFs and matching PNGs are saved here and replace their counterparts in `chua/animations`; the previous GIFs are retained with an `_original.gif` suffix. The earlier two-panel `09_equal_r_bench.gif` remains a separate presentation option.
 
 ## Error bars and captions
 
