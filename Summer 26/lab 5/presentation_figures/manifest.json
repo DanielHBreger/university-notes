@@ -1,0 +1,52 @@
+[
+  {
+    "file": "01_title_double_scroll",
+    "use": "Title slide image",
+    "source": "forward/trace270.csv; first 50 ms"
+  },
+  {
+    "file": "02_nonlinear_element",
+    "use": "Nonlinear element characterization",
+    "source": "trace1.csv; diode_fit.json"
+  },
+  {
+    "file": "03_measured_regimes",
+    "use": "Phase-portrait overview",
+    "source": "forward traces nearest 806, 760, 700, 550 \u03a9"
+  },
+  {
+    "file": "04_bifurcation",
+    "use": "Bifurcation and period doubling",
+    "source": "forward_bifurcation_points.csv; cascade_periods_forward.txt"
+  },
+  {
+    "file": "05_hysteresis",
+    "use": "History dependence at nearly the same R",
+    "source": "forward/back bifurcation CSVs; forward trace270 and back trace21"
+  },
+  {
+    "file": "06_lyapunov",
+    "use": "Quantitative evidence for chaos",
+    "source": "forward_lyapunov.csv; direct Rosenstein estimates only"
+  },
+  {
+    "file": "07_identified_inductor",
+    "use": "Physical reason to improve the model",
+    "source": "identified.json: inductor.per_record"
+  },
+  {
+    "file": "08_model_transitions",
+    "use": "Quantitative model comparison",
+    "source": "RESULTS.md: Models against the bench; rounded continuation thresholds"
+  },
+  {
+    "file": "09_equal_r_bench_still",
+    "use": "Paused model comparison",
+    "source": "Identified bench continuation; near 550 \u03a9"
+  },
+  {
+    "file": "10_model_onset_difference",
+    "use": "Paused model comparison",
+    "source": "Identified bench continuation; near 700 \u03a9"
+  }
+]

@@ -1,0 +1,553 @@
+{
+  "direction": "decreasing Rpot",
+  "frames": 130,
+  "fps": 8,
+  "portrait_window_s": 0.02,
+  "model": "bench",
+  "settling_s": 0.1,
+  "dt_s": 1e-07,
+  "continuation": true,
+  "r0_ohm": 992.0,
+  "records": [
+    {
+      "filename": "trace18.csv",
+      "rpot_ohm": 891.18
+    },
+    {
+      "filename": "trace21.csv",
+      "rpot_ohm": 885.56
+    },
+    {
+      "filename": "trace28.csv",
+      "rpot_ohm": 879.88
+    },
+    {
+      "filename": "trace31.csv",
+      "rpot_ohm": 873.7
+    },
+    {
+      "filename": "trace35.csv",
+      "rpot_ohm": 867.4
+    },
+    {
+      "filename": "trace43.csv",
+      "rpot_ohm": 862.13
+    },
+    {
+      "filename": "trace41.csv",
+      "rpot_ohm": 854.29
+    },
+    {
+      "filename": "trace42.csv",
+      "rpot_ohm": 852.85
+    },
+    {
+      "filename": "trace44.csv",
+      "rpot_ohm": 844.53
+    },
+    {
+      "filename": "trace46.csv",
+      "rpot_ohm": 837.81
+    },
+    {
+      "filename": "trace48.csv",
+      "rpot_ohm": 830.85
+    },
+    {
+      "filename": "trace50.csv",
+      "rpot_ohm": 825.96
+    },
+    {
+      "filename": "trace51.csv",
+      "rpot_ohm": 818.55
+    },
+    {
+      "filename": "trace52.csv",
+      "rpot_ohm": 816.17
+    },
+    {
+      "filename": "trace53.csv",
+      "rpot_ohm": 810.33
+    },
+    {
+      "filename": "trace54.csv",
+      "rpot_ohm": 804.36
+    },
+    {
+      "filename": "trace55.csv",
+      "rpot_ohm": 800.72
+    },
+    {
+      "filename": "trace56.csv",
+      "rpot_ohm": 794.62
+    },
+    {
+      "filename": "trace57.csv",
+      "rpot_ohm": 791.62
+    },
+    {
+      "filename": "trace58.csv",
+      "rpot_ohm": 787.77
+    },
+    {
+      "filename": "trace59.csv",
+      "rpot_ohm": 783.5
+    },
+    {
+      "filename": "trace60.csv",
+      "rpot_ohm": 780.09
+    },
+    {
+      "filename": "trace63.csv",
+      "rpot_ohm": 777.62
+    },
+    {
+      "filename": "trace67.csv",
+      "rpot_ohm": 774.55
+    },
+    {
+      "filename": "trace70.csv",
+      "rpot_ohm": 771.84
+    },
+    {
+      "filename": "trace75.csv",
+      "rpot_ohm": 768.68
+    },
+    {
+      "filename": "trace77.csv",
+      "rpot_ohm": 766.42
+    },
+    {
+      "filename": "trace80.csv",
+      "rpot_ohm": 762.18
+    },
+    {
+      "filename": "trace82.csv",
+      "rpot_ohm": 760.17
+    },
+    {
+      "filename": "trace85.csv",
+      "rpot_ohm": 756.35
+    },
+    {
+      "filename": "trace86.csv",
+      "rpot_ohm": 754.07
+    },
+    {
+      "filename": "trace91.csv",
+      "rpot_ohm": 751.11
+    },
+    {
+      "filename": "trace96.csv",
+      "rpot_ohm": 748.57
+    },
+    {
+      "filename": "trace97.csv",
+      "rpot_ohm": 747.66
+    },
+    {
+      "filename": "trace100.csv",
+      "rpot_ohm": 744.64
+    },
+    {
+      "filename": "trace103.csv",
+      "rpot_ohm": 742.48
+    },
+    {
+      "filename": "trace104.csv",
+      "rpot_ohm": 741.82
+    },
+    {
+      "filename": "trace108.csv",
+      "rpot_ohm": 738.84
+    },
+    {
+      "filename": "trace112.csv",
+      "rpot_ohm": 735.97
+    },
+    {
+      "filename": "trace117.csv",
+      "rpot_ohm": 733.08
+    },
+    {
+      "filename": "trace120.csv",
+      "rpot_ohm": 730.45
+    },
+    {
+      "filename": "trace126.csv",
+      "rpot_ohm": 727.62
+    },
+    {
+      "filename": "trace132.csv",
+      "rpot_ohm": 724.7
+    },
+    {
+      "filename": "trace133.csv",
+      "rpot_ohm": 723.93
+    },
+    {
+      "filename": "trace137.csv",
+      "rpot_ohm": 721.14
+    },
+    {
+      "filename": "trace140.csv",
+      "rpot_ohm": 718.6
+    },
+    {
+      "filename": "trace144.csv",
+      "rpot_ohm": 715.45
+    },
+    {
+      "filename": "trace148.csv",
+      "rpot_ohm": 712.54
+    },
+    {
+      "filename": "trace149.csv",
+      "rpot_ohm": 712.06
+    },
+    {
+      "filename": "trace152.csv",
+      "rpot_ohm": 709.28
+    },
+    {
+      "filename": "trace155.csv",
+      "rpot_ohm": 706.36
+    },
+    {
+      "filename": "trace163.csv",
+      "rpot_ohm": 703.36
+    },
+    {
+      "filename": "trace164.csv",
+      "rpot_ohm": 699.74
+    },
+    {
+      "filename": "trace171.csv",
+      "rpot_ohm": 694.8
+    },
+    {
+      "filename": "trace178.csv",
+      "rpot_ohm": 688.89
+    },
+    {
+      "filename": "trace186.csv",
+      "rpot_ohm": 682.74
+    },
+    {
+      "filename": "trace195.csv",
+      "rpot_ohm": 676.74
+    },
+    {
+      "filename": "trace202.csv",
+      "rpot_ohm": 670.89
+    },
+    {
+      "filename": "trace216.csv",
+      "rpot_ohm": 665.02
+    },
+    {
+      "filename": "trace223.csv",
+      "rpot_ohm": 659.28
+    },
+    {
+      "filename": "trace228.csv",
+      "rpot_ohm": 652.37
+    },
+    {
+      "filename": "trace230.csv",
+      "rpot_ohm": 648.01
+    },
+    {
+      "filename": "trace233.csv",
+      "rpot_ohm": 640.14
+    },
+    {
+      "filename": "trace236.csv",
+      "rpot_ohm": 636.17
+    },
+    {
+      "filename": "trace238.csv",
+      "rpot_ohm": 627.73
+    },
+    {
+      "filename": "trace240.csv",
+      "rpot_ohm": 623.95
+    },
+    {
+      "filename": "trace242.csv",
+      "rpot_ohm": 616.85
+    },
+    {
+      "filename": "trace244.csv",
+      "rpot_ohm": 610.32
+    },
+    {
+      "filename": "trace245.csv",
+      "rpot_ohm": 606.81
+    },
+    {
+      "filename": "trace248.csv",
+      "rpot_ohm": 597.84
+    },
+    {
+      "filename": "trace249.csv",
+      "rpot_ohm": 594.41
+    },
+    {
+      "filename": "trace252.csv",
+      "rpot_ohm": 587.25
+    },
+    {
+      "filename": "trace254.csv",
+      "rpot_ohm": 582.06
+    },
+    {
+      "filename": "trace257.csv",
+      "rpot_ohm": 575.47
+    },
+    {
+      "filename": "trace259.csv",
+      "rpot_ohm": 569.32
+    },
+    {
+      "filename": "trace261.csv",
+      "rpot_ohm": 563.95
+    },
+    {
+      "filename": "trace265.csv",
+      "rpot_ohm": 557.89
+    },
+    {
+      "filename": "trace269.csv",
+      "rpot_ohm": 551.2
+    },
+    {
+      "filename": "trace271.csv",
+      "rpot_ohm": 546.39
+    },
+    {
+      "filename": "trace276.csv",
+      "rpot_ohm": 538.92
+    },
+    {
+      "filename": "trace279.csv",
+      "rpot_ohm": 534.06
+    },
+    {
+      "filename": "trace285.csv",
+      "rpot_ohm": 529.19
+    },
+    {
+      "filename": "trace288.csv",
+      "rpot_ohm": 521.8
+    },
+    {
+      "filename": "trace290.csv",
+      "rpot_ohm": 515.73
+    },
+    {
+      "filename": "trace294.csv",
+      "rpot_ohm": 510.58
+    },
+    {
+      "filename": "trace299.csv",
+      "rpot_ohm": 503.25
+    },
+    {
+      "filename": "trace302.csv",
+      "rpot_ohm": 499.0
+    },
+    {
+      "filename": "trace307.csv",
+      "rpot_ohm": 491.58
+    },
+    {
+      "filename": "trace312.csv",
+      "rpot_ohm": 486.76
+    },
+    {
+      "filename": "trace314.csv",
+      "rpot_ohm": 481.54
+    },
+    {
+      "filename": "trace317.csv",
+      "rpot_ohm": 473.55
+    },
+    {
+      "filename": "trace320.csv",
+      "rpot_ohm": 468.43
+    },
+    {
+      "filename": "trace325.csv",
+      "rpot_ohm": 461.25
+    },
+    {
+      "filename": "trace328.csv",
+      "rpot_ohm": 456.59
+    },
+    {
+      "filename": "trace342.csv",
+      "rpot_ohm": 450.2
+    },
+    {
+      "filename": "trace347.csv",
+      "rpot_ohm": 443.7
+    },
+    {
+      "filename": "trace351.csv",
+      "rpot_ohm": 438.94
+    },
+    {
+      "filename": "trace355.csv",
+      "rpot_ohm": 432.75
+    },
+    {
+      "filename": "trace358.csv",
+      "rpot_ohm": 427.39
+    },
+    {
+      "filename": "trace360.csv",
+      "rpot_ohm": 420.85
+    },
+    {
+      "filename": "trace362.csv",
+      "rpot_ohm": 415.6
+    },
+    {
+      "filename": "trace364.csv",
+      "rpot_ohm": 408.98
+    },
+    {
+      "filename": "trace366.csv",
+      "rpot_ohm": 400.89
+    },
+    {
+      "filename": "trace368.csv",
+      "rpot_ohm": 397.48
+    },
+    {
+      "filename": "trace370.csv",
+      "rpot_ohm": 391.43
+    },
+    {
+      "filename": "trace374.csv",
+      "rpot_ohm": 384.95
+    },
+    {
+      "filename": "trace377.csv",
+      "rpot_ohm": 378.01
+    },
+    {
+      "filename": "trace381.csv",
+      "rpot_ohm": 373.37
+    },
+    {
+      "filename": "trace385.csv",
+      "rpot_ohm": 367.02
+    },
+    {
+      "filename": "trace388.csv",
+      "rpot_ohm": 360.78
+    },
+    {
+      "filename": "trace391.csv",
+      "rpot_ohm": 354.34
+    },
+    {
+      "filename": "trace394.csv",
+      "rpot_ohm": 348.69
+    },
+    {
+      "filename": "trace397.csv",
+      "rpot_ohm": 343.06
+    },
+    {
+      "filename": "trace399.csv",
+      "rpot_ohm": 338.6
+    },
+    {
+      "filename": "trace401.csv",
+      "rpot_ohm": 331.51
+    },
+    {
+      "filename": "trace402.csv",
+      "rpot_ohm": 327.83
+    },
+    {
+      "filename": "trace404.csv",
+      "rpot_ohm": 317.72
+    },
+    {
+      "filename": "trace406.csv",
+      "rpot_ohm": 314.04
+    },
+    {
+      "filename": "trace407.csv",
+      "rpot_ohm": 290.39
+    },
+    {
+      "filename": "trace408.csv",
+      "rpot_ohm": 274.35
+    },
+    {
+      "filename": "trace409.csv",
+      "rpot_ohm": 249.45
+    },
+    {
+      "filename": "trace410.csv",
+      "rpot_ohm": 220.33
+    },
+    {
+      "filename": "trace411.csv",
+      "rpot_ohm": 190.97
+    },
+    {
+      "filename": "trace412.csv",
+      "rpot_ohm": 172.17
+    },
+    {
+      "filename": "trace413.csv",
+      "rpot_ohm": 148.92
+    },
+    {
+      "filename": "trace414.csv",
+      "rpot_ohm": 121.48
+    },
+    {
+      "filename": "trace415.csv",
+      "rpot_ohm": 91.89
+    },
+    {
+      "filename": "trace416.csv",
+      "rpot_ohm": 62.13
+    },
+    {
+      "filename": "trace417.csv",
+      "rpot_ohm": 37.41
+    },
+    {
+      "filename": "trace418.csv",
+      "rpot_ohm": 3.66
+    }
+  ],
+  "parameter_source": "chua/identified.json",
+  "parameters_SI": {
+    "c1": 1.0880529047498997e-08,
+    "c2": 9.053459374907012e-08,
+    "l0": 0.019141993209106162,
+    "nu": 0.642938104147151,
+    "r0": 2.3010254492205098,
+    "rho": 4243.831277066428,
+    "RA": 249.39793687353682,
+    "AA": 1.114890017581204,
+    "RB": 22000.0,
+    "AB": 7.618431511797957,
+    "vpA": 6.726862160194077,
+    "vnA": -7.56160817948198,
+    "vpB": 6.666127572823212,
+    "vnB": -7.732707984474924,
+    "sr": 500000.0,
+    "tauA": 5e-08,
+    "tauB": 2.4e-06
+  }
+}

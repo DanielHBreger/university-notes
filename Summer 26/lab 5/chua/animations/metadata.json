@@ -1,0 +1,15 @@
+{
+  "measurement": "forward/trace270.csv",
+  "rpot_ohm": 549.34,
+  "window_ms": 7.999000000000006,
+  "playback_seconds": 12,
+  "model": "ideal",
+  "c1_nF": 11.5,
+  "c2_nF": 100,
+  "l_mH": 18,
+  "r0_ohm": 992.0,
+  "rL_ohm": 0,
+  "simulation_dt_s": 5e-07,
+  "settling_s": 0.1,
+  "note": "Time is relative to each displayed window; trajectories are not phase aligned."
+}

@@ -77,6 +77,38 @@ flow between them, are in `docs/` (start at `docs/README.md`).
 - `chua/exploration/`: scratch from the 11 September search for the mismatch, superseded by
   `identify.py`; not part of the pipeline.
 
+## Phase-space animations
+
+`python chua/animate_resistance.py` creates `measurements_resistance_sweep.gif`
+and `simulation_resistance_sweep.gif` in `chua/animations/`. Each frame shows a
+20 ms portrait at a different Rpot, decreasing across the clean forward sweep.
+Both use the same measured resistance values, fixed full-view and zoom axes,
+and an Rpot indicator. The ideal simulation carries its final state to the next
+resistance, settling for 100 ms at each value. Measured portraits are selected
+near an evenly spaced resistance grid with extra frames around 700–810 ohm;
+they are not interpolated. Parameters and source records are saved in
+`resistance_sweep_metadata.json`.
+
+The same script also creates `comparison_equal_r.gif`, placing measurements and
+the ideal simulation side by side at identical Rpot, with matched full-view and
+zoom axes. Use `python chua/animate_resistance.py --comparison-only` to render
+only this combined animation.
+
+`python chua/animate_resistance.py --model bench --comparison-only` creates
+`comparison_equal_r_bench.gif` with the identified circuit described in
+`RESULTS.md`: measured component values, the Rayleigh inductor, and Kennedy diode
+with amplifier lag and slew. It uses `identified.json` and the default effective
+amplifier parameters from `simulate.py`, a 0.1 µs integration step, and carries all
+five states between resistances. Exact parameters are saved in
+`resistance_sweep_bench_metadata.json`.
+
+`python chua/animate_phase.py --r 550 --window-ms 8` creates two looping GIFs in
+`chua/animations/`: the nearest clean forward measurement and the ideal simulation
+at that record's fitted resistance. Both show V2 against V1 with common axis limits,
+a growing path, a 0.25 ms highlighted trail, and elapsed time. The displayed 8 ms
+plays over 12 seconds; the simulation discards 100 ms of settling first. The two
+windows are not phase aligned. `metadata.json` records the source and parameters.
+
 ## Conventions and data-quality notes
 
 - Sidecars are per sweep folder (`forward_*.csv`, `back_*.csv`); the hysteresis overlay is
