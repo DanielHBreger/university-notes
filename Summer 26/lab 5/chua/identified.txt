@@ -1,5 +1,5 @@
 identify.py: 479 records, 109 periodic (58 period-1, 3 near-origin, 48 large cycle)
-channel gains: divider A + B = 1.0029 (max deviation 0.0125) -> CH1 and CH2 gains equal
+divider consistency: A + B = 1.0029 (max deviation 0.0125); does not establish relative gain accuracy
 C1 from the loop integral: 11.10 nF at small amplitude, 11.50 nF on the period-1 cycle, 12.56 nF on the large cycle
 C1 from the KCL fits: 11.48 nF (core records), 12.67 nF (large cycle)
 C2 = 90.5 nF from the near-origin orbit (3 records, 26 harmonics) (L = 19.1 mH, r = 2.8 ohm there, residual 0.009); the period-1 cycles alone give C2 = 85.2 nF, L = 20.9 mH, r = 12.0 ohm (217 harmonics, residual 0.023)

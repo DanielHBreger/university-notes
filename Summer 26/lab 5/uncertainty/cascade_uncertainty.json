@@ -1,0 +1,36 @@
+{
+  "nominal_transition_R_ohm": [
+    774.6121149480418,
+    755.595,
+    750.4481322776703
+  ],
+  "half_brackets_ohm": [
+    1.535000000000025,
+    0.7549999999999955,
+    0.410000000000025
+  ],
+  "brackets_ohm": [
+    [
+      774.55,
+      777.62
+    ],
+    [
+      754.84,
+      756.35
+    ],
+    [
+      750.29,
+      751.11
+    ]
+  ],
+  "nominal_delta": 3.694890946106103,
+  "delta_half_bracket_sensitivity": 0.8061553940744316,
+  "note": "Half-brackets are resolution descriptors, NOT standard errors. Correct covariance includes R2 in both gaps.",
+  "bracket_uniform_delta_median": 4.183458839623036,
+  "bracket_uniform_delta_95_interval": [
+    3.336235406153331,
+    5.377675967692058
+  ],
+  "bracket_uniform_delta_std": 0.5498420592430644,
+  "interval_note": "Conditional on independent uniform locations in the measured brackets. Does not include R calibration, drift, or classification uncertainty."
+}

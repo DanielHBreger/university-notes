@@ -40,6 +40,11 @@
     "source": "RESULTS.md: Models against the bench; rounded continuation thresholds"
   },
   {
+    "file": "12_model_transitions_deviation",
+    "use": "Simplified model comparison; alternative to 08",
+    "source": "Absolute differences of the same rounded thresholds plotted in 08_model_transitions"
+  },
+  {
     "file": "09_equal_r_bench_still",
     "use": "Paused model comparison",
     "source": "Identified bench continuation; near 550 \u03a9"
@@ -48,5 +53,10 @@
     "file": "10_model_onset_difference",
     "use": "Paused model comparison",
     "source": "Identified bench continuation; near 700 \u03a9"
+  },
+  {
+    "file": "11_period_doubling_orbits",
+    "use": "Measured 1,2,4,8 cycle comparison",
+    "source": "forward traces 58,82,90,92; period labels verified by lag distances"
   }
 ]

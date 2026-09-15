@@ -44,9 +44,16 @@ For each n = 1, 2, 3 (P = 2, 4, 8):
 - the records labelled period P, sorted by descending R; the highest one is `lo`, the lower edge of the bracket;
 - the lowest R among the records labelled P/2 above it is `hi`, the upper edge;
 - the `nfit` records nearest the transition are fitted: splitting² against R, straight line, zero crossing = R_n;
-- if the root lands inside the bracket it is used ("sqrt fit"); otherwise the bracket midpoint, with half the bracket width as the uncertainty.
+- if the root lands inside the bracket it is used ("sqrt fit"); otherwise the bracket midpoint, with half the bracket width reported as a resolution descriptor, not a standard error.
 
 ## `main()`
 
 - `--record path`: one raw record through `lorenz_map.maxima`, then its D(p) table, period and, for period ≥ 8, the P levels as mean ± sd over the repeats. This is the diagnostic for one file.
 - Otherwise: the sidecar of the named sweep, restricted to `--range` (default 744 to 790 ohm, the cascade), one line per record with period, floor, splitting and drift, records with drift above `--drift-max` flagged as "pot moving" and excluded from the fits. Then R1, R2, R3 with their brackets, the gaps g1 = R1 − R2 and g2 = R2 − R3, and delta_1 = g1/g2 against the universal 4.669. The model's values come from `feigenbaum.py`.
+
+## Uncertainty update
+
+`delta_covariance` propagates R1, R2 and R3 jointly, retaining the shared R2 contribution.
+The historical half-brackets are not 1σ fit errors; the log now labels the resulting value
+as a resolution sensitivity. A separate uniform-within-bracket calculation is saved in
+`uncertainty/cascade_uncertainty.json` and explained in `uncertainty/REPORT.md`.

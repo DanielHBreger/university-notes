@@ -43,9 +43,11 @@
   trace99.csv   746.20   2    72.1    572.1    1.5
  trace100.csv   744.64   2    94.6    565.0    1.2
 
-  R_1 =  774.61 +- 1.54  bracket [774.55,777.62]  sqrt fit
-  R_2 =  755.60 +- 0.75  bracket [754.84,756.35]  bracket midpoint
-  R_3 =  750.45 +- 0.41  bracket [750.29,751.11]  sqrt fit
+  R_1 =  774.61  half-bracket 1.54 ohm  bracket [774.55,777.62]  sqrt fit
+  R_2 =  755.60  half-bracket 0.75 ohm  bracket [754.84,756.35]  bracket midpoint
+  R_3 =  750.45  half-bracket 0.41 ohm  bracket [750.29,751.11]  sqrt fit
 
-  g_1 = 19.02 +- 1.71    g_2 =  5.15 +- 0.86
-  delta_1 = 3.69 +- 0.70    (simulation 4.286, universal 4.669)
+  g_1 = 19.02    g_2 =  5.15
+  delta_1 = 3.69; propagated half-bracket sensitivity 0.81    (universal 4.669; model: feigenbaum.py)
+  Half-brackets describe resistance resolution, not 1-sigma errors.
+  Shared R2 covariance is included; calibration and drift terms are additional.

@@ -42,6 +42,7 @@ import sys
 from collections import OrderedDict
 
 import numpy as np
+from uncertainty import delta_covariance
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -148,15 +149,18 @@ def main():
     print()
     for n in sorted(out):
         R, e, br, ok, use = out[n]
-        print(f'  R_{n} = {R:7.2f} +- {e:4.2f}  bracket [{br[0]:.2f},{br[1]:.2f}]'
+        print(f'  R_{n} = {R:7.2f}  half-bracket {e:4.2f} ohm  bracket [{br[0]:.2f},{br[1]:.2f}]'
               f'  {"sqrt fit" if ok else "bracket midpoint"}')
     if {1, 2, 3} <= set(out):
         g1, g2 = out[1][0] - out[2][0], out[2][0] - out[3][0]
         e1 = np.hypot(out[1][1], out[2][1]); e2 = np.hypot(out[2][1], out[3][1])
-        d = g1 / g2
-        print(f'\n  g_1 = {g1:5.2f} +- {e1:.2f}    g_2 = {g2:5.2f} +- {e2:.2f}')
-        print(f'  delta_1 = {d:.2f} +- {d*np.hypot(e1/g1, e2/g2):.2f}'
+        d, sensitivity = delta_covariance([out[k][0] for k in (1, 2, 3)],
+                                          np.diag([out[k][1]**2 for k in (1, 2, 3)]))
+        print(f'\n  g_1 = {g1:5.2f}    g_2 = {g2:5.2f}')
+        print(f'  delta_1 = {d:.2f}; propagated half-bracket sensitivity {sensitivity:.2f}'
               f'    (universal 4.669; model: feigenbaum.py)')
+        print('  Half-brackets describe resistance resolution, not 1-sigma errors.')
+        print('  Shared R2 covariance is included; calibration and drift terms are additional.')
 
 
 if __name__ == '__main__':

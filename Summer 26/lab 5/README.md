@@ -115,7 +115,7 @@ windows are not phase aligned. `metadata.json` records the source and parameters
   named `forward_vs_back_hysteresis*` so that no script mistakes it for a sweep.
 - The vertical range was changed several times within both sweeps, always on all three
   channels together, so the divider ratio is unaffected (the divider identity A + B = 1 holds
-  to 0.5 % on every record, `identified.txt`). Between forward trace329 and trace330 the fitted
+  with mean 1.0029 and maximum deviation 1.25%, `identified.txt`; this does not calibrate the channel gain ratio). Between forward trace329 and trace330 the fitted
   Rpot steps by 11 ohm in a sweep that otherwise falls 1-2 ohm per record, so forward values
   below about 467 ohm carry a +2 % offset relative to those above.
 - The back sweep's resistance scale reads about 6 ohm lower than the forward sweep's near
@@ -131,3 +131,12 @@ preserves a ChatGPT revision of it, of which the strict CSV reader, the M1 fit a
 element voltage, the input validation and the tests were kept and the rest rejected
 (its `simulate.py` never oscillated above 850 ohm because it kept the fitted current offset,
 and its conclusions were drawn from data sets no longer in use).
+
+## Measurement uncertainty
+
+The instrument audit and propagation equations are in [uncertainty/REPORT.md](uncertainty/REPORT.md).
+Run `python uncertainty/calculate.py` to rebuild the voltage-resolution, divider-fit, diode-fit,
+cascade and power-supply calculations, then regenerate the presentation figures.
+Settings and calibration inputs belong in `uncertainty/instrument_inputs.json`; missing values
+are explicit and are never treated as zero error. `python -m pytest tests/test_uncertainty.py`
+checks covariance propagation and paired block resampling.

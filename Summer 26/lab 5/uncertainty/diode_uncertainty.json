@@ -1,0 +1,165 @@
+{
+  "channels": {
+    "CH1": {
+      "quantum_V": 0.12864300000000028,
+      "quantum_grid_consistency": 1.0,
+      "u_quantization_V": 0.0371360353396806,
+      "dc_reading_limit_V": null,
+      "dc_limit_status": "unknown settings",
+      "volts_per_div_at_tip": null,
+      "offset_V_at_tip": null,
+      "probe_attenuation": 1.0
+    },
+    "CH2": {
+      "quantum_V": 0.12864300000000028,
+      "quantum_grid_consistency": 1.0,
+      "u_quantization_V": 0.0371360353396806,
+      "dc_reading_limit_V": null,
+      "dc_limit_status": "unknown settings",
+      "volts_per_div_at_tip": null,
+      "offset_V_at_tip": null,
+      "probe_attenuation": 1.0
+    }
+  },
+  "sample_dt_s": 2.7999999999998512e-06,
+  "cov_VI_I_quantization": [
+    [
+      0.0013790851207500065,
+      -6.384653336805586e-06
+    ],
+    [
+      -6.384653336805586e-06,
+      5.9117160525977646e-08
+    ]
+  ],
+  "u_current_quantization_A": 0.00024314020754695765,
+  "segments": [
+    {
+      "label": "Gc left",
+      "slope_S": 0.0036231870444477163,
+      "intercept_A": 0.02714242750473985,
+      "u_slope_block_S": 4.2603544709733365e-05,
+      "u_intercept_block_A": 0.0003267177318704467,
+      "cov_slope_intercept": [
+        [
+          1.8150620218342499e-09,
+          1.387701618658723e-08
+        ],
+        [
+          1.387701618658723e-08,
+          1.0674447631856908e-07
+        ]
+      ],
+      "valid_draws": 1000,
+      "slope_ci95_block_S": [
+        0.0035123791261414596,
+        0.0036698719832231334
+      ],
+      "v_lo": -8.619096,
+      "v_hi": -6.7537695,
+      "total_uncertainty": null
+    },
+    {
+      "label": "Gb left",
+      "slope_S": -0.0004175594384744763,
+      "intercept_A": -3.5058086001860136e-05,
+      "u_slope_block_S": 5.367375935152514e-06,
+      "u_intercept_block_A": 1.9291004801233828e-05,
+      "cov_slope_intercept": [
+        [
+          2.8808724429254324e-11,
+          9.686705199006819e-11
+        ],
+        [
+          9.686705199006819e-11,
+          3.721428662412267e-10
+        ]
+      ],
+      "valid_draws": 1000,
+      "slope_ci95_block_S": [
+        -0.0004291208136767439,
+        -0.00040823102645718746
+      ],
+      "v_lo": -6.7537695,
+      "v_hi": -1.0934675,
+      "total_uncertainty": null
+    },
+    {
+      "label": "Ga inner",
+      "slope_S": -0.0007170637646220528,
+      "intercept_A": -0.0004129710487129946,
+      "u_slope_block_S": 3.4879549956173926e-05,
+      "u_intercept_block_A": 1.2499579370082873e-05,
+      "cov_slope_intercept": [
+        [
+          1.216583005145232e-09,
+          -1.7331571709609358e-10
+        ],
+        [
+          -1.7331571709609358e-10,
+          1.5623948442900133e-10
+        ]
+      ],
+      "valid_draws": 997,
+      "slope_ci95_block_S": [
+        -0.0008783990272817121,
+        -0.0006844519314723925
+      ],
+      "v_lo": -1.0934675,
+      "v_hi": 0.5788945,
+      "total_uncertainty": null
+    },
+    {
+      "label": "Gb right",
+      "slope_S": -0.00043366825277034454,
+      "intercept_A": -0.0007515990313621883,
+      "u_slope_block_S": 3.61868763694011e-06,
+      "u_intercept_block_A": 9.956575108154138e-06,
+      "cov_slope_intercept": [
+        [
+          1.3094900213743197e-11,
+          -3.2878206008424426e-11
+        ],
+        [
+          -3.2878206008424426e-11,
+          9.913338788431459e-11
+        ]
+      ],
+      "valid_draws": 1000,
+      "slope_ci95_block_S": [
+        -0.00044317274047443565,
+        -0.000428557707073961
+      ],
+      "v_lo": 0.5788945,
+      "v_hi": 5.98191,
+      "total_uncertainty": null
+    },
+    {
+      "label": "Gc right",
+      "slope_S": 0.003786431370614927,
+      "intercept_A": -0.02606368373724144,
+      "u_slope_block_S": 0.0001201587128375754,
+      "u_intercept_block_A": 0.000895535202887402,
+      "cov_slope_intercept": [
+        [
+          1.4438116270782906e-08,
+          -1.0755944587016991e-07
+        ],
+        [
+          -1.0755944587016991e-07,
+          8.019832996105802e-07
+        ]
+      ],
+      "valid_draws": 1000,
+      "slope_ci95_block_S": [
+        0.003590073829118002,
+        0.003857544381269213
+      ],
+      "v_lo": 5.98191,
+      "v_hi": 7.718594,
+      "total_uncertainty": null
+    }
+  ],
+  "block_s": 0.0051249121875000005,
+  "note": "Paired time-block bootstrap, fixed nominal segment boundaries; calibration, EIV bias, breakpoint selection and shunt uncertainty excluded."
+}

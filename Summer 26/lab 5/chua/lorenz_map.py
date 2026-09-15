@@ -167,6 +167,10 @@ def maxima_from_arrays(t, x, prominence=0.02, period=None):
     # The scope's quantisation step on this channel. It bounds how finely
     # any maximum is known, whatever the smoothing does after.
     info['quantum'] = quantum(x)
+    if np.ptp(x) == 0:
+        # Filtering a constant can create round-off-sized false maxima.
+        info['status'] = 'flat record'
+        return np.empty(0), info
     # Fraction of samples pinned at either extreme: on this bench the low-R
     # records run off the scope's input range and clip hard, and a clipped
     # peak is a flat plateau at the rail rather than a real maximum. It is a

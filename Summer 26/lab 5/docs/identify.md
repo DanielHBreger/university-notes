@@ -6,7 +6,7 @@ Other outputs, beside the script: `identified.txt` (the readable report with the
 
 ## The idea
 
-The periodic records (the period-1 cycle below the Hopf point, the small orbit near the origin, the large outer cycle) are averaged over their hundreds of cycles. Averaging removes the scope's quantisation and leaves waveforms clean enough to differentiate. The circuit equations then give each element directly:
+The periodic records (the period-1 cycle below the Hopf point, the small orbit near the origin, the large outer cycle) are averaged over their hundreds of cycles. Averaging reduces quantization scatter and leaves waveforms suitable for differentiation; it does not remove calibration uncertainty. The circuit equations then give each element directly:
 
 - **node 1**, `C1 v1' = (v2 − v1)/Rt − g(v1)`. For any static element the loop integral of g dv1 over a cycle is zero, so `C1 = ∮ (v2 − v1)/Rt · v1' dt / ∮ v1'² dt`, whatever g is. With C1 known, `i_NR = (v2 − v1)/Rt − C1 v1'` against v1 is the element's curve as the circuit sees it, and any loop in it is a dynamic effect.
 - **node 2**, `(v1 − v2)/Rt = C2 v2' + iL` and `L iL' = v2 − r iL`. C2 comes from the tank admittance `(v1 − v2)/Rt ÷ v2` harmonic by harmonic. With C2 known, `iL = (v1 − v2)/Rt − C2 v2'`, and the flux `∫ v2 dt` against iL is the inductor's own loop: secant slope = effective inductance, enclosed area = loss per cycle.

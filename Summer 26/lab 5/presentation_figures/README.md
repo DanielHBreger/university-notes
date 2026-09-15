@@ -1,6 +1,6 @@
 # Figures for the 10-minute presentation
 
-Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies retain sharp text and lines when resized (dense scatter layers are rasterized). The result figures are 16:9; the title portrait is a separate image asset. All figures use the actual project data, with no smoothing of the displayed measured phase portraits.
+Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies retain sharp text and lines when resized (dense scatter layers are rasterized). All generated static figures are exactly 1920 × 1080 pixels (16:9), with slide-ready titles. The animation is 1280 × 720 pixels (16:9). All figures use the actual project data, with no smoothing of the displayed measured phase portraits.
 
 ## Suggested selection and order
 
@@ -14,9 +14,11 @@ Use PNG for straightforward insertion into PowerPoint or Keynote. SVG copies ret
 | 06_lyapunov | Main results | Positive direct Lyapunov estimates support local trajectory divergence in the chaotic regimes. |
 | 07_identified_inductor | Supporting figure or backup | Inductance and loss vary with oscillation amplitude, motivating the bench model. |
 | 08_model_transitions | Discussion | The identified model improves several transition thresholds beyond the ideal model. |
+| 12_model_transitions_deviation | Discussion, alternative to 08 | Shorter bars mean the predicted transition is closer to the measurement. |
 | 09_equal_r_bench.gif | Model comparison | Play once, then use the corresponding still to discuss the agreement. |
 | 09_equal_r_bench_still | Model comparison | An equal-resistance comparison in the double-scroll regime. |
 | 10_model_onset_difference | Optional backup | Another equal-resistance comparison near 700 Ω. |
+| 11_period_doubling_orbits | Main results | Period-1, 2, 4 and 8 measured orbits, with 16 successive peaks below each portrait. |
 
 For a ten-minute talk, use the phase portraits, bifurcation, Lyapunov figure, and model animation as the central evidence. Show the hysteresis and transition comparison briefly. Keep the inductor detail and second comparison still available for questions.
 
@@ -38,7 +40,22 @@ For a ten-minute talk, use the phase portraits, bifurcation, Lyapunov figure, an
 From the repository root, with the project requirements and Pillow installed:
 
 ```sh
+python uncertainty/calculate.py
 python presentation_figures/make_figures.py --animation
 ```
 
-Omit `--animation` to render only figures 01–08. `manifest.json` identifies the data sources. The original project figures and earlier animations remain available.
+Omit `--animation` to render the static figures 01–08, 11 and 12. `manifest.json` identifies the data sources. The original project figures and earlier animations remain available.
+
+## Error bars and captions
+
+The figures use short labels: resistance fit errors, segment-fit bands, and Lyapunov fit errors are one-standard-deviation components. Acquisition intervals in the bifurcation figure describe resistance sampling. Detailed error calculations and instrument conditions are in [the uncertainty report](../uncertainty/REPORT.md).
+
+The 1/2/4/8 comparison uses forward traces 58, 82, 90 and 92. Their periods are checked by the existing lag-distance analysis before rendering. The upper panels are raw voltage portraits; the lower panels use peaks from the same smoothed analysis as the bifurcation diagram.
+
+## Slide readability updates
+
+- The I–V title states how the measurement defines the nonlinear model.
+- The bifurcation overview outlines the exact zoom region with an orange dashed box; the detail panel has a matching border.
+- Increasing-resistance data use larger purple triangles and a solid, enlarged legend marker.
+- The Lyapunov plot has no point annotation arrow. Its second panel expands 540–560 Ω to display the original fit uncertainties with capped error bars.
+- Figure 12 compares absolute model deviations in ohms using the same rounded thresholds as figure 08, which is retained. These bars are differences, not measurement errors.

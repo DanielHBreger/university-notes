@@ -19,7 +19,7 @@ Rpot = R0 · (B/A) · (g2/g1)
 `g2/g1` is the ratio of the two end channels' gains. Using the ratio B/A instead of A alone has two consequences that matter:
 
 - the gain of the midpoint channel cancels completely (it scales A and B together);
-- only the relative gain of CH1 and CH2 survives, and that is 1 when they sit on the same V/div. `identify.py` later checks the identity A + B = 1 on every record and finds it holds to 0.5 %.
+- only the relative gain of CH1 and CH2 survives. Equal V/div settings do not guarantee equal gains. The identity A + B ≈ 1 is a consistency check, not a calibration of their ratio. See `uncertainty/REPORT.md` for the error budget and unresolved calibration terms.
 
 The offset C absorbs any DC offset in the channels. Fitting over the whole record, with v1 and v2 swinging independently, is what makes A and B separable.
 

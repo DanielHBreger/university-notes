@@ -2,14 +2,20 @@
 
 Inputs: `chua/forward/` (418 records, knob turned down), `chua/back/` (80 records, knob turned
 back up) and the V-I record `trace1.csv`. Divider fits use R0 = 992 ohm (`chua/scope_data.py`).
-Every number below is reproduced by the pipeline in `README.md`.
+Nominal point estimates below come from the pipeline in `README.md`.
+
+**Uncertainty update (15 September):** see [the error analysis](uncertainty/REPORT.md) and
+`uncertainty/*_uncertainty.csv`. Fit errors, acquisition brackets and instrument limits are
+different quantities. The regenerated presentation figures label the calculated fit
+components. The instrument models alone do not recover the missing voltage scales,
+calibration history or resistor calibration. Tables below retain nominal values unless noted.
 
 ## Summary
 
-- The measurements themselves are sound: the divider identity A + B = 1 holds to 0.5 % on every
-  record, so the resistance axis is right to that level, and the whole regime sequence
-  (Hopf point, period doubling, single scroll, double scroll, large outer cycle, hysteresis) is
-  in the data with 570 to 1400 windings per record.
+- The measurements show the regime sequence, including period doubling and hysteresis.
+  The divider identity is a consistency check, not a calibration of the resistance axis.
+  The identified data give mean A+B = 1.0029 and a maximum deviation of 1.25%; neither
+  number establishes relative channel gain accuracy.
 - The plan's model (constant components, five straight segments from the V-I trace) does not
   reproduce the measurement, and no choice of its constants makes it: the components are not
   what the model assumes. Identified from the oscillator records themselves (`identify.py`):
@@ -19,7 +25,7 @@ Every number below is reproduced by the pipeline in `README.md`.
   and the element is Kennedy's two-op-amp diode whose op-amps are slow enough to be seen
   (0.7 mA of dynamic deviation in the large cycle).
 - With those measured non-idealities put into the simulation (`simulate.py --model bench`)
-  every transition of the bench is reproduced to within 1 to 4 % in resistance: Hopf point
+  the tabulated transition locations are reproduced with nominal discrepancies of about 0–5%: Hopf point
   905 against 893 to 897 ohm, first doubling 776 against 775, chaos 750 against 750, double
   scroll 697 to 344 against 668 to 328, large cycle surviving to 683 against 675 ohm on the
   way up, with the periods, amplitudes and the tank current of every regime within 2 to 7 %.
@@ -65,8 +71,8 @@ ohm, i.e. the upper bound lies beyond the dial. With the inner slope the circuit
 | large outer cycle | 314 .. 4 | 3 .. 675 |
 
 The observed double-scroll range sits inside the M2 range. The back sweep's resistance scale
-reads about 6 ohm lower than the forward sweep's (R1 768 against 775, onset 874 against 880),
-a 0.8 % gain difference between the two sessions.
+reads about 6 ohm lower than the forward sweep's (R1 768 against 775, onset 874 against 880).
+A relative gain difference is one possible explanation; it is not independently calibrated.
 
 ## N1  Hopf point
 
@@ -109,9 +115,13 @@ The large outer cycle and the double scroll coexist: turning down, the double sc
 | R1 (1 -> 2) | 774.6 +- 1.5 ohm | 768.1 +- 0.2 ohm |
 | R2 (2 -> 4) | 755.6 +- 0.8 ohm | not resolved (one period-4 record) |
 | R3 (4 -> 8) | 750.5 +- 0.4 ohm | - |
-| delta_1 = (R1-R2)/(R2-R3) | 3.7 +- 0.7 | - |
+| delta_1 = (R1-R2)/(R2-R3) | 3.695; resolution sensitivity 0.806 | - |
 
-Universal value 4.669. The models' values are in the Feigenbaum section below.
+The R1/R2/R3 ± entries above are half-brackets, not standard errors. Correct propagation
+includes the shared R2. An independent-uniform model of the actual acquisition brackets
+gives a separate median delta of 4.18 with central 95% interval [3.34,5.38]. The universal
+value is 4.669; neither this interval nor the sensitivity is a full experimental confidence
+statement. See `uncertainty/REPORT.md`. The model values are below.
 
 ## M5  Lyapunov exponents  (`lyapunov.py --rosenstein --each`)
 
@@ -147,7 +157,8 @@ an estimate from the return map and the direct value as the measurement, as the 
 ## The circuit as measured  (`identify.py` -> `identified.json`, `identified_*.png`)
 
 479 records; 109 are periodic (58 period-1 cycles, 3 orbits around the origin, 48 large cycles)
-and were averaged over their cycles, which removes the scope's quantisation. Channel gains:
+and were averaged over their cycles, reducing quantization scatter without removing
+calibration error. Divider consistency:
 A + B = 1.003 +- 0.004 over all records.
 
 | element | how | value |
@@ -218,7 +229,8 @@ C1 = 11.5 nF puts the Hopf point in place but leaves the double scroll a 60 ohm 
 550 ohm and the large cycle alive to 770 ohm; the identified constants with a static element
 (fourth column) are worse still, because the loss the inductor has at 2 mA and above is what
 ends the large cycle and lowers the cascade. Turning on the inductor's amplitude dependence and
-the op-amp dynamics (last column) puts every transition within 1-4 % of the bench.
+the op-amp dynamics (last column) improves the tabulated transition locations; the nominal discrepancies reach about 5%.
+This comparison does not include a joint parameter uncertainty or establish statistical agreement.
 
 Figures: `chua/simulated_bifurcation_bench.png` (bench model over the measured points),
 `chua/simulated_bifurcation.png` and `_nominal.png`, `_static.png` (the others), and the
@@ -234,7 +246,7 @@ What the bench model still gets wrong, and why:
 - The small cycle appears within a few ohm at 850 ohm in the model, whereas on the bench it grows
   over 50 ohm below 893. A piecewise-linear element has no curvature between its corners to limit
   a growing oscillation gently.
-- The double-scroll onset (697 against 668 ohm) and its lower end (344 against 328) are 2-4 %
+- The double-scroll onset (697 against 668 ohm) and its lower end (344 against 328) are about 4.3% and 4.9%
   off; the onset is the transition most sensitive to the inner-region slope and breakpoints,
   which are known to about 1 %.
 
@@ -246,7 +258,7 @@ What the bench model still gets wrong, and why:
 | R2 (2 -> 4) | 755.6 +- 0.8 | 732.5 | 826.8 | 754.9 |
 | g1 = R1 - R2 | 19.0 | 39.4 | 18.3 | 21.9 |
 | R3 (4 -> 8) | 750.5 +- 0.4 | not resolved | not resolved | not resolved |
-| delta_1 | 3.7 +- 0.7 | - | - | - |
+| delta_1 | 3.695; resolution sensitivity 0.806 | - | - | - |
 
 The doubling points are found by bisection on the orbit's period and the sqrt law of the newest
 splitting (`feigenbaum_<model>.txt`). In all three models the period-4 orbit gives way to chaos

@@ -345,7 +345,7 @@ def analyse_record(path, rpot):
     Tall = np.diff(tp)
     out = dict(rpot=rpot, Rt=R0 + rpot, n_max=len(M), T_us=Tall.mean() * 1e6,
                jitter=float(Tall.std() / Tall.mean()), max_spread=float(np.ptp(M)))
-    # the divider identity A + B = 1 tests the relative gain of CH1 and CH2
+    # Divider consistency check; A+B alone cannot identify relative channel gains.
     X = np.column_stack([d[:, 0] - d[:, 0].mean(), d[:, 1] - d[:, 1].mean()])
     A, B = np.linalg.lstsq(X, d[:, 2] - d[:, 2].mean(), rcond=None)[0]
     out['divider_A_plus_B'] = float(A + B)
@@ -555,7 +555,7 @@ def main():
         json.dump(result, fh, indent=2)
 
     lines = [f'identify.py: {len(rows)} records, {len(per)} periodic ({len(small)} period-1, {len(tiny)} near-origin, {len(large)} large cycle)',
-             f'channel gains: divider A + B = {gain.mean():.4f} (max deviation {np.max(np.abs(gain-1)):.4f}) -> CH1 and CH2 gains equal',
+             f'divider consistency: A + B = {gain.mean():.4f} (max deviation {np.max(np.abs(gain-1)):.4f}); does not establish relative gain accuracy',
              f'C1 from the loop integral: {c1_small*1e9:.2f} nF at small amplitude, {c1_p1*1e9:.2f} nF on the period-1 cycle, {c1_lc*1e9:.2f} nF on the large cycle',
              f'C1 from the KCL fits: {fits["core"]["C1_apparent_nF"]:.2f} nF (core records), {fits["large_cycle"]["C1_apparent_nF"]:.2f} nF (large cycle)',
              f'C2 = {c2_nF:.1f} nF from the {c2_source} (L = {L_tiny_mH:.1f} mH, r = {r_tiny:.1f} ohm there, residual {tiny_resid:.3f});'

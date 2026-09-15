@@ -1,0 +1,11 @@
+{
+  "setting_V": 9.0,
+  "reported_current_setting_A": 0.03,
+  "programming_or_readback_limit_V": 0.0127,
+  "standard_u_rectangular_V": 0.007332348418708248,
+  "line_regulation_limit_V": 0.0039000000000000003,
+  "load_regulation_limit_V": 0.0039000000000000003,
+  "ripple_limit_Vrms": 0.001,
+  "current_setting_limit_A": 0.01009,
+  "note": "CH1/CH2 at 9 V each, 0.03 A reported setting. Conditional on CV operation, warm-up, temperature. Tracking mode and actual load current not established. Regulation terms are not independent calibration errors and are not RSS-added. Ripple is not added to every scope sample."
+}
