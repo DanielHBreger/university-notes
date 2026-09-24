@@ -91,5 +91,240 @@
   ],
   "drive_frequency_hz": 9.167785136453315,
   "directional_rms_difference_A": 2.651251036572372e-05,
-  "uncertainty_note": "OLS standard errors only; quantisation, channel gains, correlated errors and drift are not included."
+  "u_voltage_quantization_V": 0.0371360353396806,
+  "u_current_quantization_A": 0.00024314020754695765,
+  "code_stats": {
+    "segments": [
+      {
+        "label": "Gc left",
+        "n_codes": 15,
+        "sigma_median_A": 0.00013557999242288848,
+        "u_slope_S": 6.982772378232136e-05,
+        "u_intercept_A": 0.0005357336833876233,
+        "chi2_all": {
+          "chi2": 73.92693737390694,
+          "dof": 13,
+          "chi2_red": 5.6866874903005336,
+          "p_value": 1.507371279422551e-10
+        },
+        "chi2_core": {
+          "chi2": 6.075995348135666,
+          "dof": 12,
+          "chi2_red": 0.5063329456779722,
+          "p_value": 0.9122027623430381
+        },
+        "sign_runs": 6,
+        "sign_runs_expected": 8.5,
+        "max_abs_z": 8.237168325691254,
+        "local_slopes": [
+          {
+            "v_lo": -8.490453,
+            "v_hi": -7.97588,
+            "slope_S": 0.003075106356405489,
+            "u_slope_S": 0.00033282801500243296
+          },
+          {
+            "v_lo": -7.847237,
+            "v_hi": -7.332664,
+            "slope_S": 0.0035733671476883668,
+            "u_slope_S": 0.0003333846616603509
+          },
+          {
+            "v_lo": -7.204021,
+            "v_hi": -6.818091,
+            "slope_S": 0.003579486881830419,
+            "u_slope_S": 0.00047142633533764193
+          }
+        ]
+      },
+      {
+        "label": "Gb left",
+        "n_codes": 44,
+        "sigma_median_A": 2.284141221359766e-05,
+        "u_slope_S": 2.089988189211297e-06,
+        "u_intercept_A": 8.855536503547313e-06,
+        "chi2_all": {
+          "chi2": 121.12721824025961,
+          "dof": 42,
+          "chi2_red": 2.883981386672848,
+          "p_value": 1.3330230732928212e-09
+        },
+        "chi2_core": {
+          "chi2": 121.12721824025961,
+          "dof": 42,
+          "chi2_red": 2.883981386672848,
+          "p_value": 1.3330230732928212e-09
+        },
+        "sign_runs": 15,
+        "sign_runs_expected": 23.0,
+        "max_abs_z": 4.704523993305413,
+        "local_slopes": [
+          {
+            "v_lo": -6.689448,
+            "v_hi": -4.888443,
+            "slope_S": -0.0003792924322754147,
+            "u_slope_S": 1.0845114943641374e-05
+          },
+          {
+            "v_lo": -4.759799,
+            "v_hi": -2.958794,
+            "slope_S": -0.0003895735089030715,
+            "u_slope_S": 1.0530102498553716e-05
+          },
+          {
+            "v_lo": -2.830151,
+            "v_hi": -1.157789,
+            "slope_S": -0.00046663985267793805,
+            "u_slope_S": 1.154253133563059e-05
+          }
+        ]
+      },
+      {
+        "label": "Ga inner",
+        "n_codes": 13,
+        "sigma_median_A": 3.2131577627350934e-05,
+        "u_slope_S": 1.840204669273095e-05,
+        "u_intercept_A": 9.98120159021897e-06,
+        "chi2_all": {
+          "chi2": 14.449940150669045,
+          "dof": 11,
+          "chi2_red": 1.313630922788095,
+          "p_value": 0.20908823374361976
+        },
+        "chi2_core": {
+          "chi2": 14.449940150669045,
+          "dof": 11,
+          "chi2_red": 1.313630922788095,
+          "p_value": 0.20908823374361976
+        },
+        "sign_runs": 3,
+        "sign_runs_expected": 7.5,
+        "max_abs_z": 1.961115961074952,
+        "local_slopes": [
+          {
+            "v_lo": -1.029146,
+            "v_hi": -0.5145729,
+            "slope_S": -0.0006024757775155688,
+            "u_slope_S": 7.71452731798019e-05
+          },
+          {
+            "v_lo": -0.3859297,
+            "v_hi": 0.0,
+            "slope_S": -0.0006166614438513317,
+            "u_slope_S": 0.00011176122406781446
+          },
+          {
+            "v_lo": 0.1286432,
+            "v_hi": 0.5145729,
+            "slope_S": -0.0007901670026922741,
+            "u_slope_S": 0.00010984183872526266
+          }
+        ]
+      },
+      {
+        "label": "Gb right",
+        "n_codes": 42,
+        "sigma_median_A": 2.3411280472977535e-05,
+        "u_slope_S": 2.2934409044015733e-06,
+        "u_intercept_A": 8.325977876749487e-06,
+        "chi2_all": {
+          "chi2": 82.72722105698736,
+          "dof": 40,
+          "chi2_red": 2.068180526424684,
+          "p_value": 8.309810363968196e-05
+        },
+        "chi2_core": {
+          "chi2": 82.72722105698736,
+          "dof": 40,
+          "chi2_red": 2.068180526424684,
+          "p_value": 8.309810363968196e-05
+        },
+        "sign_runs": 13,
+        "sign_runs_expected": 22.0,
+        "max_abs_z": 3.3810598583066964,
+        "local_slopes": [
+          {
+            "v_lo": 0.6432161,
+            "v_hi": 2.315578,
+            "slope_S": -0.0004799589366244604,
+            "u_slope_S": 1.171450679388361e-05
+          },
+          {
+            "v_lo": 2.444221,
+            "v_hi": 4.116583,
+            "slope_S": -0.0004286971396062418,
+            "u_slope_S": 1.1687517831255642e-05
+          },
+          {
+            "v_lo": 4.245226,
+            "v_hi": 5.917588,
+            "slope_S": -0.0003818083041486939,
+            "u_slope_S": 1.2182835866077982e-05
+          }
+        ]
+      },
+      {
+        "label": "Gc right",
+        "n_codes": 14,
+        "sigma_median_A": 0.0001416303586537813,
+        "u_slope_S": 8.162639754533557e-05,
+        "u_intercept_A": 0.0005579479111637967,
+        "chi2_all": {
+          "chi2": 34.542644150378116,
+          "dof": 12,
+          "chi2_red": 2.8785536791981765,
+          "p_value": 0.0005536124640413392
+        },
+        "chi2_core": {
+          "chi2": 2.6699800866223913,
+          "dof": 11,
+          "chi2_red": 0.2427254624202174,
+          "p_value": 0.994408142309273
+        },
+        "sign_runs": 4,
+        "sign_runs_expected": 8.0,
+        "max_abs_z": 5.645588017536856,
+        "local_slopes": [
+          {
+            "v_lo": 6.046232,
+            "v_hi": 6.560805,
+            "slope_S": 0.003961916884651393,
+            "u_slope_S": 0.0003482463747185818
+          },
+          {
+            "v_lo": 6.689448,
+            "v_hi": 7.075377,
+            "slope_S": 0.0039238201922140075,
+            "u_slope_S": 0.0004923201756594542
+          },
+          {
+            "v_lo": 7.204021,
+            "v_hi": 7.58995,
+            "slope_S": 0.003310181227403505,
+            "u_slope_S": 0.0004922157869801185
+          }
+        ]
+      }
+    ],
+    "chi2_all": {
+      "chi2": 326.77396097220105,
+      "dof": 118,
+      "chi2_red": 2.769270855696619,
+      "p_value": 1.6811548582456952e-21
+    },
+    "chi2_core": {
+      "chi2": 227.05035488267407,
+      "dof": 116,
+      "chi2_red": 1.9573306455402937,
+      "p_value": 3.348119043390274e-09
+    },
+    "direction_check": {
+      "chi2": 66.21232012143979,
+      "dof": 80,
+      "chi2_red": 0.8276540015179974,
+      "p_value": 0.8656933246896857
+    },
+    "u_v_V": 0.0371360353396806
+  },
+  "uncertainty_note": "Segment slope_se/intercept_se are OLS standard errors over samples; code_stats carries the per-code error model (SE of the mean plus projected voltage quantisation) with chi-square and p-values. Channel gains, resistor calibration and drift are not included in either."
 }

@@ -1,0 +1,43 @@
+1. Segment fits (one measurement per voltage code; sigma = SE of the code mean (+) slope x u(V))
+segment          V range (V) codes  sigma  slope (mS)       u  intercept (mA)       u     R2 |   local slope, thirds (mS)
+-------------------------------------------------------------------------------------------------------------------------
+Gc left      -8.619.. -6.754    15  0.136      3.6232  0.0698         27.1424  0.5357  0.944 |        3.075  3.573  3.579
+Gb left      -6.754.. -1.093    44  0.023     -0.4176  0.0021         -0.0351  0.0089  0.846 |     -0.379  -0.390  -0.467
+Ga inner     -1.093..  0.579    13  0.032     -0.7171  0.0184         -0.4130  0.0100  0.588 |     -0.602  -0.617  -0.790
+Gb right      0.579..  5.982    42  0.023     -0.4337  0.0023         -0.7516  0.0083  0.845 |     -0.480  -0.429  -0.382
+Gc right      5.982..  7.719    14  0.142      3.7864  0.0816        -26.0637  0.5579  0.938 |        3.962  3.924  3.310
+sigma: median per-code uncertainty (mA). u: statistical fit uncertainty from those sigmas
+(outer segments: without the turnaround code); NOT inflated by sqrt(chi2/dof), because the
+excess scatter on the shoulders is systematic curvature, shown by the local slopes over
+thirds of each segment (from the low-voltage to the high-voltage end, each +- ~0.01 mS on
+the shoulders). Outer-segment intercepts are the line extrapolated 7-8 V to V = 0 and are
+fully correlated with the slope; quote breakpoints instead.
+
+Breakpoints (midpoint between adjacent codes; true corner within one code, u = q/sqrt(12)):
+  -6.754, -1.093, +0.579, +5.982 V, each +- 37 mV
+
+2. Chi-square of the fitted lines against the code means
+segment       chi2  dof  chi2/dof        p | core chi2  dof  chi2/dof        p | runs expect max|z|
+---------------------------------------------------------------------------------------------------
+Gc left       73.9   13      5.69    0.000 |       6.1   12      0.51    0.912 |    6    8.5    8.2
+Gb left      121.1   42      2.88    0.000 |     121.1   42      2.88    0.000 |   15   23.0    4.7
+Ga inner      14.4   11      1.31    0.209 |      14.4   11      1.31    0.209 |    3    7.5    2.0
+Gb right      82.7   40      2.07    0.000 |      82.7   40      2.07    0.000 |   13   22.0    3.4
+Gc right      34.5   12      2.88    0.001 |       2.7   11      0.24    0.994 |    4    8.0    5.6
+all five     326.8  118      2.77    0.000 |     227.1  116      1.96    0.000 |
+core: without the first and last code of the trace (drive turnaround, source clipped).
+runs: sign runs of the residuals; expect = n/2 + 1 for random scatter. Far fewer runs = curvature.
+
+3. Other slope uncertainty estimates (mS)
+segment     OLS se (samples)  block bootstrap  N samples
+Gc left               0.0090           0.0426       9533
+Gb left               0.0015           0.0054      13239
+Ga inner              0.0101           0.0349       3500
+Gb right              0.0017           0.0036      12451
+Gc right              0.0104           0.1202       8839
+
+4. Record
+Points fitted: 47562 of 58571; drive frequency 9.17 Hz
+Single-reading resolution: u(V) = 37.1 mV, u(I) = 0.243 mA (one code / sqrt(12); not the per-point bar)
+Sweep-direction check: rising - falling = 0.0265 mA rms; chi2 = 66.2, dof = 80 bins, chi2/dof = 0.83, p = 0.866
+Not included anywhere above: channel gain accuracy, shunt resistor calibration, drift.

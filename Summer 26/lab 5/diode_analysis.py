@@ -13,9 +13,11 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.signal import savgol_filter, find_peaks
+from scipy.stats import chi2 as chi2_dist
 
 HERE = Path(__file__).resolve().parent
 from chua.scope_data import R0
+import report_style
 RS = 216.0
 LABELS = ['Gc left', 'Gb left', 'Ga inner', 'Gb right', 'Gc right']
 
@@ -101,6 +103,79 @@ def slope_ranges(fits, r0=R0):
     return out
 
 
+def code_means(vi, current, keep, segments, u_v):
+    """One measurement per voltage code: mean current, its uncertainty, and segment index.
+
+    sigma^2 = (std/sqrt(n))^2 + (G u_v)^2: the standard error of the code's mean
+    current plus the code's own voltage quantisation projected through the local
+    slope. The per-sample current quantisation (~0.24 mA) is the resolution of a
+    single reading, not the uncertainty of a mean over 100-700 samples: the source
+    channel steps through its own codes within one element code and dithers it.
+    """
+    table = pd.DataFrame({'v': vi[keep], 'i': current[keep]}).groupby('v').i.agg(['mean', 'std', 'count'])
+    x = table.index.to_numpy()
+    seg = np.full(len(x), -1)
+    for k, f in enumerate(segments):
+        m = (x >= f['v_lo']) & ((x <= f['v_hi']) if k == len(segments)-1 else (x < f['v_hi']))
+        seg[m] = k
+    slope = np.array([segments[k]['slope_S'] if k >= 0 else 0.0 for k in seg])
+    se = (table['std'].fillna(0)/np.sqrt(table['count'])).to_numpy()
+    sigma = np.sqrt(se**2 + (slope*u_v)**2)
+    return x, table['mean'].to_numpy(), sigma, seg
+
+
+def _chi2_block(c2, dof):
+    return dict(chi2=float(c2), dof=int(dof), chi2_red=float(c2/dof) if dof > 0 else np.nan,
+                p_value=float(chi2_dist.sf(c2, dof)) if dof > 0 else np.nan)
+
+
+def code_stats(vi, current, keep, segments, u_v, overlap):
+    """Fit uncertainties and chi-square tests on the per-code measurements.
+
+    For each segment: the a-priori parameter covariance (X^T W X)^-1 with the
+    per-code sigma, chi2 of the reported (OLS) line against the code means, the
+    same chi2 without the code at the drive turnaround (first code of the first
+    segment, last code of the last: the source clips there), and the number of
+    sign runs in the residuals against its random expectation n/2 + 1 (a run
+    count far below that means systematic curvature, not noise).
+    """
+    x_all, y_all, s_all, seg = code_means(vi, current, keep, segments, u_v)
+    out, c2_tot, dof_tot, c2_core, dof_core = [], 0.0, 0, 0.0, 0
+    for k, f in enumerate(segments):
+        m = seg == k
+        x, y, s = x_all[m], y_all[m], s_all[m]
+        z = (y - (f['slope_S']*x + f['intercept_A']))/s
+        full = _chi2_block(np.sum(z**2), len(z) - 2)
+        core_mask = np.ones(len(z), bool)
+        if k == 0: core_mask[0] = False
+        if k == len(segments) - 1: core_mask[-1] = False
+        core = _chi2_block(np.sum(z[core_mask]**2), core_mask.sum() - 2)
+        X = np.c_[x[core_mask], np.ones(core_mask.sum())]     # same points as the core chi2
+        cov = np.linalg.inv(X.T @ (X/s[core_mask, None]**2))
+        signs = np.sign(z); runs = int(1 + np.sum(signs[1:] != signs[:-1]))
+        # local slope over thirds of the segment: how much the "straight" segment actually bends.
+        # The statistical u is not inflated by sqrt(chi2/dof): the excess is curvature, not noise.
+        xc, yc, sc = x[core_mask], y[core_mask], s[core_mask]
+        thirds = []
+        for sl in np.array_split(np.arange(len(xc)), 3):
+            Xt = np.c_[xc[sl], np.ones(len(sl))]; w = 1/sc[sl]**2
+            ct = np.linalg.inv(Xt.T @ (Xt*w[:, None])); pt = ct @ (Xt.T @ (w*yc[sl]))
+            thirds.append(dict(v_lo=float(xc[sl][0]), v_hi=float(xc[sl][-1]),
+                               slope_S=float(pt[0]), u_slope_S=float(np.sqrt(ct[0, 0]))))
+        c2_tot += full['chi2']; dof_tot += full['dof']; c2_core += core['chi2']; dof_core += core['dof']
+        out.append(dict(label=f['label'], n_codes=int(m.sum()), sigma_median_A=float(np.median(s)),
+                        u_slope_S=float(np.sqrt(cov[0, 0])), u_intercept_A=float(np.sqrt(cov[1, 1])),
+                        chi2_all=full, chi2_core=core, sign_runs=runs,
+                        sign_runs_expected=float(len(z)/2 + 1), max_abs_z=float(np.max(np.abs(z))),
+                        local_slopes=thirds))
+    direction = None
+    if len(overlap):
+        d, s = overlap[:, 1] - overlap[:, 2], overlap[:, 3]
+        direction = _chi2_block(np.sum((d/s)**2), len(d))
+    return dict(segments=out, chi2_all=_chi2_block(c2_tot, dof_tot), chi2_core=_chi2_block(c2_core, dof_core),
+                direction_check=direction, u_v_V=float(u_v))
+
+
 def analyze(path, source='CH1(V)', element='CH2(V)', rs=RS, source_range=(-9.33, 8.28)):
     if not np.isfinite(rs) or rs <= 0:
         raise ValueError('shunt resistance must be positive')
@@ -124,12 +199,16 @@ def analyze(path, source='CH1(V)', element='CH2(V)', rs=RS, source_range=(-9.33,
         mask = keep & (vi >= lo) & (vi < hi)
         up, down = current[mask & rising], current[mask & falling]
         if len(up) >= 10 and len(down) >= 10:
-            overlap.append(((lo+hi)/2,up.mean(),down.mean()))
-    overlap = np.asarray(overlap).reshape(-1,3)
+            overlap.append(((lo+hi)/2,up.mean(),down.mean(),
+                            np.sqrt(up.var(ddof=1)/len(up)+down.var(ddof=1)/len(down))))
+    overlap = np.asarray(overlap).reshape(-1,4)
     peaks, _ = find_peaks(smoothed,prominence=0.5*np.ptp(smoothed))
     troughs, _ = find_peaks(-smoothed, prominence=0.5*np.ptp(smoothed))
     turns = np.sort(np.r_[peaks,troughs])
     freq = float(1/(2*np.median(np.diff(t[turns])))) if len(turns)>1 else None
+    # uniform-within-code quantisation, q/sqrt(12) per channel, both channels independent
+    u_v = [float(np.median(np.diff(np.unique(ch)))/np.sqrt(12)) for ch in (vv, vi)]
+    u_current = float(np.hypot(*u_v)/rs)
     result = dict(schema_version=1, input=str(Path(path).resolve()),
                   voltage_column=element, source_column=source, voltage_basis='element',
                   current_definition=f'({source} - {element}) / {rs:g} ohm',
@@ -137,28 +216,36 @@ def analyze(path, source='CH1(V)', element='CH2(V)', rs=RS, source_range=(-9.33,
                   n_input=len(t), n_fit=int(keep.sum()), combined_r2=r2,
                   segments=fits, ranges=slope_ranges(fits), drive_frequency_hz=freq,
                   directional_rms_difference_A=float(np.sqrt(np.mean((overlap[:,1]-overlap[:,2])**2))) if len(overlap) else None,
-                  uncertainty_note='OLS standard errors only; quantisation, channel gains, correlated errors and drift are not included.')
+                  u_voltage_quantization_V=u_v[1], u_current_quantization_A=u_current,
+                  code_stats=code_stats(vi, current, keep, fits, u_v[1], overlap),
+                  uncertainty_note='Segment slope_se/intercept_se are OLS standard errors over samples; '
+                                   'code_stats carries the per-code error model (SE of the mean plus projected '
+                                   'voltage quantisation) with chi-square and p-values. Channel gains, resistor '
+                                   'calibration and drift are not included in either.')
     return result, (t,vv,vi,current,keep,rising,falling,overlap)
 
 
 def plot_analysis(result, arrays, out):
     t,vv,vi,current,keep,rising,falling,overlap = arrays
-    fig, (ax, diff) = plt.subplots(2,1,figsize=(10,7.8),height_ratios=[3,1],layout='constrained')
-    for mask,label,color in [(rising,'Rising source sweep','#0072B2'),(falling,'Falling source sweep','#D55E00')]:
-        table = pd.DataFrame({'v':vi[mask & keep],'i':current[mask & keep]}).groupby('v').i.mean()
-        ax.plot(table.index,table.values*1e3,'.-',ms=3,lw=0.8,color=color,label=label)
-    for k,f in enumerate(result['segments']):
-        xx=np.array([f['v_lo'],f['v_hi']])
-        ax.plot(xx,(f['slope_S']*xx+f['intercept_A'])*1e3,color='black',lw=1.6,
-                label='Five fitted segments' if k==0 else None)
-    ax.set(xlabel=f"Voltage across nonlinear element, {result['voltage_column'].split('(')[0]} (V)",ylabel='Current into nonlinear element (mA)',
-           title='M1 · Diode characteristic and sweep-direction check')
-    ax.legend(fontsize=9); ax.grid(alpha=.2)
-    if len(overlap):
-        diff.plot(overlap[:,0],(overlap[:,1]-overlap[:,2])*1e3,color='#0072B2',lw=1)
-    diff.axhline(0,color='0.4',lw=.8)
-    diff.set(xlabel='Voltage across nonlinear element (V)',ylabel='Rising − falling\n(mA)'); diff.grid(alpha=.2)
-    fig.savefig(out/'current_vs_voltage.png',dpi=200); plt.close(fig)
+    with plt.rc_context():
+        report_style.apply()
+        fig, ax = plt.subplots(figsize=report_style.figsize(aspect=0.8), layout='constrained')
+        c = report_style.COLORS
+        # one point per voltage code, both sweep directions pooled (they agree to
+        # directional_rms_difference_A, far below one current code); bars are the
+        # per-code sigma of code_means, visible only on the steep outer segments
+        x,y,s,_ = code_means(vi,current,keep,result['segments'],result['u_voltage_quantization_V'])
+        ax.errorbar(x,y*1e3,yerr=s*1e3,ls='none',marker='o',ms=1.8,mew=0,color=c[0],ecolor=c[0],
+                    elinewidth=0.5,capsize=0,label='Measured',zorder=2)
+        for k,f in enumerate(result['segments']):
+            xx=np.array([f['v_lo'],f['v_hi']])
+            ax.plot(xx,(f['slope_S']*xx+f['intercept_A'])*1e3,color='black',lw=0.9,zorder=3,
+                    label='Piecewise-linear fit' if k==0 else None)
+        ax.set(xlabel='Element voltage (V)', ylabel='Element current (mA)', xlim=(-9.2, 8.6))
+        ax.set_xticks(np.arange(-8, 9, 4))
+        h, l = ax.get_legend_handles_labels()
+        ax.legend(h[::-1], l[::-1], loc='upper right', bbox_to_anchor=(0.9, 1))
+        report_style.save(fig, out/'current_vs_voltage.png'); plt.close(fig)
     fig, (ax,resax)=plt.subplots(2,1,figsize=(10,7.8),height_ratios=[3,1],layout='constrained',sharex=True)
     ax.scatter(vi[keep],current[keep]*1e3,s=2,alpha=.12,color='#0072B2',rasterized=True,label='Measured samples')
     for k,f in enumerate(result['segments']):
@@ -177,6 +264,70 @@ def plot_analysis(result, arrays, out):
     fig.savefig(out/'optimized_breakpoints.png',dpi=200); plt.close(fig)
 
 
+def fit_stats_table(result, bootstrap_path=HERE/'uncertainty'/'diode_uncertainty.json'):
+    """Per-segment fit statistics as plain text; block-bootstrap u added when available."""
+    boot = {}
+    if bootstrap_path.exists():
+        boot = {s['label']: s for s in json.loads(bootstrap_path.read_text(encoding='utf-8'))['segments']}
+    cs = result['code_stats']
+    q = {s['label']: s for s in cs['segments']}
+    lines = ['1. Segment fits (one measurement per voltage code; sigma = SE of the code mean (+) slope x u(V))',
+             f"{'segment':10} {'V range (V)':>17} {'codes':>5} {'sigma':>6} {'slope (mS)':>11} {'u':>7}"
+             f" {'intercept (mA)':>15} {'u':>7} {'R2':>6} | {'local slope, thirds (mS)':>26}"]
+    lines.append('-'*len(lines[-1]))
+    for f in result['segments']:
+        s = q[f['label']]
+        thirds = '  '.join(f"{1e3*t['slope_S']:.3f}" for t in s['local_slopes'])
+        lines.append(f"{f['label']:10} {f['v_lo']:8.3f}..{f['v_hi']:7.3f} {s['n_codes']:5d} {1e3*s['sigma_median_A']:6.3f}"
+                     f" {1e3*f['slope_S']:11.4f} {1e3*s['u_slope_S']:7.4f}"
+                     f" {1e3*f['intercept_A']:15.4f} {1e3*s['u_intercept_A']:7.4f}"
+                     f" {f['r2']:6.3f} | {thirds:>26}")
+    lines += ['sigma: median per-code uncertainty (mA). u: statistical fit uncertainty from those sigmas',
+              '(outer segments: without the turnaround code); NOT inflated by sqrt(chi2/dof), because the',
+              'excess scatter on the shoulders is systematic curvature, shown by the local slopes over',
+              'thirds of each segment (from the low-voltage to the high-voltage end, each +- ~0.01 mS on',
+              'the shoulders). Outer-segment intercepts are the line extrapolated 7-8 V to V = 0 and are',
+              'fully correlated with the slope; quote breakpoints instead.',
+              '',
+              'Breakpoints (midpoint between adjacent codes; true corner within one code, u = q/sqrt(12)):',
+              '  ' + ', '.join(f"{f['v_hi']:+.3f}" for f in result['segments'][:-1])
+              + f" V, each +- {1e3*result['u_voltage_quantization_V']:.0f} mV",
+              '',
+              '2. Chi-square of the fitted lines against the code means',
+              f"{'segment':10} {'chi2':>7} {'dof':>4} {'chi2/dof':>9} {'p':>8} | {'core chi2':>9} {'dof':>4} {'chi2/dof':>9} {'p':>8}"
+              f" | {'runs':>4} {'expect':>6} {'max|z|':>6}"]
+    lines.append('-'*len(lines[-1]))
+    for s in cs['segments']:
+        a, c = s['chi2_all'], s['chi2_core']
+        lines.append(f"{s['label']:10} {a['chi2']:7.1f} {a['dof']:4d} {a['chi2_red']:9.2f} {a['p_value']:8.3f} |"
+                     f" {c['chi2']:9.1f} {c['dof']:4d} {c['chi2_red']:9.2f} {c['p_value']:8.3f} |"
+                     f" {s['sign_runs']:4d} {s['sign_runs_expected']:6.1f} {s['max_abs_z']:6.1f}")
+    a, c = cs['chi2_all'], cs['chi2_core']
+    lines += [f"{'all five':10} {a['chi2']:7.1f} {a['dof']:4d} {a['chi2_red']:9.2f} {a['p_value']:8.3f} |"
+              f" {c['chi2']:9.1f} {c['dof']:4d} {c['chi2_red']:9.2f} {c['p_value']:8.3f} |",
+              'core: without the first and last code of the trace (drive turnaround, source clipped).',
+              'runs: sign runs of the residuals; expect = n/2 + 1 for random scatter. Far fewer runs = curvature.',
+              '',
+              '3. Other slope uncertainty estimates (mS)',
+              f"{'segment':10} {'OLS se (samples)':>17} {'block bootstrap':>16} {'N samples':>10}"]
+    for f in result['segments']:
+        b = boot.get(f['label'], {})
+        bs = f"{1e3*b['u_slope_block_S']:16.4f}" if 'u_slope_block_S' in b else f"{'-':>16}"
+        lines.append(f"{f['label']:10} {1e3*f['slope_se_S']:17.4f} {bs} {f['n']:10d}")
+    d = cs['direction_check']
+    lines += ['',
+              '4. Record',
+              f"Points fitted: {result['n_fit']} of {result['n_input']}; drive frequency {result['drive_frequency_hz']:.2f} Hz",
+              f"Single-reading resolution: u(V) = {1e3*result['u_voltage_quantization_V']:.1f} mV, "
+              f"u(I) = {1e3*result['u_current_quantization_A']:.3f} mA (one code / sqrt(12); not the per-point bar)",
+              f"Sweep-direction check: rising - falling = {1e3*result['directional_rms_difference_A']:.4f} mA rms; "
+              + (f"chi2 = {d['chi2']:.1f}, dof = {d['dof']} bins, chi2/dof = {d['chi2_red']:.2f}, p = {d['p_value']:.3f}"
+                 if d else 'no overlap bins'),
+              'Not included anywhere above: channel gain accuracy, shunt resistor calibration, drift.'
+              if boot else 'block bootstrap: not available (run uncertainty/calculate.py).']
+    return '\n'.join(lines)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('csv',nargs='?',type=Path,default=HERE/'trace1.csv')
@@ -190,9 +341,10 @@ def main():
     with (args.out_dir/'diode_segments.csv').open('w',newline='') as fh:
         w=csv.DictWriter(fh,list(result['segments'][0])); w.writeheader(); w.writerows(result['segments'])
     plot_analysis(result,arrays,args.out_dir)
-    print(f"M1: voltage={args.element}, source={args.source}; fit R2={result['combined_r2']:.6f}")
-    for f in result['segments']:
-        print(f"{f['label']:10}: {f['v_lo']:.3f} .. {f['v_hi']:.3f} V, G={1e3*f['slope_S']:.6f} mS, intercept={1e3*f['intercept_A']:.5f} mA")
+    stats = fit_stats_table(result)
+    (args.out_dir/'diode_fit_stats.txt').write_text(stats+'\n',encoding='utf-8')
+    print(f"M1: voltage={args.element}, source={args.source}\n")
+    print(stats+'\n')
     for r in result['ranges']:
         print(f"M2 {r['side']}: {r}")
     print('M2 is a slope-only necessary estimate. Check intersections with the measured offset retained.')
