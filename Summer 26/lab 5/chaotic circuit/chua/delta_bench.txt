@@ -1,0 +1,52 @@
+Forward records 58-100 (26.5 mV-step range), by resistance:
+    trace58.csv  787.77 ohm  period 1
+    trace59.csv  783.50 ohm  period 1
+    trace66.csv  783.01 ohm  period 1
+    trace65.csv  781.94 ohm  period 1
+    trace60.csv  780.09 ohm  period 1
+    trace64.csv  779.93 ohm  period 1
+    trace61.csv  779.78 ohm  period 1
+    trace63.csv  777.62 ohm  period 1
+    trace67.csv  774.55 ohm  period 2, phase flips: left out
+    trace62.csv  773.79 ohm  period 2
+    trace68.csv  773.58 ohm  period 2
+    trace69.csv  772.74 ohm  period 2
+    trace70.csv  771.84 ohm  period 2
+    trace71.csv  771.46 ohm  period 2
+    trace72.csv  770.49 ohm  period 2
+    trace73.csv  770.17 ohm  period 2
+    trace74.csv  769.54 ohm  period 2
+    trace75.csv  768.68 ohm  period 2
+    trace76.csv  767.58 ohm  period 2
+    trace77.csv  766.42 ohm  period 2
+    trace78.csv  764.95 ohm  period 2
+    trace79.csv  764.17 ohm  period 2
+    trace80.csv  762.18 ohm  period 2
+    trace81.csv  761.05 ohm  period 2
+    trace82.csv  760.17 ohm  period 2
+    trace83.csv  759.48 ohm  period 2
+    trace84.csv  757.98 ohm  period 2
+    trace85.csv  756.35 ohm  period 2
+    trace87.csv  754.84 ohm  period 4
+    trace88.csv  754.60 ohm  period 4
+    trace86.csv  754.07 ohm  period 4
+    trace89.csv  753.26 ohm  period 4
+    trace90.csv  752.57 ohm  period 4
+    trace91.csv  751.11 ohm  period 4
+    trace94.csv  750.29 ohm  period 8, phase flips: left out
+    trace92.csv  749.48 ohm  period 8
+    trace95.csv  749.25 ohm  period 8
+    trace93.csv  748.96 ohm  period 8
+    trace96.csv  748.57 ohm  chaotic
+    trace97.csv  747.66 ohm  chaotic
+    trace98.csv  746.83 ohm  chaotic
+    trace99.csv  746.20 ohm  chaotic
+   trace100.csv  744.64 ohm  chaotic
+
+R1 (period 1 -> 2) between trace63.csv (777.62) and trace62.csv (773.79): 775.70 +- 1.92 ohm
+R2 (period 2 -> 4) between trace85.csv (756.35) and trace87.csv (754.84): 755.60 +- 0.75 ohm
+R3 (period 4 -> 8) between trace91.csv (751.11) and trace92.csv (749.48): 750.30 +- 0.81 ohm
+
+R1 - R2 = 20.11 +- 2.06 ohm, R2 - R3 = 5.30 +- 1.11 ohm
+delta_1 = 3.79 +- 0.97 (half-brackets propagated, R2 shared); universal 4.669 is 0.9 of these units away
+accumulation point with the universal ratio: 748.85 +- 1.06 ohm

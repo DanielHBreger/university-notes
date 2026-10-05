@@ -1,0 +1,65 @@
+bench model (identified.json): C1 = 10.51 nF (+ 0.26 nF from the stage-A lag), C2 = 90.5 nF, L = 18.86 mH + 0.69 H/A |d|, r = 2.3 ohm, core loss 4244 ohm/A |d| d, d = iL - its 3 ms mean, R0 = 992 ohm
+N_R: Kennedy diode RA = 249 ohm, AA = 1.115, RB = 22000 ohm, AB = 7.62, rails A +6.73/-7.56 V, B +6.67/-7.74 V, slew 13 V/us, lags 0.0591526/0.404254 us
+node 1: C1 grows with the swing x since the last turning point, + 0.843 nF/V up to 0.5 V, + 0.1775 nF/V beyond
+    v_lo     v_hi    G (mS)    c (mA)
+ -40.000   -6.783    4.0551   30.6721
+  -6.783   -1.015   -0.4150    0.3517
+  -1.015    0.875   -0.7615    0.0000
+   0.875    6.034   -0.4150   -0.3032
+   6.034   40.000    4.0551  -27.2744
+
+equilibria, g(v1) = -v1/(Rt + rL):
+   Rpot =  806.0:  v1 =  -2.50 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   2.16 V, G = -0.415 mS, UNSTABLE
+   Rpot =  770.0:  v1 =  -2.32 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   2.00 V, G = -0.415 mS, UNSTABLE
+   Rpot =  745.0:  v1 =  -2.20 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   1.90 V, G = -0.415 mS, UNSTABLE
+   Rpot =  700.0:  v1 =  -2.01 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   1.73 V, G = -0.415 mS, UNSTABLE
+   Rpot =  650.0:  v1 =  -1.82 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   1.57 V, G = -0.415 mS, UNSTABLE
+   Rpot =  450.0:  v1 =  -1.27 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   1.09 V, G = -0.415 mS, UNSTABLE
+   Rpot =  320.0:  v1 =  -1.02 V, G = -0.415 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.762 mS, UNSTABLE  |  v1 =   0.88 V, G = -0.415 mS, UNSTABLE
+
+Hopf point of the negative outer equilibrium: Rpot = 924.6 ohm, v1* = -3.31 V, period 328.6 us (3043 Hz)
+
+integrating 14 runs of 0.1 s at dt = 1e-07 ...
+   Rpot   start   v1 min   v1 max   v2 min   v2 max  n maxima  distinct    period
+  806.0      eq   -4.110   -0.680   -0.773    0.774       119         1   337.5 us
+  806.0   cycle   -4.110   -0.680   -0.773    0.774       118         1   337.5 us
+  770.0      eq   -3.738   -0.495   -0.703    0.714       117         1   342.9 us
+  770.0   cycle   -3.738   -0.495   -0.703    0.714       116         1   342.9 us
+  745.0      eq   -3.575   -0.205   -0.659    0.691       116         2   345.4 us
+  745.0   cycle    0.087    3.088   -0.602    0.574       116        10   345.0 us
+  700.0      eq   -3.225    0.364   -0.592    0.636       115        77   346.9 us
+  700.0   cycle   -3.225    0.365   -0.592    0.636       115        79   347.3 us
+  650.0      eq   -2.908    2.508   -0.525    0.569       104        76   384.5 us
+  650.0   cycle   -2.907    2.507   -0.526    0.567       104        80   383.5 us
+  450.0      eq   -1.770    1.527   -0.275    0.319        92        54   434.0 us
+  450.0   cycle   -7.063    6.364   -4.231    4.302       118         1   339.8 us
+  320.0      eq   -7.127    6.435   -4.834    4.908       120         1   333.3 us
+  320.0   cycle   -7.127    6.435   -4.834    4.908       120         1   333.3 us
+measured record for Rpot = 806 ohm: forward/trace54.csv at 804.4 ohm
+measured record for Rpot = 770 ohm: forward/trace73.csv at 770.2 ohm
+measured record for Rpot = 745 ohm: forward/trace100.csv at 744.6 ohm
+measured record for Rpot = 700 ohm: forward/trace164.csv at 699.7 ohm
+measured record for Rpot = 650 ohm: forward/trace229.csv at 650.3 ohm
+measured record for Rpot = 450 ohm: forward/trace342.csv at 450.2 ohm
+measured record for Rpot = 320 ohm: forward/trace404.csv at 317.7 ohm
+
+sweeping 1001 values of Rpot down from the negative equilibrium and up from the large cycle, carrying the state along (20 ms settle + 100 ms collect per step) ...
+
+regimes, down (forward): rest 1000-922, P1 921-766, P2 765-745, P4 744-740, P8 739-739, chaos 738-726, P3 725-725, P6 724-724, chaos 723-695, double scroll 694-407, chaos 406-406, double scroll 405-387, large cycle 386-0
+regimes, up (back):      large cycle 0-632, double scroll 633-694, chaos 695-723, P6 724-724, P3 725-725, chaos 726-738, P8 739-739, P4 740-744, P2 745-765, P1 766-922, rest 923-1000
+
+transitions (ohm; sweep step 1 ohm):
+   oscillation begins (sweep)       921.0
+   period 1 -> 2                    765.0
+   period 2 -> 4                    744.0
+   period 4 -> 8                    739.0
+   chaos begins                     738.0
+   period-3 window                  (725.0, 724.0)
+   double scroll from (down)        694.0
+   double scroll ends (down)        387.0
+   large cycle from (down)          386.0
+   large cycle survives to (up)     632.0
+   Hopf point (linear)              924.5936511534583
+   Hopf frequency (Hz)              3042.865009448952
+
+figures written to C:\Users\danib\Documents\university-notes\Summer 26\lab 5\chua

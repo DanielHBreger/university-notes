@@ -1,0 +1,64 @@
+ideal model: C1 = 10 nF, C2 = 100 nF, L = 18 mH, R0 = 992 ohm, rL = 0 ohm
+N_R: M1 fit (diode_fit.json), Table 1's slopes and breakpoints, continuous through the origin, breakpoint scale = 1
+    v_lo     v_hi    G (mS)    c (mA)
+ -40.000   -6.754    3.6232   27.6178
+  -6.754   -1.093   -0.4176    0.3275
+  -1.093    0.579   -0.7171    0.0000
+   0.579    5.982   -0.4337   -0.1641
+   5.982   40.000    3.7864  -25.4083
+
+equilibria, g(v1) = -v1/(Rt + rL):
+   Rpot =  806.0:  v1 =  -2.36 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.34 V, G = -0.434 mS, UNSTABLE
+   Rpot =  770.0:  v1 =  -2.18 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.23 V, G = -0.434 mS, UNSTABLE
+   Rpot =  745.0:  v1 =  -2.07 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.16 V, G = -0.434 mS, UNSTABLE
+   Rpot =  700.0:  v1 =  -1.89 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   1.04 V, G = -0.434 mS, UNSTABLE
+   Rpot =  650.0:  v1 =  -1.71 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   0.94 V, G = -0.434 mS, UNSTABLE
+   Rpot =  450.0:  v1 =  -1.19 V, G = -0.418 mS, UNSTABLE  |  v1 =   0.00 V, G = -0.717 mS, UNSTABLE  |  v1 =   0.63 V, G = -0.434 mS, UNSTABLE
+   Rpot =  320.0:  v1 =   0.00 V, G = -0.717 mS, UNSTABLE
+
+Hopf point of the negative outer equilibrium: Rpot = 1005.8 ohm, v1* = -3.95 V, period 337.5 us (2963 Hz)
+
+integrating 14 runs of 0.1 s at dt = 5e-07 ...
+   Rpot   start   v1 min   v1 max   v2 min   v2 max  n maxima  distinct    period
+  806.0      eq   -3.962    2.262   -0.681    0.780       106        85   376.8 us
+  806.0   cycle   -7.352    6.567   -5.611    5.607       133         1   300.4 us
+  770.0      eq   -3.613    2.058   -0.616    0.720       109        67   366.5 us
+  770.0   cycle   -7.383    6.598   -5.866    5.866       134         1   298.5 us
+  745.0      eq   -3.383    1.921   -0.574    0.678       108        89   368.3 us
+  745.0   cycle   -7.401    6.618   -6.022    6.024       135         1   297.5 us
+  700.0      eq   -3.018    1.695   -0.502    0.607       107        83   373.7 us
+  700.0   cycle   -7.431    6.650   -6.271    6.277       135         1   295.9 us
+  650.0      eq   -2.643    1.475   -0.428    0.527       105        60   379.2 us
+  650.0   cycle   -7.461    6.683   -6.511    6.520       136         1   294.5 us
+  450.0      eq   -7.559    6.793   -7.237    7.256       137         1   290.7 us
+  450.0   cycle   -7.559    6.793   -7.237    7.256       137         1   290.7 us
+  320.0      eq   -7.613    6.858   -7.579    7.604       138         1   289.1 us
+  320.0   cycle   -7.613    6.858   -7.579    7.604       138         1   289.1 us
+measured record for Rpot = 806 ohm: forward/trace54.csv at 804.4 ohm
+measured record for Rpot = 770 ohm: forward/trace73.csv at 770.2 ohm
+measured record for Rpot = 745 ohm: forward/trace100.csv at 744.6 ohm
+measured record for Rpot = 700 ohm: forward/trace164.csv at 699.7 ohm
+measured record for Rpot = 650 ohm: forward/trace229.csv at 650.3 ohm
+measured record for Rpot = 450 ohm: forward/trace342.csv at 450.2 ohm
+measured record for Rpot = 320 ohm: forward/trace404.csv at 317.7 ohm
+
+sweeping 1001 values of Rpot down from the negative equilibrium and up from the large cycle, carrying the state along (20 ms settle + 100 ms collect per step) ...
+
+regimes, down (forward): P1 1000-954, P2 953-939, P4 938-935, P8 934-934, chaos 933-887, double scroll 886-644, P2 643-642, P4 641-641, chaos 640-640, double scroll 639-584, large cycle 583-0
+regimes, up (back):      large cycle 0-927, chaos 928-933, P8 934-934, P4 935-938, P2 939-953, P1 954-1000
+
+transitions (ohm; sweep step 1 ohm):
+   oscillation begins (sweep)       1000.0
+   period 1 -> 2                    953.0
+   period 2 -> 4                    938.0
+   period 4 -> 8                    934.0
+   chaos begins                     933.0
+   period-3 window                  None
+   double scroll from (down)        886.0
+   double scroll ends (down)        584.0
+   large cycle from (down)          583.0
+   large cycle survives to (up)     927.0
+   Hopf point (linear)              1005.7926365580015
+   Hopf frequency (Hz)              2962.784388314138
+
+figures written to C:\Users\danib\Documents\university-notes\Summer 26\lab 5\chua

@@ -1,0 +1,23 @@
+verify_models.py: checks behind the simulation section
+1. kernels against DOP853 (rtol 1e-10) over 1 ms; max |dV1|
+   plan's model, period 2      (950 ohm): kernel dt 0.5 us vs DOP853 3.7e-05 V, vs dt 0.125 us 3.5e-05 V
+   plan's model, double scroll (700 ohm): kernel dt 0.5 us vs DOP853 2.1e-05 V, vs dt 0.125 us 1.8e-05 V
+   plan's model, large cycle   (300 ohm): kernel dt 0.5 us vs DOP853 7.2e-04 V, vs dt 0.125 us 7.4e-04 V
+   bench model,  period 1      (806 ohm): kernel dt 0.1 us vs DOP853 4.1e-05 V, vs dt 0.025 us 4.6e-05 V
+   bench model,  double scroll (550 ohm): kernel dt 0.1 us vs DOP853 4.0e-06 V, vs dt 0.025 us 4.6e-06 V
+   bench model,  large cycle   (320 ohm): kernel dt 0.1 us vs DOP853 9.1e-05 V, vs dt 0.025 us 7.8e-05 V
+2. Hopf point, nominal parts, G_b = -0.41756 mS: plan formula 1005.79 ohm, 2962.8 Hz; hopf_point 1005.79 ohm, 2962.8 Hz
+3. bench model Hopf point: full Jacobian 924.60 ohm, 3042.9 Hz; hopf_point 924.59 ohm, 3042.9 Hz
+4. node 1 capacitance (loop integral, nF; cycle or window estimator): records against the bench model
+   forward/trace14.csv     904.9 ohm, V1 -3.39..-3.21 V: measured 10.800 (cycle), model 10.978 (cycle, model V1 -3.38..-2.92)
+   forward/trace25.csv     883.8 ohm, V1 -3.56..-2.68 V: measured 11.057 (cycle), model 11.152 (cycle, model V1 -3.55..-2.44)
+   forward/trace44.csv     844.5 ohm, V1 -4.74..-0.94 V: measured 11.466 (cycle), model 11.368 (cycle, model V1 -4.26..-1.20)
+   forward/trace60.csv     780.1 ohm, V1 -4.07..-0.52 V: measured 11.541 (cycle), model 11.452 (cycle, model V1 -3.85..-0.57)
+   forward/trace92.csv     749.5 ohm, V1 -3.79..-0.12 V: measured 11.438 (window), model 11.512 (window, model V1 -3.60..-0.33)
+   forward/trace200.csv    673.1 ohm, V1 -3.16..+0.48 V: measured 11.440 (window), model 11.495 (window, model V1 -3.03..+0.38)
+   back/trace25.csv        582.5 ohm, V1 -7.06..+6.30 V: measured 12.499 (cycle), model 12.500 (cycle, model V1 -6.91..+6.22)
+   forward/trace270.csv    549.3 ohm, V1 -2.40..+1.95 V: measured 11.581 (window), model 11.621 (window, model V1 -2.28..+1.97)
+   back/trace15.csv        453.1 ohm, V1 -7.12..+6.37 V: measured 12.552 (cycle), model 12.552 (cycle, model V1 -7.05..+6.35)
+   forward/trace342.csv    450.2 ohm, V1 -1.87..+1.51 V: measured 11.815 (window), model 11.809 (window, model V1 -1.77..+1.52)
+   forward/trace404.csv    317.7 ohm, V1 -1.22..+0.25 V: measured 12.023 (cycle), model    nan (at rest, model V1 +0.00..+0.00)
+   forward/trace411.csv    191.0 ohm, V1 -7.21..+6.47 V: measured 12.605 (cycle), model 12.575 (cycle, model V1 -7.17..+6.49)

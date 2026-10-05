@@ -1,0 +1,56 @@
+% Suggested content for section 2.5, 27 September 2026 (late): node 1's capacitance law, the op-amps
+% at their datasheet speed (stage B's measured lag left out of the paper by choice; it stays in
+% RESULTS.md), and the agreed structure: P1 method, P2 model (a), P3 model (b), Table 3 holds every
+% number (as deviations from the measurement), P4 only interprets.
+% Figure: report_figures/simulation.pdf (panel (b) = simulate.py --model bench --datasheet-lag).
+% Reword the prose before submitting (see the 2.4 note in REPORT_TODO.md).
+%
+% Placement: a figure* never appears on the page where it is defined, so put the figure* block
+% below in 2.4 (after the lyapunov figure), not here, so that it lands at the top of the next page.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{simulation.pdf}
+  \caption{Local maxima of $V_1$ in the two simulated circuits against $R_{pot}$, over the measured maxima of both sweeps (grey, \cref{fig:bifurcation}). (a) The circuit assumed by the experiment plan, with the nominal component values and the element of \cref{tab:nonlinear_vac_data}. (b) The circuit with its component values measured from the oscillator records, including the growth of the capacitance at node 1 with the swing of $V_1$. Blue: $R_{pot}$ decreased from the top of the dial; orange: increased from the large cycle at the bottom. At each value of $R_{pot}$ the circuit settled for \qty{20}{\milli\second}, and the maxima of the following \qty{100}{\milli\second} are shown. The vertical axis is broken to fit the large cycle.}
+  \label{fig:simulation}
+\end{figure*}
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{lccc}
+         \toprule
+         Regime & Measured (\(\Omega\)) & (a) \(-\) measured (\(\Omega\)) & (b) \(-\) measured (\(\Omega\))\\
+         \midrule
+         Oscillation begins & \num{907\pm5} & \num{+98\pm7} & \num{+17\pm6}\\
+         Period \(1\to 2\) & \num{776\pm2} & \num{+178\pm2} & \num{-10\pm2}\\
+         Period \(2\to 4\) & \num{755.6\pm0.8} & \num{+182.9\pm0.9} & \num{-11.1\pm0.9}\\
+         Period \(4\to 8\) & \num{750.3\pm0.8} & \num{+184.2\pm0.9} & \num{-10.8\pm0.9}\\
+         Chaos begins & \num{748.3\pm0.7} & \num{+185.2\pm0.9} & \num{-9.8\pm0.9}\\
+         Period-3 window, upper edge & \num{718.9\pm0.3} & -- & \num{+6.6\pm0.6}\\
+         Period-3 window, lower edge & \num{713.1\pm0.5} & -- & \num{+10.4\pm0.7}\\
+         Double scroll start & \num{669.3\pm0.9} & \num{+217\pm1} & \num{+25\pm1}\\
+         Double scroll end & \num{327.9\pm0.2} & \num{+255.6\pm0.5} & \num{+58.6\pm0.5}\\
+         Large cycle begins (down) & \num{314.4\pm0.3} & \num{+269.1\pm0.6} & \num{+72.1\pm0.6}\\
+         Large cycle ends (up) & \num{680\pm5} & \num{+248\pm5} & \num{-48\pm5}\\
+         \bottomrule
+    \end{tabular}
+    \caption{Where the regime changes in the two simulated circuits of \cref{fig:simulation}, as the difference from the measured value of \(R_{pot}\) (forward sweep, \cref{tab:regime walks}; the last row is the back sweep). A simulated transition lies between two \qty{1}{\ohm} steps of the sweep and is taken as their midpoint, \qty{\pm0.5}{\ohm} (\qty{\pm1}{\ohm} for the first period doubling, whose splitting starts below the resolution used to tell the periods apart), combined with the uncertainty of the measured value. The simulated onsets come from linearizing the circuit, with the uncertainty of \(G_b\) for (a) and of the small-signal \(C_1\) and \(C_2\) for (b). ``--'': no period-3 window at \qty{1}{\ohm} steps. Between the double scroll and the large cycle the measured circuit circles the origin on a smaller orbit; both models go straight from the double scroll to the large cycle.}
+    \label{tab:simulation}
+\end{table}
+
+\subsection{Numerical Simulation}\label{simulation}
+To test how much of the measured behavior the circuit equations [cref to the circuit equations] reproduce, we integrated them numerically for two sets of component values, using a fourth-order Runge--Kutta method with a fixed time step of \qty{0.5}{\micro\second} (\qty{0.1}{\micro\second} for the second circuit, whose faster op-amp responds within \qty{0.06}{\micro\second}). As on the bench, $R_{pot}$ was swept over the whole dial in both directions in steps of \qty{1}{\ohm}, carrying the state of the circuit from one value to the next: downward from the equilibrium at the top of the dial, and upward from the large cycle at the bottom. At each value the circuit was allowed to settle for \qty{20}{\milli\second}, and the regime was identified from the maxima of $V_1$ over the following \qty{100}{\milli\second}, as in \cref{tab:regime walks}.
+
+The first circuit is the one the experiment plan assumes: the nominal component values of \cref{route}, and the element of \cref{tab:nonlinear_vac_data}, with its slopes and breakpoints joined into a continuous curve through the origin.
+
+The second circuit uses component values measured from the oscillator records themselves, through the current balances at the two nodes, none of them adjusted to the transitions it is compared with. Multiplying the current balance at node 1 by $\dot V_1$ and integrating over a record removes the element's current whatever its curve, since the element's current depends only on $V_1$, and leaves the capacitance at node 1, averaged along the record. On the smallest cycles it is \qty{10.78\pm0.03}{\nano\farad}; it grows with the size of the oscillation, to \qty{12.6}{\nano\farad} on the large cycle, and over all 479 records it follows one law: it grows with the distance $V_1$ has moved since it last turned around, by \qty{0.422\pm0.005}{\nano\farad} over the first \qty{0.5}{\volt} and by \qty{0.178\pm0.001}{\nano\farad\per\volt} beyond, as the permittivity of a ceramic (ferroelectric) dielectric does. The response of the resonant part to the current through the resistor, at each harmonic of the orbit around the origin, gives $C_2=\qty{91\pm1}{\nano\farad}$. The inductor's magnetic flux, the integral of $V_2$, plotted against its current forms loops that widen with the amplitude of the oscillation, as expected for an inductor with a ferromagnetic core: its inductance rises from \qtyrange{18}{23}{\milli\henry} and its loss resistance from \qtyrange{3}{55}{\ohm} as the current amplitude grows from \qtyrange{0.7}{14}{\milli\ampere}. In the model both grow linearly with the current's deviation from its average, starting from $L_0=\qty{18.9\pm0.2}{\milli\henry}$, the value at which the linearized circuit oscillates at the measured \qty{3045.06\pm0.03}{\hertz} of the onset. The element is the curve the oscillating circuit itself shows; its inner slopes agree with the resistor values of the element's schematic to within \qty{1.5}{\percent}. The op-amps of the element respond at their datasheet speed.
+
+Both circuits go through the measured regimes in the same order, with the same hysteresis between the two sweep directions (\cref{fig:simulation}). The plan's circuit already oscillates at the top of the dial and places every later transition about \qtyrange{180}{270}{\ohm} too high (\cref{tab:simulation}). The measured components bring the onset and the period doubling cascade to within about \qty{17}{\ohm} and \qty{11}{\ohm} of the measurement, and the double scroll to within \qty{25}{\ohm} at its start and \qty{59}{\ohm} at its end. The growth of the capacitance at node 1 is what brings the transitions after the onset this close: with the capacitance held at its small-signal value, the same circuit misses them by up to \qty{122}{\ohm}, the more the larger the oscillation. The remaining differences have both signs and no longer grow with the oscillation, and neither model has the small orbit around the origin between the double scroll and the large cycle; this is discussed in \cref{discussion}.
+
+% For the Discussion (not 2.5): model (b)'s node 1 matches the records on the period-1 cycles but
+% falls 0.1-0.4 nF (1-3.5 %) short where the orbit spends time inside the inner breakpoints (double
+% scroll, large cycle): the records show extra capacitance there that the model leaves out (the
+% op-amp's delay, kept out by choice), likely part of why the double scroll ends 59 Ohm late. C1's
+% type is not recorded; a class-2 ceramic (the tolerance fits: 10.5-10.8 against 10 nF, C2 90.5
+% against 100 nF) would explain the law: check the part. The plan's model also depends strongly on
+% the inner breakpoints, the least certain numbers of Table 1.

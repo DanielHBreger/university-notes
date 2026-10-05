@@ -1,0 +1,21 @@
+== forward sweep (23 records at the top of the dial)
+   mean-voltage divider calibrated on trace29.csv..trace36.csv: a = 1.0051, C = +15.6 mV, rms against rpot.py 0.70 ohm
+   first limit cycle: trace14.csv at 904.9 ohm, A1 = 89.5 mV, f = 3045.0 Hz (T = 328.4 us)
+   no record without a limit cycle above it
+   A1^2 = k (R_H - R) over 4 records, 897.8..904.9 ohm: R_H = 907.4 +- 0.8 ohm, k = 3229 +- 408 mV^2/ohm, chi2 = 0.2, dof = 2, chi2/dof = 0.09, p = 0.914
+   the same fit over the n smallest cycles:
+     n = 3 (A1 up to 144 mV, down to 900.7 ohm): R_H = 907.7 +- 1.1 ohm, chi2 = 0.08, dof = 1, p = 0.778
+     n = 4 (A1 up to 177 mV, down to 897.8 ohm): R_H = 907.4 +- 0.8 ohm, chi2 = 0.18, dof = 2, p = 0.914
+     n = 5 (A1 up to 203 mV, down to 895.6 ohm): R_H = 907.1 +- 0.7 ohm, chi2 = 0.87, dof = 3, p = 0.833
+     n = 6 (A1 up to 240 mV, down to 892.9 ohm): R_H = 906.5 +- 0.6 ohm, chi2 = 4.76, dof = 4, p = 0.312
+     n = 7 (A1 up to 286 mV, down to 890.7 ohm): R_H = 905.6 +- 0.5 ohm, chi2 = 20.66, dof = 5, p = 0.001
+
+== back sweep (6 records at the top of the dial)
+   mean-voltage divider calibrated on trace69.csv..trace71.csv: a = 1.0022, C = +7.4 mV, rms against rpot.py 1.44 ohm; top block calibrated on trace69.csv..trace71.csv, rms 1.44 ohm
+   first limit cycle: trace74.csv at 899.5 ohm, A1 = 165.8 mV, f = 3055.4 Hz (T = 327.3 us)
+   no record without a limit cycle above it
+   1 record(s) below FIT_MAX_V: too few for the A1^2 extrapolation
+
+Uncertainties are statistical on the rpot.py scale. The calibration choice (which records,
+fixed or fitted gain) moves the onset by about +-5 ohm; rpot.py's own scale carries the
+relative channel gain, known to a few percent.
