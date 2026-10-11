@@ -1,0 +1,9 @@
+feigenbaum.py --model ideal (C1 = 11.5 nF)
+k=1  period  1 -> 2   R_1 =   771.860 ohm   (window 771.72 .. 732.57, s from 0.2549 to 0.7100 V)
+k=2  period  2 -> 4   R_2 =   732.482 ohm   (window 732.53 .. 722.84, s from 0.0639 to 0.1957 V)
+k=3: window of period 8 not resolved (714.01 .. 714.01 ohm)
+
+ n   g_n = R_n - R_(n+1)    delta_n
+ 1               39.3779 
+universal delta = 4.669202
+accumulation point R_inf ~ 721.750 ohm

@@ -1,0 +1,36 @@
+{
+  "scope_model": "Agilent InfiniiVision DSO-X-3014A",
+  "scope_years_since_calibration": null,
+  "scope_conditions_verified": false,
+  "scope_channels_default": {
+    "CH1": {
+      "volts_per_div_at_tip": null,
+      "offset_V_at_tip": null,
+      "probe_attenuation": 1.0
+    },
+    "CH2": {
+      "volts_per_div_at_tip": null,
+      "offset_V_at_tip": null,
+      "probe_attenuation": 1.0
+    },
+    "CH3": {
+      "volts_per_div_at_tip": null,
+      "offset_V_at_tip": null,
+      "probe_attenuation": null
+    }
+  },
+  "record_channel_overrides": {},
+  "r0_ohm": 992.0,
+  "r0_standard_uncertainty_ohm": null,
+  "shunt_ohm": 216.0,
+  "shunt_standard_uncertainty_ohm": null,
+  "relative_gain_ratio_standard_uncertainty": null,
+  "supply_model": "ISO-TECH IPS 3303S",
+  "supply_mode": null,
+  "supply_actual_setting_V": 9.0,
+  "supply_conditions_verified": false,
+  "design_rail_magnitude_V": 9.0,
+  "note": "Null means unknown, never zero. The 9 V magnitude is the design value in RESULTS.md, not a recovered supply reading. Scope scale/offset values must be probe-tip-referred, with attenuation separately specified. Relative gain uncertainty requires calibration; 2% full scale must not be used as 2% of reading.",
+  "supply_reported_current_setting_A": 0.03,
+  "user_confirmed": "Both supply channels at 9 V / 0.03 A; two probes 1:1. No resistor uncertainty or scope calibration date."
+}

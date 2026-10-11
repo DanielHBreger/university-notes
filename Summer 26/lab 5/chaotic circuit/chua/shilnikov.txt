@@ -1,0 +1,75 @@
+shilnikov.py: eigenvalues at the three equilibria, gamma real, sigma +- j omega the pair; ratio = |sigma| / |gamma| (Shilnikov needs < 1)
+
+plan model (Table 1 element, C1 10 nF, C2 100 nF, L 18 mH)
+  Rpot  v1* (V)  G (mS)  gamma (1/s)  sigma (1/s)  f (kHz)  ratio  type
+   806   -2.363  -0.418       -21256          917     3.03  0.043  saddle-focus, 2-D unstable
+          0.000  -0.717        21945        -5709     3.08  0.260  saddle-focus, 1-D unstable
+          1.339  -0.434       -19545          866     2.97  0.044  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.26), at the outer equilibria holds (0.04, 0.04)
+   770   -2.184  -0.418       -22760         1044     3.04  0.046  saddle-focus, 2-D unstable
+          0.000  -0.717        21016        -5869     3.02  0.279  saddle-focus, 1-D unstable
+          1.226  -0.434       -21101         1019     2.98  0.048  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.28), at the outer equilibria holds (0.05, 0.05)
+   745   -2.071  -0.418       -23823         1126     3.05  0.047  saddle-focus, 2-D unstable
+          0.000  -0.717        20341        -5981     2.98  0.294  saddle-focus, 1-D unstable
+          1.155  -0.434       -22196         1118     3.00  0.050  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.29), at the outer equilibria holds (0.05, 0.05)
+   700   -1.888  -0.418       -25779         1262     3.07  0.049  saddle-focus, 2-D unstable
+          0.000  -0.717        19059        -6182     2.89  0.324  saddle-focus, 1-D unstable
+          1.043  -0.434       -24203         1279     3.02  0.053  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.32), at the outer equilibria holds (0.05, 0.05)
+   668   -1.772  -0.418       -27208         1349     3.08  0.050  saddle-focus, 2-D unstable
+          0.000  -0.717        18084        -6321     2.81  0.350  saddle-focus, 1-D unstable
+          0.972  -0.434       -25664         1383     3.03  0.054  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.35), at the outer equilibria holds (0.05, 0.05)
+   600   -1.555  -0.418       -30368         1514     3.11  0.050  saddle-focus, 2-D unstable
+          0.000  -0.717        15782        -6586     2.61  0.417  saddle-focus, 1-D unstable
+          0.844  -0.434       -28879         1575     3.07  0.055  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.42), at the outer equilibria holds (0.05, 0.05)
+   500   -1.296  -0.418       -35389         1709     3.16  0.048  saddle-focus, 2-D unstable
+          0.000  -0.717        11405        -6713     2.15  0.589  saddle-focus, 1-D unstable
+          0.693  -0.434       -33957         1799     3.12  0.053  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.59), at the outer equilibria holds (0.05, 0.05)
+   400    0.000  -0.717        -2622        -2347     0.76  0.895  stable focus
+                one equilibrium: no double scroll possible
+   328    0.000  -0.717       -17936         3155     1.71  0.176  saddle-focus, 2-D unstable
+                one equilibrium: no double scroll possible
+
+identified circuit (C1 10.8 nF, C2 90.5 nF, L0 18.9 mH, r0 2.3 ohm)
+  Rpot  v1* (V)  G (mS)  gamma (1/s)  sigma (1/s)  f (kHz)  ratio  type
+   806   -2.504  -0.415       -20447          544     3.07  0.027  saddle-focus, 2-D unstable
+          0.000  -0.762        24871        -6044     3.24  0.243  saddle-focus, 1-D unstable
+          2.159  -0.415       -20447          544     3.07  0.027  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.24), at the outer equilibria holds (0.03, 0.03)
+   770   -2.317  -0.415       -21912          686     3.09  0.031  saddle-focus, 2-D unstable
+          0.000  -0.762        24046        -6221     3.19  0.259  saddle-focus, 1-D unstable
+          1.998  -0.415       -21912          686     3.09  0.031  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.26), at the outer equilibria holds (0.03, 0.03)
+   745   -2.199  -0.415       -22947          780     3.10  0.034  saddle-focus, 2-D unstable
+          0.000  -0.762        23452        -6348     3.15  0.271  saddle-focus, 1-D unstable
+          1.896  -0.415       -22947          780     3.10  0.034  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.27), at the outer equilibria holds (0.03, 0.03)
+   700   -2.007  -0.415       -24849          936     3.11  0.038  saddle-focus, 2-D unstable
+          0.000  -0.762        22332        -6583     3.08  0.295  saddle-focus, 1-D unstable
+          1.731  -0.415       -24849          936     3.11  0.038  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.29), at the outer equilibria holds (0.04, 0.04)
+   668   -1.885  -0.415       -26237         1039     3.13  0.040  saddle-focus, 2-D unstable
+          0.000  -0.762        21492        -6754     3.02  0.314  saddle-focus, 1-D unstable
+          1.625  -0.415       -26237         1039     3.13  0.040  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.31), at the outer equilibria holds (0.04, 0.04)
+   600   -1.657  -0.415       -29300         1234     3.15  0.042  saddle-focus, 2-D unstable
+          0.000  -0.762        19561        -7124     2.86  0.364  saddle-focus, 1-D unstable
+          1.429  -0.415       -29300         1234     3.15  0.042  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.36), at the outer equilibria holds (0.04, 0.04)
+   500   -1.384  -0.415       -34150         1474     3.19  0.043  saddle-focus, 2-D unstable
+          0.000  -0.762        16208        -7633     2.52  0.471  saddle-focus, 1-D unstable
+          1.193  -0.415       -34150         1474     3.19  0.043  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.47), at the outer equilibria holds (0.04, 0.04)
+   400   -1.164  -0.415       -39528         1664     3.24  0.042  saddle-focus, 2-D unstable
+          0.000  -0.762        11617        -7837     1.92  0.675  saddle-focus, 1-D unstable
+          1.003  -0.415       -39528         1664     3.24  0.042  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin holds (0.67), at the outer equilibria holds (0.04, 0.04)
+   328   -1.031  -0.415       -43818         1775     3.26  0.040  saddle-focus, 2-D unstable
+          0.000  -0.762         4871        -6498     0.64  1.334  saddle-focus, 1-D unstable
+          0.888  -0.415       -43818         1775     3.26  0.040  saddle-focus, 2-D unstable
+                double-scroll geometry yes; Shilnikov at the origin fails (1.33), at the outer equilibria holds (0.04, 0.04)

@@ -1,0 +1,167 @@
+{
+ "model": "static",
+ "subtitle": "static model: identified circuit with constant components and a static element",
+ "sweep": [
+  0,
+  1000,
+  1
+ ],
+ "settle_s": 0.02,
+ "collect_s": 0.1,
+ "transitions": {
+  "oscillation begins (sweep)": 923.0,
+  "period 1 -> 2": 870.0,
+  "period 2 -> 4": 853.0,
+  "period 4 -> 8": 849.0,
+  "chaos begins": 849.0,
+  "period-3 window": [
+   838.0,
+   838.0
+  ],
+  "double scroll from (down)": 808.0,
+  "double scroll ends (down)": 474.0,
+  "large cycle from (down)": 473.0,
+  "large cycle survives to (up)": 823.0,
+  "Hopf point (linear)": 924.5936511534583,
+  "Hopf frequency (Hz)": 3042.865009448952
+ },
+ "regimes_down": [
+  [
+   "rest",
+   1000.0,
+   924.0
+  ],
+  [
+   "P1",
+   923.0,
+   921.0
+  ],
+  [
+   "chaos",
+   920.0,
+   920.0
+  ],
+  [
+   "P1",
+   919.0,
+   871.0
+  ],
+  [
+   "P2",
+   870.0,
+   854.0
+  ],
+  [
+   "P4",
+   853.0,
+   850.0
+  ],
+  [
+   "P16",
+   849.0,
+   849.0
+  ],
+  [
+   "chaos",
+   848.0,
+   839.0
+  ],
+  [
+   "P12",
+   838.0,
+   838.0
+  ],
+  [
+   "chaos",
+   837.0,
+   812.0
+  ],
+  [
+   "P14",
+   811.0,
+   811.0
+  ],
+  [
+   "chaos",
+   810.0,
+   809.0
+  ],
+  [
+   "double scroll",
+   808.0,
+   502.0
+  ],
+  [
+   "P6",
+   501.0,
+   501.0
+  ],
+  [
+   "double scroll",
+   500.0,
+   474.0
+  ],
+  [
+   "large cycle",
+   473.0,
+   0.0
+  ]
+ ],
+ "regimes_up": [
+  [
+   "large cycle",
+   0.0,
+   823.0
+  ],
+  [
+   "chaos",
+   824.0,
+   837.0
+  ],
+  [
+   "P12",
+   838.0,
+   838.0
+  ],
+  [
+   "chaos",
+   839.0,
+   848.0
+  ],
+  [
+   "P16",
+   849.0,
+   849.0
+  ],
+  [
+   "P4",
+   850.0,
+   853.0
+  ],
+  [
+   "P2",
+   854.0,
+   870.0
+  ],
+  [
+   "P1",
+   871.0,
+   925.0
+  ],
+  [
+   "chaos",
+   926.0,
+   926.0
+  ],
+  [
+   "P1",
+   927.0,
+   928.0
+  ],
+  [
+   "rest",
+   929.0,
+   1000.0
+  ]
+ ]
+}

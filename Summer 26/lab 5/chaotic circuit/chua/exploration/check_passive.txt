@@ -1,0 +1,4 @@
+passive85 hopf (1873.4488583858674, -3.0828561002763024, np.float64(0.00034352074031881704)) back large until 780.0 forward large until 475.0
+[(330, 'large cycle, max 6.73'), (400, 'large cycle, max 6.69'), (600, 'double scroll,  53 lvls'), (675, 'double scroll,  68 lvls'), (700, 'double scroll,  67 lvls'), (725, 'double scroll,  56 lvls'), (750, 'double scroll,  57 lvls'), (775, 'double scroll,  67 lvls'), (800, ' 44 lvls  [-1.11,-0.02]'), (900, '  1 lvls  [-3.23,-3.23]')]
+passive110 hopf (1702.742899069489, -2.2077224467469123, np.float64(0.0003915298062830016)) back large until 645.0 forward large until 320.0
+[(330, 'double scroll,  11 lvls'), (400, 'double scroll,  22 lvls'), (600, '  4 lvls  [-0.74,-0.25]'), (675, '  1 lvls  [-0.67,-0.67]'), (700, '  1 lvls  [-2.16,-2.16]'), (725, '  2 lvls  [-2.28,-2.27]'), (750, '  1 lvls  [-2.40,-2.40]'), (775, '  1 lvls  [-2.54,-2.54]'), (800, '  1 lvls  [-2.69,-2.69]'), (900, '  1 lvls  [-3.46,-3.46]')]

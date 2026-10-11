@@ -1,0 +1,9 @@
+.venv/
+.cache/
+__pycache__/
+.pytest_cache/
+verification/before/
+verification/cache/
+verification/after_previews/
+verification/named_verified*
+chua/exploration/*.npz

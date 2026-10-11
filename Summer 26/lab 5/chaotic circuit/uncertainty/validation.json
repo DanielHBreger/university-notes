@@ -1,0 +1,13 @@
+{
+  "forward": {
+    "records": 405,
+    "median_u_fit_ohm": 0.2200756035301369
+  },
+  "back": {
+    "records": 74,
+    "median_u_fit_ohm": 0.10934492310757221
+  },
+  "tests": "50 passed",
+  "scope_total_accuracy": "not computed without vertical settings and calibration",
+  "method": "paired time-block bootstrap; quantization covariance; correlated transition propagation"
+}

@@ -1,0 +1,114 @@
+{
+ "model": "ideal",
+ "subtitle": "ideal (table1), C1 = 10 nF, rL = 0 ohm, continuation",
+ "sweep": [
+  0,
+  1000,
+  1
+ ],
+ "settle_s": 0.02,
+ "collect_s": 0.1,
+ "transitions": {
+  "oscillation begins (sweep)": 1000.0,
+  "period 1 -> 2": 953.0,
+  "period 2 -> 4": 938.0,
+  "period 4 -> 8": 934.0,
+  "chaos begins": 933.0,
+  "period-3 window": null,
+  "double scroll from (down)": 886.0,
+  "double scroll ends (down)": 584.0,
+  "large cycle from (down)": 583.0,
+  "large cycle survives to (up)": 927.0,
+  "Hopf point (linear)": 1005.7926365580015,
+  "Hopf frequency (Hz)": 2962.784388314138
+ },
+ "regimes_down": [
+  [
+   "P1",
+   1000.0,
+   954.0
+  ],
+  [
+   "P2",
+   953.0,
+   939.0
+  ],
+  [
+   "P4",
+   938.0,
+   935.0
+  ],
+  [
+   "P8",
+   934.0,
+   934.0
+  ],
+  [
+   "chaos",
+   933.0,
+   887.0
+  ],
+  [
+   "double scroll",
+   886.0,
+   644.0
+  ],
+  [
+   "P2",
+   643.0,
+   642.0
+  ],
+  [
+   "P4",
+   641.0,
+   641.0
+  ],
+  [
+   "chaos",
+   640.0,
+   640.0
+  ],
+  [
+   "double scroll",
+   639.0,
+   584.0
+  ],
+  [
+   "large cycle",
+   583.0,
+   0.0
+  ]
+ ],
+ "regimes_up": [
+  [
+   "large cycle",
+   0.0,
+   927.0
+  ],
+  [
+   "chaos",
+   928.0,
+   933.0
+  ],
+  [
+   "P8",
+   934.0,
+   934.0
+  ],
+  [
+   "P4",
+   935.0,
+   938.0
+  ],
+  [
+   "P2",
+   939.0,
+   953.0
+  ],
+  [
+   "P1",
+   954.0,
+   1000.0
+  ]
+ ]
+}

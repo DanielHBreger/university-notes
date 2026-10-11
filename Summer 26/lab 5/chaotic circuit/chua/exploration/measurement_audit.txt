@@ -1,0 +1,17 @@
+checked 30
+checked 60
+checked 90
+checked 120
+checked 150
+checked 180
+checked 210
+checked 240
+checked 270
+checked 300
+checked 330
+checked 360
+checked 390
+checked 420
+checked 450
+checked 480
+{'raw_records': 498, 'admitted': 479, 'counts': {'back/ok': 74, 'back/rejected': 6, 'forward/ok': 405, 'forward/rejected': 13}, 'max_divider_difference_ohm': 0.004996879191935477, 'peak_count_mismatches': 0, 'max_peak_difference_V': 4.99999999417633e-07}

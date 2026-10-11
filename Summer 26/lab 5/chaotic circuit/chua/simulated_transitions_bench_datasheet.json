@@ -1,0 +1,152 @@
+{
+ "model": "bench",
+ "subtitle": "bench model, node-1 law, tau_B = 0.404 us, slew 13 V/us",
+ "sweep": [
+  0,
+  1000,
+  1
+ ],
+ "settle_s": 0.02,
+ "collect_s": 0.1,
+ "transitions": {
+  "oscillation begins (sweep)": 921.0,
+  "period 1 -> 2": 765.0,
+  "period 2 -> 4": 744.0,
+  "period 4 -> 8": 739.0,
+  "chaos begins": 738.0,
+  "period-3 window": [
+   725.0,
+   724.0
+  ],
+  "double scroll from (down)": 694.0,
+  "double scroll ends (down)": 387.0,
+  "large cycle from (down)": 386.0,
+  "large cycle survives to (up)": 632.0,
+  "Hopf point (linear)": 924.5936511534583,
+  "Hopf frequency (Hz)": 3042.865009448952
+ },
+ "regimes_down": [
+  [
+   "rest",
+   1000.0,
+   922.0
+  ],
+  [
+   "P1",
+   921.0,
+   766.0
+  ],
+  [
+   "P2",
+   765.0,
+   745.0
+  ],
+  [
+   "P4",
+   744.0,
+   740.0
+  ],
+  [
+   "P8",
+   739.0,
+   739.0
+  ],
+  [
+   "chaos",
+   738.0,
+   726.0
+  ],
+  [
+   "P3",
+   725.0,
+   725.0
+  ],
+  [
+   "P6",
+   724.0,
+   724.0
+  ],
+  [
+   "chaos",
+   723.0,
+   695.0
+  ],
+  [
+   "double scroll",
+   694.0,
+   407.0
+  ],
+  [
+   "chaos",
+   406.0,
+   406.0
+  ],
+  [
+   "double scroll",
+   405.0,
+   387.0
+  ],
+  [
+   "large cycle",
+   386.0,
+   0.0
+  ]
+ ],
+ "regimes_up": [
+  [
+   "large cycle",
+   0.0,
+   632.0
+  ],
+  [
+   "double scroll",
+   633.0,
+   694.0
+  ],
+  [
+   "chaos",
+   695.0,
+   723.0
+  ],
+  [
+   "P6",
+   724.0,
+   724.0
+  ],
+  [
+   "P3",
+   725.0,
+   725.0
+  ],
+  [
+   "chaos",
+   726.0,
+   738.0
+  ],
+  [
+   "P8",
+   739.0,
+   739.0
+  ],
+  [
+   "P4",
+   740.0,
+   744.0
+  ],
+  [
+   "P2",
+   745.0,
+   765.0
+  ],
+  [
+   "P1",
+   766.0,
+   922.0
+  ],
+  [
+   "rest",
+   923.0,
+   1000.0
+  ]
+ ]
+}

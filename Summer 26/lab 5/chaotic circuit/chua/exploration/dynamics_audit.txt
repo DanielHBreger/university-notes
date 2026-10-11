@@ -1,0 +1,66 @@
+  sweep     filename   rpot  c1_nf  gb_ms  intercept_ma  rmse_ua
+forward  trace14.csv 870.50  8.516 -0.422         0.374    6.789
+forward  trace27.csv 882.19 11.003 -0.414         0.363    7.731
+forward  trace40.csv 860.39 11.292 -0.413         0.364    9.881
+forward  trace53.csv 810.33 11.472 -0.413         0.363   14.415
+forward  trace66.csv 783.01 11.329 -0.413         0.359   16.191
+forward  trace79.csv 764.17 11.305 -0.413         0.358   16.388
+forward  trace92.csv 749.48 11.281 -0.413         0.358   15.970
+forward trace105.csv 740.89 11.270 -0.413         0.358   16.101
+forward trace118.csv 731.81 11.250 -0.413         0.358   15.991
+forward trace131.csv 724.94 11.239 -0.413         0.358   16.087
+forward trace144.csv 715.45 11.197 -0.413         0.357   16.025
+forward trace157.csv 705.20 11.207 -0.413         0.357   16.143
+forward trace170.csv 695.96 11.131 -0.413         0.355   15.920
+forward trace183.csv 686.19 11.088 -0.414         0.354   15.716
+forward trace196.csv 675.97 11.026 -0.413         0.355   15.476
+forward trace209.csv 667.45 10.845 -0.412         0.356   28.959
+forward trace222.csv 659.37 10.887 -0.412         0.356   28.720
+forward trace235.csv 637.11 10.780 -0.413         0.356   28.583
+forward trace248.csv 597.84 10.453 -0.412         0.359   28.887
+forward trace261.csv 563.95 10.105 -0.412         0.359   28.025
+forward trace274.csv 540.58  9.671 -0.413         0.359   27.447
+forward trace287.csv 524.72  9.862 -0.412         0.360   27.588
+forward trace300.csv 501.68  9.753 -0.413         0.360   27.429
+forward trace313.csv 484.37  9.420 -0.417         0.355   26.830
+forward trace326.csv 459.21  8.983 -0.419         0.351   26.888
+forward trace339.csv 454.39  9.760 -0.413         0.357   18.229
+forward trace352.csv 437.57  9.292 -0.409         0.365   18.956
+forward trace365.csv 405.89  6.537 -0.364         0.437   14.973
+forward trace378.csv 377.60  0.000  0.000         0.000      NaN
+forward trace391.csv 354.34  0.000  0.000         0.000      NaN
+forward trace404.csv 317.72  0.000  0.000         0.000      NaN
+forward trace418.csv   3.66 12.013 -0.436         0.284   83.719
+   back   trace1.csv   2.70 11.995 -0.435         0.288   81.984
+   back   trace3.csv  66.62 12.007 -0.433         0.289   82.882
+   back   trace5.csv 133.37 11.990 -0.429         0.303   83.606
+   back   trace8.csv 229.25 11.975 -0.430         0.295   81.265
+   back  trace10.csv 277.79 11.961 -0.428         0.308   81.275
+   back  trace12.csv 356.14 11.955 -0.423         0.324   80.270
+   back  trace15.csv 453.15 11.941 -0.421         0.327   81.153
+   back  trace17.csv 485.59 11.909 -0.417         0.343   78.905
+   back  trace19.csv 515.68 11.912 -0.418         0.341   77.749
+   back  trace22.csv 559.73 11.889 -0.411         0.364   78.001
+   back  trace24.csv 574.95 11.876 -0.414         0.355   76.445
+   back  trace26.csv 591.79 11.863 -0.412         0.361   78.499
+   back  trace29.csv 619.81 11.856 -0.410         0.371   76.726
+   back  trace31.csv 636.37 11.835 -0.411         0.365   76.633
+   back  trace33.csv 654.04 11.839 -0.410         0.368   75.187
+   back  trace36.csv 685.44 11.181 -0.413         0.358   21.083
+   back  trace38.csv 696.36 11.241 -0.413         0.358   20.628
+   back  trace41.csv 706.59 11.256 -0.413         0.359   21.036
+   back  trace43.csv 710.16 11.264 -0.413         0.360   21.002
+   back  trace45.csv 717.02 11.294 -0.413         0.360   21.263
+   back  trace48.csv 726.91 11.321 -0.413         0.361   21.131
+   back  trace50.csv 732.15 11.332 -0.413         0.361   21.304
+   back  trace52.csv 733.98 11.334 -0.413         0.361   21.521
+   back  trace55.csv 738.43 11.347 -0.413         0.362   21.218
+   back  trace57.csv 741.14 11.348 -0.413         0.361   21.058
+   back  trace59.csv 744.74 11.360 -0.413         0.362   21.199
+   back  trace62.csv 751.47 11.421 -0.413         0.363   14.446
+   back  trace64.csv 763.87 11.437 -0.413         0.363   14.465
+   back  trace66.csv 767.92 11.454 -0.413         0.363   14.240
+   back  trace69.csv 805.67 11.406 -0.413         0.363   17.893
+   back  trace71.csv 849.06 11.304 -0.413         0.363   17.178
+   back  trace74.csv 900.62 10.231 -0.414         0.359    5.961
+C2 nF, L mH, rL ohm [50.         30.         78.40786288] residual 6.876671311314532
