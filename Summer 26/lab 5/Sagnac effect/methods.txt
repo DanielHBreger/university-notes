@@ -1,0 +1,21 @@
+Two more phase methods (methods.py)
+
+Template matching: template = mean of the 10 rest profiles; its own period P_T = 108.02k px^2 (minima median 107.37k); shifts D = -1.6 to 55.4k px^2 over 20000-180000 px^2.
+  slope against the comparison range (fit error, sigma_x):
+      20000-180000 px^2: 1.798 +- 0.021 rad/(rad/s), sigma_x = 0.034 rad
+      10000-120000 px^2: 1.801 +- 0.017 rad/(rad/s), sigma_x = 0.026 rad
+      20000-140000 px^2: 1.794 +- 0.019 rad/(rad/s), sigma_x = 0.031 rad
+      50000-180000 px^2: 1.864 +- 0.041 rad/(rad/s), sigma_x = 0.073 rad
+AIA: 161 frames x 130 bins, converged in 1103 iterations; rms residual 5.08 counts; frame phases span 2.91 rad (167 deg).
+  bin phases psi(s): linear fit P = 105.7k px^2, largest deviation 0.56 rad (bins with > 20 % of the peak modulation).
+  slope against the largest s used, without and with a brightness factor per frame:
+    s <  260000 px^2, plain: 1.609 +- 0.026 rad/(rad/s), sigma_x = 0.047 rad
+    s <  180000 px^2, plain: 1.682 +- 0.026 rad/(rad/s), sigma_x = 0.046 rad
+    s <  130000 px^2, plain: 1.650 +- 0.026 rad/(rad/s), sigma_x = 0.046 rad
+    s <   90000 px^2, plain: 1.884 +- 0.028 rad/(rad/s), sigma_x = 0.050 rad
+    s <  260000 px^2, gain : 2.048 +- 0.024 rad/(rad/s), sigma_x = 0.040 rad
+    s <  180000 px^2, gain : 2.059 +- 0.022 rad/(rad/s), sigma_x = 0.036 rad
+    s <  130000 px^2, gain : 2.058 +- 0.018 rad/(rad/s), sigma_x = 0.029 rad
+    s <   90000 px^2, gain : 2.109 +- 0.022 rad/(rad/s), sigma_x = 0.035 rad
+  AIA assumes that only the phase changes between frames. On synthetic profiles (tests/test_methods.py) it recovers a 3.3 rad sweep to 0.01 rad; a 5 % brightness drift leaves the slope right but puts single frames off by up to 0.1 rad, and a 1.7 % frame-to-frame change of the fringe period, as measured, gives errors of order 0.2 rad. Its spread over windows and variants here measures how far the photographs break that assumption.
+Per-frame phases in methods_frames.csv; statistics and the comparison with the other methods in sagnac.txt.
