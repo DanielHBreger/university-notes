@@ -1,4 +1,4 @@
-Two more phase methods (methods.py)
+Three more phase methods (methods.py)
 
 Template matching: template = mean of the 10 rest profiles; its own period P_T = 108.02k px^2 (minima median 107.37k); shifts D = -1.6 to 55.4k px^2 over 20000-180000 px^2.
   slope against the comparison range (fit error, sigma_x):
@@ -18,4 +18,9 @@ AIA: 161 frames x 130 bins, converged in 1103 iterations; rms residual 5.08 coun
     s <  130000 px^2, gain : 2.058 +- 0.018 rad/(rad/s), sigma_x = 0.029 rad
     s <   90000 px^2, gain : 2.109 +- 0.022 rad/(rad/s), sigma_x = 0.035 rad
   AIA assumes that only the phase changes between frames. On synthetic profiles (tests/test_methods.py) it recovers a 3.3 rad sweep to 0.01 rad; a 5 % brightness drift leaves the slope right but puts single frames off by up to 0.1 rad, and a 1.7 % frame-to-frame change of the fringe period, as measured, gives errors of order 0.2 rad. Its spread over windows and variants here measures how far the photographs break that assumption.
+2D Fourier sideband on (theta, r^2) maps of 256 x 256 samples (-75 to 180 deg, r^2 < 260000 px^2) about each frame's ring centre; sideband sigma = 0.26 x carrier; rest frames scatter by 0.061 rad.
+  slope against the sideband width (fit error, sigma_x):
+    width 0.15 x carrier: 1.897 +- 0.040 rad/(rad/s), sigma_x = 0.071 rad
+    width 0.26 x carrier: 1.896 +- 0.039 rad/(rad/s), sigma_x = 0.070 rad
+    width 0.40 x carrier: 1.895 +- 0.035 rad/(rad/s), sigma_x = 0.063 rad
 Per-frame phases in methods_frames.csv; statistics and the comparison with the other methods in sagnac.txt.

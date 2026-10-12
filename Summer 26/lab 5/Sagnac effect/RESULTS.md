@@ -24,7 +24,7 @@ scatter between settings dominates. omega at the photographed settings (quadrati
 correlated, then reproducibility, independent; rad/s):
 0.2383(6)(12), 0.4073(11)(20), 0.6201(15)(30), 0.8825(18)(43), 1.1173(21)(54), 1.2786(25)(62),
 1.4671(35)(71), 1.6319(47)(79), 1.7816(61)(86). Report form, combined: 0.238(1), 0.407(2),
-0.620(3), 0.882(5), 1.117(6), 1.279(7), 1.467(8), 1.632(9), 1.78(1).
+0.620(3), 0.883(5), 1.117(6), 1.279(7), 1.467(8), 1.632(9), 1.78(1).
 
 ## Task 2: patterns (`figures/patterns`, `figures/profiles`)
 
@@ -51,7 +51,7 @@ Second method (prep Q5), the cosine fit of each frame's profile (shown as open s
 |---|---|---|
 | slope a_cos | 1.910 +- 0.025 (fit) +- 0.007 (calibration curve) = 1.910 +- 0.025 rad/(rad/s) | 1.91(3) |
 | a_cos / a_th | 1.099 +- 0.088; 1.2 combined sigma from theory, p = 0.22 | 1.10(9) |
-| largest shift | 3.395 +- 0.062 rad (fit errors of both settings) = 0.54 +- 0.01 fringe | 3.40(6) rad |
+| largest shift | 3.395 +- 0.062 rad (fit errors of both settings) = 0.54 +- 0.01 fringe | 3.39(6) rad |
 | between-setting scatter | sigma_x = 0.041 rad (minima 0.045); line without it: chi2 = 83, dof = 8, p = 1e-14 | |
 | fit rms, median per setting | 9.5 counts at rest, 5.5-6.7 at the three lowest speeds, 1.4-2.3 above | |
 | cosine minus minima, frame by frame | slope +0.038 +- 0.026 rad/(rad/s), 1.5 sigma | |
@@ -69,17 +69,19 @@ the camera response.
 
 ### Phase-extraction methods compared (`figures/methods_comparison`, `figures/methods_illustration`)
 
-Two more methods run on the same r^2 profiles (`methods.py`; scans in `methods.txt`):
+Three more methods (`methods.py`; scans in `methods.txt`):
 
 | method | what it reads | slope a, rad/(rad/s) | a / a_th | minus minima, frame by frame | robustness scan |
 |---|---|---|---|---|---|
 | minima (main) | phase at the ring centre | 1.871 +- 0.028 | 1.08(9) | | |
 | cosine fit | phase at the ring centre | 1.910 +- 0.025 | 1.10(9) | +0.038 +- 0.026 (1.5 sigma) | fit range: 1.896 at s < 3.0e5 (one-off check, not in the pipeline) |
 | template matching | mean shift over s = 0.2-1.8e5 px^2 | 1.798 +- 0.022 | 1.03(8) | -0.073 +- 0.034 (2.2 sigma) | 1.794-1.801 over three ranges; 1.864 +- 0.041 without the centre |
+| 2D Fourier sideband on (theta, r^2) | fringe-strength-weighted mean over the map | 1.896 +- 0.039 | 1.09(9) | +0.025 +- 0.038 (0.7 sigma) | 1.895-1.897 over sideband widths 0.15-0.40 x carrier |
 | AIA (plain) | weighted mean over the window | 1.609 +- 0.027 | 0.93(7) | -0.26 +- 0.04 (6.8 sigma) | 1.61-1.88 over windows; 2.05-2.11 with a brightness factor |
 
 (Slope errors are fit and calibration curve combined. sigma_x: minima 0.045, cosine 0.041,
-template 0.034, AIA 0.047 rad. Report form: 1.87(3), 1.91(3), 1.80(2), 1.61(3).)
+template 0.034, Fourier 0.070, AIA 0.047 rad. Report form: 1.87(3), 1.91(3), 1.80(2), 1.90(4),
+1.61(3).)
 
 - **Template matching** gives the smallest scatter between settings (sigma_x = 0.034 rad) and is
   stable against its comparison range. Its per-setting differences from the minima follow the
@@ -91,6 +93,14 @@ template 0.034, AIA 0.047 rad. Report form: 1.87(3), 1.91(3), 1.80(2), 1.61(3).)
   the right observable for a Sagnac phase that is the same across the beam. The template slope
   sits below because the three settings with the largest period (44.07, 64.00, 73.65) happen to
   be at higher speeds.
+- **2D Fourier sideband,** adapted from a friend's `sagnac_2d.py` by first resampling each image on
+  (theta, r^2), where the rings are straight. Its slope agrees with the minima (0.7 sigma frame by
+  frame) and does not move with the sideband width. Its per-setting differences from the minima
+  also follow the fringe period, but less than template matching's (correlation -0.74, p = 0.02;
+  -0.038 rad per 1k px^2). That fits a phase averaged mostly over the bright inner fringes,
+  around r^2 = 0.7e5 px^2. It has the largest scatter between settings (sigma_x = 0.070 rad), so
+  it is the least precise. Panel (f) of `methods_illustration` shows that the local phase shift
+  is uniform over the map to within about 0.05 rad.
 - **AIA** works on synthetic profiles: it recovers a 3.3 rad sweep to 0.01 rad
   (`tests/test_methods.py`). On the photographs its slope moves from 1.61 to 1.88 with the
   window, and to 2.05-2.11 with a per-frame brightness factor. Its rms residual is 5.1 counts
@@ -102,7 +112,7 @@ template 0.034, AIA 0.047 rad. Report form: 1.87(3), 1.91(3), 1.80(2), 1.61(3).)
   about 0.2 rad per frame on synthetic data. AIA is shown for completeness but is not used.
   Its bin phases psi(s) still come out nearly linear in r^2 (P = 105.7k px^2; deviations up to
   0.56 rad), which is a model-free sign that the rings are equally spaced in r^2.
-- **Method systematic.** The three usable methods give 1.798-1.910. Half that range, 0.056,
+- **Method systematic.** The four usable methods give 1.798-1.910. Half that range, 0.056,
   covers the choice of phase extraction:
   a = 1.871 +- 0.028 (fit and calibration) +- 0.056 (method) rad/(rad/s). With this term,
   a - a_th = 0.88 combined sigma, p = 0.38. Report form: a = 1.87(6) rad/(rad/s).
@@ -145,7 +155,7 @@ measured to about 0.027 (6 % of a_th), and a - a_th would carry about 0.029 with
 | speed reproducibility at a setting | statistical, from the calibration | 0.48 % of omega; 0.002-0.016 rad in phase | yes (fit, as error in omega) |
 | slow phase wander between settings | statistical, from the fit | sigma_x = 0.045 rad per setting | yes (fit) |
 | calibration curve | calibration, correlated across settings | 0.006 on a (0.3 %) | yes, separately |
-| phase-extraction method | systematic, half the range of minima, cosine fit, template matching | 0.056 on a (3 %) | yes, separately |
+| phase-extraction method | systematic, half the range of minima, cosine fit, template matching, 2D Fourier | 0.056 on a (3 %) | yes, separately |
 | N = 13 +- 1, R = 57.0 +- 0.5 cm | given | 7.7 % and 1.8 % on a_th | yes (theory) |
 | wavelength | not given | 0.16 % on a_th per nm | **no**, stated |
 | drift linear in time | systematic, not separable | see below | **no** |

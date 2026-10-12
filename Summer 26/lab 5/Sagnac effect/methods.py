@@ -1,4 +1,4 @@
-"""Two more ways to read the fringe phase, to compare with fringes.py (minima, cosine fit).
+"""Three more ways to read the fringe phase, to compare with fringes.py (minima, cosine fit).
 
 Input: fringes_frames.csv and fringes_profiles.npz (fringes.py): for every photograph, the
 intensity averaged over the fringe sector in bins of s = r^2 about its ring centre.
@@ -17,12 +17,19 @@ intensity averaged over the fringe sector in bins of s = r^2 about its ring cent
   psi(s) comes out of the fit and should be linear in s (rings equally spaced in r^2). delta is
   defined up to an offset and a sign; the sign is taken so that delta grows with S.
 
-Both give an average phase over the window rather than the phase at the ring centre, so a change
-of the fringe period between frames (fringes.py) enters them, but not the minima or the cosine fit.
-Each is also run with other comparison ranges (template) or windows and a per-frame brightness
-factor (AIA), to show how much its slope depends on those choices.
+  2D Fourier sideband (Takeda), after the friend's sagnac_2d.py. A single carrier does not fit
+  rings, so each image is first resampled on (theta, s = r^2) about its ring centre, where the
+  rings are straight fringes. Slow background removed along s, the positive sideband around
+  the carrier of the mean rest map kept with a Gaussian filter, and the phase relative to rest
+  taken as arg sum Z_k conj(Z_rest) over the map, which lines up the local phase before summing.
 
-Outputs: methods_frames.csv (phi_template_rad, phi_aia_rad per frame), methods.txt, methods.json
+All three give an average phase over the window rather than the phase at the ring centre, so a
+change of the fringe period between frames (fringes.py) enters them, but not the minima or the
+cosine fit. Each is also run with other comparison ranges (template), windows and a per-frame
+brightness factor (AIA), or sideband widths (Fourier), to show how much its slope depends on
+those choices.
+
+Outputs: methods_frames.csv (phi_template_rad, phi_aia_rad, phi_fourier_rad per frame), methods.txt, methods.json
 (the robustness scans), figures/methods_illustration.pdf/.png (figure*).
 Run from this folder after calibration.py and fringes.py, before sagnac.py.
 """
@@ -33,7 +40,7 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate, ndimage, optimize
 
-from fringes import P_GUESS, SMOOTH_PX, cos_model, cosine_fit, load_red
+from fringes import P_GUESS, S2_FIT_MAX, SMOOTH_PX, THETA_DEG, cos_model, cosine_fit, load_red
 from sagnac import calibration_part, fit_line, setting_means
 
 HERE = Path(__file__).resolve().parent
@@ -43,6 +50,9 @@ SELF_S = (1e3, 1.1e5)           # px^2, comparison range for the template's own 
 AIA_TOL = 1e-10                 # rad, convergence of the frame phases
 MATCH_SCAN = [(2e4, 1.8e5), (1e4, 1.2e5), (2e4, 1.4e5), (5e4, 1.8e5)]   # px^2, template robustness
 AIA_SCAN = [2.6e5, 1.8e5, 1.3e5, 0.9e5]                                # px^2, largest s used by AIA
+FOURIER_GRID = (256, 256)       # (theta, s) samples of the unwrapped image
+FOURIER_WIDTH = 0.26            # sideband sigma / carrier frequency (the friend's 0.030 / 0.114 rad/px)
+FOURIER_SCAN = [0.15, 0.26, 0.40]
 
 
 def wrap(x):
@@ -102,12 +112,53 @@ def aia_phases(fr, M, gain=False):
     """AIA frame phases relative to the rest frames, unwrapped along increasing S, sign so that
     they grow with S; also delta, a, c, d (same sign convention) and the iteration count."""
     delta, a, c, d, n_it = aia(M, gain)
-    order = np.lexsort((fr.time_s, fr.S))
-    du = np.empty_like(delta); du[order] = np.unwrap(delta[order])
+    du = relative_to_rest(fr, delta)
     if np.polyfit(fr.S, du, 1)[0] < 0:
         delta, d, du = -delta, -d, -du
-    rest = (fr.S == 0).to_numpy()
-    return du - du[rest].mean(), delta, a, c, d, n_it
+    return du, delta, a, c, d, n_it
+
+
+def relative_to_rest(fr, phase):
+    """Wrapped frame phases unwrapped along increasing S (then time), minus the rest-frame mean."""
+    order = np.lexsort((fr.time_s, fr.S))
+    du = np.empty_like(phase); du[order] = np.unwrap(phase[order])
+    return du - du[(fr.S == 0).to_numpy()].mean()
+
+
+def unwrap_image(img, cx, cy):
+    """The image resampled on (theta, s = r^2) over the fringe sector: the rings become straight."""
+    th = np.radians(np.linspace(*THETA_DEG, FOURIER_GRID[0], endpoint=False))
+    r = np.sqrt(np.linspace(0, S2_FIT_MAX, FOURIER_GRID[1], endpoint=False))
+    return ndimage.map_coordinates(img, [cy - np.outer(np.sin(th), r), cx + np.outer(np.cos(th), r)],
+                                   order=1, mode='nearest')
+
+
+def analytic(m, G):
+    """Background removed along s (Gaussian, sigma = 0.44 fringe periods, as the friend's 24 px for
+    55 px fringes), then only the sideband G kept: the complex fringe signal of a (theta, s) map."""
+    ds = S2_FIT_MAX / m.shape[-1]
+    hp = m - ndimage.gaussian_filter1d(m, 0.44 * P_GUESS / ds, axis=-1, mode='nearest')
+    return np.fft.ifft2(np.fft.fft2(hp) * G)
+
+
+def fourier_phases(maps, rest, width=FOURIER_WIDTH):
+    """2D Fourier-sideband phase (Takeda) of every (theta, s) map relative to the mean rest map.
+    The carrier is the strongest peak of the rest map's spectrum on the positive-s side near the
+    expected fringe frequency; the sideband filter is a Gaussian of sigma = width x carrier. The
+    phase difference is arg sum Z_k conj(Z_rest), which lines up the local phase before summing.
+    Returns the phases (wrapped), the filter G and Z_rest."""
+    ds = S2_FIT_MAX / maps.shape[-1]
+    rest_map = maps[rest].mean(axis=0)
+    ref = rest_map - ndimage.gaussian_filter1d(rest_map, 0.44 * P_GUESS / ds, axis=-1, mode='nearest')
+    ft, fs = np.meshgrid(np.fft.fftfreq(maps.shape[1]), np.fft.fftfreq(maps.shape[2]), indexing='ij')
+    spec = np.abs(np.fft.fft2(ref * np.outer(np.hanning(ref.shape[0]), np.hanning(ref.shape[1]))))
+    f_guess = ds / P_GUESS                                       # cycles per sample along s
+    cand = (fs > 0) & (np.hypot(ft, fs) > 0.5 * f_guess) & (np.hypot(ft, fs) < 2 * f_guess)
+    i = np.unravel_index(np.argmax(np.where(cand, spec, 0)), spec.shape)
+    G = np.exp(-((ft - ft[i]) ** 2 + (fs - fs[i]) ** 2) / (2 * (width * np.hypot(ft[i], fs[i])) ** 2))
+    Z_ref = analytic(rest_map, G)
+    phases = np.array([np.angle(np.sum(analytic(m, G) * np.conj(Z_ref))) for m in maps])
+    return phases, G, Z_ref
 
 
 def slope(fr, phi, model):
@@ -119,14 +170,15 @@ def slope(fr, phi, model):
     return a, float(np.sqrt(cov[0, 0])), sx
 
 
-def illustration(fr, s, M, T, D, phi_aia, delta, a, c, d, path):
-    """figure*: (a) cosine fit, (b) template match, (c) AIA bins against the frame phase, (d) psi(s)."""
+def illustration(fr, s, M, T, D, phi_aia, delta, a, c, d, maps, G, Z_ref, path):
+    """figure*: (a) cosine fit, (b) template match, (c) AIA bins against the frame phase, (d) psi(s),
+    (e) the (theta, r^2) map of the same frame, (f) its local Fourier phase about the mean."""
     import matplotlib.pyplot as plt
     import report_style as rs
     rs.apply()
     tex = plt.rcParams['text.usetex']
     w = rs.TEXT_WIDTH
-    fig, axs = plt.subplots(2, 2, figsize=(w, 0.62 * w), gridspec_kw=dict(hspace=0.32, wspace=0.22))
+    fig, axs = plt.subplots(3, 2, figsize=(w, 0.95 * w), gridspec_kw=dict(hspace=0.42, wspace=0.22))
     top = np.flatnonzero(fr.S == fr.S.max())
     k = top[np.argsort(D[top])[len(top) // 2]]             # median-shift frame at the top speed
     x = s / 1e5
@@ -179,7 +231,27 @@ def illustration(fr, s, M, T, D, phi_aia, delta, a, c, d, path):
             label=rf'linear, $P = {2 * np.pi / abs(k1) / 1e3:.1f}$k px$^2$' if tex
             else f'linear, P = {2 * np.pi / abs(k1) / 1e3:.1f}k px²')
     ax.set_xlabel(xlab); ax.set_ylabel(r'bin phase $\psi$ (rad)'); ax.legend(loc='upper right')
-    for ax, lab in zip(axs.flat, 'abcd'):
+
+    # (e) the frame on (theta, r^2): the rings become straight fringes
+    ext = (0, S2_FIT_MAX / 1e5, *THETA_DEG)
+    ax = axs[2, 0]
+    ax.imshow(maps[k], cmap='gray', vmin=0, vmax=220, origin='lower', aspect='auto', extent=ext)
+    ax.set_xlabel(xlab); ax.set_ylabel(r'$\theta$ (deg)')
+    ax.minorticks_off()
+
+    # (f) local phase of Z_k conj(Z_rest) about its mean, where the fringes are strong
+    ax = axs[2, 1]
+    prod = analytic(maps[k], G) * np.conj(Z_ref)
+    local = np.angle(prod * np.exp(-1j * np.angle(prod.sum())))
+    local[np.abs(prod) < 0.1 * np.abs(prod).max()] = np.nan
+    v = float(f'{np.nanpercentile(np.abs(local), 99):.1g}')            # symmetric, one figure
+    im = ax.imshow(local, cmap='RdBu_r', vmin=-v, vmax=v, origin='lower', aspect='auto', extent=ext)
+    cb = fig.colorbar(im, ax=ax, pad=0.02, fraction=0.06)
+    cb.set_label('local phase $-$ mean (rad)' if tex else 'local phase - mean (rad)')
+    cb.ax.minorticks_off()
+    ax.set_xlabel(xlab); ax.set_ylabel(r'$\theta$ (deg)')
+    ax.minorticks_off()
+    for ax, lab in zip(axs.flat, 'abcdef'):
         ax.text(-0.1, 1.02, f'({lab})', transform=ax.transAxes, va='bottom', ha='left')
     rs.save(fig, path)
     plt.close(fig)
@@ -196,23 +268,32 @@ def main():
 
     T, P_T, D, phi_t = template_phases(s, M, rest)
     phi_aia, delta, a, c, d, n_it = aia_phases(fr, M)
+    maps = np.array([unwrap_image(ndimage.gaussian_filter(load_red(HERE / r.file), SMOOTH_PX), r.cx, r.cy)
+                     for r in fr.itertuples()], dtype=np.float32)
+    ph_f, G, Z_ref = fourier_phases(maps, rest)
+    phi_f = relative_to_rest(fr, ph_f)
     pd.DataFrame(dict(file=fr.file, phi_template_rad=np.round(phi_t, 5),
-                      shift_template_px2=np.round(D, 1), phi_aia_rad=np.round(phi_aia, 5))
+                      shift_template_px2=np.round(D, 1), phi_aia_rad=np.round(phi_aia, 5),
+                      phi_fourier_rad=np.round(phi_f, 5))
                  ).to_csv(HERE / 'methods_frames.csv', index=False)
-    P_aia, dev = illustration(fr, s, M, T, D, phi_aia, delta, a, c, d,
+    P_aia, dev = illustration(fr, s, M, T, D, phi_aia, delta, a, c, d, maps, G, Z_ref,
                               HERE / 'figures' / 'methods_illustration')
 
-    # robustness: the same slope from other comparison ranges / windows / an AIA brightness factor
+    # robustness: the same slope from other comparison ranges / windows / an AIA brightness factor /
+    # other sideband widths
     t_scan = [(m, *slope(fr, template_phases(s, M, rest, m)[3], model)) for m in MATCH_SCAN]
     a_scan = [(smax, gain, *slope(fr, aia_phases(fr, M[:, s < smax], gain)[0], model))
               for gain in (False, True) for smax in AIA_SCAN]
+    f_scan = [(wd, *slope(fr, relative_to_rest(fr, fourier_phases(maps, rest, wd)[0]), model))
+              for wd in FOURIER_SCAN]
     (HERE / 'methods.json').write_text(json.dumps(dict(
         template_scan=[dict(range=m, slope=k, u_fit=u, sigma_x=x) for m, k, u, x in t_scan],
-        aia_scan=[dict(s_max=m, gain=g, slope=k, u_fit=u, sigma_x=x) for m, g, k, u, x in a_scan]),
+        aia_scan=[dict(s_max=m, gain=g, slope=k, u_fit=u, sigma_x=x) for m, g, k, u, x in a_scan],
+        fourier_scan=[dict(width=wd, slope=k, u_fit=u, sigma_x=x) for wd, k, u, x in f_scan]),
         indent=1, default=float))
 
     resid = M - (a + np.outer(np.cos(delta), c) + np.outer(np.sin(delta), d))
-    L = ['Two more phase methods (methods.py)\n',
+    L = ['Three more phase methods (methods.py)\n',
          f'Template matching: template = mean of the {rest.sum()} rest profiles; its own period '
          f'P_T = {P_T / 1e3:.2f}k px^2 (minima median {fr.P_px2.median() / 1e3:.2f}k); shifts D = '
          f'{D.min() / 1e3:.1f} to {D.max() / 1e3:.1f}k px^2 over {MATCH_S[0]:.0f}-{MATCH_S[1]:.0f} px^2.',
@@ -233,7 +314,14 @@ def main():
           'frame-to-frame change of the fringe period, as measured, gives errors of order 0.2 rad. '
           'Its spread over windows and variants here measures how far the photographs break that '
           'assumption.',
-          'Per-frame phases in methods_frames.csv; statistics and the comparison with the other '
+          f'2D Fourier sideband on (theta, r^2) maps of {FOURIER_GRID[0]} x {FOURIER_GRID[1]} samples '
+          f'({THETA_DEG[0]:.0f} to {THETA_DEG[1]:.0f} deg, r^2 < {S2_FIT_MAX:.0f} px^2) about each '
+          f'frame\'s ring centre; sideband sigma = {FOURIER_WIDTH} x carrier; rest frames scatter by '
+          f'{phi_f[rest].std(ddof=1):.3f} rad.',
+          '  slope against the sideband width (fit error, sigma_x):']
+    L += [f'    width {wd:.2f} x carrier: {k:.3f} +- {u:.3f} rad/(rad/s), sigma_x = {x:.3f} rad'
+          for wd, k, u, x in f_scan]
+    L += ['Per-frame phases in methods_frames.csv; statistics and the comparison with the other '
           'methods in sagnac.txt.']
     (HERE / 'methods.txt').write_text('\n'.join(L) + '\n', encoding='utf-8')
     print('\n'.join(L))

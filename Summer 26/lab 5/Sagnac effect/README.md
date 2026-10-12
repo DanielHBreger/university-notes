@@ -28,10 +28,10 @@ when it is installed):
 ```
 python calibration.py   # task 1 -> calibration.json, calibration.txt, figures/calibration
 python fringes.py       # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
-python methods.py       # template matching and AIA -> methods_frames.csv, methods.txt/.json, figures/methods_illustration (figure*) (a few minutes)
+python methods.py       # template matching, AIA, 2D Fourier -> methods_frames.csv, methods.txt/.json, figures/methods_illustration (figure*) (a few minutes)
 python sagnac.py        # task 3, all methods -> sagnac_speeds.csv, sagnac.txt, sagnac.json, figures/phase_vs_omega, figures/methods_comparison
 python patterns.py      # task 2 -> figures/patterns (figure*), figures/profiles
-python -m pytest -q -p no:cacheprovider tests   # synthetic checks of template matching and AIA
+python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the three methods, report-form rounding
 ```
 
 Task 4 (small loop off the axis), once its photographs are in a folder laid out like
@@ -84,21 +84,26 @@ Gaussian beams of different size, and D is the dark floor. phi is the same phase
 centre. This method uses every bin, but it relies on the envelope model and on a linear camera
 response; the minima rely on neither.
 
-Two more methods (`methods.py`), on the same r^2 profiles:
-- **Template matching:** each profile is matched to the averaged rest profile, shifted by D and
-  scaled (gain and offset free). The phase is 2 pi D / P_T, where P_T is the template's own
+Three more methods (`methods.py`):
+- **Template matching:** each r^2 profile is matched to the averaged rest profile, shifted by D
+  and scaled (gain and offset free). The phase is 2 pi D / P_T, where P_T is the template's own
   period. It uses no fringe model.
 - **Phase shifting with unknown steps (AIA, Wang & Han 2004):** every r^2 bin brightens and dims
   sinusoidally with the frame's phase. Alternating least squares finds each bin's sinusoid and
   each frame's phase together, so no period, envelope or cosine shape in r is assumed. It
   assumes that only the phase changes between frames.
+- **2D Fourier sideband (Takeda),** adapted from a friend's `sagnac_2d.py`. A single carrier
+  does not fit rings, so each image is first resampled on (theta, r^2) about its ring centre,
+  where the rings become straight fringes. Then the slow background is removed, the positive
+  sideband is kept with a Gaussian filter, and the phase relative to rest is
+  arg sum Z_k conj(Z_rest) over the map.
 
-These two read an average phase over their window, not the phase at the ring centre, so a
+These three read an average phase over their window, not the phase at the ring centre, so a
 change of the fringe period between frames enters them. Every method goes through the same
 averaging and fit in `sagnac.py` and is compared with the minima frame by frame, since all of
 them read the same photographs. The robustness scans (other ranges and windows, AIA with a
-per-frame brightness factor) are in `methods.txt`. `tests/test_methods.py` checks both new
-methods on synthetic profiles.
+per-frame brightness factor, other sideband widths) are in `methods.txt`.
+`tests/test_methods.py` checks the three new methods on synthetic data.
 
 **Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases, u = SD/sqrt(n).
 Weighted line phi = a omega + b with per-setting error sqrt(SEM^2 + (a eps omega)^2 + sigma_x^2).
@@ -115,7 +120,8 @@ independent of where the axis lies (Schwartz; prep Q8) and of the fibre's index 
   calibration curve, speed reproducibility, or given (N, R). The wavelength uncertainty was not
   given; it is reported as missing, not set to zero.
 - Every chi2 comes with dof and p.
-- `*.txt` keep more digits. The "report form" lines round the uncertainty to one significant
-  figure, but comparisons are computed from unrounded values.
+- `*.txt` keep more digits. The "report form" lines (`sagnac.round1`) round the uncertainty to
+  one significant figure and the value to the same digit, half up on the decimal digits (2.25
+  becomes 2.3, not the 2.2 of float round()). Comparisons are computed from unrounded values.
 - Not covered by the data so far: task 4 (no photographs of the small loop yet) and the rotation
   direction (sign).

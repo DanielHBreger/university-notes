@@ -34,7 +34,7 @@ Largest shift: dphi = 3.285 +- 0.069 rad (fit errors of both settings) = 0.523 +
 Report form (one significant figure, comparisons above from unrounded values):
   a = 1.87 +- 0.03 rad/(rad/s) (fit and calibration combined); a_th = 1.7 +- 0.1 rad/(rad/s); a/a_th = 1.08 +- 0.09
 
-Other phase methods, same averaging and fit (cosine fit: fringes.py, cosine_fit, prep Q5; template matching and AIA: methods.py, robustness scans in methods.txt):
+Other phase methods, same averaging and fit (cosine fit: fringes.py, cosine_fit, prep Q5; template matching, 2D Fourier and AIA: methods.py, robustness scans in methods.txt):
 cosine fit: dphi per setting 0.000, 0.491, 0.756, 1.167, 1.779, 2.141, 2.494, 2.852, 3.077, 3.395 rad; SEM 0.003-0.035 rad.
   fit rms (median per setting): 9.5, 6.5, 6.7, 5.5, 2.3, 1.6, 1.4, 1.6, 2.0, 2.0 counts (no chi2: neighbouring pixels share speckle, so the bin errors are not independent).
   line with SEM and speed reproducibility: chi2 = 83, dof = 8, p = 1e-14; sigma_x = 0.041 rad (minima: 0.045).
@@ -46,12 +46,17 @@ template matching: dphi per setting 0.000, 0.381, 0.706, 1.045, 1.491, 2.014, 2.
   a = 1.7984 +- 0.0208 (fit) +- 0.0061 (calibration curve) = 1.7984 +- 0.0217 rad/(rad/s); a / a_th = 1.035 +- 0.083, +0.43 combined sigma from theory, p = 0.66.
   minus minima, frame by frame: slope -0.0728 +- 0.0336 rad/(rad/s) (2.2 sigma; chi2 without extra scatter 790, dof = 8, p = 4e-165, sigma_x = 0.061 rad). Per setting, relative to rest: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad.
   Report form: a = 1.80 +- 0.02 rad/(rad/s); a/a_th = 1.03 +- 0.08
+2D Fourier: dphi per setting 0.000, 0.321, 0.653, 0.989, 1.436, 2.007, 2.273, 2.659, 3.005, 3.338 rad; SEM 0.005-0.022 rad.
+  line with SEM and speed reproducibility: chi2 = 159, dof = 8, p = 2e-30; sigma_x = 0.070 rad (minima: 0.045).
+  a = 1.8965 +- 0.0390 (fit) +- 0.0063 (calibration curve) = 1.8965 +- 0.0395 rad/(rad/s); a / a_th = 1.091 +- 0.089, +1.11 combined sigma from theory, p = 0.27.
+  minus minima, frame by frame: slope +0.0251 +- 0.0381 rad/(rad/s) (0.7 sigma; chi2 without extra scatter 1004, dof = 8, p = 2e-211, sigma_x = 0.069 rad). Per setting, relative to rest: +0.00, -0.07, +0.01, -0.03, -0.16, +0.02, -0.10, -0.04, +0.05, +0.05 rad.
+  Report form: a = 1.90 +- 0.04 rad/(rad/s); a/a_th = 1.09 +- 0.09
 AIA: dphi per setting 0.000, 0.450, 0.707, 0.997, 1.413, 1.898, 2.142, 2.432, 2.659, 2.830 rad; SEM 0.003-0.016 rad.
   line with SEM and speed reproducibility: chi2 = 120, dof = 8, p = 3e-22; sigma_x = 0.047 rad (minima: 0.045).
   a = 1.6094 +- 0.0263 (fit) +- 0.0055 (calibration curve) = 1.6094 +- 0.0269 rad/(rad/s); a / a_th = 0.926 +- 0.075, -0.92 combined sigma from theory, p = 0.36.
   minus minima, frame by frame: slope -0.2611 +- 0.0387 rad/(rad/s) (6.8 sigma; chi2 without extra scatter 1453, dof = 8, p = 2e-308, sigma_x = 0.070 rad). Per setting, relative to rest: +0.00, +0.06, +0.07, -0.02, -0.18, -0.09, -0.23, -0.27, -0.30, -0.46 rad.
   Report form: a = 1.61 +- 0.03 rad/(rad/s); a/a_th = 0.93 +- 0.07
-Spread of the slopes of minima, cosine fit, template matching: 1.798-1.910; half the range, 0.056, is the phase-extraction (method) systematic. AIA is left out: its slope depends on its window and variant (methods.txt).
+Spread of the slopes of minima, cosine fit, template matching, 2D Fourier: 1.798-1.910; half the range, 0.056, is the phase-extraction (method) systematic. AIA is left out: its slope depends on its window and variant (methods.txt).
   a = 1.8713 +- 0.0275 (fit and calibration) +- 0.0560 (method) rad/(rad/s); with it, a - a_th = +0.88 combined sigma, p = 0.38. Report form: a = 1.87 +- 0.06 rad/(rad/s) (all three parts).
 
 Cross-check, Eq. (7) ring by ring with one period P = 107.4k px^2 for all frames (no extrapolation to the centre):

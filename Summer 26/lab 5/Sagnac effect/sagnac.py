@@ -30,6 +30,7 @@ figures/phase_vs_omega.pdf/.png. Run from this folder after calibration.py and f
 import argparse
 import json
 import time
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 import numpy as np
@@ -50,7 +51,7 @@ LOOPS = {
 # Other phase methods (label, frame column, counted in the method spread). AIA is not counted:
 # its slope depends on its window and variant here (methods.txt).
 OTHER_METHODS = [('cosine fit', 'phi_cos_rad', True), ('template matching', 'phi_template_rad', True),
-                 ('AIA', 'phi_aia_rad', False)]
+                 ('2D Fourier', 'phi_fourier_rad', True), ('AIA', 'phi_aia_rad', False)]
 WAVELENGTH = 640e-9                   # m
 U_WAVELENGTH = None                   # not given by the lab: left out of the budget, stated in the output
 C_LIGHT = 299_792_458.0               # m/s, exact
@@ -61,14 +62,18 @@ def wrap(x):
 
 
 def round1(x, u):
-    """'x +- u' with u to one significant figure and x to the same digit."""
+    """'x +- u' with u to one significant figure and x to the same digit, rounding half up on the
+    decimal digits as printed (float round() sends ties to even: 2.25 -> 2.2, and 1.005 -> 1.0)."""
     if not np.isfinite(u) or u <= 0:
         return f'{x:.4g} +- {u}'
-    e = int(np.floor(np.log10(u)))
-    if round(u, -e) >= 10 ** (e + 1):
-        e += 1
-    d = max(-e, 0)
-    return f'{round(x, -e):.{d}f} +- {round(u, -e):.{d}f}'
+    U = Decimal(str(float(u)))
+    q = Decimal(1).scaleb(U.adjusted())
+    Ur = U.quantize(q, ROUND_HALF_UP)
+    if Ur.adjusted() > U.adjusted():                     # 0.096 -> 0.1 moves the digit
+        q = q.scaleb(1)
+        Ur = U.quantize(q, ROUND_HALF_UP)
+    X = Decimal(str(float(x))).quantize(q, ROUND_HALF_UP)
+    return f'{abs(X) if X == 0 else X:f} +- {Ur:f}'
 
 
 def theory(loop):
@@ -222,14 +227,14 @@ def make_comparison(omega, others, a, u_a, a_th, u_th, scan, path):
     tex = plt.rcParams['text.usetex']
     unit = r'rad\,s$^{-1}$' if tex else r'rad s$^{-1}$'
     style = {'cosine fit': (rs.COLORS[2], 's'), 'template matching': (rs.COLORS[3], 'D'),
-             'AIA': (rs.COLORS[5], '^')}
+             '2D Fourier': (rs.COLORS[4], 'v'), 'AIA': (rs.COLORS[5], '^')}
     fig, (ax, axb) = plt.subplots(2, 1, figsize=rs.figsize(aspect=1.15),
                                   gridspec_kw=dict(height_ratios=[1.5, 1], hspace=0.42))
     ax.axhline(0, color=rs.COLORS[0], lw=0.8, label='minima')
     dx = 0.012 * omega.max()
     for i, (label, m) in enumerate(others.items()):
         col, mk = style[label]
-        ax.errorbar(omega + (i - 1) * dx, m['d_setting'], m['u_d_setting'], fmt=mk, color=col,
+        ax.errorbar(omega + (i - (len(others) - 1) / 2) * dx, m['d_setting'], m['u_d_setting'], fmt=mk, color=col,
                     ms=3, capsize=0, elinewidth=0.6, label=label)
     ax.set_xlabel(rf'$\omega$ ({unit})')
     ax.set_ylabel(r'$\Delta\phi - \Delta\phi_{\rm minima}$ (rad)')
@@ -237,6 +242,7 @@ def make_comparison(omega, others, a, u_a, a_th, u_th, scan, path):
 
     rows = [('minima', a, u_a, rs.COLORS[0], 'o', None)]
     ranges = {'template matching': [r['slope'] for r in scan.get('template_scan', [])],
+              '2D Fourier': [r['slope'] for r in scan.get('fourier_scan', [])],
               'AIA': [r['slope'] for r in scan.get('aia_scan', [])]}
     rows += [(l, m['a'], m['u_a'], *style[l], ranges.get(l)) for l, m in others.items()]
     axb.axvspan(a_th - u_th, a_th + u_th, color=rs.COLORS[1], alpha=0.18, lw=0)
@@ -403,7 +409,7 @@ def main():
     L.append(f'  a = {round1(a, u_a)} rad/(rad/s) (fit and calibration combined); '
              f'a_th = {round1(a_th, u_th)} rad/(rad/s); a/a_th = {round1(ratio, u_ratio)}\n')
     L.append('Other phase methods, same averaging and fit (cosine fit: fringes.py, cosine_fit, prep Q5; '
-             'template matching and AIA: methods.py, robustness scans in methods.txt):')
+             'template matching, 2D Fourier and AIA: methods.py, robustness scans in methods.txt):')
     for label, m in others.items():
         L.append(f'{label}: dphi per setting ' + ', '.join(f'{d:.3f}' for d in m['y'] - m['y'][0])
                  + f' rad; SEM {m["sem"].min():.3f}-{m["sem"].max():.3f} rad.')
