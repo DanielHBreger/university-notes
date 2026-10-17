@@ -8,9 +8,8 @@
                               rings are equally spaced in r^2 and move inwards with omega.
 
 Inputs: the photographs, the frame table (fringes.py) and sagnac_speeds.csv (sagnac.py).
-Run from this folder after sagnac.py:  python patterns.py  [--loop small]  (outputs get _small)
+Run from this folder after sagnac.py:  python patterns.py
 """
-import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -20,24 +19,29 @@ from matplotlib import colors as mcolors
 
 import report_style as rs
 from fringes import R_MAX, S2_BIN, load_red, sector_profile_s2
-from sagnac import LOOPS
 
 HERE = Path(__file__).resolve().parent
 HALF = 470                     # half-width of the square crop around the ring centre (px)
 
 
 def representative(fr, S):
-    """Frame of setting S whose (unwrapped) phase is closest to the setting's median."""
+    """Frame of setting S whose (unwrapped) phase is closest to the setting's median, so the
+    photograph shown for each setting is a typical one rather than the first."""
     g = fr[fr.S == S]
     ph = np.angle(np.exp(1j * (g.phi_rad - np.angle(np.mean(np.exp(1j * g.phi_rad))))))
     return g.iloc[int(np.argmin(np.abs(ph - np.median(ph))))]
 
 
 def unit(tex):
+    """The unit rad/s for axis labels (LaTeX or matplotlib's own math text)."""
     return r'rad\,s$^{-1}$' if tex else r'rad s$^{-1}$'
 
 
 def gallery(fr, sp, path):
+    """figures/patterns: a grid of 5 columns, one panel per setting. Each panel is a square crop
+    (2 HALF px wide) of the representative photograph around its fitted ring centre, with the
+    fitted dark rings (dashed circles, radii R1-R3 from fringes.py) and the centre (+), labelled
+    with omega from sagnac_speeds.csv."""
     rs.apply()
     tex = plt.rcParams['text.usetex']
     n = len(sp)
@@ -75,6 +79,10 @@ def gallery(fr, sp, path):
 
 
 def profiles(fr, sp, path):
+    """figures/profiles: for every setting, the sector-averaged intensity against r^2 about each
+    photograph's own ring centre, averaged over the setting's photographs; colour from light
+    (rest) to dark blue (fastest). Evenly spaced fringes along r^2 that slide to smaller r^2
+    with omega are the picture of the Sagnac shift."""
     rs.apply()
     tex = plt.rcParams['text.usetex']
     edges = np.arange(0, (R_MAX - 60) ** 2, S2_BIN)
@@ -101,14 +109,10 @@ def profiles(fr, sp, path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('--loop', choices=LOOPS, default='big')
-    loop = LOOPS[ap.parse_args().loop]
-    sfx = loop['suffix']
-    fr = pd.read_csv(HERE / loop['frames'])
-    sp = pd.read_csv(HERE / f'sagnac_speeds{sfx}.csv')
-    gallery(fr, sp, HERE / 'figures' / f'patterns{sfx}')
-    profiles(fr, sp, HERE / 'figures' / f'profiles{sfx}')
+    fr = pd.read_csv(HERE / 'fringes_frames.csv')
+    sp = pd.read_csv(HERE / 'sagnac_speeds.csv')
+    gallery(fr, sp, HERE / 'figures' / 'patterns')
+    profiles(fr, sp, HERE / 'figures' / 'profiles')
 
 
 if __name__ == '__main__':

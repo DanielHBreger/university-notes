@@ -1,4 +1,4 @@
-Sagnac phase against angular velocity (sagnac.py), large loop, centred on the axis
+Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis
 
 Per setting: phase at the ring centre, mean over the frames, u = SD/sqrt(n) (statistical, frame-to-frame); omega from calibration.json +- curve (correlated) +- speed reproducibility (independent).
      S   n              omega (rad/s) phi (rad)     SD  u=SEM dphi (rad)  u_fit P (k px^2)  drift (mrad/s)     p
@@ -58,6 +58,17 @@ AIA: dphi per setting 0.000, 0.450, 0.707, 0.997, 1.413, 1.898, 2.142, 2.432, 2.
   Report form: a = 1.61 +- 0.03 rad/(rad/s); a/a_th = 0.93 +- 0.07
 Spread of the slopes of minima, cosine fit, template matching, 2D Fourier: 1.798-1.910; half the range, 0.056, is the phase-extraction (method) systematic. AIA is left out: its slope depends on its window and variant (methods.txt).
   a = 1.8713 +- 0.0275 (fit and calibration) +- 0.0560 (method) rad/(rad/s); with it, a - a_th = +0.88 combined sigma, p = 0.38. Report form: a = 1.87 +- 0.06 rad/(rad/s) (all three parts).
+
+Speed of light, Eq. (5) solved for c: c = 8 pi^2 N R^2 / (lambda a), with the measured slope a (minima) and the given N, R, lambda. In units of 10^8 m/s:
+  c = 2.7845 +- 0.0398 (fit) +- 0.0094 (calibration curve) +- 0.0833 (method) +- 0.2142 (N) +- 0.0489 (R)
+    = 2.7845 +- 0.2385 (8.6 %, all parts)
+  The measurement (fit, calibration curve, method) contributes 0.0928 (3.3 %), N = 13 +- 1 contributes 0.2142 (7.7 %); without the N term the total is 0.1049 (3.8 %).
+  lambda: no uncertainty given, NOT included (unknown, not zero). Every 1 nm of error in lambda moves c by 0.0044 (0.16 %).
+  Against the defined c = 299792458 m/s: c / c_def = 0.929 +- 0.080; c - c_def = -0.2134 +- 0.2385 = -0.89 combined sigma, p = 0.37 (two-sided, normal).
+  This is the comparison a / a_th above read the other way (c / c_def = a_th / a), here with the method systematic included.
+  Other methods (fit, calibration curve, N and R; no method term): cosine fit 2.728 +- 0.218, template matching 2.897 +- 0.231, 2D Fourier 2.748 +- 0.224.
+  Report form: c = (2.8 +- 0.2) x 10^8 m/s (all parts).
+  The phase fixes the product lambda c (= c^2 / nu). With the given wavelength c follows as above; if the laser frequency nu were known instead, c = sqrt(8 pi^2 N R^2 nu / a), with half the relative uncertainty.
 
 Cross-check, Eq. (7) ring by ring with one period P = 107.4k px^2 for all frames (no extrapolation to the centre):
   R1: slope 1.864 rad/(rad/s); dphi = 0.00, 0.39, 0.69, 1.04, 1.54, 2.01, 2.34, 2.70, 2.96, 3.29

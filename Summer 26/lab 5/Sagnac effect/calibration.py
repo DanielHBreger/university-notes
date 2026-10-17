@@ -1,31 +1,54 @@
-"""Rotation calibration: table angular velocity against the motor speed setting.
+"""Rotation calibration: how fast the table turns at each controller setting S.
 
-Minimum task 1 of the manual ("the (linear) ratio between the voltage on the motor and its
-angular velocity"). Input: Rotation calibration.csv, one row per speed setting S with the
-times of 5 or 8 consecutive turns.
+WHAT THIS SCRIPT IS FOR
+The Sagnac phase is proportional to the table's angular velocity omega, but during the
+photographs only the controller setting S is known. This script turns the stopwatch data in
+"Rotation calibration.csv" into a function omega(S), with uncertainties, which sagnac.py uses
+later. It also answers the manual's task 1 (the linear ratio between setting and omega).
 
-The turns were timed as stopwatch splits, so neighbouring laps share an endpoint:
-lap_i = t_i - t_(i-1), and the mean lap is (t_n - t_0)/n. With an independent timing error
-sigma_r on every press, Var(mean lap) = 2 sigma_r^2 / n^2 and E[SD^2 of the laps] =
-2 sigma_r^2 (n+1)/n, so the stopwatch uncertainty of the mean lap is
-    u_sw(T) = SD / sqrt(n (n+1))
-(not SD/sqrt(n), which treats the laps as independent and is 2.4-3x larger here).
-omega = 2 pi / T, u_sw(omega) = omega u_sw(T) / T.
+HOW IT RUNS (main(), top to bottom)
+  1. load_turns     read the CSV: for each setting S, the times of 5 or 8 consecutive turns.
+  2. per_setting    mean turn time T, its stopwatch uncertainty, and omega = 2 pi / T.
+  3. lag1 check     test that the turn times really are stopwatch "splits" (see below).
+  4. fits           fit omega(S) with a straight line, a parabola and a cubic, first with the
+                    stopwatch errors only.
+  5. eps            the points scatter about any smooth curve more than the stopwatch explains;
+                    find the run-to-run speed variation eps (a fraction of omega) that makes the
+                    parabola fit statistically acceptable (chi2 = dof).
+  6. refit          refit all three curves with stopwatch + eps errors and compare them.
+  7. save           calibration.json (the parabola, its covariance and eps, read by sagnac.py),
+                    calibration.txt (tables) and figures/calibration.
 
-Weighted least squares of omega on S (S is the controller reading, taken as exact):
-  linear     omega = k S + omega0          (the manual's model, reported as asked)
-  quadratic  omega = q S^2 + k S + omega0  (used for the conversion)
-  cubic      (model check only)
-The settings scatter about any smooth curve by more than the stopwatch allows. That scatter is
-modelled as a reproducibility of the table speed at a fixed setting, a fraction eps of omega
-added in quadrature (u^2 = u_sw^2 + (eps omega)^2), with eps set by chi2 = dof for the
-quadratic. The linear model is then tested with these errors. For the measurement settings,
-omega has two parts: the curve's covariance (correlated across settings) and eps omega
-(independent at each setting, since the speed during the photographs deviates from the curve
-the same way). Every fit is reported with chi2, dof and p.
+KEY IDEAS
+Stopwatch splits. The turns were timed by pressing "lap" at each pass, so turn i lasts
+t_i - t_(i-1) and neighbouring turns share a button press. Their mean is (t_n - t_0)/n: only
+the first and last presses matter. If every press has an independent error sigma_r, then
+Var(mean) = 2 sigma_r^2 / n^2, while the spread of the individual turns obeys
+E[SD^2] = 2 sigma_r^2 (n+1)/n. Eliminating sigma_r:
+    u_sw(T) = SD / sqrt(n (n+1)),
+which is 2.4-3x smaller than the usual SD/sqrt(n) (that formula assumes independent turns).
+A testable consequence: neighbouring split laps are anticorrelated (a late press makes one lap
+long and the next one short). Step 3 compares the measured correlation with simulations of
+both cases.
 
-Outputs: calibration.json (conversion model with covariance and eps), calibration.txt,
-figures/calibration.pdf/.png.
+Model choice (steps 4-6). "Model" means the curve used for omega(S):
+  linear     omega = omega0 + k S            (what the manual asks for)
+  quadratic  omega = omega0 + k S + q S^2    (used for the conversion)
+  cubic      one more term                   (only to check whether the quadratic is enough)
+Each is fitted by weighted least squares (points with smaller errors count more). Its chi2 is
+the sum of (residual / error)^2. A curve that describes the data, with correct errors, gives
+chi2 close to dof = (number of points - number of parameters); p is the probability of a chi2
+at least this large if the curve were right. With stopwatch errors alone every curve fails
+(p << 0.05): the table does not reproduce its speed that precisely. That extra scatter, eps,
+is added in quadrature, u^2 = u_sw^2 + (eps omega)^2, and chosen so that the quadratic has
+chi2 = dof. With these errors the straight line is still rejected (the table runs slower than
+linear at high S) and the cubic gains nothing, so the quadratic is used.
+
+Two kinds of omega uncertainty at the photographed settings (omega_with_cov):
+  curve            from the fitted coefficients; it moves all settings together (correlated),
+                   so sagnac.py propagates it through the slope separately;
+  reproducibility  eps * omega; independent at each setting, because the table's actual speed
+                   during the photographs differs from the curve by a random amount.
 
 Run from this folder:  python calibration.py
 """
@@ -38,40 +61,53 @@ from scipy import optimize, stats
 
 HERE = Path(__file__).resolve().parent
 CSV = HERE / 'Rotation calibration.csv'
-CONVERSION_DEGREE = 2          # see calibration.txt for the model comparison behind this
-N_SIM = 20000                  # draws for the lag-1 correlation check
-SEED = 1
+CONVERSION_DEGREE = 2          # the quadratic; see "Model choice" above and calibration.txt
+N_SIM = 20000                  # simulated data sets for the lap-correlation check (step 3)
+SEED = 1                       # fixed random seed, so the check gives the same numbers every run
 
 
 def load_turns(path=CSV):
-    """(S, list of turn-time arrays) from the calibration CSV; empty cells are skipped."""
-    df = pd.read_csv(path, encoding='utf-8-sig')
+    """Step 1. Read the CSV: column 'Speed' is the setting S, columns 'turn 1'...'turn 10' are
+    the times (s) of single turns. Settings have 5 or 8 turns; the empty cells (NaN) are dropped.
+    Returns S (array) and a list with one array of turn times per setting."""
+    df = pd.read_csv(path, encoding='utf-8-sig')       # utf-8-sig: the file starts with a BOM
     S = df['Speed'].to_numpy(float)
     turns = [row[~np.isnan(row)] for row in df.drop(columns='Speed').to_numpy(float)]
     return S, turns
 
 
 def per_setting(S, turns):
+    """Step 2. One row per setting: mean turn time T, the spread SD of single turns, the
+    stopwatch uncertainty u_T of the mean (split formula, see the module docstring), the
+    implied error of one button press, omega = 2 pi / T and its stopwatch uncertainty u_sw."""
     rows = []
     for s, t in zip(S, turns):
         n = len(t)
-        T, sd = t.mean(), t.std(ddof=1)
+        T, sd = t.mean(), t.std(ddof=1)                # ddof=1: sample SD (divides by n-1)
         uT = sd / np.sqrt(n * (n + 1))                 # shared stopwatch endpoints
         w = 2 * np.pi / T
+        # sigma_press: the per-press timing error implied by SD (from E[SD^2] = 2 sigma^2 (n+1)/n)
+        # u_sw: error propagation of omega = 2 pi / T, i.e. |d omega / dT| u_T = omega u_T / T
         rows.append(dict(S=s, n=n, T=T, sd_T=sd, sigma_press=sd * np.sqrt(n / (2 * (n + 1))),
                          u_T=uT, omega=w, u_sw=w * uT / T))
     return pd.DataFrame(rows)
 
 
 def lag1(laps):
-    """Pooled lag-1 correlation of laps about their own means; laps: list of 1-D arrays."""
+    """Step 3 (measured). How strongly each turn time correlates with the next one, pooled over
+    all settings: sum of (lap_i - mean)(lap_(i+1) - mean) over sum of (lap_i - mean)^2.
+    Split timing predicts a clearly negative value; independent laps give a value near 0
+    (slightly negative for short series)."""
     num = sum(np.sum((t[1:] - t.mean()) * (t[:-1] - t.mean())) for t in laps)
     den = sum(np.sum((t - t.mean()) ** 2) for t in laps)
     return num / den
 
 
 def lag1_simulated(ns, split, rng):
-    """Distribution of the pooled lag-1 correlation for laps of lengths ns (vectorised)."""
+    """Step 3 (expected). The same pooled correlation for N_SIM simulated data sets with the
+    same numbers of turns ns. split=True: laps are differences of independent press times (the
+    split model); split=False: independent laps. Vectorised: each row of the arrays is one
+    simulated data set. Returns N_SIM correlation values (their distribution)."""
     num = np.zeros(N_SIM); den = np.zeros(N_SIM)
     for n in ns:
         laps = np.diff(rng.normal(size=(N_SIM, n + 1)), axis=1) if split \
@@ -82,24 +118,35 @@ def lag1_simulated(ns, split, rng):
 
 
 def polyfit_weighted(x, y, u, deg):
-    """Weighted LSQ y = sum c_j x^j (c[0] constant). Returns c, cov, chi2, dof, p."""
-    A = np.vander(x, deg + 1, increasing=True)
+    """Weighted least squares of a polynomial y = c0 + c1 x + ... + c_deg x^deg, each point
+    weighted by 1/u^2. Returns the coefficients c (constant first), their covariance matrix,
+    chi2, the degrees of freedom and p (probability of a chi2 this large if the model is right).
+
+    The solution is the textbook one, written with the design matrix A whose columns are
+    1, x, x^2, ...:  cov = (A^T W A)^-1  and  c = cov A^T W y,  with W = diag(1/u^2)."""
+    A = np.vander(x, deg + 1, increasing=True)         # columns: x^0, x^1, ..., x^deg
     W = 1 / u ** 2
-    cov = np.linalg.inv(A.T @ (A * W[:, None]))
+    cov = np.linalg.inv(A.T @ (A * W[:, None]))         # A * W[:, None] = W A without building diag(W)
     c = cov @ (A.T @ (W * y))
     chi2 = float(np.sum(((y - A @ c) / u) ** 2))
     dof = len(x) - deg - 1
-    return c, cov, chi2, dof, float(stats.chi2.sf(chi2, dof))
+    return c, cov, chi2, dof, float(stats.chi2.sf(chi2, dof))   # sf = 1 - CDF = P(chi2 >= value)
 
 
 def omega_of(S, c):
-    """omega at settings S for increasing-order coefficients c."""
+    """The polynomial with coefficients c (constant first) evaluated at the settings S."""
     return np.vander(np.atleast_1d(np.asarray(S, float)), len(c), increasing=True) @ c
 
 
 def omega_with_cov(S, model, reproducibility=False):
-    """omega(S) and its covariance from a calibration.json model dict: the curve part, plus
-    (eps omega)^2 on the diagonal when reproducibility=True."""
+    """omega at the settings S from the saved conversion model (calibration.json, 'conversion'),
+    with its covariance matrix. Used by sagnac.py for the photographed settings.
+
+    omega = A c, where A is the design matrix at S (columns 1, S, S^2). The coefficients' own
+    covariance C propagates as cov(omega) = A C A^T: a full matrix, because all settings share
+    the same coefficients (if the curve is a bit high at one setting, it is high at its
+    neighbours too). With reproducibility=True the independent part (eps omega)^2 is added on
+    the diagonal only."""
     c = np.array(model['coef']); C = np.array(model['cov'])
     A = np.vander(np.atleast_1d(np.asarray(S, float)), len(c), increasing=True)
     w = A @ c
@@ -110,6 +157,8 @@ def omega_with_cov(S, model, reproducibility=False):
 
 
 def make_figure(tab, fits_tot, u_tot, path):
+    """figures/calibration: measured omega with the linear and quadratic fits (top), and each
+    fit's residuals in 10^-3 rad/s (bottom). Error bars include eps."""
     import matplotlib.pyplot as plt
     import report_style as rs
     rs.apply()
@@ -141,11 +190,14 @@ def make_figure(tab, fits_tot, u_tot, path):
 
 
 def main():
+    # 1-2. Read the turn times; per setting: T, its stopwatch error, omega and its error.
     S, turns = load_turns()
     tab = per_setting(S, turns)
     x, y, usw = tab.S.to_numpy(), tab.omega.to_numpy(), tab.u_sw.to_numpy()
 
-    # Check of the split model: neighbouring laps anticorrelated
+    # 3. Check the split model: neighbouring laps should be anticorrelated. Compare the measured
+    #    correlation with simulated split laps and with simulated independent laps; p_indep is
+    #    the fraction of independent-lap simulations at least as negative as the measurement.
     rng = np.random.default_rng(SEED)
     ns = [len(t) for t in turns]
     r_obs = lag1(turns)
@@ -153,23 +205,31 @@ def main():
     r_indep = lag1_simulated(ns, False, rng)
     p_indep = float(np.mean(r_indep <= r_obs))
 
-    # Stopwatch errors only
+    # 4. Fit line, parabola and cubic with the stopwatch errors only. All three come out with
+    #    chi2 far above dof: the points scatter more than the stopwatch explains.
     fits_sw = {}
     for deg in (1, 2, 3):
         c, cov, chi2, dof, p = polyfit_weighted(x, y, usw, deg)
         fits_sw[deg] = dict(coef=c.tolist(), cov=cov.tolist(), chi2=chi2, dof=dof, p=p)
 
-    # Reproducibility eps from the conversion model
+    # 5. The speed reproducibility eps: excess(e) = chi2 - dof of the parabola when every point's
+    #    error is sqrt(u_sw^2 + (e omega)^2). brentq finds the e where it crosses zero, i.e. the
+    #    extra scatter that makes the parabola's chi2 equal to its dof.
     def excess(e):
         f = polyfit_weighted(x, y, np.hypot(usw, e * y), CONVERSION_DEGREE)
-        return f[2] - f[3]
+        return f[2] - f[3]                              # f = (c, cov, chi2, dof, p)
     eps = 0.0 if excess(0.0) <= 0 else optimize.brentq(excess, 0.0, 0.5)
-    u_tot = np.hypot(usw, eps * y)
+    u_tot = np.hypot(usw, eps * y)                      # hypot(a, b) = sqrt(a^2 + b^2)
+
+    # 6. Refit all three curves with these errors. Now the parabola has chi2 = dof by
+    #    construction, the line is still rejected, and the cubic does not improve on the parabola.
     fits_tot = {}
     for deg in (1, 2, 3):
         c, cov, chi2, dof, p = polyfit_weighted(x, y, u_tot, deg)
         fits_tot[deg] = dict(coef=c.tolist(), cov=cov.tolist(), chi2=chi2, dof=dof, p=p)
 
+    # 7. Save. 'conversion' is what sagnac.py reads: the parabola's coefficients, their
+    #    covariance and eps. 'linear' is the manual's task-1 answer. Then the text report.
     conv = fits_tot[CONVERSION_DEGREE]
     model = dict(degree=CONVERSION_DEGREE, coef=conv['coef'], cov=conv['cov'], eps=eps,
                  S_range=[float(x.min()), float(x.max())],
@@ -188,6 +248,8 @@ def main():
                          split_sd=float(r_split.std()), p_independent=p_indep))
     (HERE / 'calibration.json').write_text(json.dumps(out, indent=1))
 
+    # Text report: per-setting table, the lap-correlation check, every fit with chi2/dof/p,
+    # the linear ratio, and omega at the photographed settings with its two error parts.
     L = ['Rotation calibration (calibration.py)\n']
     L.append('Stopwatch splits: u_sw(T) = SD/sqrt(n(n+1)) (shared endpoints; statistical). '
              'sigma_press = SD sqrt(n/(2(n+1))) is the implied timing error of one press.\n')
@@ -214,7 +276,7 @@ def main():
              'about the smooth curve by this fraction of omega, far more than the stopwatch allows '
              f'({100 * np.min(usw / y):.2f}-{100 * np.max(usw / y):.2f} %). The cubic does not '
              'remove it, so it is scatter, not a missing term.\n')
-    z = (y - omega_of(x, lin['coef'])) / u_tot
+    z = (y - omega_of(x, lin['coef'])) / u_tot          # line residuals in units of their error
     L.append(f"Linear ratio (the manual's task 1): k = d omega / dS = {lin['coef'][1]:.5f} +- "
              f"{np.sqrt(lin['cov'][1][1]):.5f} rad/s per unit S (fit, with eps), "
              f"omega0 = {lin['coef'][0]:.4f} +- {np.sqrt(lin['cov'][0][0]):.4f} rad/s.")

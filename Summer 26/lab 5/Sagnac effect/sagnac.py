@@ -1,33 +1,63 @@
-"""Sagnac phase against angular velocity, compared with the manual's Eq. (5).
+"""Sagnac phase against angular velocity: the slope, the comparison with Eq. (5), and c.
 
-Inputs: the frame table from fringes.py and calibration.json (calibration.py).
-  python sagnac.py                 large loop, centred on the axis (fringes_frames.csv)
-  python sagnac.py --loop small    small loop, off the axis (fringes_frames_small.csv), task 4
+WHAT THIS SCRIPT IS FOR
+fringes.py (and methods.py) give a phase for every photograph; calibration.py gives omega for
+every setting. This script averages the photographs of each setting, fits a straight line
+phase = a omega + b, compares the slope a with the manual's Eq. (5), solves Eq. (5) for the
+speed of light, and writes all numbers with their uncertainties.
+Inputs: fringes_frames.csv (fringes.py), methods_frames.csv (methods.py, if present) and
+calibration.json (calibration.py).   python sagnac.py
 
-Per speed setting S: the frame phases phi_c are unwrapped about their circular mean; the
-setting's phase is their mean, with u = SD/sqrt(n) (statistical, frame-to-frame scatter).
-The setting means are unwrapped in order of S. omega(S) comes from the calibration
-(S = 0 is the table at rest, omega = 0 exactly). Its uncertainty has two parts: the
-calibration curve (correlated across settings) and the speed reproducibility eps omega at a
-setting (independent), see calibration.py.
+HOW IT RUNS (main(), top to bottom)
+  1. setting_means    per setting: mean phase of its photographs and its standard error.
+  2. calibration_part omega for every setting from the calibration curve.
+  3. fit_line         weighted straight line through (omega, mean phase); finds sigma_x.
+  4. calibration_part again, now for the slope's uncertainty from the calibration curve.
+  5. checks           a quadratic term (is the dependence linear?) and ring_by_ring.
+  6. theory           a_th from Eq. (5); ratio, difference and its significance.
+  7. other methods    the same averaging and fit for the cosine fit, template matching,
+                      2D Fourier and AIA; their spread gives the method systematic u_method.
+  8. drift test       phase = a omega + D t + b, to see if a drift in time could mimic a.
+  9. outputs          sagnac_speeds.csv, then the text report sagnac.txt; c (speed_of_light,
+                      from the measured slope with every uncertainty part) is computed while
+                      the report is written; then sagnac.json and the figures phase_vs_omega
+                      and methods_comparison.
 
-Fit phi(omega) = a omega + b (weighted least squares; b absorbs the arbitrary phase at rest).
-The per-setting error is u^2 = SEM^2 + (a eps omega)^2 + sigma_x^2: the reproducibility enters
-as an error in omega (effective variance, iterated on a). If chi2 without sigma_x rejects the
-line, the speed-to-speed scatter exceeds what the frames and the speed reproducibility explain
-(the phase wanders on time scales longer than the 20-60 s taken at each setting); sigma_x, the
-same for every setting, is then set by chi2 = dof. The slope's uncertainty has two parts:
+KEY IDEAS
+Phase averaging. Phases are angles, so they are only known modulo 2 pi. Within a setting the
+photographs are first brought next to their circular mean (the angle of the average of
+e^(i phi)), then averaged. Between settings, each mean is shifted by a multiple of 2 pi to lie
+within pi of the previous setting's ("unwrapping"), which works because neighbouring settings
+differ by much less than pi. omega(S = 0) is exactly 0 (the table at rest).
+
+The weighted line and its errors. Each setting's point gets the error
+    u^2 = SEM^2 + (a eps omega)^2 + sigma_x^2
+  SEM          scatter of its photographs, SD / sqrt(n);
+  a eps omega  the table's speed reproducibility (calibration.py) turned into phase: an error
+               delta omega in x shifts the line's y by a delta omega ("effective variance");
+               since it depends on a, the fit is iterated until a stops changing;
+  sigma_x      extra scatter between settings, the same for all. Without it the line is
+               rejected (chi2 = 62 for 8 dof): the phase wanders on minutes-long time scales,
+               longer than the 20-60 s spent at each setting. sigma_x is set so that
+               chi2 = dof, which makes the slope's error honest.
+The slope's uncertainty has two parts:
   u_stat  from the fit (phase scatter and speed reproducibility),
-  u_cal   from the calibration curve (its covariance, propagated through the fit).
-The second method of the prep (Q5), a cosine fit of each frame's profile (fringes.py), goes
-through the same averaging and fit; the two are also compared frame by frame.
+  u_cal   from the calibration curve: the same curve error moves every omega together, so it is
+          propagated separately (the derivative of the slope with respect to each calibration
+          coefficient, combined with the coefficients' covariance).
+The other methods go through the same averaging and fit, and are also compared frame by frame
+with the minima (differences on the same photographs cancel their shared noise). Half the range
+of the reliable methods' slopes is the method systematic u_method.
+
 Theory, Eq. (5) with A = pi R^2:  a_th = 8 pi N A / (lambda c) = 8 pi^2 N R^2 / (lambda c),
 independent of where the rotation axis lies (Schwartz 2017).
+Speed of light: Eq. (5) solved for c with the measured slope, c = 8 pi^2 N R^2 / (lambda a), the
+slope's parts (fit, calibration curve, method) and N, R carried as separate components.
 
-Outputs (suffix _small for the small loop): sagnac.txt, sagnac.json, sagnac_speeds.csv,
-figures/phase_vs_omega.pdf/.png. Run from this folder after calibration.py and fringes.py.
+Outputs: sagnac.txt, sagnac.json, sagnac_speeds.csv, figures/phase_vs_omega.pdf/.png,
+figures/methods_comparison.pdf/.png. Run from this folder after calibration.py, fringes.py and
+methods.py.
 """
-import argparse
 import json
 import time
 from decimal import ROUND_HALF_UP, Decimal
@@ -41,13 +71,10 @@ from calibration import omega_with_cov
 
 HERE = Path(__file__).resolve().parent
 
-# Fibre loops (values given by the experimenters; +- taken as standard uncertainties)
-LOOPS = {
-    'big': dict(label='large loop, centred on the axis', N=13, u_N=1, R=0.570, u_R=0.005,
-                frames='fringes_frames.csv', suffix=''),
-    'small': dict(label='small loop, off the axis', N=46, u_N=1, R=0.155, u_R=0.001,
-                  frames='fringes_frames_small.csv', suffix='_small'),
-}
+# Fibre loop, centred on the rotation axis (values given by the experimenters; +- taken as
+# standard uncertainties)
+N_TURNS, U_N_TURNS = 13, 1
+RADIUS, U_RADIUS = 0.570, 0.005       # m
 # Other phase methods (label, frame column, counted in the method spread). AIA is not counted:
 # its slope depends on its window and variant here (methods.txt).
 OTHER_METHODS = [('cosine fit', 'phi_cos_rad', True), ('template matching', 'phi_template_rad', True),
@@ -58,56 +85,78 @@ C_LIGHT = 299_792_458.0               # m/s, exact
 
 
 def wrap(x):
+    """Angle(s) wrapped into (-pi, pi]."""
     return np.angle(np.exp(1j * np.asarray(x)))
 
 
 def round1(x, u):
     """'x +- u' with u to one significant figure and x to the same digit, rounding half up on the
-    decimal digits as printed (float round() sends ties to even: 2.25 -> 2.2, and 1.005 -> 1.0)."""
+    decimal digits as printed (float round() sends ties to even: 2.25 -> 2.2, and 1.005 -> 1.0).
+    Decimal works on the printed digits, so there are no binary rounding surprises."""
     if not np.isfinite(u) or u <= 0:
         return f'{x:.4g} +- {u}'
     U = Decimal(str(float(u)))
-    q = Decimal(1).scaleb(U.adjusted())
+    q = Decimal(1).scaleb(U.adjusted())                  # 10^(position of u's first digit)
     Ur = U.quantize(q, ROUND_HALF_UP)
     if Ur.adjusted() > U.adjusted():                     # 0.096 -> 0.1 moves the digit
         q = q.scaleb(1)
         Ur = U.quantize(q, ROUND_HALF_UP)
     X = Decimal(str(float(x))).quantize(q, ROUND_HALF_UP)
-    return f'{abs(X) if X == 0 else X:f} +- {Ur:f}'
+    return f'{abs(X) if X == 0 else X:f} +- {Ur:f}'      # abs(): no "-0.00"
 
 
-def theory(loop):
-    """a_th (rad/(rad/s)) and its uncertainty components."""
-    a = 8 * np.pi ** 2 * loop['N'] * loop['R'] ** 2 / (WAVELENGTH * C_LIGHT)
-    comps = {'N': a * loop['u_N'] / loop['N'], 'R': a * 2 * loop['u_R'] / loop['R']}
+def theory():
+    """Step 6. The predicted slope a_th = 8 pi^2 N R^2 / (lambda c) (rad per rad/s), and its
+    uncertainty components from N and R. a_th is proportional to N and to R^2, so the relative
+    errors are u_N/N and 2 u_R/R."""
+    a = 8 * np.pi ** 2 * N_TURNS * RADIUS ** 2 / (WAVELENGTH * C_LIGHT)
+    comps = {'N': a * U_N_TURNS / N_TURNS, 'R': a * 2 * U_RADIUS / RADIUS}
     if U_WAVELENGTH is not None:
         comps['lambda'] = a * U_WAVELENGTH / WAVELENGTH
     return a, comps
 
 
+def speed_of_light(a, u_a_parts):
+    """Step 8. Eq. (5) solved for c with the measured slope a: c = 8 pi^2 N R^2 / (lambda a).
+    u_a_parts: the slope's uncertainty parts by kind, rad/(rad/s). Returns c (m/s) and its uncertainty
+    components (m/s): the slope's parts (c ~ 1/a, so the same relative size), then N and R."""
+    c = 8 * np.pi ** 2 * N_TURNS * RADIUS ** 2 / (WAVELENGTH * a)
+    comps = {k: c * u / a for k, u in u_a_parts.items()}
+    comps['N'] = c * U_N_TURNS / N_TURNS
+    comps['R'] = c * 2 * U_RADIUS / RADIUS
+    if U_WAVELENGTH is not None:
+        comps['lambda'] = c * U_WAVELENGTH / WAVELENGTH
+    return c, comps
+
+
 def setting_means(fr, col='phi_rad'):
-    """One row per setting: n, mean phase, SD, SEM, time span and within-setting drift."""
+    """Step 1. One row per setting from the per-photograph phases in column `col`: number of
+    photographs n, mean phase, SD, SEM = SD/sqrt(n), start time and time span, the phase drift
+    within the setting (slope of phase against time, with its error and p), and the median
+    fringe period P. The setting means are then unwrapped in order of S (see KEY IDEAS)."""
     rows = []
-    for S, g in fr.groupby('S', sort=True):
+    for S, g in fr.groupby('S', sort=True):            # g: the photographs of setting S
         ph = g[col].to_numpy()
-        c = np.angle(np.mean(np.exp(1j * ph)))
-        ph = c + wrap(ph - c)
+        c = np.angle(np.mean(np.exp(1j * ph)))          # circular mean: angle of the mean unit vector
+        ph = c + wrap(ph - c)                           # each phase within pi of it, then plain averages work
         t = g.time_s.to_numpy() - g.time_s.min()
         n = len(ph)
-        lr = stats.linregress(t, ph)
+        lr = stats.linregress(t, ph)                    # drift within the setting (rad/s)
         rows.append(dict(S=S, n=n, phi=ph.mean(), sd=ph.std(ddof=1), sem=ph.std(ddof=1) / np.sqrt(n),
                          t_start=g.time_s.min(), span_s=t.max(), drift=lr.slope,
                          u_drift=lr.stderr, p_drift=lr.pvalue, P=g.P_px2.median()))
     tab = pd.DataFrame(rows)
     phi = tab.phi.to_numpy().copy()
     for i in range(1, len(phi)):                       # unwrap in order of S
+        # add the multiple of 2 pi that brings this setting within pi of the previous one
         phi[i] += 2 * np.pi * np.round((phi[i - 1] - phi[i]) / (2 * np.pi))
     tab['phi'] = phi
     return tab
 
 
 def wls(A, y, u):
-    """Weighted linear least squares y = A p. Returns p, covariance, chi2."""
+    """Weighted linear least squares y = A p (design matrix A, errors u): the same normal
+    equations as calibration.polyfit_weighted. Returns p, its covariance, and chi2."""
     W = 1 / u ** 2
     cov = np.linalg.inv(A.T @ (A * W[:, None]))
     p = cov @ (A.T @ (W * y))
@@ -116,18 +165,25 @@ def wls(A, y, u):
 
 def wls_line(x, y, u):
     """Weighted y = a x + b. Returns (a, b), covariance, chi2."""
-    return wls(np.c_[x, np.ones_like(x)], y, u)
+    return wls(np.c_[x, np.ones_like(x)], y, u)        # columns: x, 1
 
 
 def extra_scatter(x, y, u_base):
-    """sigma_x >= 0 with chi2(sqrt(u_base^2 + sigma_x^2)) = dof (0 if chi2 <= dof already)."""
+    """The extra scatter sigma_x >= 0 that, added in quadrature to every point's error u_base,
+    makes the line's chi2 equal to its dof (= points - 2). 0 if chi2 <= dof already. Found as
+    the root of chi2 - dof with brentq (chi2 falls steadily as sigma_x grows)."""
     dof = len(x) - 2
     f = lambda s: wls_line(x, y, np.sqrt(u_base ** 2 + s ** 2))[2] - dof
     return 0.0 if f(0.0) <= 0 else optimize.brentq(f, 0.0, 10.0)
 
 
 def fit_line(omega, y, sem, eps):
-    """Line with SEM, the speed reproducibility (a eps omega) and sigma_x; iterated on a."""
+    """Step 3. The weighted line phase = a omega + b with per-point error
+    u_fit^2 = SEM^2 + (a eps omega)^2 + sigma_x^2 (see KEY IDEAS). The middle term needs a, and
+    sigma_x depends on all errors, so: start from a fit with the SEMs alone, then repeat
+    (errors from the current a -> sigma_x -> refit -> new a) until a no longer changes.
+    Returns a, b, their covariance, chi2 (= dof when sigma_x > 0), sigma_x, the errors without
+    and with sigma_x, and the chi2 the line would have without sigma_x."""
     a = wls_line(omega, y, sem)[0][0]
     for _ in range(50):
         u_base = np.sqrt(sem ** 2 + (a * eps * omega) ** 2)
@@ -143,7 +199,14 @@ def fit_line(omega, y, sem, eps):
 
 
 def calibration_part(S, y, u_fit, model):
-    """omega per setting, its curve and reproducibility parts, and the slope's u_cal."""
+    """Steps 2 and 4. omega for every setting (0 at rest) from the calibration model, with its
+    curve error u_curve and reproducibility error u_rep (= eps omega).
+
+    With u_fit given, also the slope's uncertainty from the calibration curve, u_cal. The slope
+    is a function of the three calibration coefficients c (through omega); its derivatives J are
+    taken numerically (central differences, the fit's weights held fixed), and the coefficients'
+    covariance Cc propagates as u_cal^2 = J Cc J^T. This is done once for the slope instead of
+    per point because the curve error is shared by all settings."""
     moving = S > 0
     omega = np.zeros(len(S)); u_curve = np.zeros(len(S))
     w, Cw = omega_with_cov(S[moving], model)
@@ -159,13 +222,17 @@ def calibration_part(S, y, u_fit, model):
 
     if u_fit is None:
         return omega, u_curve, u_rep, None
+    # one small step h per coefficient (relative 1e-6), slope difference over 2h
     J = np.array([(slope(coef + h) - slope(coef - h)) / (2 * h[j])
                   for j, h in enumerate(np.diag(np.abs(coef) * 1e-6 + 1e-12))])
     return omega, u_curve, u_rep, float(np.sqrt(J @ Cc @ J))
 
 
 def ring_by_ring(fr, omega):
-    """Cross-check: manual Eq. (7) per dark ring with one global period (no centre extrapolation)."""
+    """Step 5 check: manual Eq. (7) applied to each dark ring separately, with one period P for
+    all photographs (the median), instead of the centre phase: dphi = 2 pi (s_rest - s) / P for
+    ring k, s = mean R_k^2 per setting. If the period changes between settings, the rings
+    disagree with each other; the centre phase is not affected (see fringes.py)."""
     P = float(fr.P_px2.median())
     out = {}
     for k in (1, 2, 3):
@@ -180,6 +247,9 @@ def ring_by_ring(fr, omega):
 
 
 def make_figure(tab, omega, u_omega, u_fit, a, b, a_th, u_th, path, cos):
+    """figures/phase_vs_omega: phase shift relative to rest against omega for the minima (filled)
+    and the cosine fit (open), each with its fitted line, and Eq. (5) with its 1-sigma band;
+    residuals about each line below. cos = (phases, errors, a, b) of the cosine fit."""
     import matplotlib.pyplot as plt
     import report_style as rs
     rs.apply()
@@ -264,20 +334,16 @@ def make_comparison(omega, others, a, u_a, a_th, u_th, scan, path):
 
 
 def hhmm(t):
+    """Seconds since midnight as 'hh:mm'."""
     return time.strftime('%H:%M', time.gmtime(t))
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
-    ap.add_argument('--loop', choices=LOOPS, default='big')
-    args = ap.parse_args()
-    loop = LOOPS[args.loop]
-    sfx = loop['suffix']
-    src = HERE / loop['frames']
+    src = HERE / 'fringes_frames.csv'
     if not src.exists():
-        raise SystemExit(f'{src.name} not found: run fringes.py --data <folder> --out {src.name} '
-                         f'on the photographs of the {loop["label"]} first (see README.md).')
+        raise SystemExit(f'{src.name} not found: run fringes.py first (see README.md).')
 
+    # 1. Per-photograph phases (minima method) -> one mean phase and SEM per setting.
     fr = pd.read_csv(src)
     model = json.loads((HERE / 'calibration.json').read_text())['conversion']
     eps = model['eps']
@@ -285,22 +351,28 @@ def main():
     S = tab.S.to_numpy()
     sem = tab['sem'].to_numpy()
     y = tab.phi.to_numpy()
-    dof = len(y) - 2
+    dof = len(y) - 2                                   # 10 settings - 2 line parameters
 
+    # 2. omega of every setting (and its two error parts) from the calibration.
     omega, u_curve, u_rep, _ = calibration_part(S, y, None, model)
+    # 3. The weighted line. chi_base: chi2 without sigma_x (shows why sigma_x is needed);
+    #    p_sem_only: the same line with only the frame SEMs as errors, for comparison.
     a, b, cov, chi, sx, u_base, u_fit, chi_base = fit_line(omega, y, sem, eps)
     p_base = stats.chi2.sf(chi_base, dof)
     p_sem_only = wls_line(omega, y, sem)
     u_stat = float(np.sqrt(cov[0, 0]))
+    # 4. The slope's error from the calibration curve, then the total (in quadrature).
     _, _, _, u_cal = calibration_part(S, y, u_fit, model)
     u_a = float(np.hypot(u_stat, u_cal))
     u_omega = np.hypot(u_curve, u_rep)
 
-    # curvature check: a quadratic term with the same errors
+    # 5. Curvature check: a quadratic term with the same errors; zq = how many sigma from zero.
     q, covq, _ = wls(np.c_[omega ** 2, omega, np.ones_like(omega)], y, u_fit)
     zq = q[0] / np.sqrt(covq[0, 0])
 
-    a_th, comps = theory(loop)
+    # 6. Theory and the comparison: ratio, difference in combined sigma (z), its two-sided p,
+    #    and the number of turns the measured slope implies if R and lambda are right.
+    a_th, comps = theory()
     u_th = float(np.sqrt(sum(v ** 2 for v in comps.values())))
     ratio = a / a_th
     u_ratio = ratio * np.hypot(u_a / a, u_th / a_th)
@@ -308,14 +380,17 @@ def main():
     u_diff = np.hypot(u_a, u_th)
     z = diff / u_diff
     p_z = 2 * stats.norm.sf(abs(z))
-    N_impl = ratio * loop['N']
-    u_N_impl = N_impl * np.hypot(u_a / a, 2 * loop['u_R'] / loop['R'])
+    N_impl = ratio * N_TURNS
+    u_N_impl = N_impl * np.hypot(u_a / a, 2 * U_RADIUS / RADIUS)
 
     Pglob, rings = ring_by_ring(fr, omega)
 
-    # the other phase methods: same averaging and fit, and frame by frame against the minima
-    # (they read the same photographs, so the shared noise cancels in the difference)
-    mfile = HERE / f'methods_frames{sfx}.csv'
+    # 7. The other phase methods: same averaging and fit, and frame by frame against the minima
+    #    (they read the same photographs, so the shared noise cancels in the difference).
+    #    Per method: its slope with fit and calibration errors (am, usm, ucm), and the slope of
+    #    (method - minima) per photograph against omega (ad, u_d), which tests whether the two
+    #    methods really disagree.
+    mfile = HERE / 'methods_frames.csv'
     if mfile.exists():
         fr = fr.merge(pd.read_csv(mfile), on='file', how='left', validate='one_to_one')
     others = {}
@@ -340,21 +415,24 @@ def main():
     spread = [a] + [others[l]['a'] for l, _, use in OTHER_METHODS if use and l in others]
     u_method = (max(spread) - min(spread)) / 2              # half the range of the reliable methods
 
-    # drift test: a phase linear in time fitted together with the slope
+    # 8. Drift test: a phase linear in time fitted together with the slope. Because the settings
+    #    were taken in increasing order, omega and time rise together; rho_t near -1 means the
+    #    data cannot tell a slope in omega from a drift in time.
     tm = (fr.groupby('S').time_s.mean() - fr.time_s.min()).to_numpy()
     pt, covt, _ = wls(np.c_[omega, tm, np.ones_like(omega)], y, u_fit)
     rho_t = covt[0, 1] / np.sqrt(covt[0, 0] * covt[1, 1])
     increasing = np.all(np.diff(tab.t_start.to_numpy()) > 0)
 
+    # 9. Outputs: the per-setting table, then the text report (sagnac.txt) line by line.
     tab['omega'] = omega; tab['u_omega_curve'] = u_curve; tab['u_omega_repro'] = u_rep
     tab['dphi'] = y - y[0]; tab['u_fit'] = u_fit
     tab['residual'] = y - (a * omega + b)
     for m in others.values():
         key = m['col'].removeprefix('phi_').removesuffix('_rad')
         tab[f'phi_{key}'] = m['y']; tab[f'sem_{key}'] = m['sem']; tab[f'u_fit_{key}'] = m['u_fit']
-    tab.to_csv(HERE / f'sagnac_speeds{sfx}.csv', index=False, float_format='%.6g')
+    tab.to_csv(HERE / 'sagnac_speeds.csv', index=False, float_format='%.6g')
 
-    L = [f'Sagnac phase against angular velocity (sagnac.py), {loop["label"]}\n']
+    L = ['Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis\n']
     L.append('Per setting: phase at the ring centre, mean over the frames, u = SD/sqrt(n) '
              '(statistical, frame-to-frame); omega from calibration.json +- curve (correlated) '
              '+- speed reproducibility (independent).')
@@ -386,8 +464,8 @@ def main():
              f'{np.sqrt(p_sem_only[1][0, 0]):.4f} (fit).')
     L.append(f'Curvature check (phi = q omega^2 + a omega + b, same errors): q = {q[0]:.3f} +- '
              f'{np.sqrt(covq[0, 0]):.3f} rad/(rad/s)^2, {abs(zq):.1f} sigma from zero.\n')
-    L.append(f"Theory, Eq. (5): N = {loop['N']} +- {loop['u_N']}, R = {100 * loop['R']:.1f} +- "
-             f"{100 * loop['u_R']:.1f} cm (A = pi R^2 = {np.pi * loop['R'] ** 2:.4f} m^2), "
+    L.append(f"Theory, Eq. (5): N = {N_TURNS} +- {U_N_TURNS}, R = {100 * RADIUS:.1f} +- "
+             f"{100 * U_RADIUS:.1f} cm (A = pi R^2 = {np.pi * RADIUS ** 2:.4f} m^2), "
              f'lambda = {WAVELENGTH * 1e9:.0f} nm, c exact.')
     L.append(f'  a_th = 8 pi^2 N R^2 / (lambda c) = {a_th:.4f} +- {u_th:.4f} rad/(rad/s)  '
              f"[N: {comps['N']:.4f}, R: {comps['R']:.4f}"
@@ -400,7 +478,7 @@ def main():
     L.append(f'a - a_th = {diff:+.4f} +- {u_diff:.4f} rad/(rad/s) = {z:+.2f} combined sigma, '
              f'p = {p_z:.2f} (two-sided, normal).')
     L.append(f'Equivalently, the measured slope corresponds to N = {N_impl:.2f} +- {u_N_impl:.2f} turns '
-             f"(given R and lambda), against N = {loop['N']} +- {loop['u_N']}.")
+             f"(given R and lambda), against N = {N_TURNS} +- {U_N_TURNS}.")
     u_dmax = np.hypot(u_fit[-1], u_fit[0])
     L.append(f'Largest shift: dphi = {y[-1] - y[0]:.3f} +- {u_dmax:.3f} rad (fit errors of both '
              f'settings) = {(y[-1] - y[0]) / (2 * np.pi):.3f} +- {u_dmax / (2 * np.pi):.3f} fringe, '
@@ -439,6 +517,48 @@ def main():
         L.append(f'  a = {a:.4f} +- {u_a:.4f} (fit and calibration) +- {u_method:.4f} (method) rad/(rad/s); '
                  f'with it, a - a_th = {z_m:+.2f} combined sigma, p = {2 * stats.norm.sf(abs(z_m)):.2f}. '
                  f'Report form: a = {round1(a, np.hypot(u_a, u_method))} rad/(rad/s) (all three parts).\n')
+    # Speed of light: Eq. (5) solved for c with the measured slope (minima). The slope's three
+    # error parts and N, R are kept as separate components, then combined in quadrature.
+    c_parts = {'fit': u_stat, 'calibration curve': u_cal}
+    if len(spread) > 1:
+        c_parts['method'] = u_method
+    c_m, c_comps = speed_of_light(a, c_parts)
+    u_c = float(np.sqrt(sum(v ** 2 for v in c_comps.values())))
+    u_c_meas = float(np.sqrt(sum(c_comps[k] ** 2 for k in c_parts)))
+    u_c_noN = float(np.sqrt(u_c ** 2 - c_comps['N'] ** 2))
+    z_c = (c_m - C_LIGHT) / u_c
+    p_c = 2 * stats.norm.sf(abs(z_c))
+    c_methods = {}
+    for label, _, use in OTHER_METHODS:
+        if use and label in others:
+            m = others[label]
+            cm, cc = speed_of_light(m['a'], {'fit': m['u_stat'], 'calibration curve': m['u_cal']})
+            c_methods[label] = dict(c=cm, u=float(np.sqrt(sum(v ** 2 for v in cc.values()))))
+    E8 = 1e8
+    L.append('Speed of light, Eq. (5) solved for c: c = 8 pi^2 N R^2 / (lambda a), with the measured slope a '
+             '(minima) and the given N, R, lambda. In units of 10^8 m/s:')
+    L.append(f'  c = {c_m / E8:.4f}' + ''.join(f' +- {v / E8:.4f} ({k})' for k, v in c_comps.items())
+             + f'\n    = {c_m / E8:.4f} +- {u_c / E8:.4f} ({100 * u_c / c_m:.1f} %, all parts)')
+    L.append(f'  The measurement ({", ".join(c_parts)}) contributes {u_c_meas / E8:.4f} '
+             f'({100 * u_c_meas / c_m:.1f} %), N = {N_TURNS} +- {U_N_TURNS} contributes '
+             f'{c_comps["N"] / E8:.4f} ({100 * c_comps["N"] / c_m:.1f} %); without the N term the total '
+             f'is {u_c_noN / E8:.4f} ({100 * u_c_noN / c_m:.1f} %).')
+    if U_WAVELENGTH is None:
+        L.append('  lambda: no uncertainty given, NOT included (unknown, not zero). Every 1 nm of error in '
+                 f'lambda moves c by {c_m * 1e-9 / WAVELENGTH / E8:.4f} ({100e-9 / WAVELENGTH:.2f} %).')
+    L.append(f'  Against the defined c = {C_LIGHT:.0f} m/s: c / c_def = {c_m / C_LIGHT:.3f} +- '
+             f'{u_c / C_LIGHT:.3f}; c - c_def = {(c_m - C_LIGHT) / E8:+.4f} +- {u_c / E8:.4f} = '
+             f'{z_c:+.2f} combined sigma, p = {p_c:.2f} (two-sided, normal).')
+    L.append('  This is the comparison a / a_th above read the other way (c / c_def = a_th / a), here with '
+             'the method systematic included.')
+    if c_methods:
+        L.append('  Other methods (fit, calibration curve, N and R; no method term): '
+                 + ', '.join(f'{l} {v["c"] / E8:.3f} +- {v["u"] / E8:.3f}' for l, v in c_methods.items())
+                 + '.')
+    L.append(f'  Report form: c = ({round1(c_m / E8, u_c / E8)}) x 10^8 m/s (all parts).')
+    L.append('  The phase fixes the product lambda c (= c^2 / nu). With the given wavelength c follows as above; '
+             'if the laser frequency nu were known instead, c = sqrt(8 pi^2 N R^2 nu / a), with half the '
+             'relative uncertainty.\n')
     L.append(f'Cross-check, Eq. (7) ring by ring with one period P = {Pglob / 1e3:.1f}k px^2 for all '
              f'frames (no extrapolation to the centre):')
     for k, v in rings.items():
@@ -468,10 +588,11 @@ def main():
              '(the reproducibility eps covers the scatter seen in the calibration).')
     L.append('  * The sign of the shift (rings shrink) is not compared: the rotation direction is '
              'not recorded here.')
-    (HERE / f'sagnac{sfx}.txt').write_text('\n'.join(L) + '\n', encoding='utf-8')
+    (HERE / 'sagnac.txt').write_text('\n'.join(L) + '\n', encoding='utf-8')
     print('\n'.join(L))
 
-    out = dict(loop=args.loop, slope=a, u_stat=u_stat, u_cal=u_cal, u_slope=u_a, intercept=b,
+    # Machine-readable results, then the two figures.
+    out = dict(slope=a, u_stat=u_stat, u_cal=u_cal, u_slope=u_a, intercept=b,
                sigma_x=sx, eps=eps, chi2_without_sigma_x=chi_base, p_without_sigma_x=p_base,
                dof=dof, curvature_q=q[0], u_q=float(np.sqrt(covq[0, 0])),
                theory=a_th, u_theory=u_th, theory_components=comps,
@@ -483,13 +604,17 @@ def main():
                                 sigma_x=m['sigma_x'], ratio=m['ratio'], u_ratio=m['u_ratio'], z=m['z'],
                                 minus_minima_slope=m['d_slope'], u_minus_minima=m['u_d'])
                         for l, m in others.items()})
-    (HERE / f'sagnac{sfx}.json').write_text(json.dumps(out, indent=1, default=float))
+    out['speed_of_light'] = dict(c=c_m, u_c=u_c, components=c_comps, u_measurement=u_c_meas,
+                                 u_without_N=u_c_noN, ratio_to_defined=c_m / C_LIGHT,
+                                 u_ratio_to_defined=u_c / C_LIGHT, z=z_c, p_z=p_c,
+                                 u_wavelength='not given', methods=c_methods)
+    (HERE / 'sagnac.json').write_text(json.dumps(out, indent=1, default=float))
     c = others['cosine fit']
-    make_figure(tab, omega, u_omega, u_fit, a, b, a_th, u_th, HERE / 'figures' / f'phase_vs_omega{sfx}',
+    make_figure(tab, omega, u_omega, u_fit, a, b, a_th, u_th, HERE / 'figures' / 'phase_vs_omega',
                 (c['y'], c['u_fit'], c['a'], c['b']))
-    scan = HERE / f'methods{sfx}.json'
+    scan = HERE / 'methods.json'
     make_comparison(omega, others, a, u_a, a_th, u_th, json.loads(scan.read_text()) if scan.exists() else {},
-                    HERE / 'figures' / f'methods_comparison{sfx}')
+                    HERE / 'figures' / 'methods_comparison')
 
 
 if __name__ == '__main__':

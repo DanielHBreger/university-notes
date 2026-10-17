@@ -1,6 +1,6 @@
 # Sagnac effect, lab 5
 
-Analysis of the 11 October 2026 measurements against the Sagnac manual (minimum tasks 1-5) and
+Analysis of the 11 October 2026 measurements against the Sagnac manual (minimum tasks 1-3 and 5) and
 Schwartz, Eur. J. Phys. 38, 015301 (2017). Numbers and their meaning are in `RESULTS.md`.
 
 ## Data
@@ -8,16 +8,13 @@ Schwartz, Eur. J. Phys. 38, 015301 (2017). Numbers and their meaning are in `RES
 - `Rotation calibration.csv`: times of consecutive single turns of the table, taken as
   stopwatch splits: 5 turns at each of the five lowest speed settings, 8 at the four highest
   (columns `turn 1` ... `turn 10`, empty cells skipped). `Speed` is the motor controller setting S.
-- `Measurements/<S>/<YYYYMMDDhhmmss>.png`: photographs of the fringe pattern with the large loop
+- `Measurements/<S>/<YYYYMMDDhhmmss>.png`: photographs of the fringe pattern with the fibre loop
   centred on the axis, 10-22 per setting, S = 0 (at rest), 12.59, 20.74, 31.11, 44.07, 55.83, 64.00,
   73.65, 82.18, 90. 1920x1080 RGBA. Only the red channel carries light (max 239 counts, nothing
   saturated). The settings were taken in increasing order between 16:21 and 16:33; the time in the
   file name is used.
-- `_transfer/meas.tgz`: an archive of the same photographs and the calibration CSV (not read by
-  the code).
-- Fibre loops (constants in `sagnac.py`, `LOOPS`): large loop N = 13 +- 1 turns, radius
-  R = 57.0 +- 0.5 cm; small loop (task 4, off the axis) N = 46 +- 1 turns, R = 15.5 +- 0.1 cm.
-  lambda = 640 nm, no uncertainty given.
+- Fibre loop, centred on the rotation axis (constants in `sagnac.py`): N = 13 +- 1 turns, radius
+  R = 57.0 +- 0.5 cm. lambda = 640 nm, no uncertainty given.
 
 ## Pipeline
 
@@ -29,23 +26,13 @@ when it is installed):
 python calibration.py   # task 1 -> calibration.json, calibration.txt, figures/calibration
 python fringes.py       # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
 python methods.py       # template matching, AIA, 2D Fourier -> methods_frames.csv, methods.txt/.json, figures/methods_illustration (figure*) (a few minutes)
-python sagnac.py        # task 3, all methods -> sagnac_speeds.csv, sagnac.txt, sagnac.json, figures/phase_vs_omega, figures/methods_comparison
+python sagnac.py        # task 3, all methods, speed of light -> sagnac_speeds.csv, sagnac.txt, sagnac.json, figures/phase_vs_omega, figures/methods_comparison
 python patterns.py      # task 2 -> figures/patterns (figure*), figures/profiles
 python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the three methods, report-form rounding
 ```
 
-Task 4 (small loop off the axis), once its photographs are in a folder laid out like
-`Measurements/` (one subfolder per setting, the same calibration):
-
-```
-python fringes.py --data "<folder>" --out fringes_frames_small.csv
-python sagnac.py --loop small    # -> sagnac_small.txt/.json, sagnac_speeds_small.csv, figures/phase_vs_omega_small (methods.py covers the large loop only)
-python patterns.py --loop small  # -> figures/patterns_small, figures/profiles_small
-```
-
 `fringes.py`'s starting centre, fringe-period guess and angular sector (`START`, `P_GUESS`,
-`THETA_DEG`) are set for the 11 October camera view. Check them, and the ring overlays in
-`patterns_small`, on new photographs.
+`THETA_DEG`) are set for the 11 October camera view.
 
 Figures follow the lab report style (`report_style.py`, copied unchanged from `chaotic circuit/`):
 column width unless noted, vector PDF plus 600 dpi PNG, no titles, no fit statistics in the image.
@@ -114,6 +101,13 @@ set by chi2 = dof. The slope's fit and calibration-curve uncertainties are given
 curve covariance is propagated through the fit. Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5),
 independent of where the axis lies (Schwartz; prep Q8) and of the fibre's index (prep Q10).
 
+**Speed of light** (`sagnac.py`). Eq. (5) solved for c with the measured slope (minima):
+c = 8 pi^2 N R^2/(lambda a). The slope's parts (fit, calibration curve, method) carry over with the
+same relative size (c ~ 1/a); N and R enter as given; lambda has no uncertainty given and is left out,
+as for a_th. Since c/c_def = a_th/a, this is the theory comparison read the other way. The phase
+fixes the product lambda c (= c^2/nu), so c needs the wavelength; a known laser frequency would give
+c = sqrt(8 pi^2 N R^2 nu/a) instead.
+
 ## Conventions
 
 - Every number carries its uncertainty and its kind: fit (statistical), SEM of frames,
@@ -123,5 +117,4 @@ independent of where the axis lies (Schwartz; prep Q8) and of the fibre's index 
 - `*.txt` keep more digits. The "report form" lines (`sagnac.round1`) round the uncertainty to
   one significant figure and the value to the same digit, half up on the decimal digits (2.25
   becomes 2.3, not the 2.2 of float round()). Comparisons are computed from unrounded values.
-- Not covered by the data so far: task 4 (no photographs of the small loop yet) and the rotation
-  direction (sign).
+- Not covered by the data: the rotation direction (sign).

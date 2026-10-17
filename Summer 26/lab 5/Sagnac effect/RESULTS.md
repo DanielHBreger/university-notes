@@ -117,6 +117,30 @@ template 0.034, Fourier 0.070, AIA 0.047 rad. Report form: 1.87(3), 1.91(3), 1.8
   a = 1.871 +- 0.028 (fit and calibration) +- 0.056 (method) rad/(rad/s). With this term,
   a - a_th = 0.88 combined sigma, p = 0.38. Report form: a = 1.87(6) rad/(rad/s).
 
+### Speed of light (`sagnac.txt`)
+
+Eq. (5) solved for c, with the measured slope (minima) and the given N, R and lambda:
+c = 8 pi^2 N R^2/(lambda a).
+
+| quantity | value | report form |
+|---|---|---|
+| c | 2.784 +- 0.040 (fit) +- 0.009 (calibration curve) +- 0.083 (method) +- 0.214 (N) +- 0.049 (R) = (2.784 +- 0.238) x 10^8 m/s (8.6 %) | (2.8 +- 0.2) x 10^8 m/s |
+| measurement alone (fit, calibration curve, method) | 0.093 x 10^8 m/s (3.3 %) | |
+| N = 13 +- 1 alone | 0.214 x 10^8 m/s (7.7 %) | |
+| c / c_def (c_def = 299 792 458 m/s) | 0.929 +- 0.080 | 0.93(8) |
+| c - c_def | -0.21 +- 0.24 x 10^8 m/s = -0.89 combined sigma, p = 0.37 | |
+| other methods (fit, calibration curve, N, R; no method term) | cosine fit 2.73 +- 0.22, template matching 2.90 +- 0.23, 2D Fourier 2.75 +- 0.22 (x 10^8 m/s) | |
+| wavelength | no uncertainty given, not included; 1 nm moves c by 0.0044 x 10^8 m/s (0.16 %) | |
+
+The measured c agrees with the defined value (0.89 sigma). Its uncertainty is set by the number of
+turns: N = 13 +- 1 alone is 7.7 %, against 3.3 % from the measurement, most of which is the method
+systematic (3.0 %). Without the N term the total would be 3.8 %; counting the turns to +- 0.2 would
+give about 4 %. This is the same comparison as a / a_th (c / c_def = a_th / a), now with the method
+systematic included. The phase fixes the product lambda c (= c^2/nu), so c needs the given wavelength; with
+the laser frequency known instead, c = sqrt(8 pi^2 N R^2 nu/a) would have half the relative uncertainty.
+The drift that cannot be separated from the slope (Task 5) enters c in the same way and is not in
+these numbers.
+
 The measurement agrees with Eq. (5). The theory uncertainty is dominated by N = 13 +- 1
 (7.7 %). The measured slope is five times more precise than the prediction; read the other way,
 it fixes the number of turns to 14.0 +- 0.3 if R and lambda are right.
@@ -138,15 +162,6 @@ Checks (not needed for the report):
 - Dropping the first two frames at S = 12.59 (taken 26 s before the rest, ring-fit rms 8 px
   against 3-6): slope 1.876, a change of 0.004 (0.2 sigma).
 
-## Task 4: small loop off the axis
-
-No photographs yet. The code is ready (`README.md`). Prediction from Eq. (5) with N = 46 +- 1,
-R = 15.5 +- 0.1 cm: a_th = 0.455 +- 0.011 rad/(rad/s) (N: 0.010, R: 0.006), i.e. 0.81 rad =
-0.13 fringe at omega = 1.78 rad/s, a quarter of the large loop's shift. If the phase wanders as
-much as on 11 October (sigma_x = 0.045 rad per setting, same settings), the slope would be
-measured to about 0.027 (6 % of a_th), and a - a_th would carry about 0.029 with the theory's
-0.011. The small loop's test is therefore limited by the phase wander, not by N or R.
-
 ## Task 5: errors
 
 | source | kind | size | in the result |
@@ -156,8 +171,8 @@ measured to about 0.027 (6 % of a_th), and a - a_th would carry about 0.029 with
 | slow phase wander between settings | statistical, from the fit | sigma_x = 0.045 rad per setting | yes (fit) |
 | calibration curve | calibration, correlated across settings | 0.006 on a (0.3 %) | yes, separately |
 | phase-extraction method | systematic, half the range of minima, cosine fit, template matching, 2D Fourier | 0.056 on a (3 %) | yes, separately |
-| N = 13 +- 1, R = 57.0 +- 0.5 cm | given | 7.7 % and 1.8 % on a_th | yes (theory) |
-| wavelength | not given | 0.16 % on a_th per nm | **no**, stated |
+| N = 13 +- 1, R = 57.0 +- 0.5 cm | given | 7.7 % and 1.8 % on a_th and on c | yes (theory, c) |
+| wavelength | not given | 0.16 % on a_th and on c per nm | **no**, stated |
 | drift linear in time | systematic, not separable | see below | **no** |
 
 The settings were photographed in increasing order with the only rest frames at the start. A
