@@ -1,0 +1,18 @@
+Two more phase methods (methods.py)
+
+Calibration: linear, degree 1.
+
+Template matching: template = mean of the 10 rest profiles; its own period P_T = 108.02k px^2 (minima median 107.37k); shifts D = -1.6 to 55.4k px^2 over 20000-180000 px^2.
+  slope against the comparison range (fit error, sigma_x):
+      20000-180000 px^2: 1.768 +- 0.017 rad/(rad/s), sigma_x = 0.028 rad
+      10000-120000 px^2: 1.770 +- 0.015 rad/(rad/s), sigma_x = 0.023 rad
+      20000-140000 px^2: 1.764 +- 0.015 rad/(rad/s), sigma_x = 0.023 rad
+      50000-180000 px^2: 1.834 +- 0.035 rad/(rad/s), sigma_x = 0.062 rad
+Random points: 10 pixels drawn with seed 20261011 inside the fringe sector (-75 to 180 deg, r^2 < 260000 px^2) about the rest centre (897.8, 507.7) px, read at the same positions in all 161 photographs (smoothed, sigma = 4 px). Local phase from the rest period P0 = 107.55k px^2; dark level 2.0 counts.
+  pixels (x, y): (857, 360), (1294, 490), (1331, 281), (1017, 384), (786, 501), (908, 531), (1141, 322), (1380, 355), (563, 346), (751, 45)
+  fit: 116 rounds, rms residual 10.19 counts; amplitudes 21.0-139.6 counts; phases span 3.23 rad.
+  slope of this draw: 1.786 +- 0.037 rad/(rad/s) (fit), sigma_x = 0.068 rad.
+  31 draws (this one and 30 more, seeds 1-30): slope median 1.764, 16-84 % 1.506-1.898, full range 1.414-2.119; not converged: 1.
+  diagnostic, the same pixels with the local phase from each photograph's own fitted centre and period: median 1.779, 16-84 % 1.681-1.978.
+  A fixed pixel reads the local phase at its own radius. A change of the fringe period (the wavefront curvature) or a move of the ring centre changes that local phase as well, and the pixel cannot tell either from a Sagnac shift; the diagnostic removes both. With ten pixels and a sweep of half a fringe, the answer also depends on which pixels are drawn.
+Per-frame phases in methods_frames.csv; statistics and the comparison with the other methods in sagnac.txt.
