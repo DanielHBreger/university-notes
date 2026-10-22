@@ -1,0 +1,130 @@
+1. STOPWATCH (lap splits)
+   T = (t_n - t_0)/n. Each press has an independent error sigma; the laps share presses, so
+   E[SD^2] = 2 sigma^2 (n+1)/n and Var(T) = 2 sigma^2/n^2  ->  u(T) = SD/sqrt(n(n+1)).
+       S   n    <T> (s)   SD (s)  u(T) (s)  sigma_press (s)  u_display (s)  u(omega)/omega
+     5.78  5    65.446    0.156   0.0284         0.101        0.0013       0.04 %
+    14.67  5    22.334    0.091   0.0167         0.059        0.0013       0.07 %
+    25.66  5    12.424    0.039   0.0071         0.025        0.0013       0.06 %
+    36.63  5     8.602    0.041   0.0075         0.026        0.0013       0.09 %
+    45.09  5     6.920    0.039   0.0072         0.025        0.0013       0.10 %
+    56.03  8     5.565    0.045   0.0053         0.030        0.0010       0.10 %
+    68.85  8     4.565    0.053   0.0063         0.035        0.0010       0.14 %
+    79.21  8     3.994    0.042   0.0050         0.028        0.0010       0.12 %
+    90.00  8     3.545    0.054   0.0063         0.036        0.0010       0.18 %
+   Lag-1 correlation of neighboring laps -0.34; splits predict -0.43 +- 0.09 (simulated); independent laps give a value this negative with p = 0.05.
+   The 0.01 s display resolution: rounding of the n displayed laps adds 0.0010-0.0013 s to <T>, below every u(T),
+   and it is already part of the lap spread that u(T) is computed from (statistical).
+
+2. SPEED REPRODUCIBILITY eps (the table speed at a fixed setting)
+   eps solves chi2/dof = 1 for the quadratic: 0.483 % of omega (calibration.json: 0.483 %). Statistical, independent between settings, added in quadrature to u_stopwatch.
+   linear     stopwatch only chi2/dof =   807.0/7  p = 5.7e-170;  with eps chi2/dof =  47.2/7  p = 5.1e-08
+   quadratic  stopwatch only chi2/dof =   154.9/6  p = 7.2e-31;  with eps chi2/dof =   6.0/6  p = 0.42
+   cubic      stopwatch only chi2/dof =   104.3/5  p = 6.5e-21;  with eps chi2/dof =   2.6/5  p = 0.75
+   Set by the line instead, eps would be 1.30 % of omega: the line's systematic misfit at high S
+   would then be counted as random speed noise. Taking eps from the quadratic keeps the two apart; the
+   misfit of the line enters as the calibration-model term (section 7).
+
+3. CALIBRATION LINE omega = k S + omega0 (used for every photo)
+   k = 0.020386 +- 0.000043 rad/s per unit S, omega0 = -0.02124 +- 0.00057 rad/s, correlation -0.67
+   u_curve = sqrt((1, S) Cov (1, S)^T): calibration, the same line for every setting, so correlated between
+   settings; it enters the slope through the redrawn lines (section 6). u_repro = eps omega: independent.
+       S   omega (rad/s)  u_curve   u_repro   u (combined)
+    12.59   0.2354      0.00045   0.00114   0.00122  (0.52 %)
+    20.74   0.4016      0.00066   0.00194   0.00205  (0.51 %)
+    31.11   0.6130      0.00104   0.00296   0.00314  (0.51 %)
+    44.07   0.8772      0.00157   0.00424   0.00452  (0.52 %)
+    55.83   1.1169      0.00206   0.00540   0.00578  (0.52 %)
+    64.00   1.2835      0.00241   0.00620   0.00665  (0.52 %)
+    73.65   1.4802      0.00282   0.00715   0.00769  (0.52 %)
+    82.18   1.6541      0.00318   0.00799   0.00860  (0.52 %)
+    90.00   1.8135      0.00351   0.00876   0.00944  (0.52 %)
+   Same values as sagnac_update/sagnac_speeds.csv: True.
+
+4. PHASE OF ONE PHOTO: precision from the ring radii against the spread of the photos
+   u(phi_c) of a photo: the circle-fit uncertainties of its ring radii (fringes_frames.csv uR1..uR3)
+   propagated through R_m^2 = P (m + eta), phi_c = pi - 2 pi eta, as the radii were independent.
+   Over all 161 photos: 0.013 to 0.074 rad, median 0.024 rad.
+       S   photos  median u(phi_c)  SD of the photos  SD/u   drift within setting (mrad/s, p)
+     0.00   10      0.046           0.063         1.4     -6.9  p = 0.090
+    12.59   15      0.036           0.109         3.0     -4.4  p = 0.004
+    20.74   15      0.023           0.060         2.6     -5.5  p = 0.001
+    31.11   19      0.029           0.108         3.7     +8.2  p = 0.001
+    44.07   22      0.030           0.071         2.4     -4.5  p = 0.000
+    55.83   18      0.026           0.035         1.3     -0.3  p = 0.756
+    64.00   16      0.021           0.033         1.5     +2.0  p = 0.026
+    73.65   16      0.016           0.018         1.1     +0.4  p = 0.448
+    82.18   15      0.023           0.016         0.7     +1.0  p = 0.083
+    90.00   15      0.021           0.019         0.9     +1.8  p = 0.007
+   From S = 55.83 up the photos of a setting differ by about what the ring fit allows (SD/u 0.7-1.5);
+   from 12.59 to 44.07 they differ 2.4-3.7 times more, and there the phase drifts within the setting (p = 3e-04 to 0.004).
+   Caveat: neighboring rays share speckle, so the ray minima are not fully independent and the radius
+   uncertainties (and u(phi_c)) are probably somewhat too small. Not used in the result: the setting
+   means take their uncertainty from the photos themselves (SEM), and the line from the regression.
+
+5. SETTING MEANS
+   Mean of the photos, u = SEM = SD/sqrt(n): 0.004 to 0.028 rad (statistical).
+   The rest mean (SEM 0.020 rad) is subtracted from every setting: a common offset, which a line
+   with a free intercept absorbs. It enters the slope only as the rest point's own deviation.
+   Second half minus first half of each setting: beyond 2 of its photo-noise errors in 8 of 10 settings (2.5-6.0 errors).
+   Implied wander of a setting mean: 0.039 +- 0.007 rad (bootstrap over settings),
+   so the SEM, which assumes independent photos, understates how well a setting mean is known.
+
+6. REGRESSION Delta phi = a omega + b (ten setting means, equal weights; Schwartz Eq. 7)
+   s = sqrt(sum(Delta phi - line)^2 / 8) = 0.0447 rad: the uncertainty of every point, taken from the points.
+   u_stat = s / sqrt(sum (omega - mean)^2) = 0.0239; calibration line (4000 redrawn lines) 0.0037; together 0.0242.
+   a = 1.8390 -> 1.84 ± 0.02 rad/(rad/s); R^2 = 0.9986.
+   With the photos' SEM and eps as weights instead: chi2/dof = 56.6/8, p = 2e-09:
+   those error bars are too small for the differences between settings (section 5), hence the regression.
+   Against a_th = 1.7381 +- 0.1371: z = 0.72, p = 0.47 (regression error only).
+   Distance of each point from the line against the setting's mean fringe period P: r = +0.81, p = 0.005
+   (with the median P of Table 2: r = +0.82, p = 0.004); ring-fit and cosine-fit mean periods agree, r = 0.89.
+   P per setting, 10^5 px^2: medians 1.058-1.094, means 1.057-1.099.
+
+7. FINAL SLOPE
+   regression and calibration line 0.0242 (1.3 %), statistical
+   phase-reading method 0.0543 (3.0 %): half the range of 1.8390, 1.8761, 1.7676
+   calibration model 0.0316 (1.7 %): |a(quadratic) - a(linear)|
+   a = 1.8390 +- 0.0673 (3.7 %) -> 1.84 ± 0.07 rad/(rad/s)
+   quadrature (used)            u = 0.067   z = 0.66   p = 0.51
+   straight sum (worst case)    u = 0.110   z = 0.57   p = 0.57
+   method as range/sqrt(12)     u = 0.051   z = 0.69   p = 0.49
+   method as the full range     u = 0.116   z = 0.56   p = 0.57
+   line covariance x chi2/dof   u = 0.068   z = 0.66   p = 0.51
+   The line's covariance is not scaled by its chi2/dof (6.74); scaled, the calibration-line
+   part would be 0.0095 instead of 0.0037. The line's misfit is already in the
+   calibration-model term, so the result keeps the unscaled value; using both would count it twice.
+
+8. PREDICTION a_th = 8 pi^2 N R^2 / (lambda c)
+   a_th = 1.7381 s; N: 7.69 %, R (enters squared): 1.75 %, together 7.89 % -> 1.7 ± 0.1 rad/(rad/s). c is exact (defined).
+   lambda: no uncertainty given (missing, not zero). a_th and c change by 0.156 % per nm; lambda would
+   have to be off by 23 nm to matter as much as all our own measurement uncertainties together.
+   If 13 +- 1 is a bound (flat distribution, u = 0.58 turn): u(a_th) = 0.083, the comparison z = 0.94, p = 0.35.
+
+9. SPEED OF LIGHT c = 8 pi^2 N R^2 / (lambda a)
+   c = 2.8335 x 10^8 m/s; relative parts (first order, c ~ N R^2 / a):
+      Turn count N = 13 ± 1                   7.69 %
+      Phase-reading method                    2.95 %
+      Loop radius R = 57.0 ± 0.5 cm           1.75 %
+      Calibration model                       1.72 %
+      Regression and calibration line         1.32 %
+      total 8.70 % -> (2.8 ± 0.2) x 10^8 m/s, z = -0.67, p = 0.50
+   Monte Carlo (400000 draws of N, R, a, normal): median 2.833, 16-84 % range 2.592-3.082,
+   SD 0.247 x 10^8 m/s; two-sided p of c0 = 0.51. Below the median 0.241, above it 0.249 x 10^8 m/s:
+   c ~ R^2/a makes the distribution slightly lopsided, too little to change the first-order result.
+   With N as a bound: 6.0 %. Read the other way, N = 13.8 +- 0.5 turns (+- 0.6 with R).
+
+10. LARGEST SHIFT (top setting minus rest)
+   3.285 +- 0.063 rad (u = sqrt(2) s: two setting means) = 0.523 +- 0.010 fringe; Delta t = Delta phi lambda/(2 pi c) = 1.116 +- 0.021 fs (lambda taken as exact). Predicted 3.15 rad.
+
+11. INPUTS NOT KNOWN (instrument_inputs.json: null; never treated as zero)
+   wavelength_u_m
+   camera_model
+   camera_pixel_aspect_ratio
+   stopwatch_model
+   motor_controller_model
+   rotation_direction
+   Not tested by the data: the sign of the shift (rotation direction), a steady drift in time
+   (settings in increasing order), omega during the photographs (only the calibration at other times).
+
+12. AGREEMENT WITH presentation_slides/source/numbers.json
+   10 values checked, 0 differ.

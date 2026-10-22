@@ -1,82 +1,66 @@
 Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis
 
-Per setting: phase at the ring centre, mean over the frames, u = SD/sqrt(n) (statistical, frame-to-frame); omega from calibration.json +- curve (correlated) +- speed reproducibility (independent).
-     S   n              omega (rad/s) phi (rad)     SD  u=SEM dphi (rad)  u_fit P (k px^2)  drift (mrad/s)     p
-  0.00  10   0.0000 +- 0.0000 +- 0.0000    -0.749  0.063  0.020      0.000  0.049      107.5   -6.87 +- 3.57  0.09
- 12.59  15   0.2383 +- 0.0006 +- 0.0012    -0.355  0.109  0.028      0.394  0.053      107.1   -4.44 +- 1.29  0.00
- 20.74  15   0.4073 +- 0.0011 +- 0.0020    -0.111  0.060  0.015      0.638  0.048      105.8   -5.51 +- 1.34  0.00
- 31.11  19   0.6201 +- 0.0015 +- 0.0030     0.268  0.108  0.025      1.017  0.052      106.5    8.15 +- 1.97  0.00
- 44.07  22   0.8825 +- 0.0018 +- 0.0043     0.842  0.071  0.015      1.591  0.048      109.3   -4.54 +- 1.04  0.00
- 55.83  18   1.1173 +- 0.0021 +- 0.0054     1.235  0.035  0.008      1.984  0.047      105.8   -0.29 +- 0.90  0.76
- 64.00  16   1.2786 +- 0.0025 +- 0.0062     1.626  0.033  0.008      2.375  0.047      109.4    2.01 +- 0.81  0.03
- 73.65  16   1.4671 +- 0.0035 +- 0.0071     1.951  0.018  0.004      2.700  0.047      108.7    0.44 +- 0.56  0.45
- 82.18  15   1.6319 +- 0.0047 +- 0.0079     2.209  0.016  0.004      2.958  0.048      106.8    0.97 +- 0.52  0.08
- 90.00  15   1.7816 +- 0.0061 +- 0.0086     2.536  0.019  0.005      3.285  0.048      107.3    1.76 +- 0.55  0.01
-(u_fit = sqrt(SEM^2 + (a eps omega)^2 + sigma_x^2), the error used in the fit; drift: slope of the frame phases against time within the setting, with its standard error and p for zero slope)
+PER SETTING: phase at the ring centre (minima), mean over the photos, SEM = SD/sqrt(n); omega from the
+calibration line +- its rms scatter (1.2 %); dphi = phase minus the rest mean.
+     S   n first photo      omega (rad/s)         dphi (rad) P (10^5 px^2)   resid
+  0.00  10    16:21:40   0.0000 +- 0.0000    0.000 +- 0.020         1.075  +0.048
+ 12.59  15    16:24:10   0.2354 +- 0.0027    0.394 +- 0.028         1.071  +0.009
+ 20.74  15    16:25:44   0.4015 +- 0.0046    0.638 +- 0.015         1.058  -0.052
+ 31.11  19    16:26:38   0.6128 +- 0.0070    1.017 +- 0.025         1.065  -0.062
+ 44.07  22    16:27:54   0.8768 +- 0.0101    1.591 +- 0.015         1.093  +0.026
+ 55.83  18    16:29:08   1.1165 +- 0.0128    1.984 +- 0.008         1.058  -0.022
+ 64.00  16    16:30:16   1.2829 +- 0.0148    2.375 +- 0.008         1.094  +0.063
+ 73.65  16    16:31:28   1.4796 +- 0.0170    2.700 +- 0.004         1.087  +0.026
+ 82.18  15    16:32:32   1.6534 +- 0.0190    2.958 +- 0.004         1.068  -0.035
+ 90.00  15    16:33:24   1.8127 +- 0.0208    3.285 +- 0.005         1.073  -0.002
+(the rest mean, SEM 0.020 rad, is subtracted from every row; resid = dphi minus the line)
 
-Line with the frame SEMs and the speed reproducibility (eps = 0.48 %) only: chi2 = 62, dof = 8, chi2/dof = 7.7, p = 2e-10 (frame SEMs alone: chi2 = 183).
-  -> rejected: the settings scatter about the line more than their frames and the speed reproducibility explain. Extra scatter sigma_x = 0.045 rad per setting added in quadrature (chi2 = dof).
-  (frame-to-frame SEMs 0.004-0.028 rad, speed reproducibility 0.002-0.016 rad; settings with a significant drift within their 20-60 s: 6 of 10.)
-Slope: a = 1.8713 +- 0.0267 (fit) +- 0.0063 (calibration curve) = 1.8713 +- 0.0275 rad/(rad/s)
-  intercept b = -0.818 +- 0.030 rad (phase at rest, arbitrary); chi2 = 8.0, dof = 8 by construction.
-  with the frame SEMs alone the slope would be 1.8752 +- 0.0066 (fit).
-Curvature check (phi = q omega^2 + a omega + b, same errors): q = 0.073 +- 0.055 rad/(rad/s)^2, 1.3 sigma from zero.
+THE LINE dphi = a omega + b, ordinary least squares through the ten setting means (Schwartz Eq. 7):
+  a = 1.8398 +- 0.0240 rad/(rad/s) (regression), b = -0.048 +- 0.027 rad (p = 0.11 for b = 0), R^2 = 0.9986
+  s = 0.0448 rad: the rms distance of the points from the line, used as every point's uncertainty.
+  Weighted by the photos' SEM instead: chi2 = 197.4, dof = 8, p = 2e-38 (slope 1.8231): the settings differ by
+  5.0 times more than the photo noise allows (the phase wanders between settings), so the regression's s is used.
+  Added omega^2 term: +0.025 +- 0.052 rad/(rad/s)^2, t = 0.48, p = 0.65: no bend.
+  Line through the origin (check): a = 1.8032 +- 0.0142.
 
+OTHER PHASE-READING METHODS, same averaging and regression (cosine fit: fringes.py, prep Q5; template
+matching: methods.py):
+  cosine fit         a = 1.8769 +- 0.0282, s = 0.0528 rad, R^2 = 0.9982; minus the minima per setting: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad
+  template matching  a = 1.7684 +- 0.0166, s = 0.0310 rad, R^2 = 0.9993; minus the minima per setting: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad
+  Method part of u(a): half the range of 1.8398, 1.8769, 1.7684 = 0.0543 (3.0 %).
+  Calibration part of u(a): with the quadratic calibration a = 1.8709, +1.7 %, so 0.0311.
+
+RESULT  a = 1.8398 +- 0.0240 (regression) +- 0.0543 (method) +- 0.0311 (calibration)
+          = 1.8398 +- 0.0670 rad/(rad/s) (3.6 %, the three parts in quadrature)
 Theory, Eq. (5): N = 13 +- 1, R = 57.0 +- 0.5 cm (A = pi R^2 = 1.0207 m^2), lambda = 640 nm, c exact.
-  a_th = 8 pi^2 N R^2 / (lambda c) = 1.7381 +- 0.1371 rad/(rad/s)  [N: 0.1337, R: 0.0305]
-  The lab gave no wavelength uncertainty; it is NOT included (unknown, not zero). Every 1 nm of error in lambda moves a_th by 0.0027 (0.16 %).
+  a_th = 8 pi^2 N R^2 / (lambda c) = 1.7381 +- 0.1371 rad/(rad/s) [N: 0.1337 (7.7 %), R: 0.0305 (1.8 %)]
+  lambda: no uncertainty given, NOT included (unknown, not zero); a_th and c move by 0.16 % per nm.
+  a / a_th = 1.058 +- 0.092; a - a_th = +0.1017 = +0.67 combined sigma, p = 0.51 (regression part only: +0.73 sigma, p = 0.47).
+  Read the other way (R, lambda, c known): N = 13.76 +- 0.56 turns.
+  Largest shift (S = 90 minus rest): 3.285 +- 0.063 rad = 0.523 +- 0.010 fringe at omega = 1.813 rad/s; predicted 3.15 rad.
+  As a travel-time difference, dt = dphi lambda / (2 pi c) = 1.12 +- 0.02 fs (predicted 1.07 fs; one optical period is 2.13 fs).
 
-Measured / theory: a / a_th = 1.077 +- 0.086
-a - a_th = +0.1332 +- 0.1399 rad/(rad/s) = +0.95 combined sigma, p = 0.34 (two-sided, normal).
-Equivalently, the measured slope corresponds to N = 14.00 +- 0.32 turns (given R and lambda), against N = 13 +- 1.
-Largest shift: dphi = 3.285 +- 0.069 rad (fit errors of both settings) = 0.523 +- 0.011 fringe, at omega = 1.7816 +- 0.0105 rad/s.
+SPEED OF LIGHT, Eq. (5) solved for c = 8 pi^2 N R^2 / (lambda a), in 10^8 m/s:
+  c = 2.8323 +- 0.0369 (regression, 1.3 %) +- 0.0836 (method, 3.0 %) +- 0.0479 (calibration, 1.7 %) +- 0.2179 (N, 7.7 %) +- 0.0497 (R, 1.8 %)
+    = 2.8323 +- 0.2461 (8.7 %); c / c_def = 0.945 +- 0.082, -0.67 sigma, p = 0.50.
+  This is a / a_th read the other way (c / c_def = a_th / a), not an independent test.
 
-Report form (one significant figure, comparisons above from unrounded values):
-  a = 1.87 +- 0.03 rad/(rad/s) (fit and calibration combined); a_th = 1.7 +- 0.1 rad/(rad/s); a/a_th = 1.08 +- 0.09
+DRIFT CHECK. The settings were photographed in increasing order with rest photos only at the start, so
+omega and time rise together. dphi = a omega + D t + b (t: mean photo time of the setting):
+  a = 2.14 +- 0.17 rad/(rad/s), D = -0.85 +- 0.47 mrad/s (p = 0.12), correlation(a, D) = -0.992: a steady drift cannot be told from the slope.
+  Not in the quoted uncertainty. Also not checked: the sign of the shift (rotation direction not recorded).
 
-Other phase methods, same averaging and fit (cosine fit: fringes.py, cosine_fit, prep Q5; template matching, 2D Fourier and AIA: methods.py, robustness scans in methods.txt):
-cosine fit: dphi per setting 0.000, 0.491, 0.756, 1.167, 1.779, 2.141, 2.494, 2.852, 3.077, 3.395 rad; SEM 0.003-0.035 rad.
-  fit rms (median per setting): 9.5, 6.5, 6.7, 5.5, 2.3, 1.6, 1.4, 1.6, 2.0, 2.0 counts (no chi2: neighbouring pixels share speckle, so the bin errors are not independent).
-  line with SEM and speed reproducibility: chi2 = 83, dof = 8, p = 1e-14; sigma_x = 0.041 rad (minima: 0.045).
-  a = 1.9104 +- 0.0246 (fit) +- 0.0065 (calibration curve) = 1.9104 +- 0.0254 rad/(rad/s); a / a_th = 1.099 +- 0.088, +1.24 combined sigma from theory, p = 0.22.
-  minus minima, frame by frame: slope +0.0382 +- 0.0257 rad/(rad/s) (1.5 sigma; chi2 without extra scatter 412, dof = 8, p = 5e-84, sigma_x = 0.046 rad). Per setting, relative to rest: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad.
-  Report form: a = 1.91 +- 0.03 rad/(rad/s); a/a_th = 1.10 +- 0.09
-template matching: dphi per setting 0.000, 0.381, 0.706, 1.045, 1.491, 2.014, 2.215, 2.592, 2.902, 3.201 rad; SEM 0.005-0.020 rad.
-  line with SEM and speed reproducibility: chi2 = 61, dof = 8, p = 3e-10; sigma_x = 0.034 rad (minima: 0.045).
-  a = 1.7984 +- 0.0208 (fit) +- 0.0061 (calibration curve) = 1.7984 +- 0.0217 rad/(rad/s); a / a_th = 1.035 +- 0.083, +0.43 combined sigma from theory, p = 0.66.
-  minus minima, frame by frame: slope -0.0728 +- 0.0336 rad/(rad/s) (2.2 sigma; chi2 without extra scatter 790, dof = 8, p = 4e-165, sigma_x = 0.061 rad). Per setting, relative to rest: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad.
-  Report form: a = 1.80 +- 0.02 rad/(rad/s); a/a_th = 1.03 +- 0.08
-2D Fourier: dphi per setting 0.000, 0.321, 0.653, 0.989, 1.436, 2.007, 2.273, 2.659, 3.005, 3.338 rad; SEM 0.005-0.022 rad.
-  line with SEM and speed reproducibility: chi2 = 159, dof = 8, p = 2e-30; sigma_x = 0.070 rad (minima: 0.045).
-  a = 1.8965 +- 0.0390 (fit) +- 0.0063 (calibration curve) = 1.8965 +- 0.0395 rad/(rad/s); a / a_th = 1.091 +- 0.089, +1.11 combined sigma from theory, p = 0.27.
-  minus minima, frame by frame: slope +0.0251 +- 0.0381 rad/(rad/s) (0.7 sigma; chi2 without extra scatter 1004, dof = 8, p = 2e-211, sigma_x = 0.069 rad). Per setting, relative to rest: +0.00, -0.07, +0.01, -0.03, -0.16, +0.02, -0.10, -0.04, +0.05, +0.05 rad.
-  Report form: a = 1.90 +- 0.04 rad/(rad/s); a/a_th = 1.09 +- 0.09
-AIA: dphi per setting 0.000, 0.450, 0.707, 0.997, 1.413, 1.898, 2.142, 2.432, 2.659, 2.830 rad; SEM 0.003-0.016 rad.
-  line with SEM and speed reproducibility: chi2 = 120, dof = 8, p = 3e-22; sigma_x = 0.047 rad (minima: 0.045).
-  a = 1.6094 +- 0.0263 (fit) +- 0.0055 (calibration curve) = 1.6094 +- 0.0269 rad/(rad/s); a / a_th = 0.926 +- 0.075, -0.92 combined sigma from theory, p = 0.36.
-  minus minima, frame by frame: slope -0.2611 +- 0.0387 rad/(rad/s) (6.8 sigma; chi2 without extra scatter 1453, dof = 8, p = 2e-308, sigma_x = 0.070 rad). Per setting, relative to rest: +0.00, +0.06, +0.07, -0.02, -0.18, -0.09, -0.23, -0.27, -0.30, -0.46 rad.
-  Report form: a = 1.61 +- 0.03 rad/(rad/s); a/a_th = 0.93 +- 0.07
-Spread of the slopes of minima, cosine fit, template matching, 2D Fourier: 1.798-1.910; half the range, 0.056, is the phase-extraction (method) systematic. AIA is left out: its slope depends on its window and variant (methods.txt).
-  a = 1.8713 +- 0.0275 (fit and calibration) +- 0.0560 (method) rad/(rad/s); with it, a - a_th = +0.88 combined sigma, p = 0.38. Report form: a = 1.87 +- 0.06 rad/(rad/s) (all three parts).
+RANDOM PIXELS (prep Q5, optional; presentation stage, random_points_scan.json):
+   10 pixels per draw: 1000 draws, slope mean 1.702, SD between draws 0.196, fit error of one draw 0.057, 2 failed
+   20 pixels per draw: 60 draws, slope mean 1.715, SD between draws 0.091, fit error of one draw 0.041
+   40 pixels per draw: 60 draws, slope mean 1.729, SD between draws 0.073, fit error of one draw 0.040
+   80 pixels per draw: 60 draws, slope mean 1.730, SD between draws 0.056, fit error of one draw 0.037
 
-Speed of light, Eq. (5) solved for c: c = 8 pi^2 N R^2 / (lambda a), with the measured slope a (minima) and the given N, R, lambda. In units of 10^8 m/s:
-  c = 2.7845 +- 0.0398 (fit) +- 0.0094 (calibration curve) +- 0.0833 (method) +- 0.2142 (N) +- 0.0489 (R)
-    = 2.7845 +- 0.2385 (8.6 %, all parts)
-  The measurement (fit, calibration curve, method) contributes 0.0928 (3.3 %), N = 13 +- 1 contributes 0.2142 (7.7 %); without the N term the total is 0.1049 (3.8 %).
-  lambda: no uncertainty given, NOT included (unknown, not zero). Every 1 nm of error in lambda moves c by 0.0044 (0.16 %).
-  Against the defined c = 299792458 m/s: c / c_def = 0.929 +- 0.080; c - c_def = -0.2134 +- 0.2385 = -0.89 combined sigma, p = 0.37 (two-sided, normal).
-  This is the comparison a / a_th above read the other way (c / c_def = a_th / a), here with the method systematic included.
-  Other methods (fit, calibration curve, N and R; no method term): cosine fit 2.728 +- 0.218, template matching 2.897 +- 0.231, 2D Fourier 2.748 +- 0.224.
-  Report form: c = (2.8 +- 0.2) x 10^8 m/s (all parts).
-  The phase fixes the product lambda c (= c^2 / nu). With the given wavelength c follows as above; if the laser frequency nu were known instead, c = sqrt(8 pi^2 N R^2 nu / a), with half the relative uncertainty.
-
-Cross-check, Eq. (7) ring by ring with one period P = 107.4k px^2 for all frames (no extrapolation to the centre):
-  R1: slope 1.864 rad/(rad/s); dphi = 0.00, 0.39, 0.69, 1.04, 1.54, 2.01, 2.34, 2.70, 2.96, 3.29
-  R2: slope 1.836 rad/(rad/s); dphi = 0.00, 0.36, 0.81, 1.13, 1.40, 2.12, 2.25, 2.59, 3.03, 3.29
-  The two rings differ by up to 0.14 rad at single settings, more than their frame scatter; the fringe period (curvature difference of the two beams) ranges over 105.8-109.4k px^2 (1.7 % half-range) between settings, which the per-frame centre phase accounts for.
-
-Systematics not in the numbers above:
-  * The settings were taken in increasing order (16:21-16:33) with the only rest frames at the start, so a phase drift linear in time is indistinguishable from the Sagnac slope. A rest frame at the end (or the reverse rotation) would test it.
-    Fitting phi = a omega + D t + b: a = 2.27 +- 0.23 rad/(rad/s), D = -1.1 +- 0.6 mrad/s, correlation -0.993. The within-setting drifts range over -6.9 to +8.2 mrad/s and the residual scatter about the line is sigma_x = 0.045 rad, so the phase wanders but does not random-walk; a steady drift is not excluded by this.
-  * omega is the calibration at the same setting, not measured during the photographs (the reproducibility eps covers the scatter seen in the calibration).
-  * The sign of the shift (rings shrink) is not compared: the rotation direction is not recorded here.
+REPORT FORM (uncertainty to one significant figure, value to the same digit; comparisons above use
+unrounded values):
+  k = 0.0204 +- 0.0001 rad/s per unit S, omega0 = -0.021 +- 0.002 rad/s
+  a = 1.84 +- 0.07 rad/(rad/s) (all parts); 1.84 +- 0.02 (regression only)
+  a_th = 1.7 +- 0.1 rad/(rad/s); a / a_th = 1.06 +- 0.09; N implied = 13.8 +- 0.6
+  cosine fit: a = 1.88 +- 0.03; template matching: a = 1.77 +- 0.02
+  largest shift = 3.28 +- 0.06 rad = 0.52 +- 0.01 fringe, dt = 1.12 +- 0.02 fs
+  c = (2.8 +- 0.2) x 10^8 m/s; c / c_def = 0.94 +- 0.08

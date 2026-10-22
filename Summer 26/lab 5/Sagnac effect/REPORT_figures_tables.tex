@@ -1,0 +1,276 @@
+% Figure and table blocks for the Sagnac report (prepared 22 October 2026, before the first draft).
+%
+% Numbers only. Every value is from sagnac.txt and calibration.txt (sagnac.py, calibration.py), the
+% final analysis of RESULTS.md, rounded by the course convention (the uncertainty to one significant
+% figure, the value to the same digit). There is no report prose in this file: each \caption{} holds
+% only a visible placeholder and, in a comment, what the caption has to say (the same list as in
+% REPORT_TODO.md, "Figures and tables"). Write the captions and all text in your own words.
+%
+% Needs graphicx, siunitx, booktabs and cleveref, as in the Chua report, and the figures on the
+% graphics path:   \graphicspath{{report_figures/}}
+% A figure* (full text width) never appears on the page where it is defined: put its block a
+% paragraph or two before the first text that cites it (the Chua report's Fig. 7 lesson).
+%
+% Unit of the Sagnac slope, defined once. rad/(rad/s) is a second: change this to \unit{\second}
+% if you prefer, and the tables follow.
+\providecommand{\slopeunit}{\ensuremath{\mathrm{rad}/(\mathrm{rad\,s^{-1}})}}
+
+
+% ===== Figures =============================================================================
+
+% ---- Fig. 1, section 1.2 (setup) ---------------------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{setup.pdf}
+  \caption{[caption]%
+    % Must say: top view of the apparatus, after Fig. 1 of the manual (cite it); P1, P2 polarizers,
+    % L1, L2 coupling lenses into the two ends of the fiber, L3 the camera lens; beam 1 and beam 2
+    % travel the same loop (N turns of radius R) in opposite directions and meet again at the beam
+    % splitter; everything drawn turns with the table, about the loop's center; the sense of
+    % rotation was not recorded, so the omega arrow is schematic; the small off-center loop of
+    % task 4 is not drawn.
+  }
+  \label{fig:setup}
+\end{figure}
+
+% ---- Fig. 2, section 2.1 (rotation calibration) -------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{calibration.pdf}
+  \caption{[caption]%
+    % Must say: (a) omega = 2 pi/<T> from 5 or 8 consecutive timed turns, against the
+    % motor-controller setting S; error bars: the stopwatch uncertainty omega SD/(T sqrt(n)), smaller
+    % than the markers; solid: the linear fit used for the photographs (least squares with equal
+    % relative weights); dashed: a quadratic fit, used only as a check; ticks along the bottom: the
+    % nine settings of the photographs. (b) (omega - fit)/omega for both fits, in percent, the same
+    % error bars: the points scatter about the line by 1.2 % rms, far more than the stopwatch allows,
+    % and the table turns slower than linear at high settings. Fit results in the text, not here.
+  }
+  \label{fig:calibration}
+\end{figure}
+
+% ---- Fig. 3, section 2.2 (the patterns, full width) ---------------------------------------
+\begin{figure*}[tb]
+  \centering
+  \includegraphics[width=\textwidth]{patterns.pdf}
+  \caption{[caption]%
+    % Must say: one photograph per setting, at rest and at the nine speeds in the order taken; the
+    % photo shown is the one whose phase is the median of its setting; red channel on a gray scale,
+    % cropped around the fitted ring center (+); dashed: the fitted dark rings; omega from the linear
+    % calibration. The rings move inward as omega rises; the lower left has no fringes.
+  }
+  \label{fig:patterns}
+\end{figure*}
+
+% ---- Fig. 4, section 2.2 (rings evenly spaced in r^2) -------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{rings.pdf}
+  \caption{[caption]%
+    % Must say: intensity averaged over the sector with fringes (-75 deg to 180 deg), in 1 px rings
+    % around each photo's fitted center, for the rest photo and the top-speed photo of Fig. 3;
+    % (a) against r, (b) against r^2; dashed: the fitted dark-ring radii; arrows: the top-speed
+    % photo's ring spacings, unequal in r, equal in r^2 (P, Eq. rings).
+  }
+  \label{fig:rings}
+\end{figure}
+
+% ---- Fig. 5, section 2.3 (phase of one photo) ---------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{extraction.pdf}
+  \caption{[caption]%
+    % Must say: (a) the top-speed photo with the darkest point of each dark ring on each ray (rays
+    % every 1.5 deg over the sector with fringes; one color per ring) and the concentric circles
+    % fitted to them (dashed), center +; (b) R_m^2/P against the dark-ring number m at rest and at
+    % the top speed, with the line R_m^2 = P(m + eta) of each photo (Eq. dark rings); the intercepts
+    % differ by 0.52 fringe, i.e. Delta phi = 2 pi x 0.52 = 3.3 rad.
+  }
+  \label{fig:extraction}
+\end{figure}
+
+% ---- Fig. 6, section 2.3 (the result) -----------------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{phase_vs_omega.pdf}
+  \caption{[caption]%
+    % Must say: (a) the mean phase change of each setting's photos (ring minima) against omega from
+    % the linear calibration (error bars: the 1.2 % scatter of the timed settings about the line);
+    % solid: the linear regression through the ten points with equal weights; dashed with band: the
+    % prediction a_th omega (Eq. sagnac) with its 1 sigma band from N and R. (b) each point minus
+    % the line; error bars: the standard error of the mean of the setting's photos; shaded band:
+    % +-s, the rms distance of the points from the line (0.045 rad), which the regression uses as
+    % every point's uncertainty.
+  }
+  \label{fig:phase}
+\end{figure}
+
+% ---- Fig. 7, section 2.4 (phase-reading methods) ------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{methods.pdf}
+  \caption{[caption]%
+    % Must say: (a) the phase change of each setting by the cosine fit of the r^2 profile and by
+    % template matching to the rest profile, minus the ring-minima value; each method's phase is
+    % taken relative to its own rest mean. (b) the slope each method gives with the same
+    % regression; error bars: the regression; band: the prediction +-1 sigma.
+  }
+  \label{fig:methods}
+\end{figure}
+
+% ---- Fig. 8, section 2.6 (drift) ----------------------------------------------------------
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{drift.pdf}
+  \caption{[caption]%
+    % Must say: (a) omega of each photo against the time since the first photo: the settings were
+    % taken in increasing order, so omega and time rise together; (b) each photo's phase change
+    % minus the fitted line of Fig. 6, with a straight line fitted to each setting's photos against
+    % time.
+  }
+  \label{fig:drift}
+\end{figure}
+
+% ---- optional, section 2.4 (random pixels): include only if the paragraph on prep Q5 uses it -
+% \begin{figure}[tb]
+%   \centering
+%   \includegraphics[width=\columnwidth]{random_pixels.pdf}
+%   \caption{[caption]%
+%     % Must say: (a) slopes from ten random pixels read at fixed image positions (one
+%     % alternating least-squares fit gives every photo's phase), 1000 draws; outline: the same
+%     % pixels with each photo's own center and P; lines: ring-minima slope and prediction; 2
+%     % failed draws lie off the plot. (b) the spread (SD) of the slope between draws, and the
+%     % median fit error of one draw, against the number of pixels per draw.
+%   }
+%   \label{fig:pixels}
+% \end{figure}
+
+
+% ===== Tables ==============================================================================
+% \small and a narrower column gap keep every table inside its column; drop them if your template
+% already sets table text smaller.
+
+% ---- Table 1, section 2.1 (optional: the two calibration curves; the text can carry them) ----
+\begin{table}[tb]
+  \centering\small\setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lccc}
+    \toprule
+    Fit of $\omega(S)$ & rms scatter of the points & $\omega$ at $S = 90$ & Sagnac slope $a$ \\
+                       & (\% of $\omega$)          & (\unit{\radian\per\second}) & (\slopeunit) \\
+    \midrule
+    Linear (used)     & 1.2 & 1.813 & 1.840 \\
+    Quadratic (check) & 0.4 & 1.781 & 1.871 \\
+    \bottomrule
+  \end{tabular}
+  \caption{[caption]%
+    % Must say: both fits by least squares with equal relative weights; the timed value at S = 90
+    % is 1.772 rad/s; against the stopwatch uncertainties the line has chi^2/dof = 184/7 (the table
+    % does not follow the line to the stopwatch precision); the 1.7 % change of a between the two
+    % calibrations is the calibration part of the slope's uncertainty.
+  }
+  \label{tab:calibration}
+\end{table}
+
+% ---- Table 2, section 2.3 (the measured values per setting) --------------------------------
+\begin{table}[tb]
+  \centering\small\setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{lccccc}
+    \toprule
+    $S$ & Photos & First photo & $\omega$ & $\Delta\phi$ & $P$ \\
+        &        &             & (\unit{\radian\per\second}) & (\unit{\radian}) & ($10^5$\,px$^2$) \\
+    \midrule
+    rest & 10 & 16:21:40 & 0 & 0 & \num{1.075}\\
+    12.59 & 15 & 16:24:10 & \num{0.235\pm0.003} & \num{0.39\pm0.03} & \num{1.071}\\
+    20.74 & 15 & 16:25:44 & \num{0.402\pm0.005} & \num{0.64\pm0.02} & \num{1.058}\\
+    31.11 & 19 & 16:26:38 & \num{0.613\pm0.007} & \num{1.02\pm0.02} & \num{1.065}\\
+    44.07 & 22 & 16:27:54 & \num{0.88\pm0.01} & \num{1.59\pm0.02} & \num{1.093}\\
+    55.83 & 18 & 16:29:08 & \num{1.12\pm0.01} & \num{1.984\pm0.008} & \num{1.058}\\
+    64.00 & 16 & 16:30:16 & \num{1.28\pm0.01} & \num{2.375\pm0.008} & \num{1.094}\\
+    73.65 & 16 & 16:31:28 & \num{1.48\pm0.02} & \num{2.700\pm0.004} & \num{1.087}\\
+    82.18 & 15 & 16:32:32 & \num{1.65\pm0.02} & \num{2.958\pm0.004} & \num{1.068}\\
+    90.00 & 15 & 16:33:24 & \num{1.81\pm0.02} & \num{3.285\pm0.005} & \num{1.073}\\
+    \bottomrule
+  \end{tabular}
+  \caption{[caption]%
+    % Must say: per motor setting S, the number of photos, the time of the first (11 October 2026),
+    % omega from the linear calibration (uncertainty: the 1.2 % scatter of the timed settings about
+    % the line), the mean phase change of the photos relative to the rest mean (ring minima;
+    % uncertainty: standard error of the mean of the photos; the rest mean's 0.02 rad is common to
+    % all rows and not included), and the ring spacing P in r^2 (the median of the setting's
+    % photos). Settings in the order taken.
+  }
+  \label{tab:settings}
+\end{table}
+
+% ---- Table 3, section 2.4 (optional: the methods; Fig. 7(b) and the text can carry them) ----
+\begin{table}[tb]
+  \centering\small\setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lccc}
+    \toprule
+    Method & $a$ & $s$ & $R^2$ \\
+           & (\slopeunit) & (\unit{\radian}) & \\
+    \midrule
+    Ring minima        & \num{1.84\pm0.02} & 0.045 & 0.9986 \\
+    Cosine fit         & \num{1.88\pm0.03} & 0.053 & 0.9982 \\
+    Template matching  & \num{1.77\pm0.02} & 0.031 & 0.9993 \\
+    \bottomrule
+  \end{tabular}
+  \caption{[caption]%
+    % Must say: slope of each method's ten setting means by the same equal-weight regression
+    % (uncertainty: the regression); s, the rms distance of the points from the line; R^2. The
+    % method uncertainty is half the range of the three slopes, 0.054 (3.0 %).
+  }
+  \label{tab:methods}
+\end{table}
+
+% ---- Table 4, section 2.5 (optional: the speed of light's budget) -------------------------
+\begin{table}[tb]
+  \centering\small
+  \begin{tabular}{lc}
+    \toprule
+    Source & Relative uncertainty of $c$ \\
+    \midrule
+    Turn count $N$ & \qty{7.7}{\percent} \\
+    Phase-reading method & \qty{3.0}{\percent} \\
+    Loop radius $R$ (enters squared) & \qty{1.8}{\percent} \\
+    Calibration & \qty{1.7}{\percent} \\
+    Regression & \qty{1.3}{\percent} \\
+    \midrule
+    Total (in quadrature) & \qty{8.7}{\percent} \\
+    \bottomrule
+  \end{tabular}
+  \caption{[caption]%
+    % Must say: c = 8 pi^2 N R^2/(lambda a) = (2.8 +- 0.2) x 10^8 m/s; relative uncertainties added
+    % in quadrature (c is proportional to N R^2/a); lambda given without an uncertainty (0.16 % per
+    % nm, not included).
+  }
+  \label{tab:light}
+\end{table}
+
+% ---- Table 5, section 2.6 (uncertainty budget, full width) --------------------------------
+\begin{table*}[tb]
+  \centering\small
+  \begin{tabular}{llll}
+    \toprule
+    Source & Kind & Size & Included \\
+    \midrule
+    Photo-to-photo variation & statistical & SEM \qtyrange{0.004}{0.028}{\radian} per setting & yes (in $s$) \\
+    Table speed at a setting & statistical & \qty{1.2}{\percent} of $\omega$ & yes (in $s$) \\
+    Wander of the phase between settings & statistical & about \qty{0.04}{\radian} per setting & yes (in $s$) \\
+    Calibration curve (line vs.\ quadratic) & systematic & \qty{1.7}{\percent} of $a$ & yes \\
+    Phase-reading method & systematic & \qty{3.0}{\percent} of $a$ & yes \\
+    Turn count $N = 13\pm1$ & given & \qty{7.7}{\percent} & yes ($a_\mathrm{th}$ and $c$) \\
+    Loop radius $R = \qty{57.0\pm0.5}{\centi\metre}$ & given & \qty{1.8}{\percent} & yes ($a_\mathrm{th}$ and $c$) \\
+    Wavelength $\lambda = \qty{640}{\nano\metre}$ & not given & \qty{0.16}{\percent} per nm & no \\
+    Steady drift in time & systematic & not separable from $a$ & no \\
+    \bottomrule
+  \end{tabular}
+  \caption{[caption]%
+    % Must say: every source considered, its kind, its size, and whether it is in the quoted
+    % uncertainty. The first three enter through the regression (s); the slope's three parts
+    % (1.3 % regression, 3.0 % method, 1.7 % calibration) are added in quadrature, 3.6 %:
+    % a = 1.84 +- 0.07. N and R enter only the prediction and c. Not checked: the sign of the shift
+    % (rotation direction not recorded).
+  }
+  \label{tab:budget}
+\end{table*}

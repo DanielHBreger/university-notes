@@ -62,7 +62,8 @@ import pandas as pd
 from scipy import interpolate, ndimage, optimize
 
 from fringes import P_GUESS, S2_FIT_MAX, SMOOTH_PX, THETA_DEG, cos_model, cosine_fit, load_red
-from sagnac import calibration_part, fit_line, setting_means
+from calibration import omega_of
+from sagnac import regress, setting_means
 
 HERE = Path(__file__).resolve().parent
 MATCH_S = (2e4, 1.8e5)          # px^2, template-matching comparison range
@@ -225,13 +226,14 @@ def fourier_phases(maps, rest, width=FOURIER_WIDTH):
 # ---------------------------------------------------------------- robustness scans
 
 def slope(fr, phi, model):
-    """Sagnac slope, its fit error and sigma_x for per-frame phases phi, as sagnac.py fits them
-    (same per-setting averaging and the same weighted line). Used for the robustness scans."""
+    """Sagnac slope, its regression error and s (the rms distance of the setting means from the
+    line) for per-frame phases phi, as sagnac.py fits them: the same per-setting averaging and the
+    same equal-weight regression, omega from the calibration line (model: its coefficients). Used
+    for the robustness scans."""
     tab = setting_means(fr.assign(x=phi), 'x')
-    S, y, sem = tab.S.to_numpy(), tab.phi.to_numpy(), tab['sem'].to_numpy()
-    omega = calibration_part(S, y, None, model)[0]
-    a, _, cov, _, sx, *_ = fit_line(omega, y, sem, model['eps'])
-    return a, float(np.sqrt(cov[0, 0])), sx
+    S = tab.S.to_numpy()
+    r = regress(np.where(S > 0, omega_of(S, model), 0.0), tab.dphi.to_numpy())
+    return r['a'], r['u_a'], r['s']
 
 
 def illustration(fr, s, M, T, D, phi_aia, delta, a, c, d, maps, G, Z_ref, path):
@@ -330,7 +332,7 @@ def main():
     s, M = z['s'], z['profiles']                       # s: bin centres (px^2); M: photographs x bins
     assert list(z['files']) == list(fr.file), 'profiles and frame table differ: rerun fringes.py'
     rest = (fr.S == 0).to_numpy()
-    model = json.loads((HERE / 'calibration.json').read_text())['conversion']
+    model = json.loads((HERE / 'calibration.json').read_text())['line']['coef']
 
     # 2-4. The three methods. The Fourier method needs the images themselves, resampled on
     #      (theta, r^2) about each photograph's own ring centre from fringes.py.
@@ -358,9 +360,9 @@ def main():
     f_scan = [(wd, *slope(fr, relative_to_rest(fr, fourier_phases(maps, rest, wd)[0]), model))
               for wd in FOURIER_SCAN]
     (HERE / 'methods.json').write_text(json.dumps(dict(
-        template_scan=[dict(range=m, slope=k, u_fit=u, sigma_x=x) for m, k, u, x in t_scan],
-        aia_scan=[dict(s_max=m, gain=g, slope=k, u_fit=u, sigma_x=x) for m, g, k, u, x in a_scan],
-        fourier_scan=[dict(width=wd, slope=k, u_fit=u, sigma_x=x) for wd, k, u, x in f_scan]),
+        template_scan=[dict(range=m, slope=k, u_fit=u, s=x) for m, k, u, x in t_scan],
+        aia_scan=[dict(s_max=m, gain=g, slope=k, u_fit=u, s=x) for m, g, k, u, x in a_scan],
+        fourier_scan=[dict(width=wd, slope=k, u_fit=u, s=x) for wd, k, u, x in f_scan]),
         indent=1, default=float))
 
     # Text report (methods.txt); resid = how far the AIA model is from the profiles, in counts
@@ -369,8 +371,8 @@ def main():
          f'Template matching: template = mean of the {rest.sum()} rest profiles; its own period '
          f'P_T = {P_T / 1e3:.2f}k px^2 (minima median {fr.P_px2.median() / 1e3:.2f}k); shifts D = '
          f'{D.min() / 1e3:.1f} to {D.max() / 1e3:.1f}k px^2 over {MATCH_S[0]:.0f}-{MATCH_S[1]:.0f} px^2.',
-         '  slope against the comparison range (fit error, sigma_x):']
-    L += [f'    {m[0]:7.0f}-{m[1]:6.0f} px^2: {k:.3f} +- {u:.3f} rad/(rad/s), sigma_x = {x:.3f} rad'
+         '  slope against the comparison range (regression error, s):']
+    L += [f'    {m[0]:7.0f}-{m[1]:6.0f} px^2: {k:.3f} +- {u:.3f} rad/(rad/s), s = {x:.3f} rad'
           for m, k, u, x in t_scan]
     L += [f'AIA: {len(fr)} frames x {len(s)} bins, converged in {n_it} iterations; rms residual '
           f'{np.sqrt(np.mean(resid ** 2)):.2f} counts; frame phases span {np.ptp(phi_aia):.2f} rad '
@@ -379,7 +381,7 @@ def main():
           '(bins with > 20 % of the peak modulation).',
           '  slope against the largest s used, without and with a brightness factor per frame:']
     L += [f'    s < {m:7.0f} px^2, {"gain " if g else "plain"}: {k:.3f} +- {u:.3f} rad/(rad/s), '
-          f'sigma_x = {x:.3f} rad' for m, g, k, u, x in a_scan]
+          f's = {x:.3f} rad' for m, g, k, u, x in a_scan]
     L += ['  AIA assumes that only the phase changes between frames. On synthetic profiles '
           '(tests/test_methods.py) it recovers a 3.3 rad sweep to 0.01 rad; a 5 % brightness drift '
           'leaves the slope right but puts single frames off by up to 0.1 rad, and a 1.7 % '
@@ -390,8 +392,8 @@ def main():
           f'({THETA_DEG[0]:.0f} to {THETA_DEG[1]:.0f} deg, r^2 < {S2_FIT_MAX:.0f} px^2) about each '
           f'frame\'s ring centre; sideband sigma = {FOURIER_WIDTH} x carrier; rest frames scatter by '
           f'{phi_f[rest].std(ddof=1):.3f} rad.',
-          '  slope against the sideband width (fit error, sigma_x):']
-    L += [f'    width {wd:.2f} x carrier: {k:.3f} +- {u:.3f} rad/(rad/s), sigma_x = {x:.3f} rad'
+          '  slope against the sideband width (regression error, s):']
+    L += [f'    width {wd:.2f} x carrier: {k:.3f} +- {u:.3f} rad/(rad/s), s = {x:.3f} rad'
           for wd, k, u, x in f_scan]
     L += ['Per-frame phases in methods_frames.csv; statistics and the comparison with the other '
           'methods in sagnac.txt.']

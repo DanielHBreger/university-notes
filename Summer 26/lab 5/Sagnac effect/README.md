@@ -1,13 +1,15 @@
 # Sagnac effect, lab 5
 
 Analysis of the 11 October 2026 measurements against the Sagnac manual (minimum tasks 1-3 and 5) and
-Schwartz, Eur. J. Phys. 38, 015301 (2017). Numbers and their meaning are in `RESULTS.md`.
+Schwartz, Eur. J. Phys. 38, 015301 (2017). Numbers and their meaning are in `RESULTS.md` (short
+version `SUMMARY.md`); the report material is `report_figures/`, `REPORT_figures_tables.tex`,
+`REPORT_TODO.md` and `PLAN_CHECKLIST.md`.
 
 ## Data
 
-- `Rotation calibration.csv`: times of consecutive single turns of the table, taken as
-  stopwatch splits: 5 turns at each of the five lowest speed settings, 8 at the four highest
-  (columns `turn 1` ... `turn 10`, empty cells skipped). `Speed` is the motor controller setting S.
+- `Rotation calibration.csv`: times of consecutive single turns of the table: 5 turns at each of
+  the five lowest speed settings, 8 at the four highest (columns `turn 1` ... `turn 10`, empty cells
+  skipped). `Speed` is the motor controller setting S.
 - `Measurements/<S>/<YYYYMMDDhhmmss>.png`: photographs of the fringe pattern with the fibre loop
   centred on the axis, 10-22 per setting, S = 0 (at rest), 12.59, 20.74, 31.11, 44.07, 55.83, 64.00,
   73.65, 82.18, 90. 1920x1080 RGBA. Only the red channel carries light (max 239 counts, nothing
@@ -23,31 +25,29 @@ Python 3.11+ with numpy, scipy, pandas, matplotlib and Pillow; LaTeX is used for
 when it is installed):
 
 ```
-python calibration.py   # task 1 -> calibration.json, calibration.txt, figures/calibration
-python fringes.py       # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
-python methods.py       # template matching, AIA, 2D Fourier -> methods_frames.csv, methods.txt/.json, figures/methods_illustration (figure*) (a few minutes)
-python sagnac.py        # task 3, all methods, speed of light -> sagnac_speeds.csv, sagnac.txt, sagnac.json, figures/phase_vs_omega, figures/methods_comparison
-python patterns.py      # task 2 -> figures/patterns (figure*), figures/profiles
-python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the three methods, report-form rounding
+python calibration.py     # task 1 -> calibration.json, calibration.txt
+python fringes.py         # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
+python methods.py         # template matching (+ AIA and 2D Fourier checks) -> methods_frames.csv, methods.txt/.json (a few minutes)
+python sagnac.py          # tasks 3 and 5, the speed of light -> sagnac_speeds.csv, sagnac.txt, sagnac.json
+python report_figures.py  # report_figures/*.pdf, *.png (about a minute)
+python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the phase methods, report-form rounding, Eq. (5) for c
 ```
 
 `fringes.py`'s starting centre, fringe-period guess and angular sector (`START`, `P_GUESS`,
-`THETA_DEG`) are set for the 11 October camera view.
-
-Figures follow the lab report style (`report_style.py`, copied unchanged from `chaotic circuit/`):
-column width unless noted, vector PDF plus 600 dpi PNG, no titles, no fit statistics in the image.
+`THETA_DEG`) are set for the 11 October camera view. Figures follow the lab report style
+(`report_style.py`, copied unchanged from `chaotic circuit/`): column width unless noted, vector PDF
+plus 600 dpi PNG, no titles, no fit statistics in the image.
 
 ## Method
 
-**Calibration** (`calibration.py`). The turns are stopwatch splits, so neighbouring laps share
-an endpoint. The mean lap is (t_n - t_0)/n with stopwatch uncertainty SD/sqrt(n(n+1)). The laps'
-lag-1 correlation (-0.34) agrees with this model (simulated -0.43 +- 0.09); independent laps
-would give -0.16. omega = 2 pi/T. The settings scatter about any smooth curve by more than the
-stopwatch allows. This is modelled as a reproducibility eps of the table speed at a fixed setting
-(a fraction of omega, added in quadrature), with eps set by chi2 = dof for the quadratic fit. The
-manual's linear model is reported but rejected even with eps. The quadratic converts the
-measurement settings to omega with two uncertainty parts: the curve's covariance (correlated
-across settings) and eps omega (independent per setting).
+**Calibration** (`calibration.py`). Per setting, T is the mean of the timed turns, u(T) = SD/sqrt(n),
+omega = 2 pi/T (stopwatch uncertainty 0.1-0.5 % of omega). The line omega = k S + omega0 is fitted
+by least squares with each point weighted by 1/omega^2 (equal relative weight per setting, since the
+scatter about any smooth curve is a roughly constant fraction of omega). The timed points scatter
+about the line by 1.2 % rms, far more than the stopwatch allows: the table turns slower than linear
+at high settings (2.3 % below the line at S = 90). The photos use the line, as task 1 asks, with the
+1.2 % scatter as the uncertainty of omega at a setting. A quadratic, which fits to 0.4 %, is the
+check: it raises the Sagnac slope by 1.7 %, which is the calibration part of the slope's uncertainty.
 
 **Fringe phase** (`fringes.py`). A Gaussian beam carries the phase k r^2/(2R(z)). The two output
 beams have different wavefront radii R1, R2 at the camera, so the fringes are rings with phase
@@ -59,62 +59,57 @@ In each frame, the minimum of every dark ring is found along rays over the secto
 (-75 to 180 deg; the lower left has none). One centre and the ring radii come from a
 concentric-circle fit to these minima. s_m = R_m^2 regressed on ring order m gives P and phi_c,
 the phase at the ring centre. This is the manual's Eq. (7) (minimum shift over local fringe
-period, averaged over minima) done in r^2, where the period is the same for every ring. It is
-the r^2 version of Schwartz's Eq. (5). Because Delta phi = 2 pi Delta s / P is a ratio, no
+period, averaged over minima) done in r^2, where the period is the same for every ring, and the
+r^2 version of Schwartz's Eq. (5). Because Delta phi = 2 pi Delta s / P is a ratio, no
 pixel-to-length calibration is needed, and minimum positions do not depend on the camera's
 intensity response.
 
 Second method (prep Q5, the cosine fit): the intensity averaged over the same sector, in bins of
 s about the same centre (s < 2.6e5 px^2, the three dark rings), is fitted with
 C e^(-s/sC) + B e^(-s/sB) cos(2 pi s/P + phi) + D. The two exponentials are the envelopes of two
-Gaussian beams of different size, and D is the dark floor. phi is the same phase at the ring
-centre. This method uses every bin, but it relies on the envelope model and on a linear camera
-response; the minima rely on neither.
+Gaussian beams of different size, and D is a floor. phi is the same phase at the ring centre. This
+method uses every bin, but it relies on the envelope model and on a linear camera response; the
+minima rely on neither.
 
-Three more methods (`methods.py`):
-- **Template matching:** each r^2 profile is matched to the averaged rest profile, shifted by D
-  and scaled (gain and offset free). The phase is 2 pi D / P_T, where P_T is the template's own
-  period. It uses no fringe model.
-- **Phase shifting with unknown steps (AIA, Wang & Han 2004):** every r^2 bin brightens and dims
-  sinusoidally with the frame's phase. Alternating least squares finds each bin's sinusoid and
-  each frame's phase together, so no period, envelope or cosine shape in r is assumed. It
-  assumes that only the phase changes between frames.
-- **2D Fourier sideband (Takeda),** adapted from a friend's `sagnac_2d.py`. A single carrier
-  does not fit rings, so each image is first resampled on (theta, r^2) about its ring centre,
-  where the rings become straight fringes. Then the slow background is removed, the positive
-  sideband is kept with a Gaussian filter, and the phase relative to rest is
-  arg sum Z_k conj(Z_rest) over the map.
+Third method (`methods.py`, template matching): each r^2 profile is matched to the averaged rest
+profile, shifted by D and scaled (gain and offset free). The phase is 2 pi D / P_T, where P_T is the
+template's own period. It uses no fringe model but reads an average phase over its window, so a
+change of the fringe period between frames enters it. `methods.py` also runs two further checks
+(AIA phase shifting, 2D Fourier sideband) that the final analysis does not use.
 
-These three read an average phase over their window, not the phase at the ring centre, so a
-change of the fringe period between frames enters them. Every method goes through the same
-averaging and fit in `sagnac.py` and is compared with the minima frame by frame, since all of
-them read the same photographs. The robustness scans (other ranges and windows, AIA with a
-per-frame brightness factor, other sideband widths) are in `methods.txt`.
-`tests/test_methods.py` checks the three new methods on synthetic data.
+**Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases, SEM = SD/sqrt(n).
+Ordinary least-squares line Delta phi = a omega + b through the ten setting means (Schwartz Eq. 7):
+every point's uncertainty is s, the rms distance of the points from the line, and
+u(a) = s/sqrt(sum (omega - mean)^2). Weighted by the photos' SEM instead, the line gives
+chi2/dof = 197/8: the settings differ five times more than the photo noise allows, because the
+phase wanders slowly, so the regression's own s is the right uncertainty. The slope's uncertainty
+has three parts added in quadrature: the regression (1.3 %), the phase-reading method (half the
+range of the three methods, 3.0 %) and the calibration (line against quadratic, 1.7 %).
+Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5), independent of where the axis lies (Schwartz;
+prep Q8) and of the fibre's index (prep Q10).
 
-**Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases, u = SD/sqrt(n).
-Weighted line phi = a omega + b with per-setting error sqrt(SEM^2 + (a eps omega)^2 + sigma_x^2).
-The speed reproducibility enters as an error in omega (effective variance, iterated on a). With
-SEM and reproducibility alone the line is rejected (chi2 = 62, dof = 8, p = 2e-10): the phase
-wanders on time scales longer than one setting's photographs. sigma_x = 0.045 rad per setting is
-set by chi2 = dof. The slope's fit and calibration-curve uncertainties are given separately; the
-curve covariance is propagated through the fit. Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5),
-independent of where the axis lies (Schwartz; prep Q8) and of the fibre's index (prep Q10).
-
-**Speed of light** (`sagnac.py`). Eq. (5) solved for c with the measured slope (minima):
-c = 8 pi^2 N R^2/(lambda a). The slope's parts (fit, calibration curve, method) carry over with the
-same relative size (c ~ 1/a); N and R enter as given; lambda has no uncertainty given and is left out,
-as for a_th. Since c/c_def = a_th/a, this is the theory comparison read the other way. The phase
-fixes the product lambda c (= c^2/nu), so c needs the wavelength; a known laser frequency would give
-c = sqrt(8 pi^2 N R^2 nu/a) instead.
+**Speed of light** (`sagnac.py`). Eq. (5) solved for c with the measured slope:
+c = 8 pi^2 N R^2/(lambda a). The slope's parts carry over with the same relative size (c ~ 1/a);
+N and R enter as given; lambda has no uncertainty given and is left out. Since c/c_def = a_th/a,
+this is the theory comparison read the other way.
 
 ## Conventions
 
-- Every number carries its uncertainty and its kind: fit (statistical), SEM of frames,
-  calibration curve, speed reproducibility, or given (N, R). The wavelength uncertainty was not
-  given; it is reported as missing, not set to zero.
-- Every chi2 comes with dof and p.
-- `*.txt` keep more digits. The "report form" lines (`sagnac.round1`) round the uncertainty to
-  one significant figure and the value to the same digit, half up on the decimal digits (2.25
-  becomes 2.3, not the 2.2 of float round()). Comparisons are computed from unrounded values.
-- Not covered by the data: the rotation direction (sign).
+- Every number carries its uncertainty and its kind: statistical (regression), systematic
+  (method, calibration) or given (N, R). The wavelength uncertainty was not given; it is reported
+  as missing, not set to zero.
+- Report form (`sagnac.round1`): the uncertainty to one significant figure and the value to the
+  same digit, half up on the decimal digits. Comparisons are computed from unrounded values.
+- Not covered by the data: the rotation direction (sign), a steady drift in time.
+
+## Earlier stages, kept for the record
+
+The analysis was presented on 19 October (`presentation_slides/`, PNG slides and presenter notes)
+and revised for the report on 22 October (this pipeline: simpler uncertainty treatment, same
+numbers). The presentation's own code (`presentation_slides/source/`, which reads
+`sagnac_update/`) expects the calibration file of that stage; to rerun it, copy
+`previous_reports/calibration_eps_2026-10-13.json` to `calibration.json` first. The folders
+`figures/` (quadratic-calibration figures of 13 October) and `sagnac_update/` (the linear-calibration
+stage of 18 October), the earlier results documents in `previous_reports/` and
+`presentation_slides/source/numbers.json` are superseded by `sagnac.txt` and `RESULTS.md`.
+`docs/` explains each script.
