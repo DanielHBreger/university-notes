@@ -9,7 +9,7 @@ Sources: `Documents/Sagnac_manual.pdf` (minimum tasks and Fig. 1 on p. 12, fiber
 | Manual | Status | Description | Notes |
 |---|---|---|---|
 | Laser, polarizer P₁, beam splitter, lenses L₁ and L₂ into the two fiber ends, P₂, L₃, camera; everything on the rotating table | done | As used on 11 October; `report_figures/setup.pdf` redraws the manual's Fig. 1 (without the small loop). | The polarizer orientations are not in the data files. |
-| Large loop: R = 57.0 ± 0.5 cm, 13 ± 1 turns, centered on the axis | done, caveat | The values the analysis uses (`sagnac.py` constants, `uncertainty/instrument_inputs.json`). | Given, not measured by us. Whether ±1 turn is a standard uncertainty or a bound is not stated; N is the largest uncertainty of the comparison (7.7 %), and the slope fixes N = 13.8 ± 0.6. |
+| Large loop: R = 57.0 ± 0.5 cm, 13 ± 1 turns, centered on the axis | done, caveat | The values the analysis uses (`sagnac.py` constants, `uncertainty/instrument_inputs.json`). | Given, not measured by us. Whether ±1 turn is a standard uncertainty or a bound is not stated; N is the largest uncertainty of the comparison (7.7 %), and the slope fixes N = 13.6 ± 0.5. |
 | Small loop: R = 15.5 ± 0.1 cm, 46 ± 1 turns (task 4) | not done | | Skipped on the instructor's instruction. |
 | λ = 640 nm | done, caveat | Used as given. | No tolerance given and the laser model was not recorded: λ is left out of every uncertainty (0.16 % of a_th and c per nm). |
 | Fiber SMF-28e (manual text) / SMF-28e+ (datasheet, preparation sheet) | done, caveat | Datasheet values: core 8.2 µm (a = 4.1 µm), NA 0.14, cable cutoff ≤ 1260 nm. | The two names differ; the report should say SMF-28e+ once with the note. At 640 nm the fiber is not single-mode (V = 5.6). |
@@ -19,11 +19,11 @@ Sources: `Documents/Sagnac_manual.pdf` (minimum tasks and Fig. 1 on p. 12, fiber
 
 | Task | Status | Description | Notes |
 |---|---|---|---|
-| **1** Measure the (linear) ratio between the voltage on the motor and its angular velocity | done, caveat | `calibration.py` → `calibration.json/.txt`: 5 or 8 timed turns at nine settings S = 5.78–90; u(T) = SD/√n; the line ω = kS + ω₀ by least squares with equal relative weights: k = 0.0204 ± 0.0001 rad s⁻¹ per unit S, ω₀ = −0.021 ± 0.002 rad/s; the points scatter about it by 1.2 % rms. Report 2.1, Fig. 2. | The variable is the controller setting S, which sets the motor voltage; no voltage was read. The line does not fit to the stopwatch precision (χ²/dof = 184/7; 2.3 % high at S = 90) but is used, as the task asks; the quadratic check changes the Sagnac slope by 1.7 %, which is the calibration part of its uncertainty. Calibration settings differ from the photo settings (only S = 90 is common). |
+| **1** Measure the (linear) ratio between the voltage on the motor and its angular velocity | done, caveat | `calibration.py` → `calibration.json/.txt`: 5 or 8 timed turns at nine settings S = 5.78–90; u(T) from the lap scatter and the 0.2 s reaction time of the presses; the line ω = kS + ω₀ by weighted least squares: k = 0.0206 ± 0.0001 rad s⁻¹ per unit S, ω₀ = −0.0229 ± 0.0006 rad/s (covariance enlarged by χ²/dof = 3.2). Report 2.1, Fig. 2. | The variable is the controller setting S, which sets the motor voltage; no voltage was read. The table turns slower than linear at high settings (the line is 3.2 % above the timed ω at S = 90); the line is used, as the task asks, and the bend is stated as a limitation. Calibration settings differ from the photo settings (only S = 90 is common). |
 | **2** Spin the system at different speeds and picture the interference pattern at each | done | 161 photographs: rest (10) and nine settings S = 12.59–90 (15–22 each), 16:21–16:33. Report 2.2, Fig. 3 (one per setting), Fig. 4. | Taken in increasing order of S with rest photos only at the start, which makes a steady drift inseparable from the slope (task 5). |
-| **3** Deduce the phase shift and compare with theory | done | `fringes.py` (ring finder, phase at the ring center), `sagnac.py` (setting means, regression): a = 1.84 ± 0.07 rad/(rad s⁻¹) against a_th = 1.7 ± 0.1, 0.7σ, p = 0.51. Report 2.3, Figs. 5–6, Table 2. | The manual's Eq. 7 (minimum shift over local fringe period, averaged) is done in r², where every ring has the same period; this is also Schwartz's Eq. 5. The line is Schwartz's Eq. 7 (equal-weight regression). |
+| **3** Deduce the phase shift and compare with theory | done | `fringes.py` (ring finder, phase at the ring center), `sagnac.py` (setting means, regression): a = 1.82 ± 0.06 rad/(rad s⁻¹) against a_th = 1.7 ± 0.1, 0.6σ, p = 0.57. Report 2.3, Figs. 5–6, Table 2. | The manual's Eq. 7 (minimum shift over local fringe period, averaged) is done in r², where every ring has the same period; this is also Schwartz's Eq. 5. The line is Schwartz's Eq. 7 (equal-weight regression). |
 | **4** Repeat for the off-centered small circle | not done | | Instructor's instruction. The axis-independence it would test is Schwartz's result (his Fig. 4); the report can say so in one sentence. |
-| **5** Evaluate the measurement errors | done | RESULTS Task 5 (budget, drift), `uncertainty/REPORT.md` (every component with its model and kind). Report 2.6, Table 5, Fig. 8. | Three parts of the slope's uncertainty (regression 1.3 %, method 3.0 %, calibration 1.7 %). Not covered by the quoted uncertainty: a steady drift in time, λ, the sign of the shift (rotation direction not recorded). |
+| **5** Evaluate the measurement errors | done | RESULTS Task 5 (budget, drift), `uncertainty/REPORT.md` (every component with its model and kind). Report 2.6, Table 5, Fig. 8. | Three parts of the slope's uncertainty (regression 1.3 %, method 2.9 %, calibration 1.5 %: the line's prediction uncertainty). Not covered by the quoted uncertainty: the 3.2 % bend at the top calibration setting beyond its rms, a steady drift in time, λ, the sign of the shift (rotation direction not recorded). |
 
 ## The manual's analysis instructions
 
@@ -65,15 +65,15 @@ These were answered before the experiment (pre-report) and are not part of the a
 | Paper | Status | Description | Notes |
 |---|---|---|---|
 | Phase from the dark-fringe shift scaled by the fringe width, Eq. 5 | done | In r², with the width (P) measured in every photo | Schwartz notes that ring fringes have different widths in r; in r² they do not. |
-| Slopes by linear regression with standard errors, Eq. 7 | done | Equal-weight regression of the ten setting means; slope error from the points | Weighting by the photos' SEM is rejected (χ²/dof = 197/8), which is why the regression is the right tool here. |
-| Comparison with Eq. 1 | done | a/a_th = 1.06 ± 0.09 | Schwartz: 1.304 ± 0.038 against 1.344 ± 0.006 on his large ring. |
+| Slopes by linear regression with standard errors, Eq. 7 | done | Equal-weight regression of the ten setting means; slope error from the points | Weighting by the photos' SEM is rejected (χ²/dof = 197/8), which is why the regression is the right tool here. Figures show the data and the fits only, no residual panels. |
+| Comparison with Eq. 1 | done | a/a_th = 1.05 ± 0.09 | Schwartz: 1.304 ± 0.038 against 1.344 ± 0.006 on his large ring. |
 
 ## Beyond the manual
 
 | Item | Where | Why it is there |
 |---|---|---|
-| Speed of light from the slope, c = (2.8 ± 0.2) × 10⁸ m/s; N read the other way, 13.8 ± 0.6 | `sagnac.py`, RESULTS | The same comparison as a/a_th, shown as a speed; not an independent test. |
-| Relative weights (1/ω²) in the calibration line | `calibration.py`, `uncertainty/REPORT.md` 2 | The scatter about any curve is a constant fraction of ω; an unweighted line would miss the slowest point by 13 %. |
+| Speed of light from the slope, c = (2.9 ± 0.2) × 10⁸ m/s; N read the other way, 13.6 ± 0.5 | `sagnac.py`, RESULTS | The same comparison as a/a_th, shown as a speed; not an independent test. |
+| Reaction time in the stopwatch uncertainty; weighted calibration line with χ²/dof-scaled covariance | `calibration.py`, `uncertainty/REPORT.md` 1–2 | The standard treatment of a timed calibration. |
 | Ring model in r² and the ring finder | `fringes.py`, `docs/fringes.md` | The pattern is rings, evenly spaced in r². |
 | Cosine fit, template matching, fixed pixels (1000 draws) | `fringes.py`, `methods.py`, `presentation_slides/source/random_points_scan.py` | Method uncertainty; prep Q5. |
 | Drift check (joint fit with time; trends per setting in Fig. 8) | `sagnac.py`, `report_figures.py` | The settings were taken in increasing order. |

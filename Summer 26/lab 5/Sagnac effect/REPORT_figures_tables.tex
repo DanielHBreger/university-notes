@@ -38,13 +38,13 @@
   \centering
   \includegraphics[width=\columnwidth]{calibration.pdf}
   \caption{[caption]%
-    % Must say: (a) omega = 2 pi/<T> from 5 or 8 consecutive timed turns, against the
-    % motor-controller setting S; error bars: the stopwatch uncertainty omega SD/(T sqrt(n)), smaller
-    % than the markers; solid: the linear fit used for the photographs (least squares with equal
-    % relative weights); dashed: a quadratic fit, used only as a check; ticks along the bottom: the
-    % nine settings of the photographs. (b) (omega - fit)/omega for both fits, in percent, the same
-    % error bars: the points scatter about the line by 1.2 % rms, far more than the stopwatch allows,
-    % and the table turns slower than linear at high settings. Fit results in the text, not here.
+    % Must say: omega = 2 pi/<T> from 5 or 8 consecutive timed turns, against the motor-controller
+    % setting S; error bars: lap scatter and the 0.2 s reaction time of the presses, mostly smaller
+    % than the markers; line: the weighted least-squares fit omega = k S + omega0 used for the
+    % photographs; band: its +-1 sigma prediction uncertainty (the line's own and the 1.4 % rms
+    % scatter of the timed settings about it), which is the uncertainty of omega at any photo
+    % setting; ticks along the bottom: the nine settings of the photographs. Fit results in the
+    % text, not here.
   }
   \label{fig:calibration}
 \end{figure}
@@ -94,13 +94,11 @@
   \centering
   \includegraphics[width=\columnwidth]{phase_vs_omega.pdf}
   \caption{[caption]%
-    % Must say: (a) the mean phase change of each setting's photos (ring minima) against omega from
-    % the linear calibration (error bars: the 1.2 % scatter of the timed settings about the line);
+    % Must say: the mean phase change of each setting's photos (ring minima) against omega from
+    % the linear calibration; error bars: the calibration line's prediction uncertainty in omega
+    % (1.45 %) and the standard error of the mean of the photos in Delta phi;
     % solid: the linear regression through the ten points with equal weights; dashed with band: the
-    % prediction a_th omega (Eq. sagnac) with its 1 sigma band from N and R. (b) each point minus
-    % the line; error bars: the standard error of the mean of the setting's photos; shaded band:
-    % +-s, the rms distance of the points from the line (0.045 rad), which the regression uses as
-    % every point's uncertainty.
+    % prediction a_th omega (Eq. sagnac) with its 1 sigma band from N and R.
   }
   \label{fig:phase}
 \end{figure}
@@ -126,7 +124,7 @@
     % Must say: (a) omega of each photo against the time since the first photo: the settings were
     % taken in increasing order, so omega and time rise together; (b) each photo's phase change
     % minus the fitted line of Fig. 6, with a straight line fitted to each setting's photos against
-    % time.
+    % time: the phase wanders within and between settings.
   }
   \label{fig:drift}
 \end{figure}
@@ -150,23 +148,28 @@
 % \small and a narrower column gap keep every table inside its column; drop them if your template
 % already sets table text smaller.
 
-% ---- Table 1, section 2.1 (optional: the two calibration curves; the text can carry them) ----
+% ---- Table 1, section 2.1 (optional: the timed settings; Fig. 2 and the text can carry them) --
 \begin{table}[tb]
   \centering\small\setlength{\tabcolsep}{4pt}
-  \begin{tabular}{lccc}
+  \begin{tabular}{cccc}
     \toprule
-    Fit of $\omega(S)$ & rms scatter of the points & $\omega$ at $S = 90$ & Sagnac slope $a$ \\
-                       & (\% of $\omega$)          & (\unit{\radian\per\second}) & (\slopeunit) \\
+    $S$ & $n$ & $\langle T\rangle$ (\unit{\second}) & $\omega$ (\unit{\radian\per\second}) \\
     \midrule
-    Linear (used)     & 1.2 & 1.813 & 1.840 \\
-    Quadratic (check) & 0.4 & 1.781 & 1.871 \\
+    5.78  & 5 & \num{65.45\pm0.09} & \num{0.0960\pm0.0001} \\
+    14.67 & 5 & \num{22.33\pm0.07} & \num{0.2813\pm0.0009} \\
+    25.66 & 5 & \num{12.42\pm0.06} & \num{0.506\pm0.002} \\
+    36.63 & 5 & \num{8.60\pm0.06}  & \num{0.730\pm0.005} \\
+    45.09 & 5 & \num{6.92\pm0.06}  & \num{0.908\pm0.008} \\
+    56.03 & 8 & \num{5.56\pm0.04}  & \num{1.129\pm0.008} \\
+    68.85 & 8 & \num{4.56\pm0.04}  & \num{1.38\pm0.01} \\
+    79.21 & 8 & \num{3.99\pm0.04}  & \num{1.57\pm0.02} \\
+    90.00 & 8 & \num{3.55\pm0.04}  & \num{1.77\pm0.02} \\
     \bottomrule
   \end{tabular}
   \caption{[caption]%
-    % Must say: both fits by least squares with equal relative weights; the timed value at S = 90
-    % is 1.772 rad/s; against the stopwatch uncertainties the line has chi^2/dof = 184/7 (the table
-    % does not follow the line to the stopwatch precision); the 1.7 % change of a between the two
-    % calibrations is the calibration part of the slope's uncertainty.
+    % Must say: n consecutive turns timed at each controller setting S; <T> the mean turn time with
+    % u(T)^2 = (SD/sqrt(n))^2 + (sqrt(2) sigma_r/n)^2, sigma_r = 0.2 s the reaction time of a press
+    % (only the first and last press set the mean of consecutive laps); omega = 2 pi/<T>.
   }
   \label{tab:calibration}
 \end{table}
@@ -180,21 +183,22 @@
         &        &             & (\unit{\radian\per\second}) & (\unit{\radian}) & ($10^5$\,px$^2$) \\
     \midrule
     rest & 10 & 16:21:40 & 0 & 0 & \num{1.075}\\
-    12.59 & 15 & 16:24:10 & \num{0.235\pm0.003} & \num{0.39\pm0.03} & \num{1.071}\\
-    20.74 & 15 & 16:25:44 & \num{0.402\pm0.005} & \num{0.64\pm0.02} & \num{1.058}\\
-    31.11 & 19 & 16:26:38 & \num{0.613\pm0.007} & \num{1.02\pm0.02} & \num{1.065}\\
+    12.59 & 15 & 16:24:10 & \num{0.236\pm0.003} & \num{0.39\pm0.03} & \num{1.071}\\
+    20.74 & 15 & 16:25:44 & \num{0.404\pm0.006} & \num{0.64\pm0.02} & \num{1.058}\\
+    31.11 & 19 & 16:26:38 & \num{0.617\pm0.009} & \num{1.02\pm0.02} & \num{1.065}\\
     44.07 & 22 & 16:27:54 & \num{0.88\pm0.01} & \num{1.59\pm0.02} & \num{1.093}\\
-    55.83 & 18 & 16:29:08 & \num{1.12\pm0.01} & \num{1.984\pm0.008} & \num{1.058}\\
-    64.00 & 16 & 16:30:16 & \num{1.28\pm0.01} & \num{2.375\pm0.008} & \num{1.094}\\
-    73.65 & 16 & 16:31:28 & \num{1.48\pm0.02} & \num{2.700\pm0.004} & \num{1.087}\\
-    82.18 & 15 & 16:32:32 & \num{1.65\pm0.02} & \num{2.958\pm0.004} & \num{1.068}\\
-    90.00 & 15 & 16:33:24 & \num{1.81\pm0.02} & \num{3.285\pm0.005} & \num{1.073}\\
+    55.83 & 18 & 16:29:08 & \num{1.13\pm0.02} & \num{1.984\pm0.008} & \num{1.058}\\
+    64.00 & 16 & 16:30:16 & \num{1.29\pm0.02} & \num{2.375\pm0.008} & \num{1.094}\\
+    73.65 & 16 & 16:31:28 & \num{1.49\pm0.02} & \num{2.700\pm0.004} & \num{1.087}\\
+    82.18 & 15 & 16:32:32 & \num{1.67\pm0.02} & \num{2.958\pm0.004} & \num{1.068}\\
+    90.00 & 15 & 16:33:24 & \num{1.83\pm0.03} & \num{3.285\pm0.005} & \num{1.073}\\
     \bottomrule
   \end{tabular}
   \caption{[caption]%
     % Must say: per motor setting S, the number of photos, the time of the first (11 October 2026),
-    % omega from the linear calibration (uncertainty: the 1.2 % scatter of the timed settings about
-    % the line), the mean phase change of the photos relative to the rest mean (ring minima;
+    % omega from the linear calibration (uncertainty: the line's prediction uncertainty, the
+    % line's own and the scatter of the timed settings about it, common to all settings), the
+    % mean phase change of the photos relative to the rest mean (ring minima;
     % uncertainty: standard error of the mean of the photos; the rest mean's 0.02 rad is common to
     % all rows and not included), and the ring spacing P in r^2 (the median of the setting's
     % photos). Settings in the order taken.
@@ -210,15 +214,15 @@
     Method & $a$ & $s$ & $R^2$ \\
            & (\slopeunit) & (\unit{\radian}) & \\
     \midrule
-    Ring minima        & \num{1.84\pm0.02} & 0.045 & 0.9986 \\
-    Cosine fit         & \num{1.88\pm0.03} & 0.053 & 0.9982 \\
-    Template matching  & \num{1.77\pm0.02} & 0.031 & 0.9993 \\
+    Ring minima        & \num{1.82\pm0.02} & 0.044 & 0.9987 \\
+    Cosine fit         & \num{1.86\pm0.03} & 0.053 & 0.9982 \\
+    Template matching  & \num{1.75\pm0.02} & 0.031 & 0.9993 \\
     \bottomrule
   \end{tabular}
   \caption{[caption]%
     % Must say: slope of each method's ten setting means by the same equal-weight regression
     % (uncertainty: the regression); s, the rms distance of the points from the line; R^2. The
-    % method uncertainty is half the range of the three slopes, 0.054 (3.0 %).
+    % method uncertainty is half the range of the three slopes, 0.054 (2.9 %).
   }
   \label{tab:methods}
 \end{table}
@@ -231,16 +235,16 @@
     Source & Relative uncertainty of $c$ \\
     \midrule
     Turn count $N$ & \qty{7.7}{\percent} \\
-    Phase-reading method & \qty{3.0}{\percent} \\
+    Phase-reading method & \qty{2.9}{\percent} \\
     Loop radius $R$ (enters squared) & \qty{1.8}{\percent} \\
-    Calibration & \qty{1.7}{\percent} \\
+    Calibration & \qty{1.5}{\percent} \\
     Regression & \qty{1.3}{\percent} \\
     \midrule
-    Total (in quadrature) & \qty{8.7}{\percent} \\
+    Total (in quadrature) & \qty{8.6}{\percent} \\
     \bottomrule
   \end{tabular}
   \caption{[caption]%
-    % Must say: c = 8 pi^2 N R^2/(lambda a) = (2.8 +- 0.2) x 10^8 m/s; relative uncertainties added
+    % Must say: c = 8 pi^2 N R^2/(lambda a) = (2.9 +- 0.2) x 10^8 m/s; relative uncertainties added
     % in quadrature (c is proportional to N R^2/a); lambda given without an uncertainty (0.16 % per
     % nm, not included).
   }
@@ -255,21 +259,22 @@
     Source & Kind & Size & Included \\
     \midrule
     Photo-to-photo variation & statistical & SEM \qtyrange{0.004}{0.028}{\radian} per setting & yes (in $s$) \\
-    Table speed at a setting & statistical & \qty{1.2}{\percent} of $\omega$ & yes (in $s$) \\
     Wander of the phase between settings & statistical & about \qty{0.04}{\radian} per setting & yes (in $s$) \\
-    Calibration curve (line vs.\ quadratic) & systematic & \qty{1.7}{\percent} of $a$ & yes \\
-    Phase-reading method & systematic & \qty{3.0}{\percent} of $a$ & yes \\
+    Stopwatch: lap scatter and reaction time (\qty{0.2}{\second} per press) & statistical & \qtyrange{0.14}{1.1}{\percent} of a timed $\omega$ & yes (through the line) \\
+    Calibration line and the table's scatter about it & statistical, correlated & \qty{1.5}{\percent} of $a$ & yes \\
+    Phase-reading method & systematic & \qty{2.9}{\percent} of $a$ & yes \\
     Turn count $N = 13\pm1$ & given & \qty{7.7}{\percent} & yes ($a_\mathrm{th}$ and $c$) \\
     Loop radius $R = \qty{57.0\pm0.5}{\centi\metre}$ & given & \qty{1.8}{\percent} & yes ($a_\mathrm{th}$ and $c$) \\
     Wavelength $\lambda = \qty{640}{\nano\metre}$ & not given & \qty{0.16}{\percent} per nm & no \\
+    Bend of the calibration at high settings & systematic & up to \qty{3}{\percent} of $\omega$ & partly (its rms is in the scatter) \\
     Steady drift in time & systematic & not separable from $a$ & no \\
     \bottomrule
   \end{tabular}
   \caption{[caption]%
     % Must say: every source considered, its kind, its size, and whether it is in the quoted
-    % uncertainty. The first three enter through the regression (s); the slope's three parts
-    % (1.3 % regression, 3.0 % method, 1.7 % calibration) are added in quadrature, 3.6 %:
-    % a = 1.84 +- 0.07. N and R enter only the prediction and c. Not checked: the sign of the shift
+    % uncertainty. The first two enter through the regression (s); the slope's three parts
+    % (1.3 % regression, 2.9 % method, 1.5 % calibration) are added in quadrature, 3.5 %:
+    % a = 1.82 +- 0.06. N and R enter only the prediction and c. Not checked: the sign of the shift
     % (rotation direction not recorded).
   }
   \label{tab:budget}

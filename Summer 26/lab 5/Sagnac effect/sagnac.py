@@ -8,8 +8,9 @@ uncertainty.   python sagnac.py   (from this folder, after calibration.py, fring
 
 Steps (main(), top to bottom)
   1. setting_means  per setting: n photos, mean phase, SEM = SD/sqrt(n), median ring spacing P.
-  2. omega          from the calibration line, exactly 0 at rest; its uncertainty is the rms
-                    scatter of the timed settings about the line (calibration.py).
+  2. omega          from the calibration line, exactly 0 at rest, with the prediction uncertainty
+                    (calibration.py: the line's uncertainty and the scatter of the timed settings
+                    about the line, in quadrature).
   3. regress        Delta phi = a omega + b by ordinary least squares through the ten setting
                     means (Schwartz 2017, Eq. 7). Every point's uncertainty is s, the rms distance
                     of the points from the line, and u(a) = s / sqrt(sum (omega - mean)^2).
@@ -18,8 +19,8 @@ Steps (main(), top to bottom)
                     added omega^2 term; the line forced through the origin.
   5. methods        the cosine fit and template matching through the same regression; half the
                     range of the three slopes is the method uncertainty of a.
-  6. calibration    the regression repeated with omega from the quadratic calibration; the change
-                    of a is the calibration uncertainty of a.
+  6. calibration    every moving omega comes from the same line and the same table, so the relative
+                    prediction uncertainty, sqrt((u(k)/k)^2 + rel_rms^2), carries straight into a.
   7. result         a with the three parts in quadrature; a_th = 8 pi^2 N R^2 / (lambda c), the
                     comparison, N implied by the slope, the largest shift and its travel time.
   8. c              Eq. (5) solved for c; the relative parts of a, N and R in quadrature.
@@ -39,7 +40,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from calibration import omega_of
+from calibration import omega_of, u_omega_pred
 
 HERE = Path(__file__).resolve().parent
 
@@ -165,8 +166,7 @@ def main():
     S = tab.S.to_numpy()
     moving = S > 0
     omega = np.where(moving, omega_of(S, cal['line']['coef']), 0.0)
-    omega_q = np.where(moving, omega_of(S, cal['quadratic']['coef']), 0.0)
-    u_omega = cal['line']['rel_rms'] * omega
+    u_omega = np.where(moving, u_omega_pred(S, cal['line']), 0.0)
     y, sem = tab.dphi.to_numpy(), tab['sem'].to_numpy()      # tab.sem would be pandas' sem() method
     n, dof = len(y), len(y) - 2
 
@@ -200,12 +200,16 @@ def main():
     slopes = {'ring minima': a, **{l: m['reg']['a'] for l, m in methods.items()}}
     u_meth = (max(slopes.values()) - min(slopes.values())) / 2
 
-    # 6. The calibration part: the slope with the quadratic calibration instead of the line.
-    a_quad = regress(omega_q, y)['a']
-    u_model = abs(a_quad - a)
+    # 6. The calibration part: every moving omega is predicted by the same line from the same table,
+    #    so the relative prediction uncertainty (k's relative uncertainty and the scatter of the
+    #    timed settings about the line) is a common scale error of omega, hence of a. (omega0
+    #    shifts the moving points together and is absorbed by the intercept, up to the rest point.)
+    u_k_rel = cal['line']['u_k'] / cal['line']['k']
+    rel_cal = float(np.hypot(u_k_rel, cal['line']['rel_rms']))
+    u_cal = a * rel_cal
 
     # 7. The result and the comparison with Eq. (5).
-    u_a = float(np.sqrt(u_stat ** 2 + u_meth ** 2 + u_model ** 2))
+    u_a = float(np.sqrt(u_stat ** 2 + u_meth ** 2 + u_cal ** 2))
     a_th, comps = theory()
     u_th = float(np.sqrt(sum(v ** 2 for v in comps.values())))
     z = (a - a_th) / np.hypot(u_a, u_th)
@@ -219,7 +223,7 @@ def main():
     dt_pred = a_th * omega[-1] * WAVELENGTH / (2 * np.pi * C_LIGHT)
 
     # 8. The speed of light.
-    c_parts = {'regression': u_stat, 'method': u_meth, 'calibration': u_model}
+    c_parts = {'regression': u_stat, 'method': u_meth, 'calibration': u_cal}
     c_m, c_comps = speed_of_light(a, c_parts)
     u_c = float(np.sqrt(sum(v ** 2 for v in c_comps.values())))
     z_c = (c_m - C_LIGHT) / u_c
@@ -246,7 +250,7 @@ def main():
     E8 = 1e8
     L = ['Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis\n',
          'PER SETTING: phase at the ring centre (minima), mean over the photos, SEM = SD/sqrt(n); omega from the',
-         f"calibration line +- its rms scatter ({100 * cal['line']['rel_rms']:.1f} %); dphi = phase minus the rest mean.",
+         'calibration line +- its prediction uncertainty (common to all settings); dphi = phase minus the rest mean.',
          f"{'S':>6} {'n':>3} {'first photo':>11} {'omega (rad/s)':>18} {'dphi (rad)':>18} {'P (10^5 px^2)':>13} {'resid':>7}"]
     for r in tab.itertuples():
         L.append(f'{r.S:6.2f} {r.n:3d} {hhmmss(r.t_first):>11} {r.omega:8.4f} +- {r.u_omega:.4f} '
@@ -270,9 +274,11 @@ def main():
                  'minus the minima per setting: ' + ', '.join(f'{d:+.2f}' for d in m['tab'].dphi - y) + ' rad')
     L.append(f'  Method part of u(a): half the range of {", ".join(f"{v:.4f}" for v in slopes.values())} = {u_meth:.4f} '
              f'({100 * u_meth / a:.1f} %).')
-    L.append(f'  Calibration part of u(a): with the quadratic calibration a = {a_quad:.4f}, '
-             f'{100 * (a_quad / a - 1):+.1f} %, so {u_model:.4f}.\n')
-    L.append(f'RESULT  a = {a:.4f} +- {u_stat:.4f} (regression) +- {u_meth:.4f} (method) +- {u_model:.4f} (calibration)')
+    L.append(f'  Calibration part of u(a): k is known to {100 * u_k_rel:.2f} % and the timed settings scatter about the '
+             f'line by {100 * cal["line"]["rel_rms"]:.2f} % (calibration.txt);')
+    L.append(f'  both are common to every omega, so u(a)/a = sqrt({100 * u_k_rel:.2f}^2 + {100 * cal["line"]["rel_rms"]:.2f}^2) % '
+             f'= {100 * rel_cal:.2f} %, u = {u_cal:.4f}.\n')
+    L.append(f'RESULT  a = {a:.4f} +- {u_stat:.4f} (regression) +- {u_meth:.4f} (method) +- {u_cal:.4f} (calibration)')
     L.append(f'          = {a:.4f} +- {u_a:.4f} rad/(rad/s) ({100 * u_a / a:.1f} %, the three parts in quadrature)')
     L.append(f"Theory, Eq. (5): N = {N_TURNS} +- {U_N_TURNS}, R = {100 * RADIUS:.1f} +- {100 * U_RADIUS:.1f} cm "
              f"(A = pi R^2 = {np.pi * RADIUS ** 2:.4f} m^2), lambda = {WAVELENGTH * 1e9:.0f} nm, c exact.")
@@ -317,10 +323,10 @@ def main():
     print('\n'.join(L))
 
     out = dict(
-        slope=dict(a=a, u_stat=u_stat, u_method=u_meth, u_calibration=u_model, u=u_a, b=b, u_b=reg['u_b'], p_b=p_b,
+        slope=dict(a=a, u_stat=u_stat, u_method=u_meth, u_calibration=u_cal, u=u_a, b=b, u_b=reg['u_b'], p_b=p_b,
                    s=s, r2=reg['r2'], dof=dof, chi2_sem_weighted=chi_sem, p_sem_weighted=p_sem,
                    omega2_term=float(q2[0]), u_omega2_term=float(np.sqrt(C2[0, 0])), t_omega2=t_q, p_omega2=p_q,
-                   a_through_origin=a0, u_a_through_origin=u_a0, a_quadratic_calibration=a_quad),
+                   a_through_origin=a0, u_a_through_origin=u_a0, u_k_rel=u_k_rel, rel_calibration=rel_cal),
         methods={l: dict(a=m['reg']['a'], u_a=m['reg']['u_a'], s=m['reg']['s'], r2=m['reg']['r2']) for l, m in methods.items()},
         theory=dict(a_th=a_th, u_a_th=u_th, components=comps, u_wavelength='not given',
                     per_nm=1e-9 / WAVELENGTH),

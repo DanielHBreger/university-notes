@@ -36,18 +36,22 @@ python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the phase 
 `fringes.py`'s starting centre, fringe-period guess and angular sector (`START`, `P_GUESS`,
 `THETA_DEG`) are set for the 11 October camera view. Figures follow the lab report style
 (`report_style.py`, copied unchanged from `chaotic circuit/`): column width unless noted, vector PDF
-plus 600 dpi PNG, no titles, no fit statistics in the image.
+plus 600 dpi PNG, no titles, no fit statistics in the image, no residual panels.
 
 ## Method
 
-**Calibration** (`calibration.py`). Per setting, T is the mean of the timed turns, u(T) = SD/sqrt(n),
-omega = 2 pi/T (stopwatch uncertainty 0.1-0.5 % of omega). The line omega = k S + omega0 is fitted
-by least squares with each point weighted by 1/omega^2 (equal relative weight per setting, since the
-scatter about any smooth curve is a roughly constant fraction of omega). The timed points scatter
-about the line by 1.2 % rms, far more than the stopwatch allows: the table turns slower than linear
-at high settings (2.3 % below the line at S = 90). The photos use the line, as task 1 asks, with the
-1.2 % scatter as the uncertainty of omega at a setting. A quadratic, which fits to 0.4 %, is the
-check: it raises the Sagnac slope by 1.7 %, which is the calibration part of the slope's uncertainty.
+**Calibration** (`calibration.py`). Per setting, T is the mean of n = 5 or 8 consecutive timed
+turns and omega = 2 pi/T. u(T) combines the lap scatter SD/sqrt(n) with the reaction time of the
+presses: the laps are consecutive, so only the first and last press set the mean, and with
+sigma_r = 0.2 s per press that part is sqrt(2) sigma_r/n. Together 0.14-1.1 % of omega. The line
+omega = k S + omega0 is fitted by weighted least squares (weights 1/u(omega)^2); the points scatter
+more than their uncertainties allow (chi2/dof = 3.2: the table turns slower than linear at high
+settings, 3.2 % below the line at S = 90), so the coefficient covariance is enlarged by chi2/dof.
+The photos use the line, as task 1 asks. A photo setting was not timed, so its omega carries the
+line's prediction uncertainty: the line's own (0.3-0.45 %) and the 1.4 % rms scatter of the timed
+settings about it, 1.45 % in all, common to every setting; that relative size (1.5 %) is the
+calibration part of the Sagnac slope's uncertainty. The 3.2 % bend at the top setting is stated as
+a limitation.
 
 **Fringe phase** (`fringes.py`). A Gaussian beam carries the phase k r^2/(2R(z)). The two output
 beams have different wavefront radii R1, R2 at the camera, so the fringes are rings with phase
@@ -84,7 +88,7 @@ u(a) = s/sqrt(sum (omega - mean)^2). Weighted by the photos' SEM instead, the li
 chi2/dof = 197/8: the settings differ five times more than the photo noise allows, because the
 phase wanders slowly, so the regression's own s is the right uncertainty. The slope's uncertainty
 has three parts added in quadrature: the regression (1.3 %), the phase-reading method (half the
-range of the three methods, 3.0 %) and the calibration (line against quadratic, 1.7 %).
+range of the three methods, 2.9 %) and the calibration (the line's prediction uncertainty, 1.5 %).
 Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5), independent of where the axis lies (Schwartz;
 prep Q8) and of the fibre's index (prep Q10).
 

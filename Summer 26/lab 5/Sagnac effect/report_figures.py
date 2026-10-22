@@ -15,15 +15,14 @@ Reads:
 
 Writes to report_figures/ (name: what it shows; width):
     setup           top view of the apparatus, after Fig. 1 of the manual; column
-    calibration     omega against the motor setting S, linear fit (used) and quadratic (check),
-                    with the residuals of both; column
+    calibration     omega against the motor setting S with the linear fit; column
     patterns        one photograph per setting with the fitted dark rings and centre; figure*
     rings           intensity around the ring centre against r and against r^2, at rest and at
                     the top speed: equal spacing in r^2; column
     extraction      the ring finder on the top-speed photo (dark-ring minima, concentric circles)
                     and R_m^2/P against the ring number m at rest and at the top speed; column
     phase_vs_omega  setting means of the phase against omega, the regression line and the
-                    prediction, with the distance of each point from the line; column
+                    prediction; column
     methods         the three phase-reading methods: difference from the ring minima per
                     setting, and the slope each one gives; column
     drift           omega and each photo's phase minus the fitted line against time; column
@@ -55,7 +54,7 @@ from matplotlib.patches import Circle, Ellipse, FancyBboxPatch, Rectangle  # noq
 
 import fringes as F  # noqa: E402
 import report_style as rs  # noqa: E402
-from calibration import omega_of  # noqa: E402
+from calibration import omega_of, u_omega_pred  # noqa: E402
 
 rs.apply()
 TEX = plt.rcParams['text.usetex']
@@ -233,43 +232,29 @@ def setup():
 
 # ---- 2. calibration -------------------------------------------------------------------------
 def calibration():
-    """(a) omega = 2 pi / <T> of the timed turns against the motor setting S, with the linear fit that
-    converts the photo settings (used) and the quadratic (check); ticks along the bottom mark the nine
-    photo settings. (b) (omega - fit) / omega of both. Error bars: the stopwatch uncertainty
-    omega SD/(T sqrt(n)), smaller than the markers in (a)."""
+    """omega = 2 pi / <T> of the timed turns against the motor setting S, with the linear fit that
+    converts the photo settings and its prediction band (the line's uncertainty and the rms scatter of
+    the timed settings about it, +-1 sigma); ticks along the bottom mark the nine photo settings. Error
+    bars: the uncertainty of each timed setting (lap scatter and reaction time), mostly smaller than
+    the markers."""
     tab = pd.DataFrame(CAL['settings'])
-    lin = lambda s: omega_of(s, CAL['line']['coef'])           # noqa: E731
-    quad = lambda s: omega_of(s, CAL['quadratic']['coef'])     # noqa: E731
-    fig, (ax, axr) = plt.subplots(2, 1, sharex=True, figsize=rs.figsize(aspect=0.95), height_ratios=[2.1, 1],
-                                  layout='constrained')
-    fig.get_layout_engine().set(hspace=0.02, h_pad=0.02)
+    fig, ax = plt.subplots(figsize=rs.figsize(aspect=0.72), layout='constrained')
     xs = np.linspace(0, 95, 200)
-    ax.plot(xs, lin(xs), color=BLUE, label='Linear fit (used)')
-    ax.plot(xs, quad(xs), color=VERM, ls='--', label='Quadratic fit (check)')
+    w, u = omega_of(xs, CAL['line']['coef']), u_omega_pred(xs, CAL['line'])
+    ax.fill_between(xs, w - u, w + u, color=BLUE, alpha=0.18, lw=0, label=r'Fit $\pm1\sigma$')
+    ax.plot(xs, w, color=BLUE, label='Linear fit')
     ax.errorbar(tab.S, tab.omega, tab.u_omega, fmt='o', color='k', ms=2.8, elinewidth=0.6, capsize=0, zorder=3,
                 label='Timed turns')
     ax.vlines(PHOTO_S, 0, 0.07, color=GREY, lw=0.6)
     tick = Line2D([], [], ls='none', marker='|', ms=5, mew=0.6, color=GREY)
     h, l = ax.get_legend_handles_labels()
-    order = [l.index('Timed turns'), l.index('Linear fit (used)'), l.index('Quadratic fit (check)')]
+    order = [l.index('Timed turns'), l.index('Linear fit'), l.index(r'Fit $\pm1\sigma$')]
     ax.legend([h[i] for i in order] + [tick], [l[i] for i in order] + ['Settings of the photos'], loc='upper left')
-    ax.set_ylabel(rf'$\omega$ ({rads()})')
+    ax.set_xlim(0, 95)
     ax.set_ylim(0, 2.0)
     ax.set_yticks(np.arange(0, 2.01, 0.5))
-    label(ax, '(a)', x=0.97, y=0.04, ha='right', va='bottom')
-    off = 0.8
-    for model, col, mk, mfc, dx, text in [(lin, BLUE, 'o', BLUE, -off, 'Linear'),
-                                          (quad, VERM, 's', 'white', off, 'Quadratic')]:
-        axr.errorbar(tab.S + dx, (tab.omega - model(tab.S)) / tab.omega * 100, tab.u_omega / tab.omega * 100,
-                     fmt=mk, color=col, mfc=mfc, ms=2.8, elinewidth=0.6, capsize=0, label=text)
-    axr.axhline(0, color=GREY, lw=0.5, zorder=0)
-    axr.set_ylim(-3.2, 2.2)
-    axr.set_xlim(0, 95)
-    axr.set_xlabel(r'Motor setting $S$')
-    axr.set_ylabel(rf'$(\omega - \mathrm{{fit}})/\omega$ ({PCT})')
-    axr.legend(loc='lower left', ncol=2)
-    label(axr, '(b)', x=0.97, y=0.93, ha='right')
-    fig.align_ylabels([ax, axr])
+    ax.set_xlabel(r'Motor setting $S$')
+    ax.set_ylabel(rf'$\omega$ ({rads()})')
     save(fig, 'calibration')
 
 
@@ -401,36 +386,25 @@ def extraction():
 
 # ---- 6. phase against omega -----------------------------------------------------------------
 def phase_vs_omega():
-    """(a) Mean phase change of each setting's photos (ring minima) against omega, the regression line
+    """Mean phase change of each setting's photos (ring minima) against omega, the regression line
     Delta phi = a omega + b fitted to the ten points with equal weights (sagnac.py), and the prediction
-    a_th omega with its 1 sigma band (N, R). The omega error bars are the 1.2 % scatter of the timed
-    settings about the calibration line. (b) Each point minus the line. Error bars: the standard error of
-    the mean of the setting's photos (SEM); the shaded band is +-s, the rms distance of the points from
-    the line, which the regression uses as every point's uncertainty."""
-    a, b, s = RES['slope']['a'], RES['slope']['b'], RES['slope']['s']
-    fig, (ax, axr) = plt.subplots(2, 1, sharex=True, figsize=rs.figsize(aspect=0.95), height_ratios=[2.1, 1],
-                                  layout='constrained')
-    fig.get_layout_engine().set(hspace=0.02, h_pad=0.02)
+    a_th omega with its 1 sigma band (N, R). Error bars: the calibration line's uncertainty in omega and
+    the standard error of the mean of the setting's photos in Delta phi, both mostly smaller than the
+    markers."""
+    a, b = RES['slope']['a'], RES['slope']['b']
+    fig, ax = plt.subplots(figsize=rs.figsize(aspect=0.72), layout='constrained')
     xs = np.linspace(0, 1.95, 100)
     ax.fill_between(xs, (TH - UTH) * xs, (TH + UTH) * xs, color=VERM, alpha=0.15, lw=0)
     ax.plot(xs, TH * xs, color=VERM, ls='--', label=r'Prediction $a_\mathrm{th}\,\omega$, $\pm1\sigma$')
     ax.plot(xs, a * xs + b, color=BLUE, label='Linear regression')
-    ax.errorbar(SP.omega, SP.dphi, xerr=SP.u_omega, fmt='o', color=BLUE, ms=3, elinewidth=0.6, capsize=0, zorder=3,
-                label='Setting means')
+    ax.errorbar(SP.omega, SP.dphi, xerr=SP.u_omega, yerr=SP['sem'], fmt='o', color=BLUE, ms=3, elinewidth=0.6,
+                capsize=0, zorder=3, label='Setting means')
     h, l = ax.get_legend_handles_labels()
     ax.legend([h[2], h[1], h[0]], [l[2], l[1], l[0]], loc='upper left')
+    ax.set_xlabel(rf'$\omega$ ({rads()})')
     ax.set_ylabel(r'$\Delta\phi$ (rad)')
     ax.set_xlim(-0.05, 1.92)
     ax.set_ylim(-0.25, 3.6)
-    label(ax, '(a)', x=0.97, y=0.04, ha='right', va='bottom')
-    axr.axhspan(-s, s, color='0.88', lw=0, zorder=0)
-    axr.axhline(0, color=BLUE, lw=0.8, zorder=1)
-    axr.errorbar(SP.omega, SP.resid, SP['sem'], fmt='o', color=BLUE, ms=3, elinewidth=0.6, capsize=0, zorder=3)
-    axr.set_ylim(-0.12, 0.12)
-    axr.set_xlabel(rf'$\omega$ ({rads()})')
-    axr.set_ylabel(r'$\Delta\phi - \mathrm{line}$ (rad)')
-    label(axr, '(b)', x=0.97, y=0.93, ha='right')
-    fig.align_ylabels([ax, axr])
     save(fig, 'phase_vs_omega')
 
 

@@ -4,13 +4,13 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 
 ## Inputs
 
-`calibration.json` (the timed settings, the line and the quadratic), `sagnac.json` (the regression, the methods, a_th), `sagnac_speeds.csv` (the ten setting means), `fringes_frames.csv` (every photo's center, radii and phase; ω per photo is recomputed from the line, 0 at rest) and, for `patterns`, `rings` and `extraction`, the representative photographs themselves. The optional `random_pixels` figure reads `presentation_slides/source/random_points_scan.json`.
+`calibration.json` (the timed settings and the line), `sagnac.json` (the regression, the methods, a_th), `sagnac_speeds.csv` (the ten setting means), `fringes_frames.csv` (every photo's center, radii and phase; ω per photo is recomputed from the line, 0 at rest) and, for `patterns`, `rings` and `extraction`, the representative photographs themselves. The optional `random_pixels` figure reads `presentation_slides/source/random_points_scan.json`. No figure has a residual panel (points minus fit).
 
 ## Helpers
 
 - `rads()`, `slope_unit()`, `PCT`: the units rad s⁻¹, rad/(rad s⁻¹) and the percent sign, written for LaTeX when it is used (`\%`, thin space) and for matplotlib's own math text otherwise.
 - `label(ax, text, ...)`: the panel letter, inside the axes.
-- `omega_text(w)`: "ω = 0" or "ω = 1.81 rad s⁻¹".
+- `omega_text(w)`: "ω = 0" or "ω = 1.83 rad s⁻¹".
 - `representative(S)`: the photo of setting S whose phase is closest to the setting's median (the same choice as the slides).
 - `rings(row)`: the finite radii among `R1`–`R3`.
 - `gray_crop(row, half)`: the red channel of a photo, a square of 2·half px around its fitted center, zero-padded past the image edge.
@@ -22,11 +22,11 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 ## The figures
 
 - `setup()`: the top view of the apparatus, after Fig. 1 of the manual: turntable, the fiber loop as a bundle of circles, laser, P₁, beam splitter (diagonal as in the manual, so each beam is reflected once and transmitted once on its way to the camera), L₁ and L₂ to the two fiber ends, P₂, L₃, camera, the two beam directions, the sense of rotation, the radius R. Drawing only.
-- `calibration()`: (a) ω of the nine timed settings against S with the stopwatch error bars, the line (used) and the quadratic (check), short ticks at the nine photo settings; (b) (ω − fit)/ω in percent for both fits, the series offset by ±0.8 in S.
+- `calibration()`: ω of the nine timed settings against S with their error bars (lap scatter and reaction time), the fitted line with its ±1σ prediction band (`calibration.u_omega_pred`: the line's uncertainty and the rms scatter of the timed settings about it), and short ticks at the nine photo settings. One panel.
 - `patterns()`: one square panel per setting (the figure*, 512 pt wide), the representative photo cropped 500 px around its center, the fitted dark rings dashed, the center marked, the ω label from the line.
 - `rings_figure()`: the rest and top-speed photos' intensity against r and against r² (1 px annuli, fringe sector), dashed lines at the fitted radii, arrows with the top-speed spacings (241 and 132 px; 1.08 and 1.08 × 10⁵ px²).
 - `extraction()`: (a) the ring finder's minima on the top-speed photo, one color per ring, with the fitted circles; (b) R_m²/P against m at rest and at the top speed with the lines m + η, and the difference of the intercepts (0.52 fringe).
-- `phase_vs_omega()`: (a) the ten setting means against ω (error bars: the line's 1.2 % scatter), the regression line `slope.a`, `slope.b`, the prediction `theory.a_th` ± 1σ; (b) `resid` with the SEM error bars and the ±s band.
+- `phase_vs_omega()`: the ten setting means against ω (error bars: the calibration line's uncertainty in ω, the SEM in Δφ), the regression line `slope.a`, `slope.b`, and the prediction `theory.a_th` ± 1σ. One panel.
 - `methods()`: (a) `dphi_cos − dphi` and `dphi_template − dphi` per setting; (b) the three slopes with their regression errors over the prediction's band.
 - `drift()`: (a) ω of every photo against minutes since the first photo; (b) each photo's Δφ minus the line, with a straight line fitted to each setting's photos.
 - `random_pixels()` (optional): (a) histograms of the slope over the 1000 ten-pixel draws (fixed positions; and with each photo's own center and P), lines at the minima slope and the prediction; (b) the SD between draws and the median fit error of one draw against pixels per draw, from `sagnac.json['random_pixels']`.

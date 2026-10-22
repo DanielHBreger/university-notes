@@ -4,7 +4,7 @@ One file per script, as in `chaotic circuit/docs/`. Each file walks the script f
 
 | Order | File | Script | What it settles |
 |---|---|---|---|
-| 1 | [calibration.md](calibration.md) | `calibration.py` | ω of the timed settings, the line (used) and the quadratic (check), the 1.2 % scatter |
+| 1 | [calibration.md](calibration.md) | `calibration.py` | ω of the timed settings with the reaction-time uncertainty, the weighted line and its uncertainty |
 | 2 | [fringes.md](fringes.md) | `fringes.py` | the ring finder, the phase at the ring center of every photo, the cosine fit |
 | 3 | [methods.md](methods.md) | `methods.py` (described through `sagnac_update/methods.py`, whose template matching is identical) | template matching |
 | 4 | [sagnac.md](sagnac.md) | `sagnac.py` | setting means, the regression, the three-part uncertainty, c, the drift check: every number of `RESULTS.md` |
@@ -35,7 +35,7 @@ The fringes are rings: two Gaussian beams on a common axis with wavefront radii 
 
 so the dark rings sit at R_m² = P(m + η), with φ_c = π − 2πη. Rotation changes only φ_c. Every phase method reads φ_c or a phase averaged over part of the pattern; Δφ is that phase minus its mean at rest.
 
-The rotation calibration: T the mean of the timed turns, ω = 2π/T, and the line ω = kS + ω₀ (least squares with weights 1/ω²) that converts the photo settings, with the 1.2 % scatter of the timed points about it as the uncertainty of ω.
+The rotation calibration: T the mean of the timed turns with u(T) from the lap scatter and the 0.2 s reaction time of the presses, ω = 2π/T, and the weighted least-squares line ω = kS + ω₀ (covariance enlarged by χ²/dof) that converts the photo settings, with the line's uncertainty as the uncertainty of ω.
 
 ## Naming conventions
 
