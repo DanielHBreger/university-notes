@@ -15,7 +15,9 @@ Reads:
 
 Writes to report_figures/ (name: what it shows; width):
     setup           top view of the apparatus, after Fig. 1 of the manual; column
-    calibration     omega against the motor setting S with the linear fit; column
+    calibration     omega of the timed settings against the motor setting S with the linear fit and its
+                    prediction band; column
+    conversion      the nine photo settings converted to omega by that line, with their uncertainties; column
     patterns        one photograph per setting with the fitted dark rings and centre; figure*
     rings           intensity around the ring centre against r and against r^2, at rest and at
                     the top speed: equal spacing in r^2; column
@@ -49,7 +51,6 @@ sys.path.insert(0, str(HERE))
 import matplotlib  # noqa: E402
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.lines import Line2D  # noqa: E402
 from matplotlib.patches import Circle, Ellipse, FancyBboxPatch, Rectangle  # noqa: E402
 
 import fringes as F  # noqa: E402
@@ -70,7 +71,6 @@ FR['omega'] = np.where(FR.S > 0, omega_of(FR.S, CAL['line']['coef']), 0.0)
 FR['minutes'] = (FR.time_s - FR.time_s.min()) / 60
 REST_PHI = FR.loc[FR.S == 0, 'phi_rad'].mean()
 TH, UTH = RES['theory']['a_th'], RES['theory']['u_a_th']      # a_th = 8 pi^2 N R^2 / (lambda c)
-PHOTO_S = SP.S.to_numpy()[1:]                                 # the nine motor settings of the photographs
 SCAN = HERE / 'presentation_slides' / 'source' / 'random_points_scan.json'
 
 
@@ -234,28 +234,50 @@ def setup():
 def calibration():
     """omega = 2 pi / <T> of the timed turns against the motor setting S, with the linear fit that
     converts the photo settings and its prediction band (the line's uncertainty and the rms scatter of
-    the timed settings about it, +-1 sigma); ticks along the bottom mark the nine photo settings. Error
-    bars: the uncertainty of each timed setting (lap scatter and reaction time), mostly smaller than
-    the markers."""
+    the timed settings about it, +-1 sigma). Error bars: the uncertainty of each timed setting (lap
+    scatter and reaction time), mostly smaller than the markers."""
     tab = pd.DataFrame(CAL['settings'])
+    fig, ax = line_axes()
+    ax.errorbar(tab.S, tab.omega, tab.u_omega, fmt='o', color='k', ms=2.8, elinewidth=0.6, capsize=0, zorder=3,
+                label='Timed turns')
+    h, l = ax.get_legend_handles_labels()
+    order = [l.index('Timed turns'), l.index('Linear fit'), l.index(r'Fit $\pm1\sigma$')]
+    ax.legend([h[i] for i in order], [l[i] for i in order], loc='upper left')
+    save(fig, 'calibration')
+
+
+def line_axes():
+    """A column-width axes of omega against S with the calibration line and its +-1 sigma prediction band,
+    shared by the calibration and conversion figures."""
     fig, ax = plt.subplots(figsize=rs.figsize(aspect=0.72), layout='constrained')
     xs = np.linspace(0, 95, 200)
     w, u = omega_of(xs, CAL['line']['coef']), u_omega_pred(xs, CAL['line'])
     ax.fill_between(xs, w - u, w + u, color=BLUE, alpha=0.18, lw=0, label=r'Fit $\pm1\sigma$')
     ax.plot(xs, w, color=BLUE, label='Linear fit')
-    ax.errorbar(tab.S, tab.omega, tab.u_omega, fmt='o', color='k', ms=2.8, elinewidth=0.6, capsize=0, zorder=3,
-                label='Timed turns')
-    ax.vlines(PHOTO_S, 0, 0.07, color=GREY, lw=0.6)
-    tick = Line2D([], [], ls='none', marker='|', ms=5, mew=0.6, color=GREY)
-    h, l = ax.get_legend_handles_labels()
-    order = [l.index('Timed turns'), l.index('Linear fit'), l.index(r'Fit $\pm1\sigma$')]
-    ax.legend([h[i] for i in order] + [tick], [l[i] for i in order] + ['Settings of the photos'], loc='upper left')
     ax.set_xlim(0, 95)
     ax.set_ylim(0, 2.0)
     ax.set_yticks(np.arange(0, 2.01, 0.5))
     ax.set_xlabel(r'Motor setting $S$')
     ax.set_ylabel(rf'$\omega$ ({rads()})')
-    save(fig, 'calibration')
+    return fig, ax
+
+
+def conversion():
+    """How the nine motor settings of the photographs become omega: dotted guides from each setting up to
+    the calibration line and across to the omega axis, and at the line the prediction uncertainty (the
+    line's uncertainty and the rms scatter of the timed settings about it) as a bare error bar. No
+    measurement was made at these settings; the values are those of Table 2. The timed settings are in
+    the calibration figure."""
+    fig, ax = line_axes()
+    S9, w9, u9 = SP.S[1:].to_numpy(), SP.omega[1:].to_numpy(), SP.u_omega[1:].to_numpy()
+    ax.vlines(S9, 0, w9, color=GREY, lw=0.5, ls=(0, (2, 2)), zorder=1)        # from the setting up to the line
+    ax.hlines(w9, 0, S9, color=GREY, lw=0.5, ls=(0, (2, 2)), zorder=1)        # and across to the omega axis
+    ax.errorbar(S9, w9, u9, fmt='none', ecolor=VERM, elinewidth=1.1, capsize=2.5, capthick=0.8, zorder=3,
+                label=r'$\omega$ read off the line, $\pm1\sigma$')
+    h, l = ax.get_legend_handles_labels()
+    order = [l.index(r'$\omega$ read off the line, $\pm1\sigma$'), l.index('Linear fit'), l.index(r'Fit $\pm1\sigma$')]
+    ax.legend([h[i] for i in order], [l[i] for i in order], loc='upper left')
+    save(fig, 'conversion')
 
 
 # ---- 3. patterns ----------------------------------------------------------------------------
@@ -525,7 +547,7 @@ def random_pixels():
     save(fig, 'random_pixels')
 
 
-FIGURES = {'setup': setup, 'calibration': calibration, 'patterns': patterns, 'rings': rings_figure,
+FIGURES = {'setup': setup, 'calibration': calibration, 'conversion': conversion, 'patterns': patterns, 'rings': rings_figure,
            'extraction': extraction, 'phase_vs_omega': phase_vs_omega, 'methods': methods, 'drift': drift,
            'random_pixels': random_pixels}
 

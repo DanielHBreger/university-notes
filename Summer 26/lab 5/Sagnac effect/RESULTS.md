@@ -30,7 +30,7 @@ Unrounded $a_{\mathrm{th}} = 1.738 \pm 0.137$: $N$ gives 7.7 %, $R$ (squared) 2 
 
 ## Task 1: rotation calibration
 
-Figure: `report_figures/calibration` (the timed points, the line and its ±1σ prediction band).
+Figures: `report_figures/calibration` (the timed points, the line and its ±1σ prediction band) and `report_figures/conversion` (the nine photo settings read off that line, with the prediction uncertainty at the line: the ω column of Table 2).
 
 **Timing.** At each of nine controller settings $S$ (a number on the motor controller, no unit, which sets the motor voltage) n = 5 or 8 consecutive turns were timed with a stopwatch, one press per turn. $T$ is the mean turn time and $\omega = 2\pi/T$. Two things limit $T$: the scatter of the single turns, SD/√n, and the human reaction time of the presses. The n turns are consecutive laps, so the mean turn time is $(t_n - t_0)/n$ and only the first and the last press enter it; with a reaction time $\sigma_r = 0.2$ s per press that part is $\sqrt{2}\sigma_r/n$. Together
 

@@ -22,7 +22,8 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 ## The figures
 
 - `setup()`: the top view of the apparatus, after Fig. 1 of the manual: turntable, the fiber loop as a bundle of circles, laser, P₁, beam splitter (diagonal as in the manual, so each beam is reflected once and transmitted once on its way to the camera), L₁ and L₂ to the two fiber ends, P₂, L₃, camera, the two beam directions, the sense of rotation, the radius R. Drawing only.
-- `calibration()`: ω of the nine timed settings against S with their error bars (lap scatter and reaction time), the fitted line with its ±1σ prediction band (`calibration.u_omega_pred`: the line's uncertainty and the rms scatter of the timed settings about it), and short ticks at the nine photo settings. One panel.
+- `calibration()`: ω of the nine timed settings against S with their error bars (lap scatter and reaction time) on `line_axes()`: the fitted line with its ±1σ prediction band (`calibration.u_omega_pred`: the line's uncertainty and the rms scatter of the timed settings about it). One panel.
+- `conversion()`: on the same `line_axes()`, dotted guides from each photo setting up to the line and across to the ω axis, with a bare error bar (no marker) at the line for the prediction uncertainty: the ω column of Table 2, drawn as a read-off rather than as data. One panel; it carries the same numbers as Table 2, so the report can use either.
 - `patterns()`: one square panel per setting (the figure*, 512 pt wide), the representative photo cropped 500 px around its center, the fitted dark rings dashed, the center marked, the ω label from the line.
 - `rings_figure()`: the rest and top-speed photos' intensity against r and against r² (1 px annuli, fringe sector), dashed lines at the fitted radii, arrows with the top-speed spacings (241 and 132 px; 1.08 and 1.08 × 10⁵ px²).
 - `extraction()`: (a) the ring finder's minima on the top-speed photo, one color per ring, with the fitted circles; (b) R_m²/P against m at rest and at the top speed with the lines m + η, and the difference of the intercepts (0.52 fringe).
@@ -33,7 +34,7 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 
 ## Outputs and usage
 
-`report_figures/<name>.pdf` and `.png` for `setup`, `calibration`, `patterns`, `rings`, `extraction`, `phase_vs_omega`, `methods`, `drift`, `random_pixels`. Column figures are about 245 pt wide; `patterns` is 512 pt.
+`report_figures/<name>.pdf` and `.png` for `setup`, `calibration`, `conversion`, `patterns`, `rings`, `extraction`, `phase_vs_omega`, `methods`, `drift`, `random_pixels`. Column figures are about 245 pt wide; `patterns` is 512 pt.
 
 ```
 python report_figures.py                    # all, about a minute
