@@ -27,14 +27,14 @@ when it is installed):
 ```
 python calibration.py     # task 1 -> calibration.json, calibration.txt
 python fringes.py         # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
-python methods.py         # template matching (+ AIA and 2D Fourier checks) -> methods_frames.csv, methods.txt/.json (a few minutes)
+python methods.py         # template matching -> methods_frames.csv (about a minute)
 python sagnac.py          # tasks 3 and 5, the speed of light -> sagnac_speeds.csv, sagnac.txt, sagnac.json
 python report_figures.py  # report_figures/*.pdf, *.png (about a minute)
-python -m pytest -q -p no:cacheprovider tests   # synthetic checks of the phase methods, report-form rounding, Eq. (5) for c
+python -m pytest -q -p no:cacheprovider tests   # synthetic check of template matching, report-form rounding, Eq. (5) for c
 ```
 
-`fringes.py`'s starting centre, fringe-period guess and angular sector (`START`, `P_GUESS`,
-`THETA_DEG`) are set for the 11 October camera view. Figures follow the lab report style
+`fringes.py`'s starting centre, fringe-period guess and angular sector (`START_CENTRE`, `P_GUESS`,
+`SECTOR_DEG`) are set for the 11 October camera view. Figures follow the lab report style
 (`report_style.py`, copied unchanged from `chaotic circuit/`): column width unless noted, vector PDF
 plus 600 dpi PNG, no titles, no fit statistics in the image, no residual panels.
 
@@ -44,14 +44,13 @@ plus 600 dpi PNG, no titles, no fit statistics in the image, no residual panels.
 turns and omega = 2 pi/T. u(T) combines the lap scatter SD/sqrt(n) with the reaction time of the
 presses: the laps are consecutive, so only the first and last press set the mean, and with
 sigma_r = 0.2 s per press that part is sqrt(2) sigma_r/n. Together 0.14-0.9 % of omega. The line
-omega = k S + omega0 is fitted by weighted least squares (weights 1/u(omega)^2); the points scatter
-more than their uncertainties allow (chi2/dof = 4.1: the table turns slower than linear at high
-settings, 3.0 % below the line at S = 90), so the coefficient covariance is enlarged by chi2/dof.
-The photos use the line, as task 1 asks. A photo setting was not timed, so its omega carries the
-line's prediction uncertainty: the line's own (0.3-0.5 %) and the 1.3 % rms scatter of the timed
-settings about it, 1.35 % in all, common to every setting; that relative size (1.4 %) is the
-calibration part of the Sagnac slope's uncertainty. The 3.0 % bend at the top setting is stated as
-a limitation.
+omega = k S + omega0 is fitted with scipy's curve_fit, weighted by the timing uncertainties. The
+points lie farther from the line than those allow (chi2/dof = 4.1): the table turns slower than
+linear at high settings, 3.0 % below the line at S = 90. The photos use the line, as task 1 asks.
+A photo setting was not timed, so its omega carries the line's prediction uncertainty: the line's
+own (0.15-0.25 %) and the 1.3 % rms scatter of the timed settings about it, 1.3 % in all, common to
+every setting; that relative size is the calibration part of the Sagnac slope's uncertainty. The
+3.0 % bend at the top setting is stated as a limitation.
 
 **Fringe phase** (`fringes.py`). A Gaussian beam carries the phase k r^2/(2R(z)). The two output
 beams have different wavefront radii R1, R2 at the camera, so the fringes are rings with phase
@@ -78,17 +77,16 @@ minima rely on neither.
 Third method (`methods.py`, template matching): each r^2 profile is matched to the averaged rest
 profile, shifted by D and scaled (gain and offset free). The phase is 2 pi D / P_T, where P_T is the
 template's own period. It uses no fringe model but reads an average phase over its window, so a
-change of the fringe period between frames enters it. `methods.py` also runs two further checks
-(AIA phase shifting, 2D Fourier sideband) that the final analysis does not use.
+change of the fringe period between frames enters it.
 
 **Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases, SEM = SD/sqrt(n).
-Ordinary least-squares line Delta phi = a omega + b through the ten setting means (Schwartz Eq. 7):
-every point's uncertainty is s, the rms distance of the points from the line, and
-u(a) = s/sqrt(sum (omega - mean)^2). Weighted by the photos' SEM instead, the line gives
-chi2/dof = 197/8: the settings differ five times more than the photo noise allows, because the
-phase wanders slowly, so the regression's own s is the right uncertainty. The slope's uncertainty
-has three parts added in quadrature: the regression (1.3 %), the phase-reading method (half the
-range of the three methods, 2.9 %) and the calibration (the line's prediction uncertainty, 1.4 %).
+A straight line Delta phi = a omega + b through the ten setting means (scipy's linregress; Schwartz
+Eq. 7): the slope's uncertainty comes from how far the points lie from the line (s = 0.044 rad
+rms). Measured against the photos' SEM, the line has chi2/dof = 205/8: the settings differ five
+times more than the photo noise allows, because the phase wanders slowly, so the regression's own
+scatter is the right uncertainty. The slope's uncertainty has three parts added in quadrature: the
+regression (1.3 %), the phase-reading method (half the range of the three methods, 2.9 %) and the
+calibration (the line's prediction uncertainty, 1.3 %).
 Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5), independent of where the axis lies (Schwartz;
 prep Q8) and of the fibre's index (prep Q10).
 

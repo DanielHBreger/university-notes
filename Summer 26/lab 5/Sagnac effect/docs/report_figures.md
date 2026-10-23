@@ -8,15 +8,15 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 
 ## Helpers
 
-- `rads()`, `slope_unit()`, `PCT`: the units rad s⁻¹, rad/(rad s⁻¹) and the percent sign, written for LaTeX when it is used (`\%`, thin space) and for matplotlib's own math text otherwise.
-- `label(ax, text, ...)`: the panel letter, inside the axes.
-- `omega_text(w)`: "ω = 0" or "ω = 1.83 rad s⁻¹".
+- `RAD_S`, `SLOPE_UNIT`: the units rad s⁻¹ and rad/(rad s⁻¹), with a thin space when LaTeX typesets the text.
+- `panel_letter(ax, text, ...)`: the panel letter, inside the axes.
+- `omega_text(omega)`: "ω = 0" or "ω = 1.83 rad s⁻¹".
+- `legend_in_order(ax, labels)`: a legend in the given order, whatever order the artists were drawn in.
 - `representative(S)`: the photo of setting S whose phase is closest to the setting's median (the same choice as the slides).
-- `rings(row)`: the finite radii among `R1`–`R3`.
-- `gray_crop(row, half)`: the red channel of a photo, a square of 2·half px around its fitted center, zero-padded past the image edge.
-- `sector_profile_r(row, r_max)`: `fringes.sector_profile` of the smoothed red channel about the photo's center.
-- `ray_minima_for(file)`: the three rounds of the `fringes.py` ring finder on one photo; returns the last round's minima (ring index, x, y).
-- `ring_line(row)`: the line R_m² = P(m + η) of one photo by the steps of `fringes.ring_phase` (ring numbers from the gaps over `P_GUESS`).
+- `ring_radii(row)`: the finite radii among `R1`–`R3`.
+- `crop(row, half)`: the red channel of a photo, a square of 2·half px around its fitted center, zero-padded past the image edge.
+- `profile_against_r(row, r_max)`: `fringes.sector_profile` of the smoothed red channel about the photo's center, in 1 px annuli.
+- `ring_line(row)`: the line R_m² = P(m + η) of one photo by the steps of `fringes.ring_phase` (`fringes.ring_numbers` for m).
 - `save(fig, name)`: `report_style.save` into `report_figures/`, then closes the figure.
 
 ## The figures
@@ -26,7 +26,7 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 - `conversion()`: on the same `line_axes()`, dotted guides from each photo setting up to the line and across to the ω axis, with a bare error bar (no marker) at the line for the prediction uncertainty: the ω column of Table 2, drawn as a read-off rather than as data. One panel; it carries the same numbers as Table 2, so the report can use either.
 - `patterns()`: one square panel per setting (the figure*, 512 pt wide), the representative photo cropped 500 px around its center, the fitted dark rings dashed, the center marked, the ω label from the line.
 - `rings_figure()`: the rest and top-speed photos' intensity against r and against r² (1 px annuli, fringe sector), dashed lines at the fitted radii, arrows with the top-speed spacings (241 and 132 px; 1.08 and 1.08 × 10⁵ px²).
-- `extraction()`: (a) the ring finder's minima on the top-speed photo, one color per ring, with the fitted circles; (b) R_m²/P against m at rest and at the top speed with the lines m + η, and the difference of the intercepts (0.52 fringe).
+- `extraction()`: (a) the ring finder's minima on the top-speed photo (`fringes.analyse_photo` rerun on that photo), one color per ring, with the fitted circles; (b) R_m²/P against m at rest and at the top speed with the lines m + η, and the difference of the intercepts (0.52 fringe).
 - `phase_vs_omega()`: the ten setting means against ω (error bars: the calibration line's uncertainty in ω, the SEM in Δφ), the regression line `slope.a`, `slope.b`, and the prediction `theory.a_th` ± 1σ. One panel.
 - `methods()`: (a) `dphi_cos − dphi` and `dphi_template − dphi` per setting; (b) the three slopes with their regression errors over the prediction's band.
 - `drift()`: (a) ω of every photo against minutes since the first photo; (b) each photo's Δφ minus the line, with a straight line fitted to each setting's photos.

@@ -28,8 +28,8 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 ## Task 1: rotation calibration
 
 - $T$ = mean of n = 5 or 10 consecutive turn times, $\omega = 2\pi/T$. $u(T)^2 = (\mathrm{SD}/\sqrt n)^2 + (\sqrt2\,\sigma_r/n)^2$ with the reaction time σ_r = 0.2 s per press (only the first and last press set the mean of consecutive laps): 0.14–0.9 % of ω.
-- Line $\omega = kS + \omega_0$, weighted least squares: k = 0.0205 ± 0.0001 rad/s per unit S, ω₀ = −0.0226 ± 0.0007 rad/s. χ²/dof = 28.7/7, so the covariance is multiplied by 4.1 and the uncertainties reflect the scatter. The table turns slower than linear at high settings: the line is 3.0 % above the timed ω at S = 90.
-- ω at the photo settings is predicted by the line: its uncertainty combines the line's (0.3–0.5 %) with the 1.3 % scatter of the timed settings about the line, 1.35 % in all; both are common to every setting, so the calibration part of the slope's uncertainty is 1.4 %.
+- Line $\omega = kS + \omega_0$, weighted by the timing uncertainties: k = 0.02054 ± 0.00005 rad/s per unit S, ω₀ = −0.0226 ± 0.0003 rad/s. The points lie farther from the line than their error bars allow (χ²/dof = 28.7/7): the table turns slower than linear at high settings, 3.0 % below the line at S = 90.
+- ω at the photo settings is predicted by the line: its uncertainty combines the line's (0.15–0.25 %) with the 1.3 % scatter of the timed settings about the line, 1.3 % in all; both are common to every setting, so the calibration part of the slope's uncertainty is 1.3 %.
 
 ## Task 2: fringe patterns
 
@@ -50,13 +50,13 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 | 20.74 | 15 | 0.403(5) | 0.64(2) |
 | 31.11 | 19 | 0.616(8) | 1.02(2) |
 | 44.07 | 22 | 0.88(1) | 1.59(2) |
-| 55.83 | 18 | 1.12(2) | 1.984(8) |
+| 55.83 | 18 | 1.12(1) | 1.984(8) |
 | 64.00 | 16 | 1.29(2) | 2.375(8) |
 | 73.65 | 16 | 1.49(2) | 2.700(4) |
 | 82.18 | 15 | 1.67(2) | 2.958(4) |
 | 90.00 | 15 | 1.83(2) | 3.285(5) |
 
-ω: the calibration line's prediction uncertainty (1.35 %). Δφ: standard error of the mean of the photos (SEM); the rest SEM (0.02 rad) is common to all rows.
+ω: the calibration line's prediction uncertainty (1.3 %). Δφ: standard error of the mean of the photos (SEM); the rest SEM (0.02 rad) is common to all rows.
 
 | Fit result | Value |
 |---|---|
@@ -65,7 +65,7 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 | R² | 0.9987 |
 | Added ω² term | p = 0.67, no bend |
 | Intercept | −0.05 ± 0.03 rad, p = 0.12 |
-| Weighted by the photos' SEM instead | χ²/dof = 197/8: the settings vary five times more than the photo noise, so the regression's own s is used |
+| The line against the photos' SEM | χ²/dof = 205/8: the settings vary five times more than the photo noise, so the regression's own s is used |
 
 ## Phase-reading methods
 
@@ -79,7 +79,7 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 - Method uncertainty: half the range of the three full-image methods, 0.054 (2.9 %).
 - Fixed pixels: one draw of ten pixels varies by 0.20 between draws, 3.4 times its own fit error. The rings move only half a fringe, and fixed pixels read center and spacing changes as phase.
 
-**Final slope:** a = 1.83 ± 0.06 rad/(rad/s), from 1.3 % regression, 2.9 % method and 1.4 % calibration, added in quadrature (3.5 %).
+**Final slope:** a = 1.83 ± 0.06 rad/(rad/s), from 1.3 % regression, 2.9 % method and 1.3 % calibration, added in quadrature (3.5 %).
 
 ## Speed of light
 
@@ -88,7 +88,7 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 | Turn count N | 7.7 % |
 | Phase-reading method | 2.9 % |
 | Loop radius R (squared) | 1.8 % |
-| Calibration | 1.4 % |
+| Calibration | 1.3 % |
 | Regression | 1.3 % |
 | **Total** | **8.6 %** |
 | λ (not included) | 0.16 % per nm |
@@ -103,7 +103,7 @@ The phase grows linearly with ω and agrees with the Sagnac formula. The compari
 | Photo-to-photo variation | statistical | SEM 0.004–0.028 rad | yes, in s |
 | Wander between settings | statistical | about 0.04 rad | yes, in s |
 | Stopwatch (lap scatter, reaction time 0.2 s) | statistical | 0.14–0.9 % of a timed ω | yes, through the line |
-| Calibration line and the table's scatter about it | statistical, correlated | 1.4 % of a | yes |
+| Calibration line and the table's scatter about it | statistical, correlated | 1.3 % of a | yes |
 | Phase-reading method | systematic | 2.9 % of a | yes |
 | N, R | given | 7.7 %, 1.8 % | yes (prediction, c) |
 | λ | not given | 0.16 % per nm | no |

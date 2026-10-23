@@ -1,6 +1,6 @@
 # `patterns.py`
 
-> **Earlier stage.** `patterns.py` still runs (it reads `sagnac_speeds.csv`, whose `omega` column is now the line's value), but the report uses `report_figures.py` for the pattern figure.
+> **Earlier stage.** Moved to `previous_reports/patterns_2026-10-13.py` on 23 October; it imports functions that the rewritten `fringes.py` no longer has (`sector_profile_s2`, `S2_BIN`), so it does not run as it stands. The report uses `report_figures.py` for the pattern figure.
 
 The two task-2 figures of the earlier analysis: one photograph per setting with its fitted dark rings (`figures/patterns`), and each setting's mean intensity profile against r² (`figures/profiles`). The report now uses `report_figures.py` for its figures instead.
 

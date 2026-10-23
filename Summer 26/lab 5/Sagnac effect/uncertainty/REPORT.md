@@ -7,13 +7,13 @@ The uncertainty side of `RESULTS.md`, written so that the report's task 5 and an
 | Quantity | How it is obtained | Uncertainty | Kind | Size |
 |---|---|---|---|---|
 | T of a timed setting | mean of n = 5 or 10 consecutive turns | lap scatter SD/√n and reaction time √2 σ_r/n in quadrature | statistical | 0.14–0.9 % of ω |
-| Calibration line ω = kS + ω₀ | weighted least squares, weights 1/u(ω)² | covariance × χ²/dof (4.1) | statistical | k to 0.50 % |
-| ω of a photo setting | predicted by the line | the line's uncertainty and the rms scatter of the timed settings about it, in quadrature | statistical, common to all settings | 1.35 % of ω |
+| Calibration line ω = kS + ω₀ | fit weighted by the timing uncertainties | propagated from them | statistical | k to 0.24 % |
+| ω of a photo setting | predicted by the line | the line's uncertainty and the rms scatter of the timed settings about it, in quadrature | statistical, common to all settings | 1.3 % of ω |
 | φ_c of one photo | ring radii → R_m² = P(m + η) → φ_c = π − 2πη | circle-fit precision (check only) | statistical | about 0.02 rad |
 | Δφ of a setting | mean of its photos minus the rest mean | SEM = SD/√n (assumes independent photos) | statistical | 0.004–0.028 rad |
 | Slope a, regression | equal-weight line through the ten setting means | s, the rms distance of the points from the line | statistical | 0.024 (1.3 %) |
 | Slope a, method | three ways of reading the phase | half their range | systematic | 0.054 (2.9 %) |
-| Slope a, calibration | every ω predicted by the same line | a √((u_k/k)² + rel_rms²) | statistical, correlated | 0.025 (1.4 %) |
+| Slope a, calibration | every ω predicted by the same line | a √((u_k/k)² + rel_rms²) | statistical, correlated | 0.024 (1.3 %) |
 | **Slope a** | | three parts in quadrature | | **1.83 ± 0.06 (3.5 %)** |
 | Prediction a_th | 8π²NR²/(λc) | N (7.7 %), R squared (1.8 %); λ not given | given | 1.7 ± 0.1 (7.9 %) |
 | **Speed of light c** | 8π²NR²/(λa) | relative parts of a, N, R in quadrature | | **(2.9 ± 0.2) × 10⁸ m/s (8.6 %)** |
@@ -42,19 +42,21 @@ The reaction time dominates at the fast settings, where a turn takes 3.5–7 s. 
 
 ## 2. The calibration line and ω at the photo settings
 
-The line ω = kS + ω₀ is fitted by weighted least squares with weights 1/u(ω)². Its χ²/dof = 28.7/7 = 4.1 (p = 2 × 10⁻⁴): the points scatter more than their uncertainties allow, because the table is not exactly linear in S (it turns slower than the line at high settings: the deviations are −0.1, +1.0, +0.3, +0.1, +0.5, 0.0, −0.9, −1.8, −3.0 % in order of S). The coefficient covariance is therefore multiplied by χ²/dof, the usual remedy, so that the uncertainties reflect the actual scatter:
+The line ω = kS + ω₀ is fitted with each timed point weighted by its uncertainty (scipy's `curve_fit`), and the uncertainties of k and ω₀ are propagated from the timing uncertainties, nothing rescaled:
 
 ```
-k = 0.02054 +- 0.00010 rad/s per unit S (0.50 %),   omega0 = -0.0226 +- 0.0007 rad/s
+k = 0.02054 +- 0.00005 rad/s per unit S (0.24 %),   omega0 = -0.0226 +- 0.0003 rad/s
 ```
+
+Its χ²/dof = 28.7/7 = 4.1 (p = 2 × 10⁻⁴): the points lie farther from the line than their uncertainties allow, because the table is not exactly linear in S (it turns slower than the line at high settings: the deviations are −0.1, +1.0, +0.3, +0.1, +0.5, 0.0, −0.9, −1.8, −3.0 % in order of S). That misfit is not hidden in the coefficients; it enters below as the scatter of the timed settings about the line.
 
 A photo setting was not timed: the line predicts its ω, and a prediction carries two things, how well the line is known and how far a single setting lies from it. The second is the rms scatter of the timed settings about the line, 1.27 % of ω (the table does not repeat a setting better than that). So
 
 ```
-u(omega)^2 = (1, S) Cov (1, S)^T + (0.0127 omega)^2        1.35 % of omega
+u(omega)^2 = (1, S) Cov (1, S)^T + (0.0127 omega)^2        1.3 % of omega
 ```
 
-(the line's part is 0.3–0.5 %). Both parts are common to all photo settings (the same line, the same table), so they do not average out between settings; their effect on the slope is a separate part (section 6).
+(the line's part is 0.15–0.25 %). Both parts are common to all photo settings (the same line, the same table), so they do not average out between settings; their effect on the slope is a separate part (section 6).
 
 What is only partly in these numbers: the bend of the table's speed at high settings is a systematic deviation from the line (3.0 % at S = 90), not scatter. Its rms over the nine settings is in the 1.27 %; its full size at the top setting is not. A curve through the timed points instead of the line would lower the Sagnac slope by a few percent; this is stated in `RESULTS.md` (Task 5).
 
@@ -72,7 +74,7 @@ s = sqrt( sum (Delta phi_i - a omega_i - b)^2 / (10 - 2) ) = 0.0444 rad
 u(a) = s / sqrt( sum (omega_i - mean omega)^2 ) = 0.0236
 ```
 
-s is the rms distance of the points from the line and is used as every point's uncertainty: it contains everything that moves a setting mean (photo noise, the table speed, the wander between settings). Weighted by the photos' SEM instead, the line gives χ²/dof = 197/8 (p = 3 × 10⁻³⁸): the points lie five times farther from the line than the photo noise allows, which is why the regression is the right tool here. a = 1.8261 ± 0.0236, reported as 1.83 ± 0.02 rad/(rad/s); R² = 0.9987; an added ω² term is 0.5 standard errors from zero (p = 0.67).
+s is the rms distance of the points from the line and is used as every point's uncertainty: it contains everything that moves a setting mean (photo noise, the table speed, the wander between settings). Measured against the photos' SEM, the line has χ²/dof = 205/8 (p = 6 × 10⁻⁴⁰): the points lie five times farther from the line than the photo noise allows, which is why the regression's own scatter is the right uncertainty. a = 1.8261 ± 0.0236, reported as 1.83 ± 0.02 rad/(rad/s); R² = 0.9987; an added ω² term is 0.5 standard errors from zero (p = 0.67).
 
 With the regression uncertainty only: z = (1.8261 − 1.7381)/√(0.0236² + 0.1371²) = 0.63, two-sided p = 0.53.
 
@@ -82,7 +84,7 @@ The cosine fit and template matching, through the same averaging and regression,
 
 ## 6. The calibration part
 
-Every moving ω is predicted by the same line from the same table, so the relative prediction uncertainty of section 2 is a common scale error of ω, and a scale error of ω is the same scale error of a: u_cal(a)/a = √((u_k/k)² + 0.0127²) = √(0.50² + 1.27²) % = 1.36 %, u_cal(a) = 0.0249. (ω₀ shifts the nine moving points together and is absorbed by the line's intercept, apart from the fixed rest point; its effect is far below the rounding.) This is the only place where the calibration enters u(a); the per-setting u(ω) of section 2 are the same information point by point. Treating the scatter as common is the conservative reading: if it were independent between settings it would partly average out in the slope, but the deviations are a bend, not noise.
+Every moving ω is predicted by the same line from the same table, so the relative prediction uncertainty of section 2 is a common scale error of ω, and a scale error of ω is the same scale error of a: u_cal(a)/a = √((u_k/k)² + 0.0127²) = √(0.24² + 1.27²) % = 1.29 %, u_cal(a) = 0.0236. (ω₀ shifts the nine moving points together and is absorbed by the line's intercept, apart from the fixed rest point; its effect is far below the rounding.) This is the only place where the calibration enters u(a); the per-setting u(ω) of section 2 are the same information point by point. Treating the scatter as common is the conservative reading: if it were independent between settings it would partly average out in the slope, but the deviations are a bend, not noise.
 
 ## 7. The final slope
 
@@ -90,8 +92,8 @@ Every moving ω is predicted by the same line from the same table, so the relati
 |---|---:|---:|---|
 | Regression | 0.0236 | 1.3 % | statistical |
 | Phase-reading method | 0.0539 | 2.9 % | systematic |
-| Calibration | 0.0249 | 1.4 % | statistical (correlated across settings) |
-| **Quadrature** | **0.0639** | **3.5 %** | a = 1.8261 ± 0.0639 → **1.83 ± 0.06 rad/(rad/s)** |
+| Calibration | 0.0236 | 1.3 % | statistical (correlated across settings) |
+| **Quadrature** | **0.0634** | **3.5 %** | a = 1.8261 ± 0.0634 → **1.83 ± 0.06 rad/(rad/s)** |
 
 The three parts come from different things and are added as independent. Against a_th: a/a_th = 1.051 ± 0.091, z = 0.58, p = 0.56. Read the other way, with R, λ and c known, N = 13 a/a_th = 13.66 ± 0.53 turns.
 
@@ -115,7 +117,7 @@ c = 8 pi^2 N R^2 / (lambda a),     (u_c/c)^2 = (u_a/a)^2 + (u_N/N)^2 + (2 u_R/R)
 | Turn count N = 13 ± 1 | 7.7 % |
 | Phase-reading method | 2.9 % |
 | Loop radius R (squared) | 1.8 % |
-| Calibration | 1.4 % |
+| Calibration | 1.3 % |
 | Regression | 1.3 % |
 | **Total** | **8.6 %** |
 

@@ -13,19 +13,19 @@ Uncertainty of the mean turn time: u(T)^2 = (SD/sqrt(n))^2 + (sqrt(2) sigma_r / 
  79.21 10    3.989   0.040     0.0125   0.0283   0.0309       1.57513  0.01221  0.78%
  90.00 10    3.545   0.048     0.0151   0.0283   0.0321       1.77241  0.01604  0.91%
 
-Line omega = k S + omega0, weighted least squares (weights 1/u_omega^2):
-  k = 0.02054 +- 0.00010 rad/s per unit S (0.50 %), omega0 = -0.0226 +- 0.0007 rad/s
-  chi2 = 28.7, dof = 7, chi2/dof = 4.09, p = 0.0002: the points scatter more than their uncertainties allow, so the coefficient covariance is multiplied by 4.09.
-  residuals (omega - line)/omega: -0.1, +1.0, +0.3, +0.1, +0.5, +0.0, -0.9, -1.8, -3.0 %  (rms 1.27 %); the table turns slower than the line at high settings.
-  At S = 90: timed 1.7724 rad/s, line 1.8257 +- 0.0085 (+3.0 %).
+Line omega = k S + omega0, curve_fit weighted by the timing uncertainties:
+  k = 0.02054 +- 0.00005 rad/s per unit S (0.24 %), omega0 = -0.0226 +- 0.0003 rad/s
+  chi2 = 28.7, dof = 7, chi2/dof = 4.09, p = 0.0002: the points lie farther from the line than their uncertainties allow.
+  (omega - line)/omega: -0.1, +1.0, +0.3, +0.1, +0.5, +0.0, -0.9, -1.8, -3.0 %  (rms 1.27 %); the table turns slower than the line at high settings.
+  At S = 90: timed 1.7724 rad/s, line 1.8257 +- 0.0236 (+3.0 %).
 
 omega at the photo settings, predicted by the line: u^2 = (line uncertainty)^2 + (rms scatter)^2, the scatter being 1.27 % of omega; both parts are common to all settings:
-  S =  12.59: omega = 0.2359 +- 0.0031 rad/s (1.31 %; line alone 0.0007)
-  S =  20.74: omega = 0.4033 +- 0.0053 rad/s (1.32 %; line alone 0.0015)
-  S =  31.11: omega = 0.6163 +- 0.0082 rad/s (1.34 %; line alone 0.0026)
-  S =  44.07: omega = 0.8824 +- 0.0119 rad/s (1.34 %; line alone 0.0039)
-  S =  55.83: omega = 1.1239 +- 0.0152 rad/s (1.35 %; line alone 0.0051)
-  S =  64.00: omega = 1.2917 +- 0.0174 rad/s (1.35 %; line alone 0.0059)
-  S =  73.65: omega = 1.4899 +- 0.0201 rad/s (1.35 %; line alone 0.0069)
-  S =  82.18: omega = 1.6651 +- 0.0225 rad/s (1.35 %; line alone 0.0077)
-  S =  90.00: omega = 1.8257 +- 0.0247 rad/s (1.35 %; line alone 0.0085)
+  S =  12.59: omega = 0.2359 +- 0.0030 rad/s (1.28 %)
+  S =  20.74: omega = 0.4033 +- 0.0052 rad/s (1.28 %)
+  S =  31.11: omega = 0.6163 +- 0.0079 rad/s (1.29 %)
+  S =  44.07: omega = 0.8824 +- 0.0114 rad/s (1.29 %)
+  S =  55.83: omega = 1.1239 +- 0.0145 rad/s (1.29 %)
+  S =  64.00: omega = 1.2917 +- 0.0167 rad/s (1.29 %)
+  S =  73.65: omega = 1.4899 +- 0.0192 rad/s (1.29 %)
+  S =  82.18: omega = 1.6651 +- 0.0215 rad/s (1.29 %)
+  S =  90.00: omega = 1.8257 +- 0.0236 rad/s (1.29 %)
