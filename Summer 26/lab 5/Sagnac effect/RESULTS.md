@@ -32,23 +32,23 @@ Unrounded $a_{\mathrm{th}} = 1.738 \pm 0.137$: $N$ gives 7.7 %, $R$ (squared) 2 
 
 Figures: `report_figures/calibration` (the timed points, the line and its ±1σ prediction band) and `report_figures/conversion` (the nine photo settings read off that line, with the prediction uncertainty at the line: the ω column of Table 2).
 
-**Timing.** At each of nine controller settings $S$ (a number on the motor controller, no unit, which sets the motor voltage) n = 5 or 8 consecutive turns were timed with a stopwatch, one press per turn. $T$ is the mean turn time and $\omega = 2\pi/T$. Two things limit $T$: the scatter of the single turns, SD/√n, and the human reaction time of the presses. The n turns are consecutive laps, so the mean turn time is $(t_n - t_0)/n$ and only the first and the last press enter it; with a reaction time $\sigma_r = 0.2$ s per press that part is $\sqrt{2}\sigma_r/n$. Together
+**Timing.** At each of nine controller settings $S$ (a number on the motor controller, no unit, which sets the motor voltage) n = 5 (the five lowest settings) or 10 (the four highest) consecutive turns were timed with a stopwatch, one press per turn. $T$ is the mean turn time and $\omega = 2\pi/T$. Two things limit $T$: the scatter of the single turns, SD/√n, and the human reaction time of the presses. The n turns are consecutive laps, so the mean turn time is $(t_n - t_0)/n$ and only the first and the last press enter it; with a reaction time $\sigma_r = 0.2$ s per press that part is $\sqrt{2}\sigma_r/n$. Together
 
 $$u(T)^2 = \left(\frac{\mathrm{SD}}{\sqrt n}\right)^2 + \left(\frac{\sqrt2\,\sigma_r}{n}\right)^2, \qquad \frac{u(\omega)}{\omega} = \frac{u(T)}{T}$$
 
-which gives 0.14–1.1 % of ω (the reaction time dominates at the fast settings). Example, S = 90: 8 turns, ⟨T⟩ = 3.545 s, SD = 0.054 s, SD/√n = 0.019 s, √2σ_r/n = 0.035 s, u(T) = 0.040 s, ω = 1.772 ± 0.020 rad/s. The 0.2 s is a conventional value; the lap scatter itself implies a smaller press-to-press jitter, so it is on the safe side.
+which gives 0.14–0.9 % of ω (the reaction time dominates at the fast settings). Example, S = 90: 10 turns, ⟨T⟩ = 3.545 s, SD = 0.048 s, SD/√n = 0.015 s, √2σ_r/n = 0.028 s, u(T) = 0.032 s, ω = 1.772 ± 0.016 rad/s. The 0.2 s is a conventional value; the lap scatter itself implies a smaller press-to-press jitter, so it is on the safe side.
 
 **The line.** $\omega = kS + \omega_0$ by weighted least squares with weights $1/u(\omega)^2$:
 
 | | Value | Unrounded |
 |---|---|---|
-| $k$ | 0.0206 ± 0.0001 rad/s per unit S | 0.02058 ± 0.00010 (0.48 %) |
-| $\omega_0$ | −0.0229 ± 0.0006 rad/s | −0.0229 ± 0.0006 |
-| χ²/dof, p | 22.5/7, 0.002 | |
+| $k$ | 0.0205 ± 0.0001 rad/s per unit S | 0.02054 ± 0.00010 (0.50 %) |
+| $\omega_0$ | −0.0226 ± 0.0007 rad/s | −0.0226 ± 0.0007 |
+| χ²/dof, p | 28.7/7, 2 × 10⁻⁴ | |
 
-The points scatter more than their uncertainties allow (χ²/dof = 3.2), so the coefficient covariance is multiplied by χ²/dof, the usual remedy, and the uncertainties above reflect the actual scatter. The deviations from the line are −0.1, +0.8, +0.1, −0.1, +0.3, −0.1, −1.3, −2.1, −3.2 % in order of S (rms 1.4 %): the table turns slower than linear at high settings. At S = 90 the line gives 1.829 rad/s, 3.2 % above the timed 1.772 rad/s. The intercept is not physical (the line was only tested for S = 5.78–90); at rest ω = 0 is used.
+The points scatter more than their uncertainties allow (χ²/dof = 4.1), so the coefficient covariance is multiplied by χ²/dof, the usual remedy, and the uncertainties above reflect the actual scatter. The deviations from the line are −0.1, +1.0, +0.3, +0.1, +0.5, 0.0, −0.9, −1.8, −3.0 % in order of S (rms 1.3 %): the table turns slower than linear at high settings. At S = 90 the line gives 1.826 rad/s, 3.0 % above the timed 1.772 rad/s. The intercept is not physical (the line was only tested for S = 5.78–90); at rest ω = 0 is used.
 
-**ω at the photo settings.** A photo setting was not timed: the line predicts its ω. The prediction carries the line's own uncertainty, $(1, S)\,\mathrm{Cov}\,(1, S)^T$ (0.3–0.45 % of ω), and the scatter of the timed settings about the line, 1.4 % of ω (the table does not repeat a setting better than that); in quadrature 1.45 % of ω (Table 2). Both parts are common to every photo setting (the same line, the same table), so the calibration part of the Sagnac slope's uncertainty has the same relative size, $\sqrt{0.48^2 + 1.38^2}\,\% = 1.5\ \%$ (Task 3).
+**ω at the photo settings.** A photo setting was not timed: the line predicts its ω. The prediction carries the line's own uncertainty, $(1, S)\,\mathrm{Cov}\,(1, S)^T$ (0.3–0.5 % of ω), and the scatter of the timed settings about the line, 1.3 % of ω (the table does not repeat a setting better than that); in quadrature 1.35 % of ω (Table 2). Both parts are common to every photo setting (the same line, the same table), so the calibration part of the Sagnac slope's uncertainty has the same relative size, $\sqrt{0.50^2 + 1.27^2}\,\% = 1.4\ \%$ (Task 3).
 
 ---
 
@@ -84,16 +84,16 @@ A straight line through $R_m^2$ against the ring number $m$ gives the slope $P$ 
 |---|---|---|---|---|---|
 | rest | 10 | 16:21:40 | 0 | 0 (reference) | 1.075 |
 | 12.59 | 15 | 16:24:10 | 0.236 ± 0.003 | 0.39 ± 0.03 | 1.071 |
-| 20.74 | 15 | 16:25:44 | 0.404 ± 0.006 | 0.64 ± 0.02 | 1.058 |
-| 31.11 | 19 | 16:26:38 | 0.617 ± 0.009 | 1.02 ± 0.02 | 1.065 |
+| 20.74 | 15 | 16:25:44 | 0.403 ± 0.005 | 0.64 ± 0.02 | 1.058 |
+| 31.11 | 19 | 16:26:38 | 0.616 ± 0.008 | 1.02 ± 0.02 | 1.065 |
 | 44.07 | 22 | 16:27:54 | 0.88 ± 0.01 | 1.59 ± 0.02 | 1.093 |
-| 55.83 | 18 | 16:29:08 | 1.13 ± 0.02 | 1.984 ± 0.008 | 1.058 |
+| 55.83 | 18 | 16:29:08 | 1.12 ± 0.02 | 1.984 ± 0.008 | 1.058 |
 | 64.00 | 16 | 16:30:16 | 1.29 ± 0.02 | 2.375 ± 0.008 | 1.094 |
 | 73.65 | 16 | 16:31:28 | 1.49 ± 0.02 | 2.700 ± 0.004 | 1.087 |
 | 82.18 | 15 | 16:32:32 | 1.67 ± 0.02 | 2.958 ± 0.004 | 1.068 |
-| 90.00 | 15 | 16:33:24 | 1.83 ± 0.03 | 3.285 ± 0.005 | 1.073 |
+| 90.00 | 15 | 16:33:24 | 1.83 ± 0.02 | 3.285 ± 0.005 | 1.073 |
 
-ω from the calibration line with its prediction uncertainty (1.45 %, common to all settings). The rest SEM (0.02 rad) is common to every row. P is the median of the setting's photos.
+ω from the calibration line with its prediction uncertainty (1.35 %, common to all settings). The rest SEM (0.02 rad) is common to every row. P is the median of the setting's photos.
 
 ### The line through the ten settings
 
@@ -101,18 +101,18 @@ $\Delta\phi = a\omega + b$ by ordinary least squares, ten points, equal weights,
 
 | Quantity | Value | Unrounded |
 |---|---|---|
-| Slope a (regression) | 1.82 ± 0.02 rad/(rad/s) | 1.8228 ± 0.0235 |
+| Slope a (regression) | 1.83 ± 0.02 rad/(rad/s) | 1.8261 ± 0.0236 |
 | s, the rms distance of the points from the line | 0.04 rad | 0.0444 |
 | R² | 0.9987 | |
-| Intercept b | −0.05 ± 0.03 rad, p = 0.12 (t test) | −0.046 ± 0.027 |
+| Intercept b | −0.05 ± 0.03 rad, p = 0.12 (t test) | −0.047 ± 0.027 |
 | Added ω² term | 0.5 standard errors from zero, p = 0.67 | no sign of a bend |
-| Line forced through the origin (check) | 1.79 ± 0.01 | 1.788 ± 0.014 |
+| Line forced through the origin (check) | 1.79 ± 0.01 | 1.791 ± 0.014 |
 
-**Why a regression and not the photos' error bars.** Weighted by the SEM of each setting (0.004–0.028 rad), the line gives χ²/dof = 197/8 (p = 3 × 10⁻³⁸, slope 1.806): the setting means lie five times farther from the line than the photo noise allows. The SEM assumes the photos of one setting are independent, and they are not: the phase wanders slowly (see the drift section), so a setting mean is less well known than its SEM says. The regression's $s$ contains everything that moves a setting mean (photo noise, the table speed, the wander), which is why it is used. A regression through all 161 photos would treat correlated photos as independent and give a misleadingly small uncertainty.
+**Why a regression and not the photos' error bars.** Weighted by the SEM of each setting (0.004–0.028 rad), the line gives χ²/dof = 197/8 (p = 3 × 10⁻³⁸, slope 1.809): the setting means lie five times farther from the line than the photo noise allows. The SEM assumes the photos of one setting are independent, and they are not: the phase wanders slowly (see the drift section), so a setting mean is less well known than its SEM says. The regression's $s$ contains everything that moves a setting mean (photo noise, the table speed, the wander), which is why it is used. A regression through all 161 photos would treat correlated photos as independent and give a misleadingly small uncertainty.
 
-**Comparison with the prediction** (regression uncertainty only): a / a_th = 1.05 ± 0.08; the difference 0.085 against $\sqrt{0.024^2 + 0.137^2} = 0.139$ is 0.6σ, two-sided p = 0.54. For scale, Schwartz's large ring gave 1.304 ± 0.038 against a prediction of 1.344 ± 0.006 (agreement within 3 %).
+**Comparison with the prediction** (regression uncertainty only): a / a_th = 1.05 ± 0.08; the difference 0.088 against $\sqrt{0.024^2 + 0.137^2} = 0.139$ is 0.6σ, two-sided p = 0.53. For scale, Schwartz's large ring gave 1.304 ± 0.038 against a prediction of 1.344 ± 0.006 (agreement within 3 %).
 
-**Largest shift.** At ω = 1.83 rad/s, Δφ = 3.28 ± 0.06 rad = 0.52 ± 0.01 fringe (the ± 0.06 is $\sqrt{2}\,s$: top setting minus rest, each known to s). As a travel-time difference $\Delta t = \Delta\phi\,\lambda/(2\pi c) = 1.12 \pm 0.02$ fs. The prediction there is 3.2 ± 0.3 rad (unrounded 3.18), $\Delta t = 1.08$ fs, half an optical period (2.13 fs).
+**Largest shift.** At ω = 1.83 rad/s, Δφ = 3.28 ± 0.06 rad = 0.52 ± 0.01 fringe (the ± 0.06 is $\sqrt{2}\,s$: top setting minus rest, each known to s). As a travel-time difference $\Delta t = \Delta\phi\,\lambda/(2\pi c) = 1.12 \pm 0.02$ fs. The prediction there is 3.2 ± 0.3 rad (unrounded 3.17), $\Delta t = 1.08$ fs, half an optical period (2.13 fs).
 
 ### Phase-reading methods (prep Q5)
 
@@ -120,31 +120,31 @@ Figure: `report_figures/methods`. Each method's per-setting phases go through th
 
 | Method | What it reads | a (rad/(rad/s)) | s (rad) | R² |
 |---|---|---|---|---|
-| Ring minima (main) | phase at the ring center, from the ring radii | 1.82 ± 0.02 | 0.044 | 0.9987 |
+| Ring minima (main) | phase at the ring center, from the ring radii | 1.83 ± 0.02 | 0.044 | 0.9987 |
 | Cosine fit of the $r^2$ profile | phase at the center from a fitted fringe model | 1.86 ± 0.03 | 0.053 | 0.9982 |
-| Template matching to the rest profile | shift of the whole profile, read mid-window | 1.75 ± 0.02 | 0.031 | 0.9993 |
+| Template matching to the rest profile | shift of the whole profile, read mid-window | 1.76 ± 0.02 | 0.031 | 0.9993 |
 
-Unrounded slopes 1.8228, 1.8595, 1.7520.
+Unrounded slopes 1.8261, 1.8630, 1.7552.
 
 - **Cosine fit.** Intensity against $s = r^2$: $C e^{-s/s_C} + B e^{-s/s_B}\cos(2\pi s/P + \phi) + D$. The exponentials are the envelopes of two Gaussian beams of different size (QE3, PDF p. 7), D a floor. It uses every pixel but relies on the envelope model and a linear camera response. Its fits report an rms and no χ², because neighboring pixels share speckle. It reads 0.10–0.19 rad higher than the minima at every moving setting, because at rest the bright flat center is not a cosine (fit rms 9.5 counts at rest, 1.4–2.3 above S = 44).
 - **Template matching** (our addition). Each $r^2$ profile is shifted and scaled to match the averaged rest profile; the shift $D$ gives $2\pi D/P$. It needs no fringe model but reads the phase in the middle of the comparison window, where a change of P adds to it.
-- **Method uncertainty.** The methods read the same photographs, so they are correlated checks, not independent measurements. Half the range of the three slopes, (1.8595 − 1.7520)/2 = 0.054 rad/(rad/s) (2.9 % of a), is taken as one standard uncertainty. This is a convention; it is the largest part of the slope's uncertainty.
+- **Method uncertainty.** The methods read the same photographs, so they are correlated checks, not independent measurements. Half the range of the three slopes, (1.8630 − 1.7552)/2 = 0.054 rad/(rad/s) (2.9 % of a), is taken as one standard uncertainty. This is a convention; it is the largest part of the slope's uncertainty.
 - **Fixed pixels** (the second half of prep Q5, optional; `report_figures/random_pixels`). Ten pixels at fixed image positions are read in all 161 photos and fitted with $I = a_j + b_j\cos(\psi_j + \delta_k)$ for every pixel j and photo k. Over 1000 random draws of ten pixels the slope has mean 1.70 and spreads by 0.20 (SD) between draws, 3.4 times the fit error of one draw (0.057); with 20, 40 and 80 pixels the spread falls to 0.09, 0.07 and 0.06 but stays above the fit error. Our largest shift is only half a fringe, so each pixel passes through less than one bright–dark cycle, and a fixed pixel also reads a moving ring center or a change of P as a phase change. For a large Δφ_max, where fixed points pass through many cycles, this method would do well; our run is the small-shift case. Not used for the result. (These numbers are the presentation stage's scan, `presentation_slides/source/random_points_scan.json`, summarized by `sagnac.py`; it used the earlier calibration line.)
 
 ### Final slope
 
-$$a = 1.82 \pm 0.06\ \mathrm{rad/(rad/s)}$$
+$$a = 1.83 \pm 0.06\ \mathrm{rad/(rad/s)}$$
 
 | Part | On a (unrounded) | Relative | How |
 |---|---|---|---|
 | Regression | 0.024 | 1.3 % | s and the spread of the ten ω |
 | Phase-reading method | 0.054 | 2.9 % | half the range of the three methods |
-| Calibration | 0.027 | 1.5 % | the line's prediction uncertainty, common to every ω: $\sqrt{(u_k/k)^2 + (1.38\,\%)^2}$ |
+| Calibration | 0.025 | 1.4 % | the line's prediction uncertainty, common to every ω: $\sqrt{(u_k/k)^2 + (1.27\,\%)^2}$ |
 | **Added in quadrature** | **0.064** | **3.5 %** | |
 
 The three parts come from different things (noise between settings, how the phase is read, the calibration line) and are added as independent.
 
-**Against the prediction** (full uncertainty): a / a_th = 1.05 ± 0.09, difference 0.6σ (z = 0.56), p = 0.58. Read the other way, with c, R and λ taken as known, the slope fixes the number of turns: N = 13.6 ± 0.5, against the given 13 ± 1.
+**Against the prediction** (full uncertainty): a / a_th = 1.05 ± 0.09, difference 0.6σ (z = 0.58), p = 0.56. Read the other way, with c, R and λ taken as known, the slope fixes the number of turns: N = 13.7 ± 0.5, against the given 13 ± 1.
 
 ---
 
@@ -152,14 +152,14 @@ The three parts come from different things (noise between settings, how the phas
 
 $$c = \frac{8\pi^2 N R^2}{\lambda a} = (2.9 \pm 0.2) \times 10^8\ \mathrm{m/s}$$
 
-Unrounded 2.859 ± 0.247 (8.6 %). c / c₀ = 0.95 ± 0.08, with c₀ = 299 792 458 m/s (defined); −0.6σ (z = −0.56), two-sided p = 0.57. This is the same comparison as a / a_th ($c/c_0 = a_{\mathrm{th}}/a$), shown as a speed of light, not an independent test: the slope is inferred through the Sagnac formula with the given geometry.
+Unrounded 2.854 ± 0.246 (8.6 %). c / c₀ = 0.95 ± 0.08, with c₀ = 299 792 458 m/s (defined); −0.6σ (z = −0.59), two-sided p = 0.56. This is the same comparison as a / a_th ($c/c_0 = a_{\mathrm{th}}/a$), shown as a speed of light, not an independent test: the slope is inferred through the Sagnac formula with the given geometry.
 
 | Source | Relative uncertainty of c |
 |---|---|
 | Turn count N = 13 ± 1 | 7.7 % |
 | Phase-reading method | 2.9 % |
 | Loop radius R = 57.0 ± 0.5 cm (enters squared) | 1.8 % |
-| Calibration | 1.5 % |
+| Calibration | 1.4 % |
 | Regression | 1.3 % |
 | **Total (in quadrature)** | **8.6 %** |
 | Wavelength (not given, not included) | 0.16 % per nm |
@@ -176,20 +176,20 @@ Figure: `report_figures/drift`. Derivations: `uncertainty/REPORT.md`.
 |---|---|---|---|
 | Photo-to-photo variation | statistical | SEM 0.004–0.028 rad per setting | yes, in s |
 | Wander of the phase between settings | statistical | about 0.04 rad per setting | yes, in s (it dominates s) |
-| Stopwatch: lap scatter and reaction time (0.2 s per press) | statistical | 0.14–1.1 % of a timed ω | yes, through the line |
-| Calibration line and the table's scatter about it | statistical (correlated across settings) | 1.5 % of a | yes |
+| Stopwatch: lap scatter and reaction time (0.2 s per press) | statistical | 0.14–0.9 % of a timed ω | yes, through the line |
+| Calibration line and the table's scatter about it | statistical (correlated across settings) | 1.4 % of a | yes |
 | Phase-reading method | systematic | 2.9 % of a | yes |
 | Turn count N = 13 ± 1 | given | 7.7 % | yes (prediction, c) |
 | Loop radius R = 57.0 ± 0.5 cm | given | 1.8 % | yes (prediction, c) |
 | Wavelength λ = 640 nm | not given | 0.16 % per nm | no |
-| Bend of the calibration at high settings (line 3.2 % above the timed ω at S = 90) | systematic | up to 3 % of ω at the top settings | partly: its rms is in the 1.4 % scatter, the 3.2 % at the top setting is not |
+| Bend of the calibration at high settings (line 3.0 % above the timed ω at S = 90) | systematic | up to 3 % of ω at the top settings | partly: its rms is in the 1.3 % scatter, the 3.0 % at the top setting is not |
 | Steady drift of the phase in time | systematic | not separable from a | no |
 
 Not checked: the sign of the shift (the rotation direction was not recorded). ω comes from the calibration at the same setting, not from timing during the photographs. The calibration's bend at high settings would lower the slope if the line were replaced by a curve through the timed points; its average size is in the scatter term, its full size at the top setting is stated here.
 
 ### Drift in time
 
-The settings were photographed in increasing order, with rest photos only at the start, so ω and time rise together. A phase that drifts steadily in time would change the slope and cannot be told apart from it. The joint regression $\Delta\phi = a\omega + Dt + b$ (t the mean time of each setting's photos) gives a = 2.1 ± 0.2 rad/(rad/s), D = −0.8 ± 0.5 mrad/s, p = 0.13 for D, and a correlation of −0.99 between a and D. Within the settings the phase drifts by up to ±8 mrad/s, changing sign (Fig. 8). The quoted uncertainties do not include a steady drift.
+The settings were photographed in increasing order, with rest photos only at the start, so ω and time rise together. A phase that drifts steadily in time would change the slope and cannot be told apart from it. The joint regression $\Delta\phi = a\omega + Dt + b$ (t the mean time of each setting's photos) gives a = 2.1 ± 0.2 rad/(rad/s), D = −0.8 ± 0.5 mrad/s, p = 0.12 for D, and a correlation of −0.99 between a and D. Within the settings the phase drifts by up to ±8 mrad/s, changing sign (Fig. 8). The quoted uncertainties do not include a steady drift.
 
 **A plausible source of the wander (not tested).** At 640 nm SMF-28e+ guides several modes: V = 5.6 (core radius 4.1 µm, NA 0.14), above the single-mode limit 2.405 (prep Q12). Light in several modes is sensitive to fiber stress and temperature, and the camera records the whole multimode field with no single-mode filter at the common port, so the two directions need not stay exactly reciprocal. Single-mode coupling is possible with this fiber (the manual's 15.5 mm lens gives up to 93 %, the setup's 8 mm lens at most 47 %) but was very hard to align.
 

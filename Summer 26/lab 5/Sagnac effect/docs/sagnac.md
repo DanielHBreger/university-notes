@@ -6,7 +6,7 @@ Tasks 3 and 5 and the speed of light: the slope a of the phase against ω with i
 
 Eq. (5) predicts Δφ = a_th ω with a_th = 8π²NR²/(λc). The ten setting means are fitted with the line Δφ = aω + b by ordinary least squares (Schwartz 2017, Eq. 7): every point's uncertainty is s, the rms distance of the points from the line, and u(a) = s/√Σ(ω − ω̄)². Weighted by the photos' SEM instead, the line has χ²/dof = 197/8: the settings differ five times more than the photo noise allows, because the phase wanders over minutes, so a setting mean is less well known than its SEM and the regression's own s is the right uncertainty.
 
-The slope's uncertainty has three parts, added in quadrature: the regression (0.024), the phase-reading method (half the range of the three methods' slopes, 0.054) and the calibration (every ω is predicted by the same line from the same table, so the relative prediction uncertainty √((u_k/k)² + rel_rms²) = 1.46 % is a common scale error of ω and hence of a: 0.027). a = 1.8228 ± 0.0645 → 1.82 ± 0.06 rad/(rad/s).
+The slope's uncertainty has three parts, added in quadrature: the regression (0.024), the phase-reading method (half the range of the three methods' slopes, 0.054) and the calibration (every ω is predicted by the same line from the same table, so the relative prediction uncertainty √((u_k/k)² + rel_rms²) = 1.36 % is a common scale error of ω and hence of a: 0.025). a = 1.8261 ± 0.0639 → 1.83 ± 0.06 rad/(rad/s).
 
 ## `round1(x, u)`
 
@@ -37,7 +37,7 @@ Optional (prep Q5): reads the presentation stage's `random_points_scan.json` if 
 
 ## `main()`, step by step
 
-1. `setting_means(fr, 'phi_rad')`; ω from `calibration.json['line']['coef']` through `calibration.omega_of`, exactly 0 at rest; u_omega through `calibration.u_omega_pred` (the line's uncertainty and the rms scatter of the timed settings about it, 1.45 %, common to all settings).
+1. `setting_means(fr, 'phi_rad')`; ω from `calibration.json['line']['coef']` through `calibration.omega_of`, exactly 0 at rest; u_omega through `calibration.u_omega_pred` (the line's uncertainty and the rms scatter of the timed settings about it, 1.35 %, common to all settings).
 2. `regress(omega, dphi)`: a, b, u_stat, s, R².
 3. Checks: the line weighted by the SEMs (χ², p); an added ω² term by least squares, with a t test on its coefficient (7 dof); the line through the origin; a t test on the intercept.
 4. The other methods (`OTHER_METHODS`: cosine fit from `fringes_frames.csv`, template matching from `methods_frames.csv`) through the same `setting_means` and `regress`; u_meth = half the range of the three slopes.
@@ -61,11 +61,11 @@ Optional (prep Q5): reads the presentation stage's `random_points_scan.json` if 
 
 ## Against the presentation (19 October)
 
-The presentation's numbers (`presentation_slides/source/numbers.json`, `previous_reports/`) were a = 1.8390 ± 0.0242 (regression plus a calibration-line part from 4000 redrawn lines), method 0.054, calibration model (line against quadratic) 0.032, total 0.067 → 1.84 ± 0.07; here a = 1.8228 ± 0.0235, 0.054, 0.027, total 0.064 → 1.82 ± 0.06. The slope moved by 0.9 % because the calibration line is now fitted with the stopwatch uncertainties (lap scatter and reaction time) as weights, which favor the slow settings, so ω at the top settings is about 1 % higher than before. The calibration part (1.5 %) is now the line's prediction uncertainty (k's 0.48 % and the 1.38 % scatter of the timed settings about the line) instead of the quadratic difference; the 3.2 % bend at the top setting is a stated limitation. The largest shift is 3.28 ± 0.06 rad (the presentation rounded a six-digit 3.285 up to 3.29).
+The presentation's numbers (`presentation_slides/source/numbers.json`, `previous_reports/`) were a = 1.8390 ± 0.0242 (regression plus a calibration-line part from 4000 redrawn lines), method 0.054, calibration model (line against quadratic) 0.032, total 0.067 → 1.84 ± 0.07; here a = 1.8261 ± 0.0236, 0.054, 0.025, total 0.064 → 1.83 ± 0.06. The slope moved by 0.7 % because the calibration line is now fitted with the stopwatch uncertainties (lap scatter and reaction time) as weights, which favor the slow settings, so ω at the top settings is about 1 % higher than before, and because the calibration file was completed on 23 October (10 turns instead of 8 at the four fastest settings). The calibration part (1.4 %) is now the line's prediction uncertainty (k's 0.50 % and the 1.27 % scatter of the timed settings about the line) instead of the quadratic difference; the 3.0 % bend at the top setting is a stated limitation. The largest shift is 3.28 ± 0.06 rad (the presentation rounded a six-digit 3.285 up to 3.29).
 
 ## Caveats
 
 - The three methods read the same photographs; half their range is a convention for one standard uncertainty.
-- The calibration line sits 3.2 % above the timed ω at S = 90 (the table bends at high settings); a curve through the timed points would lower a by a few percent. The rms of the deviations is in u(a) through the 1.38 % scatter term; the 3.2 % at the top setting is not. Stated in `RESULTS.md`, Task 5.
+- The calibration line sits 3.0 % above the timed ω at S = 90 (the table bends at high settings); a curve through the timed points would lower a by a few percent. The rms of the deviations is in u(a) through the 1.27 % scatter term; the 3.0 % at the top setting is not. Stated in `RESULTS.md`, Task 5.
 - A steady drift in time is in no uncertainty, and the sign of the shift is not compared (rotation direction not recorded).
 - The earlier versions (`previous_reports/sagnac_quadratic_2026-10-13.py`, `sagnac_update/sagnac.py`) fitted a weighted line with an extra per-setting term set by χ² = dof and propagated the calibration curve by derivatives; they need the earlier `calibration.py`.

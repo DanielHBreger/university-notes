@@ -8,7 +8,7 @@ version `SUMMARY.md`); the report material is `report_figures/`, `REPORT_figures
 ## Data
 
 - `Rotation calibration.csv`: times of consecutive single turns of the table: 5 turns at each of
-  the five lowest speed settings, 8 at the four highest (columns `turn 1` ... `turn 10`, empty cells
+  the five lowest speed settings, 10 at the four highest (columns `turn 1` ... `turn 10`, empty cells
   skipped). `Speed` is the motor controller setting S.
 - `Measurements/<S>/<YYYYMMDDhhmmss>.png`: photographs of the fringe pattern with the fibre loop
   centred on the axis, 10-22 per setting, S = 0 (at rest), 12.59, 20.74, 31.11, 44.07, 55.83, 64.00,
@@ -40,17 +40,17 @@ plus 600 dpi PNG, no titles, no fit statistics in the image, no residual panels.
 
 ## Method
 
-**Calibration** (`calibration.py`). Per setting, T is the mean of n = 5 or 8 consecutive timed
+**Calibration** (`calibration.py`). Per setting, T is the mean of n = 5 or 10 consecutive timed
 turns and omega = 2 pi/T. u(T) combines the lap scatter SD/sqrt(n) with the reaction time of the
 presses: the laps are consecutive, so only the first and last press set the mean, and with
-sigma_r = 0.2 s per press that part is sqrt(2) sigma_r/n. Together 0.14-1.1 % of omega. The line
+sigma_r = 0.2 s per press that part is sqrt(2) sigma_r/n. Together 0.14-0.9 % of omega. The line
 omega = k S + omega0 is fitted by weighted least squares (weights 1/u(omega)^2); the points scatter
-more than their uncertainties allow (chi2/dof = 3.2: the table turns slower than linear at high
-settings, 3.2 % below the line at S = 90), so the coefficient covariance is enlarged by chi2/dof.
+more than their uncertainties allow (chi2/dof = 4.1: the table turns slower than linear at high
+settings, 3.0 % below the line at S = 90), so the coefficient covariance is enlarged by chi2/dof.
 The photos use the line, as task 1 asks. A photo setting was not timed, so its omega carries the
-line's prediction uncertainty: the line's own (0.3-0.45 %) and the 1.4 % rms scatter of the timed
-settings about it, 1.45 % in all, common to every setting; that relative size (1.5 %) is the
-calibration part of the Sagnac slope's uncertainty. The 3.2 % bend at the top setting is stated as
+line's prediction uncertainty: the line's own (0.3-0.5 %) and the 1.3 % rms scatter of the timed
+settings about it, 1.35 % in all, common to every setting; that relative size (1.4 %) is the
+calibration part of the Sagnac slope's uncertainty. The 3.0 % bend at the top setting is stated as
 a limitation.
 
 **Fringe phase** (`fringes.py`). A Gaussian beam carries the phase k r^2/(2R(z)). The two output
@@ -88,7 +88,7 @@ u(a) = s/sqrt(sum (omega - mean)^2). Weighted by the photos' SEM instead, the li
 chi2/dof = 197/8: the settings differ five times more than the photo noise allows, because the
 phase wanders slowly, so the regression's own s is the right uncertainty. The slope's uncertainty
 has three parts added in quadrature: the regression (1.3 %), the phase-reading method (half the
-range of the three methods, 2.9 %) and the calibration (the line's prediction uncertainty, 1.5 %).
+range of the three methods, 2.9 %) and the calibration (the line's prediction uncertainty, 1.4 %).
 Theory: a_th = 8 pi^2 N R^2/(lambda c), Eq. (5), independent of where the axis lies (Schwartz;
 prep Q8) and of the fibre's index (prep Q10).
 

@@ -3,52 +3,52 @@ Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rot
 PER SETTING: phase at the ring centre (minima), mean over the photos, SEM = SD/sqrt(n); omega from the
 calibration line +- its prediction uncertainty (common to all settings); dphi = phase minus the rest mean.
      S   n first photo      omega (rad/s)         dphi (rad) P (10^5 px^2)   resid
-  0.00  10    16:21:40   0.0000 +- 0.0000    0.000 +- 0.020         1.075  +0.046
- 12.59  15    16:24:10   0.2362 +- 0.0033    0.394 +- 0.028         1.071  +0.010
- 20.74  15    16:25:44   0.4039 +- 0.0058    0.638 +- 0.015         1.058  -0.051
- 31.11  19    16:26:38   0.6172 +- 0.0089    1.017 +- 0.025         1.065  -0.061
- 44.07  22    16:27:54   0.8839 +- 0.0128    1.591 +- 0.015         1.093  +0.026
- 55.83  18    16:29:08   1.1259 +- 0.0163    1.984 +- 0.008         1.058  -0.022
- 64.00  16    16:30:16   1.2940 +- 0.0188    2.375 +- 0.008         1.094  +0.063
- 73.65  16    16:31:28   1.4925 +- 0.0217    2.700 +- 0.004         1.087  +0.026
- 82.18  15    16:32:32   1.6680 +- 0.0242    2.958 +- 0.004         1.068  -0.036
- 90.00  15    16:33:24   1.8289 +- 0.0266    3.285 +- 0.005         1.073  -0.002
+  0.00  10    16:21:40   0.0000 +- 0.0000    0.000 +- 0.020         1.075  +0.047
+ 12.59  15    16:24:10   0.2359 +- 0.0031    0.394 +- 0.028         1.071  +0.010
+ 20.74  15    16:25:44   0.4033 +- 0.0053    0.638 +- 0.015         1.058  -0.051
+ 31.11  19    16:26:38   0.6163 +- 0.0082    1.017 +- 0.025         1.065  -0.061
+ 44.07  22    16:27:54   0.8824 +- 0.0119    1.591 +- 0.015         1.093  +0.026
+ 55.83  18    16:29:08   1.1239 +- 0.0152    1.984 +- 0.008         1.058  -0.022
+ 64.00  16    16:30:16   1.2917 +- 0.0174    2.375 +- 0.008         1.094  +0.063
+ 73.65  16    16:31:28   1.4899 +- 0.0201    2.700 +- 0.004         1.087  +0.026
+ 82.18  15    16:32:32   1.6651 +- 0.0225    2.958 +- 0.004         1.068  -0.036
+ 90.00  15    16:33:24   1.8257 +- 0.0247    3.285 +- 0.005         1.073  -0.002
 (the rest mean, SEM 0.020 rad, is subtracted from every row; resid = dphi minus the line)
 
 THE LINE dphi = a omega + b, ordinary least squares through the ten setting means (Schwartz Eq. 7):
-  a = 1.8228 +- 0.0235 rad/(rad/s) (regression), b = -0.046 +- 0.027 rad (p = 0.12 for b = 0), R^2 = 0.9987
+  a = 1.8261 +- 0.0236 rad/(rad/s) (regression), b = -0.047 +- 0.027 rad (p = 0.12 for b = 0), R^2 = 0.9987
   s = 0.0444 rad: the rms distance of the points from the line, used as every point's uncertainty.
-  Weighted by the photos' SEM instead: chi2 = 197.1, dof = 8, p = 3e-38 (slope 1.8059): the settings differ by
+  Weighted by the photos' SEM instead: chi2 = 197.1, dof = 8, p = 3e-38 (slope 1.8093): the settings differ by
   5.0 times more than the photo noise allows (the phase wanders between settings), so the regression's s is used.
-  Added omega^2 term: +0.023 +- 0.050 rad/(rad/s)^2, t = 0.45, p = 0.67: no bend.
-  Line through the origin (check): a = 1.7878 +- 0.0138.
+  Added omega^2 term: +0.023 +- 0.051 rad/(rad/s)^2, t = 0.45, p = 0.67: no bend.
+  Line through the origin (check): a = 1.7909 +- 0.0139.
 
 OTHER PHASE-READING METHODS, same averaging and regression (cosine fit: fringes.py, prep Q5; template
 matching: methods.py):
-  cosine fit         a = 1.8595 +- 0.0281, s = 0.0530 rad, R^2 = 0.9982; minus the minima per setting: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad
-  template matching  a = 1.7520 +- 0.0163, s = 0.0308 rad, R^2 = 0.9993; minus the minima per setting: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad
-  Method part of u(a): half the range of 1.8228, 1.8595, 1.7520 = 0.0538 (2.9 %).
-  Calibration part of u(a): k is known to 0.48 % and the timed settings scatter about the line by 1.38 % (calibration.txt);
-  both are common to every omega, so u(a)/a = sqrt(0.48^2 + 1.38^2) % = 1.46 %, u = 0.0266.
+  cosine fit         a = 1.8630 +- 0.0281, s = 0.0530 rad, R^2 = 0.9982; minus the minima per setting: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad
+  template matching  a = 1.7552 +- 0.0164, s = 0.0308 rad, R^2 = 0.9993; minus the minima per setting: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad
+  Method part of u(a): half the range of 1.8261, 1.8630, 1.7552 = 0.0539 (2.9 %).
+  Calibration part of u(a): k is known to 0.50 % and the timed settings scatter about the line by 1.27 % (calibration.txt);
+  both are common to every omega, so u(a)/a = sqrt(0.50^2 + 1.27^2) % = 1.36 %, u = 0.0249.
 
-RESULT  a = 1.8228 +- 0.0235 (regression) +- 0.0538 (method) +- 0.0266 (calibration)
-          = 1.8228 +- 0.0645 rad/(rad/s) (3.5 %, the three parts in quadrature)
+RESULT  a = 1.8261 +- 0.0236 (regression) +- 0.0539 (method) +- 0.0249 (calibration)
+          = 1.8261 +- 0.0639 rad/(rad/s) (3.5 %, the three parts in quadrature)
 Theory, Eq. (5): N = 13 +- 1, R = 57.0 +- 0.5 cm (A = pi R^2 = 1.0207 m^2), lambda = 640 nm, c exact.
   a_th = 8 pi^2 N R^2 / (lambda c) = 1.7381 +- 0.1371 rad/(rad/s) [N: 0.1337 (7.7 %), R: 0.0305 (1.8 %)]
   lambda: no uncertainty given, NOT included (unknown, not zero); a_th and c move by 0.16 % per nm.
-  a / a_th = 1.049 +- 0.091; a - a_th = +0.0846 = +0.56 combined sigma, p = 0.58 (regression part only: +0.61 sigma, p = 0.54).
-  Read the other way (R, lambda, c known): N = 13.63 +- 0.54 turns.
-  Largest shift (S = 90 minus rest): 3.285 +- 0.063 rad = 0.523 +- 0.010 fringe at omega = 1.829 rad/s; predicted 3.18 rad.
+  a / a_th = 1.051 +- 0.091; a - a_th = +0.0880 = +0.58 combined sigma, p = 0.56 (regression part only: +0.63 sigma, p = 0.53).
+  Read the other way (R, lambda, c known): N = 13.66 +- 0.53 turns.
+  Largest shift (S = 90 minus rest): 3.285 +- 0.063 rad = 0.523 +- 0.010 fringe at omega = 1.826 rad/s; predicted 3.17 rad.
   As a travel-time difference, dt = dphi lambda / (2 pi c) = 1.12 +- 0.02 fs (predicted 1.08 fs; one optical period is 2.13 fs).
 
 SPEED OF LIGHT, Eq. (5) solved for c = 8 pi^2 N R^2 / (lambda a), in 10^8 m/s:
-  c = 2.8587 +- 0.0369 (regression, 1.3 %) +- 0.0843 (method, 2.9 %) +- 0.0418 (calibration, 1.5 %) +- 0.2199 (N, 7.7 %) +- 0.0502 (R, 1.8 %)
-    = 2.8587 +- 0.2472 (8.6 %); c / c_def = 0.954 +- 0.082, -0.56 sigma, p = 0.57.
+  c = 2.8535 +- 0.0369 (regression, 1.3 %) +- 0.0842 (method, 2.9 %) +- 0.0389 (calibration, 1.4 %) +- 0.2195 (N, 7.7 %) +- 0.0501 (R, 1.8 %)
+    = 2.8535 +- 0.2463 (8.6 %); c / c_def = 0.952 +- 0.082, -0.59 sigma, p = 0.56.
   This is a / a_th read the other way (c / c_def = a_th / a), not an independent test.
 
 DRIFT CHECK. The settings were photographed in increasing order with rest photos only at the start, so
 omega and time rise together. dphi = a omega + D t + b (t: mean photo time of the setting):
-  a = 2.11 +- 0.17 rad/(rad/s), D = -0.82 +- 0.47 mrad/s (p = 0.13), correlation(a, D) = -0.992: a steady drift cannot be told from the slope.
+  a = 2.12 +- 0.17 rad/(rad/s), D = -0.82 +- 0.47 mrad/s (p = 0.12), correlation(a, D) = -0.992: a steady drift cannot be told from the slope.
   Not in the quoted uncertainty. Also not checked: the sign of the shift (rotation direction not recorded).
 
 RANDOM PIXELS (prep Q5, optional; presentation stage, random_points_scan.json):
@@ -59,9 +59,9 @@ RANDOM PIXELS (prep Q5, optional; presentation stage, random_points_scan.json):
 
 REPORT FORM (uncertainty to one significant figure, value to the same digit; comparisons above use
 unrounded values):
-  k = 0.0206 +- 0.0001 rad/s per unit S, omega0 = -0.0229 +- 0.0006 rad/s
-  a = 1.82 +- 0.06 rad/(rad/s) (all parts); 1.82 +- 0.02 (regression only)
-  a_th = 1.7 +- 0.1 rad/(rad/s); a / a_th = 1.05 +- 0.09; N implied = 13.6 +- 0.5
-  cosine fit: a = 1.86 +- 0.03; template matching: a = 1.75 +- 0.02
+  k = 0.0205 +- 0.0001 rad/s per unit S, omega0 = -0.0226 +- 0.0007 rad/s
+  a = 1.83 +- 0.06 rad/(rad/s) (all parts); 1.83 +- 0.02 (regression only)
+  a_th = 1.7 +- 0.1 rad/(rad/s); a / a_th = 1.05 +- 0.09; N implied = 13.7 +- 0.5
+  cosine fit: a = 1.86 +- 0.03; template matching: a = 1.76 +- 0.02
   largest shift = 3.28 +- 0.06 rad = 0.52 +- 0.01 fringe, dt = 1.12 +- 0.02 fs
   c = (2.9 +- 0.2) x 10^8 m/s; c / c_def = 0.95 +- 0.08
