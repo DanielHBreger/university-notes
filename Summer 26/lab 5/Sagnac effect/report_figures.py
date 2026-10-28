@@ -25,11 +25,9 @@ Writes to report_figures/ (name: what it shows; width):
                     and R_m^2/P against the ring number m at rest and at the top speed; column
     phase_vs_omega  setting means of the phase against omega, the regression line and the
                     prediction; column
-    methods         the three phase-reading methods: difference from the ring minima per
-                    setting, and the slope each one gives; column
+    methods         the four phase readouts: difference from the ring minima per setting, and the
+                    slope each one gives (fixed pixels with the spread between draws); column
     drift           omega and each photo's phase minus the fitted line against time; column
-    random_pixels   (optional) slopes of 1000 draws of ten fixed pixels, and the spread against
-                    the number of pixels per draw; column
 
 Usage, from this folder (about a minute; LaTeX is used for the text when it is installed):
     python report_figures.py              all figures
@@ -70,7 +68,6 @@ PHOTOS['omega'] = np.where(PHOTOS.S > 0, omega_of(PHOTOS.S, CAL['line']), 0.0)
 PHOTOS['minutes'] = (PHOTOS.time_s - PHOTOS.time_s.min()) / 60
 REST_PHI = PHOTOS.loc[PHOTOS.S == 0, 'phi_rad'].mean()
 A_TH, U_A_TH = RES['theory']['a_th'], RES['theory']['u_a_th']    # a_th = 8 pi^2 N R^2 / (lambda c)
-SCAN = HERE / 'presentation_slides' / 'source' / 'random_points_scan.json'
 
 
 # ---- helpers ------------------------------------------------------------------------------
@@ -217,7 +214,7 @@ def line_axes():
     fig, ax = plt.subplots(figsize=rs.figsize(aspect=0.72), layout='constrained')
     S = np.linspace(0, 95, 200)
     omega, u_omega = omega_of(S, CAL['line']), u_omega_pred(S, CAL['line'])
-    ax.fill_between(S, omega - u_omega, omega + u_omega, color=BLUE, alpha=0.18, lw=0, label=r'Fit $\pm1\sigma$')
+    ax.fill_between(S, omega - u_omega, omega + u_omega, color=BLUE, alpha=0.18, lw=0, label=r'$\pm1\sigma$ band')
     ax.plot(S, omega, color=BLUE, label='Linear fit')
     ax.set_xlim(0, 95)
     ax.set_ylim(0, 2.0)
@@ -236,7 +233,7 @@ def calibration():
     fig, ax = line_axes()
     ax.errorbar(timed.S, timed.omega, timed.u_omega, fmt='o', color='k', ms=2.8, elinewidth=0.6, capsize=0, zorder=3,
                 label='Timed turns')
-    legend_in_order(ax, ['Timed turns', 'Linear fit', r'Fit $\pm1\sigma$'], loc='upper left')
+    legend_in_order(ax, ['Timed turns', 'Linear fit', r'$\pm1\sigma$ band'], loc='upper left')
     save(fig, 'calibration')
 
 
@@ -253,7 +250,7 @@ def conversion():
     read_off = r'$\omega$ read off the line, $\pm1\sigma$'
     ax.errorbar(moving.S, moving.omega, moving.u_omega, fmt='none', ecolor=VERM, elinewidth=1.1, capsize=2.5,
                 capthick=0.8, zorder=3, label=read_off)
-    legend_in_order(ax, [read_off, 'Linear fit', r'Fit $\pm1\sigma$'], loc='upper left')
+    legend_in_order(ax, [read_off, 'Linear fit', r'$\pm1\sigma$ band'], loc='upper left')
     save(fig, 'conversion')
 
 
@@ -385,8 +382,8 @@ def phase_vs_omega():
     """Mean phase change of each setting's photos (ring minima) against omega, the regression line
     Delta phi = a omega + b fitted to the ten points with equal weights (sagnac.py), and the prediction
     a_th omega with its 1 sigma band (N, R). Error bars: the calibration line's uncertainty in omega and
-    the standard error of the mean of the setting's photos in Delta phi, both mostly smaller than the
-    markers."""
+    the uncertainty of a setting mean in Delta phi, s = the scatter of the settings about the line (the
+    same for every setting; the photos' standard errors are smaller)."""
     a, b = RES['slope']['a'], RES['slope']['b']
     fig, ax = plt.subplots(figsize=rs.figsize(aspect=0.72), layout='constrained')
     omega = np.linspace(0, 1.95, 100)
@@ -394,7 +391,7 @@ def phase_vs_omega():
     ax.fill_between(omega, (A_TH - U_A_TH) * omega, (A_TH + U_A_TH) * omega, color=VERM, alpha=0.15, lw=0)
     ax.plot(omega, A_TH * omega, color=VERM, ls='--', label=prediction)
     ax.plot(omega, a * omega + b, color=BLUE, label='Linear regression')
-    ax.errorbar(SETTINGS.omega, SETTINGS.dphi, xerr=SETTINGS.u_omega, yerr=SETTINGS['sem'], fmt='o', color=BLUE, ms=3,
+    ax.errorbar(SETTINGS.omega, SETTINGS.dphi, xerr=SETTINGS.u_omega, yerr=SETTINGS.u_dphi, fmt='o', color=BLUE, ms=3,
                 elinewidth=0.6, capsize=0, zorder=3, label='Setting means')
     legend_in_order(ax, ['Setting means', 'Linear regression', prediction], loc='upper left')
     ax.set_xlabel(rf'$\omega$ ({RAD_S})')
@@ -407,14 +404,16 @@ def phase_vs_omega():
 # ---- 7. methods -----------------------------------------------------------------------------
 METHODS = [('Ring minima', None, BLUE, 'o', BLUE),                 # (label, column key, colour, marker, marker face)
            ('Cosine fit', 'cos', GREEN, 's', GREEN),
-           ('Template matching', 'template', PINK, 'D', 'white')]
+           ('Template matching', 'template', PINK, 'D', 'white'),
+           ('Fixed pixels', 'pixels', ORANGE, '^', ORANGE)]
 
 
 def methods():
-    """(a) Phase change of each setting by the cosine fit of the r^2 profile and by template matching to
-    the rest profile, minus the ring-minima value; each method's phase is relative to its own rest mean.
-    (b) The slope of each method's ten points by the same regression (sagnac.json), error bars from the
-    regression; shaded: the prediction a_th +- 1 sigma."""
+    """(a) Phase change of each setting by the cosine fit of the r^2 profile, by template matching to the
+    rest profile and by the fixed pixels (main draw), minus the ring-minima value; each readout's phase is
+    relative to its own rest mean. (b) The slope of each readout's ten points by the same regression
+    (sagnac.json), error bars from the regression, except the fixed pixels, whose bar is the SD of the
+    slope between the draws of ten pixels (pixels.json); shaded: the prediction a_th +- 1 sigma."""
     fig, (ax_diff, ax_slopes) = plt.subplots(2, 1, figsize=rs.figsize(aspect=1.0), height_ratios=[1.35, 1],
                                              layout='constrained')
     fig.get_layout_engine().set(hspace=0.08, h_pad=0.04)
@@ -433,7 +432,8 @@ def methods():
     ax_slopes.axvline(A_TH, color=VERM, ls='--', lw=0.9)
     n = len(METHODS)
     slopes = [(RES['slope']['a'], RES['slope']['u_stat'])] + \
-             [(RES['methods'][k]['a'], RES['methods'][k]['u_a']) for k in ('cosine fit', 'template matching')]
+             [(RES['methods'][k]['a'], RES['methods'][k]['u_a']) for k in ('cosine fit', 'template matching')] + \
+             [(RES['fixed_pixels']['a'], RES['fixed_pixels']['u_draws'])]
     for j, ((text, key, color, marker, face), (value, u)) in enumerate(zip(METHODS, slopes)):
         ax_slopes.errorbar(value, n - 1 - j, xerr=u, fmt=marker, color=color, mfc=face, mec=color, ms=3.4, mew=0.8,
                            elinewidth=0.8, capsize=0)
@@ -442,7 +442,7 @@ def methods():
     ax_slopes.set_yticklabels([method[0] for method in METHODS[::-1]])
     ax_slopes.tick_params(axis='y', which='both', length=0)
     ax_slopes.set_ylim(-0.95, n - 0.4)
-    ax_slopes.set_xlim(1.55, 1.95)
+    ax_slopes.set_xlim(1.5, 2.0)
     ax_slopes.set_xlabel(rf'Slope $a$ ({SLOPE_UNIT})')
     panel_letter(ax_slopes, '(b)', x=0.97, y=0.93, ha='right')
     save(fig, 'methods')
@@ -479,57 +479,9 @@ def drift():
     save(fig, 'drift')
 
 
-# ---- 9. random pixels (optional) ------------------------------------------------------------
-def random_pixels():
-    """(a) The slope from ten fixed random pixels (the method of sagnac_update/methods.py, every photo's
-    phase from one alternating least-squares fit), for 1000 draws: filled, the method as it is (fixed image
-    positions); outline, the same pixels with each photo's own fitted centre and P. Lines: the ring-minima
-    slope and the prediction. Failed draws (negative slope) lie off the plot. (b) Spread (SD) of the slope
-    between draws against the number of pixels per draw, and the median fit error of a single draw
-    (sagnac.json, random_pixels)."""
-    draws = [d for d in json.loads(SCAN.read_text())['draws'] if d['n'] == 10 and d['seed'] != 20261011]
-    fixed = np.array([d['fixed']['slope'] for d in draws])
-    own_frame = np.array([d['frame']['slope'] for d in draws])
-    fig, (ax_hist, ax_spread) = plt.subplots(2, 1, figsize=rs.figsize(aspect=1.05), height_ratios=[1.6, 1],
-                                             layout='constrained')
-    fig.get_layout_engine().set(hspace=0.08, h_pad=0.04)
-    bins = np.arange(0.8, 2.72 + 1e-9, 0.04)
-    counts_fixed, _, _ = ax_hist.hist(fixed, bins=bins, color='0.70', edgecolor='white', lw=0.3,
-                                      label='Fixed pixel positions')
-    counts_own, _, _ = ax_hist.hist(own_frame, bins=bins, histtype='step', color=PINK, lw=0.9,
-                                    label="Each photo's own center and $P$")
-    top = max(counts_fixed.max(), counts_own.max())
-    ax_hist.set_ylim(0, 1.75 * top)                          # room for the legend above the bars
-    line_height = 1.08 / 1.75                                # the two lines stop just above the bars
-    ax_hist.axvline(RES['slope']['a'], ymax=line_height, color=BLUE, lw=1.0, label='Ring minima')
-    ax_hist.axvline(A_TH, ymax=line_height, color=VERM, ls='--', lw=0.9, label=r'Prediction $a_\mathrm{th}$')
-    ax_hist.set_xlim(0.8, 2.72)
-    ax_hist.set_xlabel(rf'Slope $a$ ({SLOPE_UNIT})')
-    ax_hist.set_ylabel('Draws')
-    ax_hist.legend(loc='upper right')
-    panel_letter(ax_hist, '(a)', x=0.03, y=0.95)
-    by_n = {int(k): v for k, v in RES['random_pixels'].items()}
-    pixels = np.array(sorted(by_n))
-    ax_spread.plot(pixels, [by_n[k]['sd'] for k in pixels], 'o-', color='k', ms=3, lw=0.7,
-                   label='Spread between draws (SD)')
-    ax_spread.plot(pixels, [by_n[k]['u_fit'] for k in pixels], 's--', color=GREY, mfc='white', ms=3, lw=0.7,
-                   label='Fit error of one draw')
-    ax_spread.set_xscale('log')
-    ax_spread.set_xlim(7, 115)
-    ax_spread.set_xticks(pixels)
-    ax_spread.set_xticklabels([str(k) for k in pixels])
-    ax_spread.minorticks_off()
-    ax_spread.set_ylim(0, 0.25)
-    ax_spread.set_xlabel('Pixels per draw')
-    ax_spread.set_ylabel(rf'Uncertainty ({SLOPE_UNIT})')
-    ax_spread.legend(loc='upper right')
-    panel_letter(ax_spread, '(b)', x=0.03, y=0.95)
-    save(fig, 'random_pixels')
-
-
 FIGURES = {'setup': setup, 'calibration': calibration, 'conversion': conversion, 'patterns': patterns,
            'rings': rings_figure, 'extraction': extraction, 'phase_vs_omega': phase_vs_omega, 'methods': methods,
-           'drift': drift, 'random_pixels': random_pixels}
+           'drift': drift}
 
 if __name__ == '__main__':
     names = sys.argv[1:] or list(FIGURES)

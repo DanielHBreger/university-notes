@@ -4,7 +4,7 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 
 ## Inputs
 
-`calibration.json` (the timed settings and the line), `sagnac.json` (the regression, the methods, a_th), `sagnac_speeds.csv` (the ten setting means), `fringes_frames.csv` (every photo's center, radii and phase; ω per photo is recomputed from the line, 0 at rest) and, for `patterns`, `rings` and `extraction`, the representative photographs themselves. The optional `random_pixels` figure reads `presentation_slides/source/random_points_scan.json`. No figure has a residual panel (points minus fit).
+`calibration.json` (the timed settings and the line), `sagnac.json` (the regression, the methods, a_th), `sagnac_speeds.csv` (the ten setting means), `fringes_frames.csv` (every photo's center, radii and phase; ω per photo is recomputed from the line, 0 at rest) and, for `patterns`, `rings` and `extraction`, the representative photographs themselves. `methods` also reads the fixed pixels' columns of `sagnac_speeds.csv` and `fixed_pixels` of `sagnac.json`. No figure has a residual panel (points minus fit).
 
 ## Helpers
 
@@ -27,14 +27,13 @@ Draws the report's figures in the report's style from the outputs of `calibratio
 - `patterns()`: one square panel per setting (the figure*, 512 pt wide), the representative photo cropped 500 px around its center, the fitted dark rings dashed, the center marked, the ω label from the line.
 - `rings_figure()`: the rest and top-speed photos' intensity against r and against r² (1 px annuli, fringe sector), dashed lines at the fitted radii, arrows with the top-speed spacings (241 and 132 px; 1.08 and 1.08 × 10⁵ px²).
 - `extraction()`: (a) the ring finder's minima on the top-speed photo (`fringes.analyse_photo` rerun on that photo), one color per ring, with the fitted circles; (b) R_m²/P against m at rest and at the top speed with the lines m + η, and the difference of the intercepts (0.52 fringe).
-- `phase_vs_omega()`: the ten setting means against ω (error bars: the calibration line's uncertainty in ω, the SEM in Δφ), the regression line `slope.a`, `slope.b`, and the prediction `theory.a_th` ± 1σ. One panel.
-- `methods()`: (a) `dphi_cos − dphi` and `dphi_template − dphi` per setting; (b) the three slopes with their regression errors over the prediction's band.
+- `phase_vs_omega()`: the ten setting means against ω (error bars: the calibration line's uncertainty in ω, the per-setting uncertainty s in Δφ), the regression line `slope.a`, `slope.b`, and the prediction `theory.a_th` ± 1σ. One panel.
+- `methods()`: (a) `dphi_cos − dphi`, `dphi_template − dphi` and `dphi_pixels − dphi` per setting; (b) the four slopes over the prediction's band: the first three with their regression errors, the fixed pixels with the SD of the slope between random draws of ten pixels (`fixed_pixels.u_draws`), which is why they are outside the method range.
 - `drift()`: (a) ω of every photo against minutes since the first photo; (b) each photo's Δφ minus the line, with a straight line fitted to each setting's photos.
-- `random_pixels()` (optional): (a) histograms of the slope over the 1000 ten-pixel draws (fixed positions; and with each photo's own center and P), lines at the minima slope and the prediction; (b) the SD between draws and the median fit error of one draw against pixels per draw, from `sagnac.json['random_pixels']`.
 
 ## Outputs and usage
 
-`report_figures/<name>.pdf` and `.png` for `setup`, `calibration`, `conversion`, `patterns`, `rings`, `extraction`, `phase_vs_omega`, `methods`, `drift`, `random_pixels`. Column figures are about 245 pt wide; `patterns` is 512 pt.
+`report_figures/<name>.pdf` and `.png` for `setup`, `calibration`, `conversion`, `patterns`, `rings`, `extraction`, `phase_vs_omega`, `methods`, `drift` (`random_pixels` was dropped on 24 October: the fixed pixels are in `methods`). Column figures are about 245 pt wide; `patterns` is 512 pt.
 
 ```
 python report_figures.py                    # all, about a minute

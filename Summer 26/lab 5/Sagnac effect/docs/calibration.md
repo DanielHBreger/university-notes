@@ -4,11 +4,11 @@ Turns the stopwatch timing in `Rotation calibration.csv` into the table's angula
 
 ## The idea
 
-**Timing.** At each setting n = 5 (the five lowest) or 10 (the four highest) consecutive turns were timed, one press per turn. T is the mean turn time and ω = 2π/T. Two things limit T: the scatter of the single laps, SD/√n, and the reaction time of the presses. The laps are consecutive, so the mean is (t_n − t_0)/n and only the first and last press enter: with σ_r = `REACTION_TIME_S` = 0.2 s per press that part is √2 σ_r/n. In quadrature, u(T)² = (SD/√n)² + (√2 σ_r/n)², and u(ω)/ω = u(T)/T: 0.14–0.9 % of ω, the reaction time dominating at the fast settings. (0.2 s is a conventional value; the lap scatter implies a smaller press jitter, so this is conservative.)
+**Timing.** At each setting n = 5 (the five lowest) or 10 (the four highest) consecutive turns were timed, one press per turn. T is the mean turn time and ω = 2π/T. Two things limit T: the scatter of the single laps, SD/√n, and the reaction time of the presses. The laps are consecutive, so the mean is (t_n − t_0)/n and only the first and last press enter: with σ_r = `REACTION_TIME_S` = 0.25 s per press that part is √2 σ_r/n. In quadrature, u(T)² = (SD/√n)² + (√2 σ_r/n)², and u(ω)/ω = u(T)/T: 0.15–1.1 % of ω, the reaction time dominating at the fast settings. (0.25 s is our own reaction time, measured with an online reaction-time test, used as the uncertainty of each press; the lap scatter implies a smaller press jitter, so this is conservative.)
 
-**The line.** `scipy.optimize.curve_fit(line, S, omega, sigma=u_omega, absolute_sigma=True)`: each point weighted by its timing uncertainty, the uncertainties of k and ω₀ propagated from those, nothing rescaled. k = 0.02054 ± 0.00005 rad/s per unit S (0.24 %), ω₀ = −0.0226 ± 0.0003 rad/s. The points lie farther from the line than their uncertainties allow (χ²/dof = 28.7/7): the table is not exactly linear in S, it turns slower than the line at high settings, 3.0 % below it at S = 90. That misfit is not hidden in the coefficients; it is carried as the rms scatter of the timed settings about the line, 1.27 % of ω.
+**The line.** `scipy.optimize.curve_fit(line, S, omega, sigma=u_omega, absolute_sigma=True)`: each point weighted by its timing uncertainty, the uncertainties of k and ω₀ propagated from those, nothing rescaled. k = 0.02054 ± 0.00006 rad/s per unit S (0.29 %), ω₀ = −0.0227 ± 0.0004 rad/s. The points lie farther from the line than their uncertainties allow (χ²/dof = 20.2/7, p = 0.005): the table is not exactly linear in S, it turns slower than the line at high settings, 3.0 % below it at S = 90. That misfit is not hidden in the coefficients; it is carried as the rms scatter of the timed settings about the line, 1.28 % of ω.
 
-**ω at a photo setting** (not timed, so predicted by the line): kS + ω₀ with the prediction uncertainty u(ω)² = (line uncertainty)² + (rel_rms ω)², the line's own uncertainty (0.15–0.25 %) and the 1.27 % scatter, 1.3 % in all. Both parts are common to every photo setting (the same line, the same table), so `sagnac.py` takes the calibration part of the Sagnac slope's uncertainty as the same relative size, √((u_k/k)² + rel_rms²) = 1.3 %.
+**ω at a photo setting** (not timed, so predicted by the line): kS + ω₀ with the prediction uncertainty u(ω)² = (line uncertainty)² + (rel_rms ω)², the line's own uncertainty (0.2–0.3 %) and the 1.28 % scatter, 1.3 % in all. Both parts are common to every photo setting (the same line, the same table), so `sagnac.py` takes the calibration part of the Sagnac slope's uncertainty as the same relative size, √((u_k/k)² + rel_rms²) = 1.3 %.
 
 ## `load_turns(path=CSV)`
 
@@ -34,7 +34,7 @@ Steps 1–3 as above, then the outputs.
 |---|---|
 | `reaction_time_s` | 0.2 |
 | `settings` | one record per timed setting: `S`, `n`, `T`, `sd_T`, `u_T_stat`, `u_T_reaction`, `u_T`, `omega`, `u_omega` |
-| `line` | `k`, `u_k`, `omega0`, `u_omega0`, `cov` (of ω₀, k), `chi2`, `dof`, `p`, `rel_rms` (0.0127), `resid_rel`, `omega90`, `u_omega90` |
+| `line` | `k`, `u_k`, `omega0`, `u_omega0`, `cov` (of ω₀, k), `chi2`, `dof`, `p`, `rel_rms` (0.0128), `resid_rel`, `omega90`, `u_omega90` |
 | `omega90_timed` | 1.7724 |
 
 `calibration.txt`: the per-setting table with both parts of u(T), the line with χ²/dof and its deviations, the comparison at S = 90, and ω at the nine photo settings with the prediction uncertainty.

@@ -1,0 +1,69 @@
+% Section 1 of the Sagnac report: Hila's "Sagnac - Theoretical Background.docx" (27 October 2026)
+% with the equations in LaTeX. Her wording is unchanged; corrected: lambda C -> lambda c in
+% Delta phi and a_th, the 2 pi of the manual's Eq. 7 (radians, not fringes), and typos (a doubled
+% "using a stopwatch", two missing periods, two lowercase sentence starts).
+% Needs siunitx and cleveref, as REPORT_figures_tables.tex; the figure block below is that file's
+% fig:setup block with Hila's caption.
+
+\subsection{Theoretical Background}
+\label{sec:theory}
+
+\subsubsection{The Sagnac Effect and Phase Shift}
+\label{sec:sagnac}
+
+We examine a circular optical path of radius $R$ and perimeter $l = 2\pi R$ rotating at a constant angular velocity $\omega$. A beam splitter is positioned at the center of the rotation axis and sends two light beams traveling in opposite directions across our loop. In the inertial laboratory frame light travels at speed $c$ in both directions while the perimeter of the loop including the fiber ports moves at a tangential speed $v = \omega R$.
+
+The beam moving against the direction of rotation covers a shorter distance to reach the detector thus completing its circuit in $t_- = l/(c+v)$. Conversely, the beam traveling with the direction of rotation must cover a longer distance to reach the detector and meets it after beam 1, completing its circuit in $t_+ = l/(c-v)$. The arrival time difference at the detector for a single loop is $\Delta t = t_+ - t_- = 2lv/(c^2 - v^2)$ and in the low velocity limit ($v \ll c$) simplifies to $\Delta t \approx 4A\omega/c^2$, where $A = \pi R^2$ is the area enclosed by the loop and winding the fiber into $N$ turns multiplies this time delay by $N$. Travel time delay $\Delta t$ between two beams of vacuum wavelength $\lambda$ translates into an optical phase difference according to: $\Delta\phi = (2\pi c/\lambda)\,\Delta t$ and so the interferometer measures the Sagnac phase shift given for $N$ turns by:
+\begin{equation}
+  \Delta\phi = \frac{8\pi N A \omega}{\lambda c}.
+  \label{eq:sagnac}
+\end{equation}
+
+This phase shift does not depend on the refractive index of the optical fiber nor its position of the rotation axis. Shifting the rotation axis adds a closed contour line integral of a constant vector to the travel time difference which vanishes identically by Stokes' theorem. The phase shift depends solely on the enclosed area (parameter $A$). Therefore, plotting the phase shift $\Delta\phi$ versus the angular velocity $\omega$ yields a linear relation passing through the origin with a theoretical slope: $a_\mathrm{th} = 8\pi^2 N R^2/(\lambda c)$. This proportionality factor is determined only by the loop geometry and the laser wavelength.
+
+\subsubsection{Interference and the Ring Pattern}
+\label{sec:rings}
+
+Two consistent beams with intensities $I_1$ and $I_2$ overlapping at the camera plane with a phase difference $\phi$ produce an intensity distribution given by: $I = I_1 + I_2 + 2\sqrt{I_1 I_2}\cos\phi$ featuring dark minima (destructive interference) wherever $\phi = \pi + 2\pi m$ for an integer $m$. While two plane waves intersecting at an angle create straight interference fringes characterized by a single spatial period the pattern produced in our setup consists of concentric rings similar to the pattern observed in Schwartz's experiment.
+
+These rings derive from the curvature of the wavefronts. A Gaussian beam carries a transverse phase of the form $kr^2/[2R(z)]$, where $R(z)$ is the wavefront's radius of curvature. Therefore two beams following a common optical axis but reaching the camera with different radii of curvature ($R_1 \neq R_2$) creating a phase difference that grows linearly with the squared radial distance $r^2$ from the pattern's center:
+\begin{equation}
+  \phi(r) = \phi_\mathrm{c} + \frac{2\pi r^2}{P}, \qquad
+  P = \frac{2\lambda}{\left| \frac{1}{R_1} - \frac{1}{R_2} \right|}.
+  \label{eq:rings}
+\end{equation}
+$\phi_\mathrm{c}$ represents the phase difference at the center, meaning the rings are evenly spaced in the variable $r^2$ much like Newton's rings.
+The dark rings are located at $\phi = \pi + 2\pi m$, corresponding to radii $R_m$ given by:
+\begin{equation}
+  R_m^2 = P(m + \eta), \qquad \phi_\mathrm{c} = \pi - 2\pi\eta.
+  \label{eq:dark_rings}
+\end{equation}
+
+Consequently the squared radii of the dark rings fall on a straight line when plotted against the ring index $m$. The slope of this line yields the period $P$ and its intercept determines the central phase $\phi_\mathrm{c}$. Rotating the system adds phase shift across the beam and modifying only $\phi_\mathrm{c}$: the rings slide inward or outward while the period $P$ remains constant.
+Conversely, an angular tilt between the beams shifts the center of the ring pattern and adjusting the distance between the coupling lens and the fiber end alters $P$ but none of these effects changes $\phi_\mathrm{c}$.
+
+To extract the phase from the dark-ring radii we follow the method of Equation~(7) from the laboratory manual: $\Delta\phi_\mathrm{avg} = 2\pi\,\bigl\langle \Delta r_i^{(n)}/\Lambda_i^{(n)} \bigr\rangle$ which calculates the shift of each minimum ($\Delta r_i$) relative to its local period ($\Lambda_i$), averaged across all minima.
+We perform this step in the variable $r^2$ where all rings share the same period $P$.
+
+Schwartz extracts the phase from his circular fringes using an identical principle but measures the shift and fringe width in the radial coordinate $r$ but it's only accurate if this width remains constant throughout the displacement. In our setup this condition did not occur: between rest and the maximum speed, the first dark ring moves by 157 pixels while its radial gap to the adjacent ring widens from 159 to 242 pixels.
+In the $r^2$ domain the period assumes a single value for every ring in every photograph and since $\eta$ is a dimensionless ratio of two areas measured in squared pixels no spatial calibration from pixels to physical length units is required.
+
+\subsection{Experimental Setup and Measurement Procedure}
+\label{sec:setup}
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\columnwidth]{setup.pdf}
+  \caption{Top view of the interferometer. Components $P_1$, $P_2$ are polarizers, $L_1$, $L_2$ are coupling lenses, $L_3$ is the camera lens. Beams 1 and 2 traverse the same fiber loop ($N$ turns and radius $R$) in opposite directions and meet at the beam splitter in the center. The entire system rotates together with the table around the center of the loop. The direction of the arrow for $\omega$ is only schematic as the rotation direction was not recorded.}
+  \label{fig:setup}
+\end{figure}
+
+\Cref{fig:setup} presents a top view of the experimental setup. A laser beam with a wavelength of \qty{640}{\nano\metre} passes through a first polarizer $P_1$ to a beam splitter located at the center of the table and the two beams emerging from it are focused by lenses $L_1$ and $L_2$ into opposite ends of an optical fiber wrapped in $N$ turns into a loop of radius $R$. When exiting the fiber the two beams return to the central beam splitter, recombine and pass through a second polarizer $P_2$ and the camera lens $L_3$ to a camera that records the interference pattern.
+The two polarizers suppress unwanted reflections from the lenses and the beam splitter that did not enter the loop. The entire optical setup is placed on a rotating table with the fiber loop wrapped around it.
+
+The fiber loop consists of $N = \num{13 \pm 1}$ turns with a radius of $R = \qty{57.0 \pm 0.5}{\centi\metre}$ and the wavelength is given as \qty{640}{\nano\metre} with no specified uncertainty. The optical fiber in the system is a Corning SMF-28e+ model. Substituting these values into \cref{eq:sagnac} predicts a theoretical slope of $a_\mathrm{th} = 8\pi^2 N R^2/(\lambda c) = \num{1.7 \pm 0.1}$~rad/(rad/s).
+The uncertainty in this slope stems from the given uncertainties in the number of turns $N$ (7.7\%) and the radius $R$ (1.8\%, because the $R^2$ term doubles its relative error). The wavelength $\lambda$ has no specified uncertainty, so it is excluded from the error calculation (even a $\pm\qty{1}{\nano\metre}$ error would affect the slope by only 0.16\% which is negligible).
+
+The table is driven by a motor and its speed is controlled solely by adjusting the dial $S$ on the controller. $S$ is a dimensionless number that determines the motor voltage so in order to calibrate the angular velocity we visually counted and measured the duration of ten consecutive rotations using a stopwatch at nine settings between $S = 5.78$ and 90. We photographed the interference pattern 161 times: 10 photographs at rest, and between 15 and 22 photographs at each of the nine speed settings between $S = 12.59$ and 90 in increasing order of $S$. The direction of rotation of the table was not recorded.
+
+Task 4 in the laboratory manual (repeating the measurement with a small loop displaced from the rotation axis when $R = \qty{15.5 \pm 0.1}{\centi\metre}$, with \num{46 \pm 1} turns) was not performed under the instruction of the laboratory instructor; Schwartz (2017) performed and reported on this test. The results for this configuration are reported by Schwartz (2017).

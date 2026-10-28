@@ -1,12 +1,12 @@
 # `sagnac.py`
 
-Tasks 3 and 5 and the speed of light: the slope a of the phase against ω with its uncertainty, the comparison with the manual's Eq. (5), the same fit for the other phase-reading methods, Eq. (5) solved for c, and the drift check. Every number in `RESULTS.md` comes from here. It reads `calibration.json`, `fringes_frames.csv` and `methods_frames.csv` (if present) from its own folder and writes `sagnac_speeds.csv`, `sagnac.txt` and `sagnac.json`. A second.
+Tasks 3 and 5 and the speed of light: the slope a of the phase against ω with its uncertainty, the comparison with the manual's Eq. (5), the same fit for the other phase-reading methods, Eq. (5) solved for c, and the drift check. Every number in `RESULTS.md` comes from here. It reads `calibration.json`, `fringes_frames.csv`, `methods_frames.csv` and `pixels_frames.csv` with `pixels.json` (the last three if present) from its own folder and writes `sagnac_speeds.csv`, `sagnac.txt` and `sagnac.json`. A second.
 
 ## The idea
 
 Eq. (5) predicts Δφ = a_th ω with a_th = 8π²NR²/(λc). The ten setting means are fitted with the line Δφ = aω + b by `scipy.stats.linregress` (Schwartz 2017, Eq. 7): the slope's uncertainty comes from how far the points lie from the line. Measured against the photos' SEM, the line has χ²/dof = 205/8: the settings differ five times more than the photo noise allows, because the phase wanders over minutes, so a setting mean is less well known than its SEM and the regression's own scatter is the right uncertainty.
 
-The slope's uncertainty has three parts, added in quadrature: the regression (0.024), the phase-reading method (half the range of the three methods' slopes, 0.054) and the calibration (every ω is predicted by the same line from the same table, so the relative prediction uncertainty √((u_k/k)² + rel_rms²) = 1.3 % is a common scale error of ω and hence of a: 0.024). a = 1.8261 ± 0.0634 → 1.83 ± 0.06 rad/(rad/s).
+The slope's uncertainty has three parts, added in quadrature: the regression (0.024), the phase-reading method (half the range of the three methods' slopes, 0.054) and the calibration (every ω is predicted by the same line from the same table, so the relative prediction uncertainty √((u_k/k)² + rel_rms²) = 1.3 % is a common scale error of ω and hence of a: 0.024). a = 1.8258 ± 0.0635 → 1.83 ± 0.06 rad/(rad/s).
 
 ## `round1(x, u)`
 
@@ -28,15 +28,15 @@ The rms distance of the points from a `linregress` line with n − 2 degrees of 
 
 Δφ = aω + Dt + b, the model of the drift check for `curve_fit`, with (ω, t) stacked as the independent variable.
 
-## `random_pixel_summary(path=SCAN)`
+## The fixed-pixel readout (step 4b)
 
-Optional (prep Q5): reads the presentation stage's `random_points_scan.json` if present and summarizes, per number of pixels per draw, the draws, the mean and SD of their slopes (negative slopes = failed fits, left out) and the median fit error of one draw. Those slopes were fitted by the presentation's weighted line, not by `linregress`.
+If `pixels_frames.csv` and `pixels.json` exist (`pixels.py`), the main draw's per-photo phases go through the same `setting_means` and `linregress` as the other readouts, and the result is written beside them (`fixed_pixels` in `sagnac.json`, `dphi_pixels`/`sem_pixels` in `sagnac_speeds.csv`, a block in `sagnac.txt`) but is not in the method range: its uncertainty is the SD of the slope between the random draws of ten pixels (`pixels.json`, `summary`), 0.19, since which pixels are read changes the slope at the 11 % level over a half-fringe run. The methods figure shows it with that bar.
 
 ## `main()`, step by step
 
 1. `setting_means(photos, 'phi_rad')`; ω from the `line` entry of `calibration.json` through `calibration.omega_of`, exactly 0 at rest; u_omega through `calibration.u_omega_pred` (1.3 %, common to all settings).
 2. `stats.linregress(omega, dphi)`: a, b, their standard errors, R²; s from `rms_from_line`; a t test on the intercept.
-3. Checks: χ² of the fitted line against the SEMs; an added ω² term by `np.polyfit(..., 2, cov=True)` with a t test on its coefficient (7 dof).
+3. Checks: χ² of the fitted line against the SEMs; an added ω² term by `np.polyfit(..., 2, cov=True)` with a t test on its coefficient (7 dof); the calibration's bend: ω at the photo settings from a weighted quadratic through the timed points and from straight segments between them, the slope with each (both raise a: +2.2 % and +2.5 %), and the ω² term that bend alone would give against the line's ω (−0.04, inside the fitted term's ± 0.05, so the ω² check cannot tell the bend from none).
 4. The other methods (`OTHER_METHODS`: cosine fit from `fringes_frames.csv`, template matching from `methods_frames.csv`) through the same `setting_means` and `linregress`; u_method = half the range of the three slopes.
 5. u_cal = a √((u_k/k)² + rel_rms²) from the `line` entry (ω₀ shifts the moving points together and is absorbed by the intercept, apart from the fixed rest point).
 6. u_a in quadrature; a_th and the comparison (ratio, z, p, both with the full u_a and with the regression part alone); N implied = 13 a/a_th; the largest shift (top setting minus rest, u = √2 s), in fringes and as Δt = Δφ λ/(2πc).
@@ -46,23 +46,23 @@ Optional (prep Q5): reads the presentation stage's `random_points_scan.json` if 
 
 ## Outputs
 
-`sagnac_speeds.csv`, one row per setting: `S`, `n`, `phi` (mean center phase, rad), `sem`, `t_first` (s after midnight), `P` (median, px²), `dphi` (phi minus the rest mean), `omega`, `u_omega` (rad/s), `resid` (dphi minus the line), `dphi_cos`, `sem_cos`, `dphi_template`, `sem_template`.
+`sagnac_speeds.csv`, one row per setting: `S`, `n`, `phi` (mean center phase, rad), `sem` (the photo noise, SD/√n), `u_dphi` (= s, the uncertainty of a setting mean in the report), `t_first` (s after midnight), `P` (median, px²), `dphi` (phi minus the rest mean), `omega`, `u_omega` (rad/s), `resid` (dphi minus the line), `dphi_cos`, `sem_cos`, `dphi_template`, `sem_template`, `dphi_pixels`, `sem_pixels` (the fixed pixels' main draw).
 
-`sagnac.txt`: the per-setting table, the line and its checks, the other methods, the result with its parts, the theory and comparison, the largest shift, c with its budget, the drift check, the random-pixel summary, and a report-form block (one significant figure).
+`sagnac.txt`: the per-setting table, the line and its checks, the other methods, the result with its parts, the theory and comparison, the largest shift, c with its budget, the drift check, the fixed-pixel block (the main draw through the regression and the spread per number of pixels), and a report-form block (one significant figure).
 
-`sagnac.json`: `slope` (a, u_stat, u_method, u_calibration, u, b, u_b, p_b, s, r2, dof, chi2_vs_sem, p_vs_sem, omega2_term, u_omega2_term, t_omega2, p_omega2, u_k_rel, rel_calibration), `methods` (a, u_a, s, r2 per method), `theory` (a_th, u_a_th, components, per_nm), `comparison` (ratio, u_ratio, z, p, z_regression_only, N_implied, u_N_implied), `largest_shift`, `speed_of_light` (c, u_c, components, rel, ratio_to_defined, z, p), `drift` (a, u_a, D, u_D, p_D, correlation), `random_pixels`, `report_form`.
+`sagnac.json`: `slope` (a, u_stat, u_method, u_calibration, u, b, u_b, p_b, s, r2, dof, chi2_vs_sem, p_vs_sem, omega2_term, u_omega2_term, t_omega2, p_omega2, u_k_rel, rel_calibration), `methods` (a, u_a, s, r2 per method), `theory` (a_th, u_a_th, components, per_nm), `comparison` (ratio, u_ratio, z, p, z_regression_only, N_implied, u_N_implied), `largest_shift`, `speed_of_light` (c, u_c, components, rel, ratio_to_defined, z, p), `drift` (a, u_a, D, u_D, p_D, correlation), `fixed_pixels` (a, u_a, s, r2 of the main draw; u_draws, draws, mean_draws, failed for ten pixels; n_pixels, seed, the per-n summary, in_method_range = false), `report_form`. `bend`: the slope with ω from the weighted quadratic and from the straight segments, their relative change, and the ω² term the bend alone would give (24 October).
 
 ## Constants
 
-`N_TURNS, U_N_TURNS = 13, 1`; `RADIUS, U_RADIUS = 0.570, 0.005` (m); `WAVELENGTH = 640e-9` (m); `U_WAVELENGTH = None`; `C_LIGHT = 299_792_458.0` (m/s, exact); `OTHER_METHODS`: cosine fit (`phi_cos_rad`), template matching (`phi_template_rad`); `SCAN`: `presentation_slides/source/random_points_scan.json`.
+`N_TURNS, U_N_TURNS = 13, 1`; `RADIUS, U_RADIUS = 0.570, 0.005` (m); `WAVELENGTH = 640e-9` (m); `U_WAVELENGTH = None`; `C_LIGHT = 299_792_458.0` (m/s, exact); `OTHER_METHODS`: cosine fit (`phi_cos_rad`), template matching (`phi_template_rad`); `FIXED_PIXELS`: the fixed pixels (`phi_pixels_rad` from `pixels_frames.csv`, with `pixels.json`), shown beside the others but not in the method range.
 
 ## Against the presentation (19 October)
 
-The presentation's numbers (`presentation_slides/source/numbers.json`, `previous_reports/`) were a = 1.8390 ± 0.0242 (regression plus a calibration-line part from 4000 redrawn lines), method 0.054, calibration model (line against quadratic) 0.032, total 0.067 → 1.84 ± 0.07; here a = 1.8261 ± 0.0236, 0.054, 0.024, total 0.063 → 1.83 ± 0.06. The slope moved by 0.7 % because the calibration line is now fitted with the stopwatch uncertainties (lap scatter and reaction time) as weights, which favor the slow settings, so ω at the top settings is about 1 % higher than before, and because the calibration file was completed on 23 October (10 turns instead of 8 at the four fastest settings). The calibration part (1.3 %) is now the line's prediction uncertainty (k's 0.24 % and the 1.27 % scatter of the timed settings about the line) instead of the quadratic difference; the 3.0 % bend at the top setting is a stated limitation.
+The presentation's numbers (`presentation_slides/source/numbers.json`, `previous_reports/`) were a = 1.8390 ± 0.0242 (regression plus a calibration-line part from 4000 redrawn lines), method 0.054, calibration model (line against quadratic) 0.032, total 0.067 → 1.84 ± 0.07; here a = 1.8258 ± 0.0236, 0.054, 0.024, total 0.064 → 1.83 ± 0.06. The slope moved by 0.7 % because the calibration line is now fitted with the stopwatch uncertainties (lap scatter and reaction time) as weights, which favor the slow settings, so ω at the top settings is about 1 % higher than before, and because the calibration file was completed on 23 October (10 turns instead of 8 at the four fastest settings). The calibration part (1.3 %) is now the line's prediction uncertainty (k's 0.24 % and the 1.27 % scatter of the timed settings about the line) instead of the quadratic difference; the 3.0 % bend at the top setting is a stated limitation.
 
 ## Caveats
 
 - The three methods read the same photographs; half their range is a convention for one standard uncertainty.
-- The calibration line sits 3.0 % above the timed ω at S = 90 (the table bends at high settings); a curve through the timed points would lower a by a few percent. The rms of the deviations is in u(a) through the 1.27 % scatter term; the 3.0 % at the top setting is not. Stated in `RESULTS.md`, Task 5.
+- The calibration line sits 3.0 % above the timed ω at S = 90 (the table bends at high settings); a curve through the timed points instead of the line raises a, by 2.2 % (a weighted quadratic through the timed points) to 2.5 % (straight segments between them), 0.04 rad/(rad s⁻¹), because the line's ω is too high at the fast settings (`bend` in `sagnac.txt`, 24 October; "lower" here before was a sign error). The rms of the deviations is in u(a) through the 1.28 % scatter term; the 3.0 % at the top setting is not. Stated in `RESULTS.md`, Task 5.
 - A steady drift in time is in no uncertainty, and the sign of the shift is not compared (rotation direction not recorded).
 - The earlier versions (`previous_reports/sagnac_quadratic_2026-10-13.py`, `sagnac_update/sagnac.py`) fitted a weighted line with an extra per-setting term set by χ² = dof and propagated the calibration curve by derivatives; they need the earlier `calibration.py`.

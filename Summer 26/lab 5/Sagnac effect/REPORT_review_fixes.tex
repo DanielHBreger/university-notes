@@ -1,0 +1,157 @@
+% Replacement text for the Sagnac report, from the review of v22 (27 October 2026).
+%
+% Each block says WHERE it goes: the section, and the sentence it replaces or follows, quoted from
+% the PDF so you can find it in Overleaf with Ctrl+F. Labels are those of REPORT_section1.tex and
+% REPORT_figures_tables.tex (eq:sagnac, fig:drift, tab:settings, ...); sections 2.1-2.3 are written
+% out as "Section~2.1" etc. because I do not know their labels. The slope unit is typed as in the
+% PDF, rad/(rad/s): swap in your macro if you have one. Numbers come from sagnac.txt,
+% calibration.txt and fringes_frames.csv, rounded by the course convention (uncertainty to one
+% significant figure, value to the same digit). Nothing here needs the analysis rerun, except
+% where a comment says so.
+%
+% Blocks: 1 title, 2 abstract/conclusions "1.83", 3 introduction motivation, 4 notation,
+% 5 manual's Eq. (7), 6 task 4, 7 photo cadence, 8 direction of rotation, 9 reaction time,
+% 10 why the line + rest point, 11 "2 % of a fringe", 12 ray sector, 13 ring numbering,
+% 14 linearity + intercept, 15 main method + cosine bias, 16 uncertainty sentence,
+% 17 bend + drift, 18 conclusions, 19 captions and notation.
+
+
+% ==== 1. Title (review point 5) =============================================================
+% Route A: retitle; nothing else changes. One of:
+\title{The Sagnac effect in a rotating fiber loop, and the speed of light from it}
+%\title{Testing the Sagnac effect in a rotating fiber loop}
+%
+% Route B: keep the title and make c the stated aim. Replace the abstract's first sentence
+%   "In this report we test the Sagnac effect in a fiber loop of 13 turns which rotates together
+%    with an interferometer."
+% with:
+In this report we measure the speed of light with the Sagnac effect, in a fiber loop of 13 turns which rotates together with an interferometer.
+% and in 2.3 replace
+%   "It is worth noting that c/c_0 is not an independent test of the effect, as it can be
+%    simplified to a_th/a, which we discussed above."
+% with:
+Since $c$ comes from the same slope, $c/c_0 = a_\mathrm{th}/a$: the agreement of $c$ with its defined value and the agreement of $a$ with $a_\mathrm{th}$ are one statement, and the $0.6\sigma$ above is its strength.
+
+
+% ==== 2. "up to 1.83 rad/s" (review point 1): 1.83 is the line, 1.77 was timed ==============
+% Abstract: "at rest and at nine speeds up to 1.83 rad/s" ->
+at rest and at nine speeds up to about \qty{1.8}{\radian\per\second}.
+% Conclusions: "Over nine speeds, up to 1.83 rad/s," ->
+Over nine speeds, up to about \qty{1.8}{\radian\per\second},
+
+
+% ==== 3. Motivation (review point 8): first paragraph under "1 Introduction", before 1.1 =======
+The Sagnac effect, first observed by Sagnac in 1913, is the phase shift between two light beams that travel a closed loop in opposite directions while the loop rotates \cite{manual}. It is the basis of the fiber-optic and ring-laser gyroscopes used for navigation, and large ring lasers sense the rotation of the Earth with it \cite{manual}. In this experiment we test the effect in a fiber loop: the loop rotates together with the interferometer that feeds it, we read the phase shift from the interference pattern at nine angular velocities, compare the slope of the shift against the angular velocity with the prediction of \cref{eq:sagnac}, and from the slope obtain the speed of light.
+
+
+% ==== 4. Notation (presentation): the first "157(1) pixels" in 1.1.2 is the first use in the body
+% Append a footnote to it (the abstract uses the notation too; a footnote there is awkward, so the
+% body's first use is the place):
+\footnote{Throughout this report the digit in parentheses is the uncertainty in the last digit of the value, one standard deviation.}
+% and the Table 1 caption's last sentence can then go.
+
+
+% ==== 5. The manual's Eq. (7) has no 2 pi (review point 8): 1.1.2, after
+%   "... relative to its local period (Lambda_i), averaged across all minima." add:
+The manual's equation gives the shift in fringes; the factor $2\pi$ converts it to radians.
+
+
+% ==== 6. Task 4 (review point 2): last paragraph of 1.2 ======================================
+The fourth task of the manual, repeating the measurement with the small loop ($R = \qty{15.5 \pm 0.1}{\centi\metre}$, \num{46 \pm 1} turns) displaced from the rotation axis, was not performed, on the instruction of the laboratory instructor. Schwartz \cite{schwartz} reports this test: the shift is independent of the position of the axis, as \cref{eq:sagnac} requires.
+
+
+% ==== 7. Photo cadence (review point 8): 1.2, after "... in increasing order of S." ===========
+The photographs of one setting were taken about \qty{2}{\second} apart over \qtyrange{17}{56}{\second}; the next setting followed within about half a minute (two minutes after the rest photographs), and the whole run took \qty{12}{\minute} (\cref{tab:settings}).
+% If you know them, add the camera model and exposure here; I do not.
+
+
+% ==== 8. Direction of rotation (review point 8): 1.2 ==========================================
+% (a) If the direction WAS recorded: keep "The table rotated counterclockwise when viewed from
+%     above." and add:
+The sign of the shift was not compared with it: that needs also which of the two beams has the larger wavefront curvature, which sets the direction the rings move for a given sign of the shift, and we did not determine it.
+% (b) If it was NOT recorded (sagnac.txt and the earlier caption say so): replace the sentence with
+The direction of rotation of the table was not recorded.
+%     and add to the caption of fig:setup:
+The arrow for $\omega$ is schematic.
+
+
+% ==== 9. Reaction time (review point 3): 2.1, replace the three sentences from
+%   "The uncertainty of <T> is statistical: ..." to "... 0.15 % to 1.1 % of omega." with:
+The uncertainty of $\langle T\rangle$ has two parts. The first is the scatter of the single-turn times about their mean, their standard deviation over $\sqrt{n}$. The second is the timing of the presses: the turns are consecutive, so only the first and the last press set the mean, and their uncertainties enter as $\sqrt{2}\,\sigma_\mathrm{r}/n$. The mean reaction delay is the same for both presses and cancels in their difference; what remains is its variation, for which we take $\sigma_\mathrm{r} = \qty{0.25}{\second}$, our reaction time measured with an online reaction time test\footnote{\url{https://humanbenchmark.com/tests/reactiontime}}, as an upper bound. It is a generous one: the lap-to-lap scatter at the fast settings, \qtyrange{0.04}{0.05}{\second}, shows that the press-to-press variation is smaller. Together the two parts give an uncertainty of \qtyrange{0.15}{1.1}{\percent} of $\omega$.
+% This keeps every number. The alternative, dropping the reaction term or replacing 0.25 s by the
+% jitter, means rerunning calibration.py and sagnac.py: k, omega0, chi^2, the 0.15-1.1 % range and
+% (slightly) a change. The chi^2 verdict only gets stronger, so the text above is safe as is.
+
+
+% ==== 10. Why the line, and the rest point (review points 1 and 8): 2.1, replace
+%   "The angular velocity at each photo setting is taken from the fitted line, including at S = 90."
+% with:
+The angular velocity at each photo setting is taken from the fitted line, including at $S = 90$: the first task of the manual asks for the linear ratio, and the photo settings lie between the timed ones. What the bend at the high settings does to the result is estimated in Section~2.3. At rest the table did not turn, so $\omega = 0$ exactly, and not the line's value at $S = 0$.
+
+
+% ==== 11. "2 % of a fringe" (review point 8): 2.2, replace
+%   "This holds true to within 2 % of a fringe across all 126 photos taken which have 3 rings."
+% with:
+Across the 126 photographs with three rings, the two gaps agree with each other to \qty{2}{\percent} of a fringe on average (rms) and to \qty{7}{\percent} at worst, and no ring lies farther than \qty{2.5}{\percent} of a fringe from the straight line through the three.
+
+
+% ==== 12. Ray sector (review point 8): 2.2, replace
+%   "After light smoothing, the intensity along straight lines from the ring center passes through
+%    a minimum at each dark ring."
+% with:
+After light smoothing, the intensity along 170 rays from the ring center, one every \ang{1.5} over the \ang{255} of the circle that carry fringes (the lower left, \cref{fig:patterns}, is left out), passes through a minimum at each dark ring.
+
+
+% ==== 13. Ring numbering (review point 8): 2.2, after
+%   "The innermost ring is numbered m = 0, and the rest by their gap in r^2/P." add:
+The numbering is the same in every photograph because the largest shift, \num{0.52} fringes, is smaller than $\eta$ at rest, \num{0.62}: no ring reached the center and vanished, so the ring that is innermost at rest is innermost at every speed.
+
+
+% ==== 14. Linearity and the intercept (review points 6 and 8): 2.3 ============================
+% After "with slope a = 1.83(6) rad/(rad/s), R^2 = 0.9987." add:
+A term in $\omega^2$ added to the fit has the coefficient \num{0.02 \pm 0.05}~rad/(rad/s)$^2$, consistent with zero ($p = 0.67$): no curvature is visible over this range. The bend of the calibration alone would give \num{-0.04}, inside this uncertainty, so this test cannot see it either.
+% (The second sentence is optional; it ties to block 17.)
+% And "which is 1.7 standard errors from zero" -> "which is 1.8 standard errors from zero"
+% (-0.0466/0.0265 = 1.76).
+
+
+% ==== 15. Main method, and the cosine fit's offset (review point 7): 2.3 ======================
+% After "... and the brightness of fixed pixels in the image, described below." add:
+The ring minima are our main method: it is the method of Eq.~(7) of the manual, and it uses only the positions of the dark rings, with no assumption about the shape of the intensity profile. The other three are checks on it.
+% After "The cosine fit results 0.10 rad to 0.19 rad higher at every setting." add:
+The cosine fit assumes a sinusoidal profile under the Gaussian envelope of the beams; where the real profile departs from this, at the bright center and towards the edge of the beam, the fitted phase is pulled. The pull at rest is subtracted with the rest phase, so what \cref{fig:methods}a shows is how it changes as the rings move. We did not test this further.
+
+
+% ==== 16. The garbled uncertainty sentence: 2.3, replace
+%   "Two of them are statistical: the regression's slope's standard error contributes
+%    0.024 rad/(rad/s) from each setting, propagated through the fit."
+% with:
+Two of them are statistical. The \qty{0.04}{\radian} scatter of the settings about the line, propagated through the fit, gives the slope a standard error of \num{0.024}~rad/(rad/s).
+
+
+% ==== 17. Bend and drift (review points 1 and 4): 2.3, replace
+%   "Two things lie outside it: First is the bend of the calibration near the higher S values, the
+%    second is a steady drift of the phase over time. The photos were taken in increasing order of
+%    angular velocity only, so if there were a drift over time, we are unable to detect it."
+% with:
+Two systematic effects are not in this $\pm 0.06$. The first is the bend of the calibration at the high settings (Section~2.1). If $\omega$ at the photo settings is read from straight segments between the timed points instead of the line, so that the timed value is used at $S = 90$, the slope rises to \num{1.87}~rad/(rad/s), by \qty{2.5}{\percent}; a quadratic through the timed points gives the same \num{1.87} (\qty{2.2}{\percent}). This is a one-sided shift of about \qty{2}{\percent} of $a$, upward, larger than the calibration term in the sum above; with it the slope would still agree with the prediction, at $0.9\sigma$. The second is a steady drift of the phase in time. The settings were photographed in increasing order of speed, so $\omega$ and time rise together (\cref{fig:drift}a), and a drift cannot be told from the slope: fitting $\Delta\phi = a\omega + Dt + b$ returns $D = \qty{-0.8 \pm 0.5}{\milli\radian\per\second}$ and $a = \num{2.1 \pm 0.2}$~rad/(rad/s), with a correlation of \num{-0.99} between the two. The trends within the settings (\cref{fig:drift}b) have both signs and average to zero within their scatter (\qty{-1 \pm 1}{\milli\radian\per\second}), so they neither support nor exclude such a drift. Neither effect is in the quoted uncertainty; photographs at rest between the speed settings would have removed the second.
+
+
+% ==== 18. Conclusions (review points 1, 4): replace the two sentences
+%   "The settings wander by about 0.04 rad and because the measurements were taken in increasing
+%    order of speeds a steady drift of the phase cannot be identified. In future attempts of this
+%    experiment we would count the turns of the fiber more precisely, take photos at rest between
+%    the different speed settings, as well as take photos going in the reverse direction."
+% with:
+The settings wander by about \qty{0.04}{\radian}, and because the measurements were taken in increasing order of speed a steady drift of the phase cannot be separated from the slope. The bend of the calibration at the high settings is not in the quoted uncertainty either; following the timed points instead of the line would raise the slope by about \qty{2}{\percent}. In future attempts of this experiment we would count the turns of the fiber more precisely, time the turns at the photo settings themselves, take photos at rest between the speed settings, and take photos going in the reverse direction.
+% Same paragraph: "13 \pm 1" -> \num{13 \pm 1} (renders 13(1) like everywhere else).
+
+
+% ==== 19. Captions ============================================================================
+% fig:phase (Fig. 6), append:
+The error bars, \qty{1.3}{\percent} in $\omega$ and \qty{0.04}{\radian} in $\Delta\phi$ (\cref{tab:settings}), are mostly smaller than the markers.
+% fig:methods (Fig. 7): "(at a drawn of ten pixels)" -> "(for one draw of ten pixels)".
+%   Its (b) axis says rad/(rad s^-1) while the text says rad/(rad/s): make them the same
+%   (report_figures.py, the xlabel of the methods figure).
+% tab:settings (Table 2): "the time the first photo was taken" ->
+the time the first photo was taken (on 11 October 2026)

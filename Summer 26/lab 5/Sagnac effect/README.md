@@ -28,9 +28,10 @@ when it is installed):
 python calibration.py     # task 1 -> calibration.json, calibration.txt
 python fringes.py         # dark rings, minima and cosine-fit phases of the 161 photographs -> fringes_frames.csv, fringes_profiles.npz (a few minutes)
 python methods.py         # template matching -> methods_frames.csv (about a minute)
+python pixels.py          # fixed pixels, 1000 random draws -> pixels_frames.csv, pixels.json (a few minutes)
 python sagnac.py          # tasks 3 and 5, the speed of light -> sagnac_speeds.csv, sagnac.txt, sagnac.json
 python report_figures.py  # report_figures/*.pdf, *.png (about a minute)
-python -m pytest -q -p no:cacheprovider tests   # synthetic check of template matching, report-form rounding, Eq. (5) for c
+python -m pytest -q -p no:cacheprovider tests   # synthetic checks of template matching and the fixed-pixel fit, report-form rounding, Eq. (5) for c
 ```
 
 `fringes.py`'s starting centre, fringe-period guess and angular sector (`START_CENTRE`, `P_GUESS`,
@@ -43,12 +44,12 @@ plus 600 dpi PNG, no titles, no fit statistics in the image, no residual panels.
 **Calibration** (`calibration.py`). Per setting, T is the mean of n = 5 or 10 consecutive timed
 turns and omega = 2 pi/T. u(T) combines the lap scatter SD/sqrt(n) with the reaction time of the
 presses: the laps are consecutive, so only the first and last press set the mean, and with
-sigma_r = 0.2 s per press that part is sqrt(2) sigma_r/n. Together 0.14-0.9 % of omega. The line
+sigma_r = 0.25 s per press that part is sqrt(2) sigma_r/n. Together 0.15-1.1 % of omega. The line
 omega = k S + omega0 is fitted with scipy's curve_fit, weighted by the timing uncertainties. The
-points lie farther from the line than those allow (chi2/dof = 4.1): the table turns slower than
+points lie farther from the line than those allow (chi2/dof = 2.9, p = 0.005): the table turns slower than
 linear at high settings, 3.0 % below the line at S = 90. The photos use the line, as task 1 asks.
 A photo setting was not timed, so its omega carries the line's prediction uncertainty: the line's
-own (0.15-0.25 %) and the 1.3 % rms scatter of the timed settings about it, 1.3 % in all, common to
+own (0.2-0.3 %) and the 1.3 % rms scatter of the timed settings about it, 1.3 % in all, common to
 every setting; that relative size is the calibration part of the Sagnac slope's uncertainty. The
 3.0 % bend at the top setting is stated as a limitation.
 
@@ -79,7 +80,17 @@ profile, shifted by D and scaled (gain and offset free). The phase is 2 pi D / P
 template's own period. It uses no fringe model but reads an average phase over its window, so a
 change of the fringe period between frames enters it.
 
-**Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases, SEM = SD/sqrt(n).
+Fourth method (`pixels.py`, fixed pixels; prep Q5, asked for by the instructor): ten pixels at
+fixed image positions are read in every frame and fitted with I_kj = a_j + b_j cos(psi_j + delta_k),
+one phase delta_k per frame, under two physical limits (b_j >= 0; a_j - b_j >= the camera's dark
+level), which the fit needs because no pixel sweeps a whole fringe over this run. A fixed pixel
+reads the local phase at its own radius, so a moving centre or spacing reads as phase, and the
+slope depends on which pixels are drawn: over 1000 random draws of ten it spreads by 0.19 (11 %).
+It is shown beside the other readouts with that spread as its uncertainty and is not in the
+method range.
+
+**Phase against omega** (`sagnac.py`). Per setting: mean of the frame phases; its uncertainty in the
+report is s, the scatter of the settings about the line (the SEM is the photo noise only).
 A straight line Delta phi = a omega + b through the ten setting means (scipy's linregress; Schwartz
 Eq. 7): the slope's uncertainty comes from how far the points lie from the line (s = 0.044 rad
 rms). Measured against the photos' SEM, the line has chi2/dof = 205/8: the settings differ five

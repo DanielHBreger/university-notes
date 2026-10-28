@@ -19,11 +19,11 @@ Sources: `Documents/Sagnac_manual.pdf` (minimum tasks and Fig. 1 on p. 12, fiber
 
 | Task | Status | Description | Notes |
 |---|---|---|---|
-| **1** Measure the (linear) ratio between the voltage on the motor and its angular velocity | done, caveat | `calibration.py` → `calibration.json/.txt`: 5 or 10 timed turns at nine settings S = 5.78–90; u(T) from the lap scatter and the 0.2 s reaction time of the presses; the line ω = kS + ω₀ weighted by the timing uncertainties: k = 0.02054 ± 0.00005 rad s⁻¹ per unit S, ω₀ = −0.0226 ± 0.0003 rad/s. Report 2.1, Fig. 2 (and the optional conversion figure). | The variable is the controller setting S, which sets the motor voltage; no voltage was read. The table turns slower than linear at high settings (the line is 3.0 % above the timed ω at S = 90); the line is used, as the task asks, and the bend beyond its rms is stated as a limitation. Calibration settings differ from the photo settings (only S = 90 is common). |
+| **1** Measure the (linear) ratio between the voltage on the motor and its angular velocity | done, caveat | `calibration.py` → `calibration.json/.txt`: 5 or 10 timed turns at nine settings S = 5.78–90; u(T) from the lap scatter and the 0.25 s reaction time of the presses; the line ω = kS + ω₀ weighted by the timing uncertainties: k = 0.02054 ± 0.00006 rad s⁻¹ per unit S, ω₀ = −0.0227 ± 0.0004 rad/s. Report 2.1, Fig. 2, Table 1. | The variable is the controller setting S, which sets the motor voltage; no voltage was read. The table turns slower than linear at high settings (the line is 3.0 % above the timed ω at S = 90); the line is used, as the task asks, and the bend beyond its rms is stated as a limitation. Calibration settings differ from the photo settings (only S = 90 is common). |
 | **2** Spin the system at different speeds and picture the interference pattern at each | done | 161 photographs: rest (10) and nine settings S = 12.59–90 (15–22 each), 16:21–16:33. Report 2.2, Fig. 3 (one per setting), Fig. 4. | Taken in increasing order of S with rest photos only at the start, which makes a steady drift inseparable from the slope (task 5). |
-| **3** Deduce the phase shift and compare with theory | done | `fringes.py` (ring finder, phase at the ring center), `sagnac.py` (setting means, regression): a = 1.83 ± 0.06 rad/(rad s⁻¹) against a_th = 1.7 ± 0.1, 0.6σ, p = 0.56. Report 2.3, Figs. 5–6, Table 2. | The manual's Eq. 7 (minimum shift over local fringe period, averaged) is done in r², where every ring has the same period; this is also Schwartz's Eq. 5. The line is Schwartz's Eq. 7 (equal-weight regression). |
+| **3** Deduce the phase shift and compare with theory | done | `fringes.py` (ring finder, phase at the ring center), `sagnac.py` (setting means, regression): a = 1.83 ± 0.06 rad/(rad s⁻¹) against a_th = 1.7 ± 0.1, 0.6σ, p = 0.56. Report 2.2 (the phase of each photo, Fig. 5, Table 2) and 2.3 (the line and the comparison, Figs. 6–7). | The manual's Eq. 7 (minimum shift over local fringe period, averaged) is done in r², where every ring has the same period; this is also Schwartz's Eq. 5. The line is Schwartz's Eq. 7 (equal-weight regression). |
 | **4** Repeat for the off-centered small circle | not done | | Instructor's instruction. The axis-independence it would test is Schwartz's result (his Fig. 4); the report can say so in one sentence. |
-| **5** Evaluate the measurement errors | done | RESULTS Task 5 (budget, drift), `uncertainty/REPORT.md` (every component with its model and kind). Report 2.6, Table 5, Fig. 8. | Three parts of the slope's uncertainty (regression 1.3 %, method 2.9 %, calibration 1.3 %: the line's prediction uncertainty). Not covered by the quoted uncertainty: the 3.0 % bend at the top calibration setting beyond its rms, a steady drift in time, λ, the sign of the shift (rotation direction not recorded). |
+| **5** Evaluate the measurement errors | done | RESULTS Task 5 (budget, drift), `uncertainty/REPORT.md` (every component with its model and kind). Report 2.3 (the slope's three parts with their kinds) and 2.4 (what is not covered; Fig. 8), restated in brief in the conclusions. | Three parts of the slope's uncertainty (regression 1.3 %, method 2.9 %, calibration 1.3 %: the line's prediction uncertainty). Not covered by the quoted uncertainty: the 3.0 % bend at the top calibration setting beyond its rms, a steady drift in time, λ, the sign of the shift (rotation direction not recorded). |
 
 ## The manual's analysis instructions
 
@@ -39,7 +39,7 @@ These were answered before the experiment (pre-report) and are not part of the a
 
 | Question | Status | Where the report uses it |
 |---|---|---|
-| 1. Optimum NA and focal length of the coupling lens (D = 4 mm) | pre-report | 1.1.3 optional: the manual's own numbers (f = 15.5 mm, NA 0.13; 93 % against 47 % with the 8 mm lens). |
+| 1. Optimum NA and focal length of the coupling lens (D = 4 mm) | pre-report | One clause in 2.4's next-time list: the manual's matched 15.5 mm lens (93 % into the fundamental mode against 47 % with the 8 mm lens). |
 | 2. Coupling efficiency of the RMS40X objective; the best of the four | pre-report | Not needed. |
 | 3. Polarizers (and Berry phase) against unwanted reflections | pre-report | 1.2: why there are two polarizers. |
 
@@ -51,14 +51,14 @@ These were answered before the experiment (pre-report) and are not part of the a
 | Q2 Distance between adjacent maxima | pre-report | 1.1.2: Λ = λ/(2 sin θ) | Our fringes are rings; Λ is only the plane-wave picture. |
 | Q3 The Gaussian beam | pre-report | 1.1.2: transverse phase kρ²/(2R(z)) (QE3 PDF p. 10); envelopes in the cosine fit (QE3 PDF p. 7) | The basis of the ring model. |
 | Q4 Derive Δφ = N(8π/(λc)) A·ω | pre-report | 1.1.1 (manual Eqs. 1–5; Pascoli; Tartaglia) | |
-| Q5 Two ways to extract Δφ; which is more accurate when Δφ_max is large | done | 2.4: ring minima, cosine fit, template matching (method spread 3.0 %); fixed pixels (1000 draws: one draw ± 0.2, 3.4 times its fit error) | Our largest shift is half a fringe: the small-shift case. |
+| Q5 Two ways to extract Δφ; which is more accurate when Δφ_max is large | done | 2.3: ring minima, cosine fit, template matching (method spread 2.9 %) and the fixed-pixel readout, all four in Fig. 7; the fixed pixels (the instructor asked for them) in their own paragraph, with the spread of the slope between 1000 random draws of ten pixels (11 %) as their uncertainty and the reason it is large at half a fringe, outside the method range | Our largest shift is half a fringe: the small-shift case. |
 | Q6 Polarizers (Malus) and Berry phase | pre-report | 1.2 | |
 | Q7 Lens–fiber distance, light from the fiber and from its surface | pre-report | 1.1.2: changes the wavefront radius, so P, not φ_c (to first order) | P varies by ±1.7 % between settings. |
 | Q8 Influence of the center of rotation | done (theory) | 1.1.1: none (Schwartz Eq. 4) | Not tested here (task 4 skipped). |
-| Q9 Influence of the wavelength on the pattern | pre-report | 1.1.2 optional | |
+| Q9 Influence of the wavelength on the pattern | pre-report | Not in the report (REPORT_TODO.md, "Left out on purpose") | |
 | Q10 Influence of the refractive index (Schwartz) | done (theory) | 1.1.1: none (Schwartz Sec. 2) | |
 | Q11 SMF-28e+ core diameter, NA, effective index at 1310 and 1550 nm | pre-report | 1.2 if wanted: core 8.2 µm, NA 0.14, effective group index 1.4674 (1310 nm) and 1.4679 (1550 nm) (datasheet in the manual, p. 11) | |
-| Q12 Is SMF-28e+ single-mode at 640 nm? | done | 1.1.3: no, V = 5.6 > 2.405 (cutoff ≤ 1260 nm) | The plausible, untested cause of the wander (2.6). |
+| Q12 Is SMF-28e+ single-mode at 640 nm? | done | 1.1.3: no, V = 5.6 > 2.405 (cutoff ≤ 1260 nm) | The plausible, untested cause of the wander (2.4). |
 
 ## Schwartz 2017 (assigned paper)
 
@@ -75,14 +75,14 @@ These were answered before the experiment (pre-report) and are not part of the a
 | Speed of light from the slope, c = (2.9 ± 0.2) × 10⁸ m/s; N read the other way, 13.7 ± 0.5 | `sagnac.py`, RESULTS | The same comparison as a/a_th, shown as a speed; not an independent test. |
 | Reaction time in the stopwatch uncertainty; the calibration line's prediction uncertainty for ω at the photo settings | `calibration.py`, `uncertainty/REPORT.md` 1–2 | The standard treatment of a timed calibration. |
 | Ring model in r² and the ring finder | `fringes.py`, `docs/fringes.md` | The pattern is rings, evenly spaced in r². |
-| Cosine fit, template matching, fixed pixels (1000 draws) | `fringes.py`, `methods.py`, `presentation_slides/source/random_points_scan.py` | Method uncertainty; prep Q5. |
+| Cosine fit, template matching, fixed pixels (1000 draws) | `fringes.py`, `methods.py`, `pixels.py` (24 October, with the current calibration) | Method uncertainty; prep Q5. |
 | Drift check (joint fit with time; trends per setting in Fig. 8) | `sagnac.py`, `report_figures.py` | The settings were taken in increasing order. |
 | Report figures and table blocks | `report_figures.py`, `REPORT_figures_tables.tex` | The report. |
-| Tests: 4 at the top level | `tests/`, `docs/tests.md` | Synthetic check of template matching, of the report-form rounding and of Eq. (5) for c. |
+| Tests: 5 at the top level | `tests/`, `docs/tests.md` | Synthetic checks of template matching and of the fixed-pixel fit, of the report-form rounding and of Eq. (5) for c. |
 
 ## Open points
 
 - λ's tolerance and the laser model: ask the instructor or read the laser's label, if the report should include λ in the budget.
 - N: if the instructor knows how 13 ± 1 was obtained (counted? estimated from length?), say so; it is the dominant uncertainty.
 - A steady drift and the sign of the shift cannot be checked with these data; only new measurements (rest photos between speeds, reversed rotation, random order) can.
-- The presentation code (`presentation_slides/source/`, `sagnac_update/`) is kept as the record of 19 October and needs the earlier calibration files from `previous_reports/` to rerun (`README.md`, "Earlier stages"). The random-pixel scan it produced is reused as stored.
+- The presentation code (`presentation_slides/source/`, `sagnac_update/`) is kept as the record of 19 October and needs the earlier calibration files from `previous_reports/` to rerun (`README.md`, "Earlier stages"). Its random-pixel scan was superseded on 24 October by `pixels.py`, which repeats it with the current calibration (same numbers to within the rounding).

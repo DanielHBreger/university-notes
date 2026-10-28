@@ -1,31 +1,31 @@
 Rotation calibration (calibration.py): omega = 2 pi / T at each controller setting S
 
-Uncertainty of the mean turn time: u(T)^2 = (SD/sqrt(n))^2 + (sqrt(2) sigma_r / n)^2, with the human reaction time sigma_r = 0.2 s per press (two presses set the mean of n consecutive laps).
+Uncertainty of the mean turn time: u(T)^2 = (SD/sqrt(n))^2 + (sqrt(2) sigma_r / n)^2, with the human reaction time sigma_r = 0.25 s per press (two presses set the mean of n consecutive laps).
 
      S  n    T (s)  SD (s) SD/sqrt(n) reaction  u_T (s) omega (rad/s)  u_omega    rel
-  5.78  5   65.446   0.156     0.0697   0.0566   0.0898       0.09601  0.00013  0.14%
- 14.67  5   22.334   0.091     0.0408   0.0566   0.0698       0.28133  0.00088  0.31%
- 25.66  5   12.424   0.039     0.0175   0.0566   0.0592       0.50573  0.00241  0.48%
- 36.63  5    8.602   0.041     0.0183   0.0566   0.0594       0.73043  0.00505  0.69%
- 45.09  5    6.920   0.039     0.0176   0.0566   0.0592       0.90797  0.00777  0.86%
- 56.03 10    5.569   0.041     0.0131   0.0283   0.0312       1.12824  0.00632  0.56%
- 68.85 10    4.558   0.050     0.0158   0.0283   0.0324       1.37850  0.00980  0.71%
- 79.21 10    3.989   0.040     0.0125   0.0283   0.0309       1.57513  0.01221  0.78%
- 90.00 10    3.545   0.048     0.0151   0.0283   0.0321       1.77241  0.01604  0.91%
+  5.78  5   65.446   0.156     0.0697   0.0707   0.0993       0.09601  0.00015  0.15%
+ 14.67  5   22.334   0.091     0.0408   0.0707   0.0816       0.28133  0.00103  0.37%
+ 25.66  5   12.424   0.039     0.0175   0.0707   0.0728       0.50573  0.00297  0.59%
+ 36.63  5    8.602   0.041     0.0183   0.0707   0.0730       0.73043  0.00620  0.85%
+ 45.09  5    6.920   0.039     0.0176   0.0707   0.0729       0.90797  0.00956  1.05%
+ 56.03 10    5.569   0.041     0.0131   0.0354   0.0377       1.12824  0.00764  0.68%
+ 68.85 10    4.558   0.050     0.0158   0.0354   0.0387       1.37850  0.01172  0.85%
+ 79.21 10    3.989   0.040     0.0125   0.0354   0.0375       1.57513  0.01481  0.94%
+ 90.00 10    3.545   0.048     0.0151   0.0354   0.0385       1.77241  0.01923  1.09%
 
 Line omega = k S + omega0, curve_fit weighted by the timing uncertainties:
-  k = 0.02054 +- 0.00005 rad/s per unit S (0.24 %), omega0 = -0.0226 +- 0.0003 rad/s
-  chi2 = 28.7, dof = 7, chi2/dof = 4.09, p = 0.0002: the points lie farther from the line than their uncertainties allow.
-  (omega - line)/omega: -0.1, +1.0, +0.3, +0.1, +0.5, +0.0, -0.9, -1.8, -3.0 %  (rms 1.27 %); the table turns slower than the line at high settings.
-  At S = 90: timed 1.7724 rad/s, line 1.8257 +- 0.0236 (+3.0 %).
+  k = 0.02054 +- 0.00006 rad/s per unit S (0.29 %), omega0 = -0.0227 +- 0.0004 rad/s
+  chi2 = 20.2, dof = 7, chi2/dof = 2.88, p = 0.005: the points lie farther from the line than their uncertainties allow.
+  (omega - line)/omega: -0.1, +0.9, +0.3, +0.1, +0.5, +0.0, -0.9, -1.9, -3.0 %  (rms 1.28 %); the table turns slower than the line at high settings.
+  At S = 90: timed 1.7724 rad/s, line 1.8260 +- 0.0239 (+3.0 %).
 
-omega at the photo settings, predicted by the line: u^2 = (line uncertainty)^2 + (rms scatter)^2, the scatter being 1.27 % of omega; both parts are common to all settings:
-  S =  12.59: omega = 0.2359 +- 0.0030 rad/s (1.28 %)
-  S =  20.74: omega = 0.4033 +- 0.0052 rad/s (1.28 %)
-  S =  31.11: omega = 0.6163 +- 0.0079 rad/s (1.29 %)
-  S =  44.07: omega = 0.8824 +- 0.0114 rad/s (1.29 %)
-  S =  55.83: omega = 1.1239 +- 0.0145 rad/s (1.29 %)
-  S =  64.00: omega = 1.2917 +- 0.0167 rad/s (1.29 %)
-  S =  73.65: omega = 1.4899 +- 0.0192 rad/s (1.29 %)
-  S =  82.18: omega = 1.6651 +- 0.0215 rad/s (1.29 %)
-  S =  90.00: omega = 1.8257 +- 0.0236 rad/s (1.29 %)
+omega at the photo settings, predicted by the line: u^2 = (line uncertainty)^2 + (rms scatter)^2, the scatter being 1.28 % of omega; both parts are common to all settings:
+  S =  12.59: omega = 0.2359 +- 0.0030 rad/s (1.29 %)
+  S =  20.74: omega = 0.4033 +- 0.0052 rad/s (1.30 %)
+  S =  31.11: omega = 0.6163 +- 0.0080 rad/s (1.30 %)
+  S =  44.07: omega = 0.8825 +- 0.0115 rad/s (1.30 %)
+  S =  55.83: omega = 1.1241 +- 0.0147 rad/s (1.31 %)
+  S =  64.00: omega = 1.2919 +- 0.0169 rad/s (1.31 %)
+  S =  73.65: omega = 1.4901 +- 0.0195 rad/s (1.31 %)
+  S =  82.18: omega = 1.6653 +- 0.0218 rad/s (1.31 %)
+  S =  90.00: omega = 1.8260 +- 0.0239 rad/s (1.31 %)

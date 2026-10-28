@@ -46,8 +46,7 @@ WAVELENGTH = 640e-9                   # m
 U_WAVELENGTH = None                   # not given by the lab: left out of the budget, stated in the output
 C_LIGHT = 299_792_458.0               # m/s, exact
 OTHER_METHODS = [('cosine fit', 'phi_cos_rad'), ('template matching', 'phi_template_rad')]
-SCAN = HERE / 'presentation_slides' / 'source' / 'random_points_scan.json'   # optional, prep Q5
-SCAN_ORIGINAL_SEED = 20261011         # the presentation's main draw, left out of the statistics
+FIXED_PIXELS = ('fixed pixels', 'phi_pixels_rad')   # pixels.py: shown beside the other readouts, not in the method range
 
 
 def round1(x, u):
@@ -117,30 +116,17 @@ def hhmmss(seconds):
     return time.strftime('%H:%M:%S', time.gmtime(seconds))
 
 
-def random_pixel_summary(path=SCAN):
-    """Optional (prep Q5): the random-pixel method of the presentation stage, repeated for many
-    draws of n fixed pixels (random_points_scan.json). Per n: the number of draws, the mean and SD
-    of their slopes (failed fits with a negative slope left out) and the median fit error of one
-    draw. The slopes in that file were fitted by the presentation's weighted line, not by linregress."""
-    if not path.exists():
-        return None
-    draws = [d for d in json.loads(path.read_text())['draws'] if d['seed'] != SCAN_ORIGINAL_SEED]
-    summary = {}
-    for n in sorted({d['n'] for d in draws}):
-        slopes = np.array([d['fixed']['slope'] for d in draws if d['n'] == n])
-        good = slopes[slopes > 0]
-        summary[int(n)] = dict(draws=len(slopes), failed=int(np.sum(slopes <= 0)), mean=float(good.mean()),
-                               sd=float(good.std(ddof=1)),
-                               u_fit=float(np.median([d['fixed']['u_fit'] for d in draws if d['n'] == n])))
-    return summary
-
-
 def main():
-    cal_line = json.loads((HERE / 'calibration.json').read_text())['line']
+    cal = json.loads((HERE / 'calibration.json').read_text())
+    cal_line = cal['line']
     photos = pd.read_csv(HERE / 'fringes_frames.csv')
     template_file = HERE / 'methods_frames.csv'
     if template_file.exists():
         photos = photos.merge(pd.read_csv(template_file)[['file', 'phi_template_rad']], on='file', how='left',
+                              validate='one_to_one')
+    pixels_file = HERE / 'pixels_frames.csv'
+    if pixels_file.exists():
+        photos = photos.merge(pd.read_csv(pixels_file)[['file', FIXED_PIXELS[1]]], on='file', how='left',
                               validate='one_to_one')
 
     # 1-2. Setting means; omega from the calibration line (0 at rest) with its prediction uncertainty.
@@ -166,6 +152,15 @@ def main():
     quad, quad_cov = np.polyfit(omega, dphi, 2, cov=True)
     t_quad = float(quad[0] / np.sqrt(quad_cov[0, 0]))
     p_quad = float(2 * stats.t.sf(abs(t_quad), n_settings - 3))
+    # 4b. The calibration's bend (the line is above the timed omega at the fast settings): the slope with omega
+    # at the photo settings from a curve through the timed points instead of the line (a weighted quadratic, and
+    # straight segments between the timed points), and the omega^2 term that bend alone would give against the
+    # line's omega.
+    timed = pd.DataFrame(cal['settings'])
+    om_quad = np.where(moving, np.polyval(np.polyfit(timed.S, timed.omega, 2, w=1 / timed.u_omega), S), 0.0)
+    om_seg = np.where(moving, np.interp(S, timed.S, timed.omega), 0.0)
+    a_quad, a_seg = stats.linregress(om_quad, dphi).slope, stats.linregress(om_seg, dphi).slope
+    c_bend = np.polyfit(omega, a * om_quad, 2)[0]
 
     # 5. The other phase-reading methods through the same regression; half the range = method part.
     methods = {}
@@ -178,6 +173,18 @@ def main():
                                  r2=method_fit.rvalue ** 2, col=col)
     slopes = {'ring minima': a, **{name: m['a'] for name, m in methods.items()}}
     u_method = (max(slopes.values()) - min(slopes.values())) / 2
+    # 5b. The fixed-pixel readout (pixels.py) through the same regression, shown beside the others but not in the
+    # method range: its slope depends on which pixels are drawn (the spread between draws in pixels.json).
+    fixed = None
+    if FIXED_PIXELS[1] in photos and (HERE / 'pixels.json').exists():
+        means = setting_means(photos, FIXED_PIXELS[1])
+        fixed_fit = stats.linregress(omega, means.dphi.to_numpy())
+        scan = json.loads((HERE / 'pixels.json').read_text())
+        ten = next(s_ for s_ in scan['summary'] if s_['n'] == scan['main']['n'])
+        fixed = dict(means=means, a=fixed_fit.slope, u_a=fixed_fit.stderr,
+                     rms=rms_from_line(omega, means.dphi.to_numpy(), fixed_fit), r2=fixed_fit.rvalue ** 2,
+                     u_draws=ten['sd'], draws=ten['draws'], mean_draws=ten['mean'], failed=ten['failed'],
+                     n_pixels=scan['main']['n'], seed=scan['main']['seed'], summary=scan['summary'])
 
     # 6. The calibration part: every moving omega is predicted by the same line from the same table, so
     #    the relative prediction uncertainty (k's relative uncertainty and the scatter of the timed
@@ -214,21 +221,25 @@ def main():
     u_a_drift, u_D = np.sqrt(drift_cov[0, 0]), np.sqrt(drift_cov[1, 1])
     corr_aD = float(drift_cov[0, 1] / (u_a_drift * u_D))
     p_D = float(2 * stats.t.sf(abs(D / u_D), n_settings - 3))
-    random_pixels = random_pixel_summary()
 
     # 10. Outputs. The per-setting table first.
     settings['omega'] = omega
     settings['u_omega'] = u_omega
     settings['resid'] = residual
+    settings['u_dphi'] = rms             # the uncertainty of a setting mean in the report: the scatter about the line
     for name, m in methods.items():
         key = m['col'].removeprefix('phi_').removesuffix('_rad')
         settings[f'dphi_{key}'] = m['means'].dphi
         settings[f'sem_{key}'] = m['means']['sem']
+    if fixed:
+        settings['dphi_pixels'] = fixed['means'].dphi
+        settings['sem_pixels'] = fixed['means']['sem']
     settings.to_csv(HERE / 'sagnac_speeds.csv', index=False, float_format='%.6g')
 
     E8 = 1e8
     lines = ['Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis\n',
-             'PER SETTING: phase at the ring centre (minima), mean over the photos, SEM = SD/sqrt(n); omega from the',
+             'PER SETTING: phase at the ring centre (minima), mean over the photos; SEM = SD/sqrt(n) is the photo noise only; the',
+             'uncertainty of a setting mean (u_dphi in sagnac_speeds.csv) is s, the scatter about the line below, the same for every setting; omega from the',
              'calibration line +- its prediction uncertainty (common to all settings); dphi = phase minus the rest mean.',
              f"{'S':>6} {'n':>3} {'first photo':>11} {'omega (rad/s)':>18} {'dphi (rad)':>18} {'P (10^5 px^2)':>13} {'resid':>7}"]
     for row in settings.itertuples():
@@ -243,7 +254,13 @@ def main():
                  f'{np.sqrt(chi2_sem / dof):.1f} times farther')
     lines.append('  from the line than the photo noise allows (the phase wanders between settings), so s is used, not the SEM.')
     lines.append(f'  Added omega^2 term: {quad[0]:+.3f} +- {np.sqrt(quad_cov[0, 0]):.3f} rad/(rad/s)^2, t = {t_quad:.2f}, '
-                 f'p = {p_quad:.2f}: no bend.\n')
+                 f'p = {p_quad:.2f}: no bend visible.')
+    lines.append("  The calibration's bend (the line is above the timed omega at the fast settings, calibration.txt): with omega at the")
+    lines.append(f"  photo settings from a curve through the timed points instead of the line, the slope is {a_quad:.4f} (weighted quadratic, "
+                 f"{100 * (a_quad / a - 1):+.1f} %) or {a_seg:.4f} (straight segments between the timed points, {100 * (a_seg / a - 1):+.1f} %):")
+    lines.append("  the line's omega is too high there, so a curve raises a. Against the line's omega, that bend alone would give an omega^2")
+    lines.append(f"  term of {c_bend:+.3f} rad/(rad/s)^2, inside the fitted term's +- {np.sqrt(quad_cov[0, 0]):.3f}: the omega^2 check cannot tell "
+                 "the bend from no bend.\n")
     lines.append('OTHER PHASE-READING METHODS, same averaging and regression (cosine fit: fringes.py, prep Q5; template')
     lines.append('matching: methods.py):')
     for name, m in methods.items():
@@ -282,13 +299,19 @@ def main():
     lines.append(f'  a = {a_drift:.2f} +- {u_a_drift:.2f} rad/(rad/s), D = {1e3 * D:+.2f} +- {1e3 * u_D:.2f} mrad/s '
                  f'(p = {p_D:.2f}), correlation(a, D) = {corr_aD:.3f}: a steady drift cannot be told from the slope.')
     lines.append('  Not in the quoted uncertainty. Also not checked: the sign of the shift (rotation direction not recorded).\n')
-    if random_pixels:
-        lines.append('RANDOM PIXELS (prep Q5, optional; presentation stage, random_points_scan.json):')
-        for n_pixels, v in random_pixels.items():
-            lines.append(f'  {n_pixels:3d} pixels per draw: {v["draws"]} draws, slope mean {v["mean"]:.3f}, SD between draws '
-                         f'{v["sd"]:.3f}, fit error of one draw {v["u_fit"]:.3f}'
+    if fixed:
+        diffs = ', '.join(f'{d:+.2f}' for d in fixed['means'].dphi - dphi)
+        lines.append(f'FIXED PIXELS (prep Q5; pixels.py): {fixed["n_pixels"]} pixels at fixed image positions, read in every photograph and')
+        lines.append(f'fitted with I_kj = a_j + b_j cos(psi_j + delta_k); the main draw (seed {fixed["seed"]}) through the same averaging and regression:')
+        lines.append(f'  a = {fixed["a"]:.4f} +- {fixed["u_a"]:.4f} (fit), s = {fixed["rms"]:.4f} rad, R^2 = {fixed["r2"]:.4f}; '
+                     f'minus the minima per setting: {diffs} rad')
+        for v in fixed['summary']:
+            lines.append(f'  {v["n"]:3d} pixels per draw: {v["draws"]} draws, slope mean {v["mean"]:.3f}, SD between draws {v["sd"]:.3f} '
+                         f'({100 * v["sd"] / v["mean"]:.1f} %), median fit error {v["median_u_fit"]:.3f}'
                          + (f', {v["failed"]} failed' if v['failed'] else ''))
-        lines.append('')
+        lines.append(f'  Shown in the methods figure with the SD between draws of {fixed["n_pixels"]} pixels as its uncertainty; not in the method')
+        lines.append('  range above: over this run no pixel sweeps a whole fringe, and a moving ring centre or spacing reads as phase at a')
+        lines.append('  fixed pixel, so the slope depends on which pixels are drawn.\n')
     lines.append('REPORT FORM (uncertainty to one significant figure, value to the same digit; comparisons above use')
     lines.append('unrounded values):')
     lines.append(f'  k = {round1(cal_line["k"], cal_line["u_k"])} rad/s per unit S, '
@@ -319,7 +342,12 @@ def main():
         speed_of_light=dict(c=c_meas, u_c=u_c, components=c_parts, rel=100 * u_c / c_meas, ratio_to_defined=c_meas / C_LIGHT,
                             u_ratio_to_defined=u_c / C_LIGHT, z=float(z_c), p=p_c),
         drift=dict(a=float(a_drift), u_a=float(u_a_drift), D=float(D), u_D=float(u_D), p_D=p_D, correlation=corr_aD),
-        random_pixels=random_pixels,
+        bend=dict(a_quadratic=float(a_quad), a_segments=float(a_seg), rel_quadratic=float(100 * (a_quad / a - 1)),
+                  rel_segments=float(100 * (a_seg / a - 1)), omega2_term_bend_alone=float(c_bend)),
+        fixed_pixels=None if fixed is None else dict(
+            a=float(fixed['a']), u_a=float(fixed['u_a']), s=fixed['rms'], r2=float(fixed['r2']), u_draws=fixed['u_draws'],
+            draws=fixed['draws'], mean_draws=fixed['mean_draws'], failed=fixed['failed'], n_pixels=fixed['n_pixels'],
+            seed=fixed['seed'], summary=fixed['summary'], in_method_range=False),
         report_form=lines[lines.index('unrounded values):') + 1:])
     (HERE / 'sagnac.json').write_text(json.dumps(results, indent=1, default=float))
 

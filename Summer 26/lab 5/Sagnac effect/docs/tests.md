@@ -1,11 +1,11 @@
 # `tests/` and `sagnac_update/tests/`
 
-Four tests in three files at the top level, all passing on 23 October 2026 with the report pipeline (Python 3.13, pytest 9.1). They check template matching on synthetic fringes with a known phase, the report-form rounding, and Eq. 5 solved for c. The statistics behind the final numbers (`linregress`, `setting_means`, the three-part uncertainty) have no test of their own; `sagnac.txt` prints every intermediate value instead.
+Five tests in four files at the top level, all passing on 24 October 2026 with the report pipeline (Python 3.13, pytest 9.1). They check template matching and the fixed-pixel fit on synthetic data with a known phase sweep, the report-form rounding, and Eq. 5 solved for c. The statistics behind the final numbers (`linregress`, `setting_means`, the three-part uncertainty) have no test of their own; `sagnac.txt` prints every intermediate value instead.
 
 ## Running them
 
 ```bash
-# from the 'Sagnac effect' folder: 4 tests
+# from the 'Sagnac effect' folder: 5 tests
 python -m pytest -q -p no:cacheprovider tests
 ```
 
@@ -16,6 +16,10 @@ python -m pytest -q -p no:cacheprovider tests
 `make_profiles(phases)` builds ring profiles in s = r² on the 130 bins of `fringes.py` (`np.arange(1000, 260000, 2000.0)` px²): 80 e^(−s/2.6×10⁵) + 85 e^(−s/1.4×10⁵) cos(2πs/P + φ) + 7, with P = 107500 px² and one phase per frame.
 
 - `test_template_recovers_shift`: 10 rest frames and 11 frames from 0.3 to 3.3 rad, noise σ = 1.5 counts. `methods.template_phases` finds the template's own period within 2 % of P and every phase within 0.1 rad.
+
+## `tests/test_pixels.py` (`pixels.py`)
+
+- `test_fit_recovers_phases`: ten pixels at random fringe phases with random offsets (60–120 counts) and amplitudes (20–50 counts), 10 rest frames and 11 frames from 0.3 to 3.3 rad (a sweep of half a fringe, as in the run), noise σ = 1 count. `pixels.fit_phases` converges and, after `relative_to_rest`, every phase is within 0.05 rad of the truth and every offset and amplitude within 2 counts.
 
 ## `tests/test_rounding.py`
 
@@ -38,5 +42,5 @@ python -m pytest -q -p no:cacheprovider tests
 
 ## Not covered
 
-- `rms_from_line`, `setting_means`, `random_pixel_summary` and the drift fit in `sagnac.py`; the calibration fit.
+- `rms_from_line`, `setting_means`, the drift fit and the bend check in `sagnac.py`; the calibration fit; the fixed-pixel fit on real images (only the synthetic check above).
 - `fringes.py` (ring finder, ring-minima phase, cosine fit). The method that gives the result is not checked against a known phase.

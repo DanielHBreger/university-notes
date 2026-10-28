@@ -17,7 +17,7 @@ Uncertainty of a timed setting. The n turns are consecutive laps, so the mean tu
 sigma_r per press that part is sqrt(2) sigma_r / n. The scatter of the single laps gives the
 statistical part SD/sqrt(n). The two are added in quadrature:
     u(T)^2 = (SD/sqrt(n))^2 + (sqrt(2) sigma_r / n)^2,     u(omega)/omega = u(T)/T.
-sigma_r = REACTION_TIME_S (0.2 s, a conventional value; the lap scatter itself implies a smaller
+sigma_r = REACTION_TIME_S (0.25 s, our own reaction time, measured with an online reaction-time test, used as the uncertainty of each press; the lap scatter itself implies a smaller
 press-to-press jitter, so this is on the safe side).
 
 The line. scipy's curve_fit with the timing uncertainties as sigma gives k and omega0 with
@@ -39,7 +39,7 @@ from scipy import optimize, stats
 
 HERE = Path(__file__).resolve().parent
 CSV = HERE / 'Rotation calibration.csv'
-REACTION_TIME_S = 0.2          # human reaction time per stopwatch press (s)
+REACTION_TIME_S = 0.25         # human reaction time per stopwatch press (s)
 PHOTO_SETTINGS = [12.59, 20.74, 31.11, 44.07, 55.83, 64.00, 73.65, 82.18, 90.0]
 
 

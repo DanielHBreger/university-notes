@@ -1,48 +1,53 @@
 Sagnac phase against angular velocity (sagnac.py), fibre loop centred on the rotation axis
 
-PER SETTING: phase at the ring centre (minima), mean over the photos, SEM = SD/sqrt(n); omega from the
+PER SETTING: phase at the ring centre (minima), mean over the photos; SEM = SD/sqrt(n) is the photo noise only; the
+uncertainty of a setting mean (u_dphi in sagnac_speeds.csv) is s, the scatter about the line below, the same for every setting; omega from the
 calibration line +- its prediction uncertainty (common to all settings); dphi = phase minus the rest mean.
      S   n first photo      omega (rad/s)         dphi (rad) P (10^5 px^2)   resid
   0.00  10    16:21:40   0.0000 +- 0.0000    0.000 +- 0.020         1.075  +0.047
  12.59  15    16:24:10   0.2359 +- 0.0030    0.394 +- 0.028         1.071  +0.010
  20.74  15    16:25:44   0.4033 +- 0.0052    0.638 +- 0.015         1.058  -0.051
- 31.11  19    16:26:38   0.6163 +- 0.0079    1.017 +- 0.025         1.065  -0.061
- 44.07  22    16:27:54   0.8824 +- 0.0114    1.591 +- 0.015         1.093  +0.026
- 55.83  18    16:29:08   1.1239 +- 0.0145    1.984 +- 0.008         1.058  -0.022
- 64.00  16    16:30:16   1.2917 +- 0.0167    2.375 +- 0.008         1.094  +0.063
- 73.65  16    16:31:28   1.4899 +- 0.0192    2.700 +- 0.004         1.087  +0.026
- 82.18  15    16:32:32   1.6651 +- 0.0215    2.958 +- 0.004         1.068  -0.036
- 90.00  15    16:33:24   1.8257 +- 0.0236    3.285 +- 0.005         1.073  -0.002
+ 31.11  19    16:26:38   0.6163 +- 0.0080    1.017 +- 0.025         1.065  -0.061
+ 44.07  22    16:27:54   0.8825 +- 0.0115    1.591 +- 0.015         1.093  +0.026
+ 55.83  18    16:29:08   1.1241 +- 0.0147    1.984 +- 0.008         1.058  -0.022
+ 64.00  16    16:30:16   1.2919 +- 0.0169    2.375 +- 0.008         1.094  +0.063
+ 73.65  16    16:31:28   1.4901 +- 0.0195    2.700 +- 0.004         1.087  +0.026
+ 82.18  15    16:32:32   1.6653 +- 0.0218    2.958 +- 0.004         1.068  -0.036
+ 90.00  15    16:33:24   1.8260 +- 0.0239    3.285 +- 0.005         1.073  -0.002
 (the rest mean, SEM 0.020 rad, is subtracted from every row; resid = dphi minus the line)
 
 THE LINE dphi = a omega + b, linregress through the ten setting means (Schwartz Eq. 7):
-  a = 1.8261 +- 0.0236 rad/(rad/s), b = -0.047 +- 0.027 rad (p = 0.12 for b = 0), R^2 = 0.9987
+  a = 1.8258 +- 0.0236 rad/(rad/s), b = -0.047 +- 0.027 rad (p = 0.12 for b = 0), R^2 = 0.9987
   s = 0.0444 rad: the rms distance of the points from the line, which sets the slope's uncertainty.
   The line against the photos' SEM: chi2 = 205.0, dof = 8, p = 6e-40: the settings lie 5.1 times farther
   from the line than the photo noise allows (the phase wanders between settings), so s is used, not the SEM.
-  Added omega^2 term: +0.023 +- 0.051 rad/(rad/s)^2, t = 0.45, p = 0.67: no bend.
+  Added omega^2 term: +0.023 +- 0.051 rad/(rad/s)^2, t = 0.45, p = 0.67: no bend visible.
+  The calibration's bend (the line is above the timed omega at the fast settings, calibration.txt): with omega at the
+  photo settings from a curve through the timed points instead of the line, the slope is 1.8658 (weighted quadratic, +2.2 %) or 1.8723 (straight segments between the timed points, +2.5 %):
+  the line's omega is too high there, so a curve raises a. Against the line's omega, that bend alone would give an omega^2
+  term of -0.042 rad/(rad/s)^2, inside the fitted term's +- 0.051: the omega^2 check cannot tell the bend from no bend.
 
 OTHER PHASE-READING METHODS, same averaging and regression (cosine fit: fringes.py, prep Q5; template
 matching: methods.py):
-  cosine fit         a = 1.8630 +- 0.0281, s = 0.0530 rad, R^2 = 0.9982; minus the minima per setting: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad
-  template matching  a = 1.7552 +- 0.0164, s = 0.0308 rad, R^2 = 0.9993; minus the minima per setting: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad
-  Method part of u(a): half the range of 1.8261, 1.8630, 1.7552 = 0.0539 (2.9 %).
-  Calibration part of u(a): k is known to 0.24 % and the timed settings scatter about the line by 1.27 % (calibration.txt);
-  both are common to every omega, so u(a)/a = sqrt(0.24^2 + 1.27^2) % = 1.29 %, u = 0.0236.
+  cosine fit         a = 1.8626 +- 0.0281, s = 0.0530 rad, R^2 = 0.9982; minus the minima per setting: +0.00, +0.10, +0.12, +0.15, +0.19, +0.16, +0.12, +0.15, +0.12, +0.11 rad
+  template matching  a = 1.7549 +- 0.0164, s = 0.0308 rad, R^2 = 0.9993; minus the minima per setting: +0.00, -0.01, +0.07, +0.03, -0.10, +0.03, -0.16, -0.11, -0.06, -0.08 rad
+  Method part of u(a): half the range of 1.8258, 1.8626, 1.7549 = 0.0539 (2.9 %).
+  Calibration part of u(a): k is known to 0.29 % and the timed settings scatter about the line by 1.28 % (calibration.txt);
+  both are common to every omega, so u(a)/a = sqrt(0.29^2 + 1.28^2) % = 1.31 %, u = 0.0239.
 
-RESULT  a = 1.8261 +- 0.0236 (regression) +- 0.0539 (method) +- 0.0236 (calibration)
-          = 1.8261 +- 0.0634 rad/(rad/s) (3.5 %, the three parts in quadrature)
+RESULT  a = 1.8258 +- 0.0236 (regression) +- 0.0539 (method) +- 0.0239 (calibration)
+          = 1.8258 +- 0.0635 rad/(rad/s) (3.5 %, the three parts in quadrature)
 Theory, Eq. (5): N = 13 +- 1, R = 57.0 +- 0.5 cm (A = pi R^2 = 1.0207 m^2), lambda = 640 nm, c exact.
   a_th = 8 pi^2 N R^2 / (lambda c) = 1.7381 +- 0.1371 rad/(rad/s) [N: 0.1337 (7.7 %), R: 0.0305 (1.8 %)]
   lambda: no uncertainty given, NOT included (unknown, not zero); a_th and c move by 0.16 % per nm.
-  a / a_th = 1.051 +- 0.091; a - a_th = +0.0880 = +0.58 combined sigma, p = 0.56 (regression part only: +0.63 sigma, p = 0.53).
+  a / a_th = 1.050 +- 0.091; a - a_th = +0.0877 = +0.58 combined sigma, p = 0.56 (regression part only: +0.63 sigma, p = 0.53).
   Read the other way (R, lambda, c known): N = 13.66 +- 0.53 turns.
   Largest shift (S = 90 minus rest): 3.285 +- 0.063 rad = 0.523 +- 0.010 fringe at omega = 1.826 rad/s; predicted 3.17 rad.
   As a travel-time difference, dt = dphi lambda / (2 pi c) = 1.12 +- 0.02 fs (predicted 1.08 fs; one optical period is 2.13 fs).
 
 SPEED OF LIGHT, Eq. (5) solved for c = 8 pi^2 N R^2 / (lambda a), in 10^8 m/s:
-  c = 2.8535 +- 0.0369 (regression, 1.3 %) +- 0.0842 (method, 2.9 %) +- 0.0369 (calibration, 1.3 %) +- 0.2195 (N, 7.7 %) +- 0.0501 (R, 1.8 %)
-    = 2.8535 +- 0.2460 (8.6 %); c / c_def = 0.952 +- 0.082, -0.59 sigma, p = 0.56.
+  c = 2.8540 +- 0.0369 (regression, 1.3 %) +- 0.0842 (method, 2.9 %) +- 0.0374 (calibration, 1.3 %) +- 0.2195 (N, 7.7 %) +- 0.0501 (R, 1.8 %)
+    = 2.8540 +- 0.2461 (8.6 %); c / c_def = 0.952 +- 0.082, -0.59 sigma, p = 0.56.
   This is a / a_th read the other way (c / c_def = a_th / a), not an independent test.
 
 DRIFT CHECK. The settings were photographed in increasing order with rest photos only at the start, so
@@ -50,17 +55,22 @@ omega and time rise together. dphi = a omega + D t + b (t: mean photo time of th
   a = 2.12 +- 0.17 rad/(rad/s), D = -0.82 +- 0.47 mrad/s (p = 0.12), correlation(a, D) = -0.992: a steady drift cannot be told from the slope.
   Not in the quoted uncertainty. Also not checked: the sign of the shift (rotation direction not recorded).
 
-RANDOM PIXELS (prep Q5, optional; presentation stage, random_points_scan.json):
-   10 pixels per draw: 1000 draws, slope mean 1.702, SD between draws 0.196, fit error of one draw 0.057, 2 failed
-   20 pixels per draw: 60 draws, slope mean 1.715, SD between draws 0.091, fit error of one draw 0.041
-   40 pixels per draw: 60 draws, slope mean 1.729, SD between draws 0.073, fit error of one draw 0.040
-   80 pixels per draw: 60 draws, slope mean 1.730, SD between draws 0.056, fit error of one draw 0.037
+FIXED PIXELS (prep Q5; pixels.py): 10 pixels at fixed image positions, read in every photograph and
+fitted with I_kj = a_j + b_j cos(psi_j + delta_k); the main draw (seed 20261011) through the same averaging and regression:
+  a = 1.7734 +- 0.0367 (fit), s = 0.0692 rad, R^2 = 0.9966; minus the minima per setting: +0.00, -0.01, -0.07, -0.02, +0.01, -0.06, -0.06, -0.03, -0.12, -0.12 rad
+   10 pixels per draw: 1001 draws, slope mean 1.689, SD between draws 0.193 (11.4 %), median fit error 0.057, 6 failed
+   20 pixels per draw: 60 draws, slope mean 1.702, SD between draws 0.090 (5.3 %), median fit error 0.041
+   40 pixels per draw: 60 draws, slope mean 1.716, SD between draws 0.072 (4.2 %), median fit error 0.040
+   80 pixels per draw: 60 draws, slope mean 1.717, SD between draws 0.055 (3.2 %), median fit error 0.037
+  Shown in the methods figure with the SD between draws of 10 pixels as its uncertainty; not in the method
+  range above: over this run no pixel sweeps a whole fringe, and a moving ring centre or spacing reads as phase at a
+  fixed pixel, so the slope depends on which pixels are drawn.
 
 REPORT FORM (uncertainty to one significant figure, value to the same digit; comparisons above use
 unrounded values):
-  k = 0.02054 +- 0.00005 rad/s per unit S, omega0 = -0.0226 +- 0.0003 rad/s
+  k = 0.02054 +- 0.00006 rad/s per unit S, omega0 = -0.0227 +- 0.0004 rad/s
   a = 1.83 +- 0.06 rad/(rad/s) (all parts); 1.83 +- 0.02 (regression only)
   a_th = 1.7 +- 0.1 rad/(rad/s); a / a_th = 1.05 +- 0.09; N implied = 13.7 +- 0.5
-  cosine fit: a = 1.86 +- 0.03; template matching: a = 1.76 +- 0.02
+  cosine fit: a = 1.86 +- 0.03; template matching: a = 1.75 +- 0.02
   largest shift = 3.28 +- 0.06 rad = 0.52 +- 0.01 fringe, dt = 1.12 +- 0.02 fs
   c = (2.9 +- 0.2) x 10^8 m/s; c / c_def = 0.95 +- 0.08
