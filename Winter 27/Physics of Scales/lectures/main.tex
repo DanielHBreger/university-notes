@@ -1,0 +1,35 @@
+\documentclass[a4paper]{report}
+
+\input{setup/preamble}
+\input{setup/macros}
+
+\course{Physics of Scales}
+\me[danielbreger@campus.technion.ac.il]{}
+\professor{Lecturer name}% \professor[email]{Dr.\ Name}
+\institute{Technion}
+\date{Based on lectures by \profloc{} in 2026--27
+\\ Notes created by Daniel Haim Breger
+\\~\\ Updated \today}
+
+\begin{document}
+
+\renewcommand\thepage{Title}
+\maketitle
+\renewcommand\thepage{Preface}
+
+\input{preface.tex}
+\pagenumbering{gobble}
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagestyle{head}
+\pagenumbering{arabic}
+
+\chapter{Day, Month D, 2026}
+\input{lectures/YYMMDD.tex}
+
+\centering
+* * *
+\end{document}
